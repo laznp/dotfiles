@@ -1,0 +1,124 @@
+syntax enable
+set relativenumber
+set tabstop=4
+set backspace=indent,eol,start
+set autoindent
+set showmatch
+set nowrap
+set noswapfile
+set incsearch
+set hlsearch
+filetype plugin indent on
+set fileformat=unix
+set encoding=utf-8
+set fileencoding=utf-8
+let mapleader = ' '
+set mouse=a
+let g:polyglot_disabled = ['autoindent']
+set clipboard=unnamed
+
+" Vim Plug
+call plug#begin('~/.vim/plugged')
+Plug 'jiangmiao/auto-pairs'
+Plug 'scrooloose/nerdtree'
+Plug 'preservim/nerdcommenter'
+Plug 'sirver/ultisnips'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'dikiaap/minimalist'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'sheerun/vim-polyglot'
+Plug 'preservim/tagbar'
+Plug 'wincent/terminus'
+Plug 'jeffkreeftmeijer/vim-numbertoggle'
+Plug 'joshdick/onedark.vim'
+Plug 'TaDaa/vimade'
+Plug 'ryanoasis/vim-devicons'
+Plug 'vim-syntastic/syntastic'
+call plug#end()
+
+" NERDCommenter
+nmap <C-_> <Plug>NERDCommenterToggle
+vmap <C-_> <Plug>NERDCommenterToggle<CR>gv
+
+" NERDTree
+let NERDTreeQuitOnOpen=1
+let g:NERDTreeMinimalUI=1
+nmap <F2> :NERDTreeToggle<CR>
+let NERDTreeShowHidden=1
+let g:NERDTreeIgnore=['__pycache__','.git','.github','.DS_Store']
+
+" Tabs
+nmap <leader>1 :bp<CR>
+nmap <leader>2 :bn<CR>
+nmap <C-w> :bd<CR>
+
+" UltiSnips
+let g:UltiSnipsSnippetDirectory=[$HOME.'/.vim/snippets']
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+
+" Delete Trailing Space
+"autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
+autocmd BufWritePre * :%s/\s\+$//e
+
+" Git Gutter
+highlight GitGutterAdd guifg=#009900 ctermfg=Green
+highlight GitGutterChange guifg=#bbbb00 ctermfg=Yellow
+highlight GitGutterDelete guifg=#ff2222 ctermfg=Red
+nmap ) <Plug>(GitGutterNextHunk)
+nmap ( <Plug>(GitGutterPrevHunk)
+let g:gitgutter_enabled = 1
+let g:gitgutter_map_keys = 0
+
+" Vim Airline
+let g:airline_theme = "onedark"
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#fnamemode = ':t'
+
+" CtrlP
+if executable('rg')
+let g:ctrlp_user_command = 'rg %s --files --hidden --color=never --glob ""'
+endif
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+
+" Tagbar
+nmap <F8> :TagbarToggle<CR>
+
+" Syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 0
+let g:syntastic_quiet_messages = { 'regex': 'W191\|E117\|E265\|E302\|E305\|E501\|E231' }
+function! ToggleSyntastic()
+    for i in range(1, winnr('$'))
+        let bnum = winbufnr(i)
+        if getbufvar(bnum, '&buftype') == 'quickfix'
+            lclose
+            return
+        endif
+    endfor
+    SyntasticCheck
+endfunction
+nnoremap <F7> :call ToggleSyntastic()<CR>
+
+"Custom
+command! Reload execute "source ~/.vimrc"
+set background=dark
+colorscheme onedark
+"let @/ = ""
+au BufNewFile,BufRead *.py set autoindent tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
+"au BufNewFile *.py 0r ~/.vim/py_header
+nmap <leader>` :noh<CR>
+set list
+set listchars=tab:•·
+
