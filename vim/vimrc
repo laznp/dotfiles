@@ -17,6 +17,14 @@ set mouse=a
 let g:polyglot_disabled = ['autoindent']
 set clipboard=unnamed
 
+" Download Vim Plug if not exist
+let need_to_install_plugins = 0
+if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    let need_to_install_plugins = 1
+endif
+
 " Vim Plug
 call plug#begin('~/.vim/plugged')
 Plug 'jiangmiao/auto-pairs'
@@ -37,6 +45,7 @@ Plug 'joshdick/onedark.vim'
 Plug 'TaDaa/vimade'
 Plug 'ryanoasis/vim-devicons'
 Plug 'vim-syntastic/syntastic'
+Plug 'marciomazza/vim-brogrammer-theme'
 call plug#end()
 
 " NERDCommenter
@@ -98,7 +107,8 @@ let g:syntastic_python_checkers = ['flake8']
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
-let g:syntastic_quiet_messages = { 'regex': 'W191\|E117\|E265\|E302\|E305\|E501\|E231' }
+let g:syntastic_check_on_wq = 0
+let g:syntastic_quiet_messages = { 'regex': 'W191\|E117\|E265\|E302\|E305\|E501\|E231\|E225' }
 function! ToggleSyntastic()
     for i in range(1, winnr('$'))
         let bnum = winbufnr(i)
@@ -115,9 +125,7 @@ nnoremap <F7> :call ToggleSyntastic()<CR>
 command! Reload execute "source ~/.vimrc"
 set background=dark
 colorscheme onedark
-"let @/ = ""
 au BufNewFile,BufRead *.py set autoindent tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
-"au BufNewFile *.py 0r ~/.vim/py_header
 nmap <leader>` :noh<CR>
 set list
 set listchars=tab:•·
