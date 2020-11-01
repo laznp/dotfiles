@@ -15,7 +15,9 @@ set fileencoding=utf-8
 let mapleader = ' '
 set mouse=a
 let g:polyglot_disabled = ['autoindent']
-set clipboard=unnamed
+set clipboard+=unnamed
+set foldmethod=indent
+set foldlevelstart=99
 
 " Download Vim Plug if not exist
 let need_to_install_plugins = 0
@@ -47,6 +49,7 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'vim-syntastic/syntastic'
 Plug 'marciomazza/vim-brogrammer-theme'
 Plug 'vim-pandoc/vim-pandoc'
+Plug 'ycm-core/YouCompleteMe'
 call plug#end()
 
 " NERDCommenter
@@ -59,8 +62,6 @@ let g:NERDTreeMinimalUI=1
 nmap <F2> :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
 let g:NERDTreeIgnore=['__pycache__','.git','.github','.DS_Store']
-" Auto open NERDTree when open vim
-"autocmd VimEnter * NERDTree
 
 " Tabs
 nmap <leader>1 :bp<CR>
@@ -88,10 +89,28 @@ let g:gitgutter_map_keys = 0
 " Vim Airline
 let g:airline_theme = "onedark"
 let g:airline_powerline_fonts = 1
+let g:airline#extensions#tagbar#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemode = ':t'
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline_filetype_overrides = {'nerdtree': [ get(g:, 'NERDTreeStatusline', 'NERD'), '' ]}
+let g:airline_mode_map = {
+      \ '__'     : '-',
+      \ 'c'      : 'C',
+      \ 'i'      : 'I',
+      \ 'ic'     : 'I',
+      \ 'ix'     : 'I',
+      \ 'n'      : 'N',
+      \ 'multi'  : 'M',
+      \ 'ni'     : 'N',
+      \ 'no'     : 'N',
+      \ 'R'      : 'R',
+      \ 'Rv'     : 'R',
+      \ 's'      : 'S',
+      \ 'S'      : 'S',
+      \ 't'      : 'T',
+      \ 'v'      : 'V',
+      \ 'V'      : 'V',
+      \ }
 
 " CtrlP
 if executable('rg')
@@ -99,9 +118,6 @@ let g:ctrlp_user_command = 'rg %s --files --hidden --color=never --glob ""'
 endif
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
-
-" Tagbar
-nmap <F8> :TagbarToggle<CR>
 
 " Syntastic
 set statusline+=%#warningmsg#
@@ -124,7 +140,6 @@ function! ToggleSyntastic()
     endfor
     SyntasticCheck
 endfunction
-nnoremap <F7> :call ToggleSyntastic()<CR>
 
 "Custom
 command! Reload execute "source ~/.config/nvim/init.vim"
@@ -135,4 +150,9 @@ au BufNewFile,BufRead *.go set autoindent tabstop=4 softtabstop=4 shiftwidth=4 n
 nmap <leader>` :noh<CR>
 set list
 set listchars=tab:•·
+
+" Keybinding Remap
 nnoremap <F5> :!go run %<CR>
+nnoremap <F6> za
+nnoremap <F7> :call ToggleSyntastic()<CR>
+nnoremap <F8> :TagbarToggle<CR>
