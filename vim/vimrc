@@ -19,14 +19,14 @@ set clipboard=unnamed
 
 " Download Vim Plug if not exist
 let need_to_install_plugins = 0
-if empty(glob('~/.vim/autoload/plug.vim'))
-    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+if empty(glob('~/.local/share/autoload/plug.vim'))
+    silent !curl -fLo ~/.local/share/nvim/autoload/plug.vim --create-dirs
         \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     let need_to_install_plugins = 1
 endif
 
 " Vim Plug
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.config/nvim/plugged')
 Plug 'jiangmiao/auto-pairs'
 Plug 'scrooloose/nerdtree'
 Plug 'preservim/nerdcommenter'
@@ -46,6 +46,7 @@ Plug 'TaDaa/vimade'
 Plug 'ryanoasis/vim-devicons'
 Plug 'vim-syntastic/syntastic'
 Plug 'marciomazza/vim-brogrammer-theme'
+Plug 'vim-pandoc/vim-pandoc'
 call plug#end()
 
 " NERDCommenter
@@ -58,6 +59,8 @@ let g:NERDTreeMinimalUI=1
 nmap <F2> :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
 let g:NERDTreeIgnore=['__pycache__','.git','.github','.DS_Store']
+" Auto open NERDTree when open vim
+"autocmd VimEnter * NERDTree
 
 " Tabs
 nmap <leader>1 :bp<CR>
@@ -65,13 +68,12 @@ nmap <leader>2 :bn<CR>
 nmap <C-w> :bd<CR>
 
 " UltiSnips
-let g:UltiSnipsSnippetDirectory=[$HOME.'/.vim/snippets']
+let g:UltiSnipsSnippetDirectory=[$HOME.'/.config/nvim/snippets']
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 " Delete Trailing Space
-"autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
 autocmd BufWritePre * :%s/\s\+$//e
 
 " Git Gutter
@@ -88,6 +90,8 @@ let g:airline_theme = "onedark"
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemode = ':t'
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
 
 " CtrlP
 if executable('rg')
@@ -123,7 +127,7 @@ endfunction
 nnoremap <F7> :call ToggleSyntastic()<CR>
 
 "Custom
-command! Reload execute "source ~/.vimrc"
+command! Reload execute "source ~/.config/nvim/init.vim"
 set background=dark
 colorscheme onedark
 au BufNewFile,BufRead *.py set autoindent tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
@@ -132,4 +136,3 @@ nmap <leader>` :noh<CR>
 set list
 set listchars=tab:•·
 nnoremap <F5> :!go run %<CR>
-
