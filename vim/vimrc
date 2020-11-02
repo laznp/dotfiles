@@ -131,7 +131,7 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
-let g:syntastic_quiet_messages = { 'regex': 'W191\|E117\|E265\|E302\|E305\|E501\|E231\|E225' }
+"let g:syntastic_quiet_messages = { 'regex': 'W191\|E117\|E265\|E302\|E305\|E501\|E231\|E225' }
 function! ToggleSyntastic()
     for i in range(1, winnr('$'))
         let bnum = winbufnr(i)
@@ -147,7 +147,7 @@ endfunction
 command! Reload execute "source ~/.config/nvim/init.vim"
 set background=dark
 colorscheme onedark
-au BufNewFile,BufRead *.py set autoindent tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
+au BufNewFile,BufRead *.py set autoindent tabstop=4 softtabstop=4 shiftwidth=4 expandtab
 au BufNewFile,BufRead *.go set autoindent tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
 nmap <leader>` :noh<CR>
 set list
