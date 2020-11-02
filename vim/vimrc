@@ -1,6 +1,6 @@
 syntax enable
 set relativenumber
-set tabstop=4
+set tabstop=4 shiftwidth=4
 set backspace=indent,eol,start
 set autoindent
 set showmatch
@@ -18,6 +18,7 @@ let g:polyglot_disabled = ['autoindent']
 set clipboard+=unnamed
 set foldmethod=indent
 set foldlevelstart=99
+set termguicolors
 
 " Download Vim Plug if not exist
 let need_to_install_plugins = 0
@@ -50,6 +51,7 @@ Plug 'vim-syntastic/syntastic'
 Plug 'marciomazza/vim-brogrammer-theme'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'ycm-core/YouCompleteMe'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 call plug#end()
 
 " NERDCommenter
