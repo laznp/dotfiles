@@ -11,4 +11,4 @@ if [ ! -f "$NVIM_DIR/py_header" ]; then ln -s $(pwd)/vim/py_header $NVIM_DIR/py_
 if [ ! -f "$NVIM_DIR/snippets/python.snippets" ]; then ln -s $(pwd)/vim/python.snippets $NVIM_DIR/snippets/python.snippets; fi
 
 # ZSH Aliases
-if [ ! -f "$HOME/.zshrc" ]; then ln -s $(pwd)/zsh/zsh_alias $HOME/.zsh_alias; fi
+if [ ! -f "$HOME/.zsh_alias" ]; then ln -s $(pwd)/zsh/zsh_alias $HOME/.zsh_alias; fi

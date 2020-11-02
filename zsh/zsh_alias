@@ -1,25 +1,49 @@
+# Alias Tokopedia SSH
 alias tkp-prod="ssh -i /Users/nakama/.ssh/tokopedia-prod.pem -l root"
 alias tkp-jenkins="ssh -i /Users/nakama/.ssh/tokopedia-jenkins.pem -l root"
 alias tkp-stag="ssh -i /Users/nakama/.ssh/tokopedia-new-stag.pem -l root"
 alias tkp-gcp="ssh -i /Users/nakama/.ssh/tokopedia-gcp.pem -l root"
 alias tkp-aws-stag="ssh -i /Users/nakama/.ssh/tokopedia-aws-stag.pem -l ubuntu"
+
+# Alias Infinitec SSH
 alias infi-ubuntu="ssh -i ~/Downloads/cp-station-dev-key.pem -l ubuntu"
 alias infi-ec2="ssh -i ~/Downloads/cp-station-dev-key.pem -l ec2-user"
+
+# Alias Command
 alias tg="terragrunt"
 alias tf="terraform"
-alias sed=gsed
-alias vim="nvim"
 alias py="python"
 alias py3="python3"
-alias reload="source $HOME/.zshrc"
-alias -s py="python3"
+alias sed="gsed"
+alias vim="nvim"
 alias burpsuite="java -noverify -javaagent:"/Users/nakama/Downloads/BurpSuitePro/burp-loader-x-Ai.jar" -Xmx2048m -jar "/Users/nakama/Downloads/BurpSuitePro/burpsuite_pro_v2020.9.2.jar""
+alias ls="$(which ls_extended)"
+
+# Run python3 on every filename with .py extension
+alias -s py="python3"
+
+# Shorthand for edit rc files
 alias vimrc="vim ~/.config/nvim/init.vim"
 alias zshrc="vim ~/.zshrc"
-alias ls=$(which ls_extended)
+
+# Alias source zshrc
+alias reload="source $HOME/.zshrc"
+
+# Alias reverse proxy with port as arguments
 function publish() {
 	ssh -nN -R 11227:localhost:"$1" zoelabs
 }
+
+# Alias create new python virtualenv
+function pyenv() {
+	if [ -z "$1" ]; then
+		python3 -m venv venv
+	else
+		python3 -m venv "$1"
+	fi
+}
+
+# Alias activating python virtualenv on directory
 function activate() {
 	if [ -z "$1" ]; then
 		source ./venv/bin/activate
@@ -27,3 +51,13 @@ function activate() {
 		source ./$1/bin/activate
 	fi
 }
+
+# Alias git command
+alias gad="git add"
+alias gco="git checkout"
+alias gcob="git checkout -b"
+alias gcm="git commit -m"
+alias gps="git push origin"
+alias gpl="git pull origin"
+alias gst="git status"
+alias gdf="git diff"
