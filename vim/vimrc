@@ -33,7 +33,7 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'jiangmiao/auto-pairs'
 Plug 'scrooloose/nerdtree'
 Plug 'preservim/nerdcommenter'
-Plug 'sirver/ultisnips'
+"Plug 'sirver/ultisnips'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-fugitive'
@@ -45,13 +45,13 @@ Plug 'preservim/tagbar'
 Plug 'wincent/terminus'
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
 Plug 'joshdick/onedark.vim'
-Plug 'TaDaa/vimade'
+"Plug 'TaDaa/vimade'
 Plug 'ryanoasis/vim-devicons'
 Plug 'vim-syntastic/syntastic'
 Plug 'marciomazza/vim-brogrammer-theme'
 Plug 'vim-pandoc/vim-pandoc'
-Plug 'ycm-core/YouCompleteMe'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
 " NERDCommenter
@@ -64,6 +64,10 @@ let g:NERDTreeMinimalUI=1
 nmap <F2> :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
 let g:NERDTreeIgnore=['__pycache__','.git','.github','.DS_Store']
+
+" DevIcons
+let g:webdevicons_enable_nerdtree = 1 
+let g:webdevicons_conceal_nerdtree_brackets = 1 
 
 " Tabs
 nmap <leader>1 :bp<CR>
@@ -127,6 +131,7 @@ set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 let g:syntastic_python_checkers = ['flake8']
 let g:syntastic_go_checkers = ['go', 'golint', 'errcheck']
+let g:syntastic_python_flake8_post_args="--max-line-length=120"
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
