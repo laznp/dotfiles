@@ -19,6 +19,8 @@ set clipboard+=unnamed
 set foldmethod=indent
 set foldlevelstart=99
 set termguicolors
+set formatoptions-=cro
+highlight Comment cterm=italic gui=italic
 
 " Download Vim Plug if not exist
 let need_to_install_plugins = 0
@@ -51,12 +53,14 @@ Plug 'vim-syntastic/syntastic'
 Plug 'marciomazza/vim-brogrammer-theme'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+"Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
 " NERDCommenter
 nmap <C-_> <Plug>NERDCommenterToggle
 vmap <C-_> <Plug>NERDCommenterToggle<CR>gv
+nmap <C-\/> <Plug>NERDCommenterToggle
+vmap <C-\/> <Plug>NERDCommenterToggle<CR>gv
 
 " NERDTree
 let NERDTreeQuitOnOpen=1
@@ -66,8 +70,8 @@ let NERDTreeShowHidden=1
 let g:NERDTreeIgnore=['__pycache__','.git','.github','.DS_Store']
 
 " DevIcons
-let g:webdevicons_enable_nerdtree = 1 
-let g:webdevicons_conceal_nerdtree_brackets = 1 
+let g:webdevicons_enable_nerdtree = 1
+let g:webdevicons_conceal_nerdtree_brackets = 1
 
 " Tabs
 nmap <leader>1 :bp<CR>
@@ -96,8 +100,14 @@ let g:gitgutter_map_keys = 0
 let g:airline_theme = "onedark"
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tagbar#enabled = 1
-let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemode = ':t'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ''
+let g:airline#extensions#tabline#left_alt_sep = ''
+let g:airline#extensions#tabline#right_sep = ''
+let g:airline#extensions#tabline#right_alt_sep = ''
+let g:airline_left_sep = ''
+let g:airline_right_sep = ''
 let g:airline_filetype_overrides = {'nerdtree': [ get(g:, 'NERDTreeStatusline', 'NERD'), '' ]}
 let g:airline_mode_map = {
       \ '__'     : '-',
