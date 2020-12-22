@@ -6,9 +6,10 @@ alias tkp-ali-prod="ssh -i /Users/nakama/.ssh/tokopedia-prod.pem -l root"
 alias tkp-gcp-stag="ssh -i /Users/nakama/.ssh/tokopedia-gcp-stag.pem -l root"
 alias tkp-gcp-prod="ssh -i /Users/nakama/.ssh/tokopedia-gcp.pem -l root"
 alias tkp-aws-stag="ssh -i /Users/nakama/.ssh/tokopedia-aws-stag.pem -l ubuntu"
+alias tkp-aws-prod="ssh -i /Users/nakama/.ssh/tokopedia-prod.pem -l ubuntu"
 
 # Alias Infinitec SSH
-alias infi-ubuntu="ssh -i ~/Downloads/cp-station-dev-key.pem -l ubuntu"
+alias infi-ubuntu="ssh -i ~/Downloads/InfiCert/cp-station-dev-key.pem -l ubuntu"
 alias infi-ec2="ssh -i ~/Downloads/cp-station-dev-key.pem -l ec2-user"
 
 # Alias Command
@@ -66,3 +67,10 @@ alias gdf="git diff"
 
 # Alias OpenVPN
 alias vpn="sudo /usr/local/Cellar/openvpn/2.4.9/sbin/openvpn ~/Downloads/laznp.ovpn"
+
+# Alias Parallel Desktop
+alias parallel="sudo -b '/Applications/Parallels Desktop.app/Contents/MacOS/prl_client_app'"
+
+# Alias for Arch Linux
+alias pacman="sudo pacman"
+alias reboot="sudo reboot"
