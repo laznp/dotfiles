@@ -74,3 +74,4 @@ alias parallel="sudo -b '/Applications/Parallels Desktop.app/Contents/MacOS/prl_
 # Alias for Arch Linux
 alias pacman="sudo pacman"
 alias reboot="sudo reboot"
+alias podman="sudo podman"
