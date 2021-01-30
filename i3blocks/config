@@ -25,8 +25,8 @@ interval=2
 color=#ffffff
 
 [BATTERY]
-command=echo " $(acpi -b | awk -F ',' '{print $2}' | tr -d ' ')"
-interval=1
+command=echo " $(bash battery-state.sh)"
+interval=2
 
 [TIME]
 command=date '+ %a %d %b %H:%M'

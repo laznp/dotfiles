@@ -66,7 +66,7 @@ alias gst="git status"
 alias gdf="git diff"
 
 # Alias OpenVPN
-alias vpn="sudo /usr/local/Cellar/openvpn/2.4.9/sbin/openvpn ~/Downloads/laznp.ovpn"
+alias vpn="sudo openvpn ~/Downloads/laznp.ovpn"
 
 # Alias Parallel Desktop
 alias parallel="sudo -b '/Applications/Parallels Desktop.app/Contents/MacOS/prl_client_app'"
