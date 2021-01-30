@@ -21,10 +21,11 @@ ln -s $(pwd)/utils/* "$HOME/.local/bin/"
 # ZSH Alias
 if [ "$(grep "zsh_alias" ~/.zshrc | wc -l)" == "0" ]; then echo "source ~/.zsh_alias" >> ~/.zshrc; fi
 
-# Automate i3, i3blocks and Alacritty
+# Automate Config
 if [ ! -d "$HOME/.config" ]; then mkdir -p "$HOME/.config"; fi
 ln -s $(pwd)/i3 "$HOME/.config/i3"
 ln -s $(pwd)/i3blocks "$HOME/.config/i3blocks"
 ln -s $(pwd)/alacritty "$HOME/.config/alacritty"
+ln -s $(pwd)/rofi "$HOME/.config/rofi"
 ln -s $(pwd)/libinput-gestures/libinput-gestures.conf "$HOME/.config/libinput-gestures.conf"
 
