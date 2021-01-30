@@ -12,6 +12,11 @@ if [ ! -f "$NVIM_DIR/snippets/python.snippets" ]; then ln -s $(pwd)/vim/python.s
 
 # ZSH
 if [ ! -f "$HOME/.zsh_alias" ]; then ln -s $(pwd)/zsh/zsh_alias $HOME/.zsh_alias; fi
+if [ "$(grep ".local/bin" ~/.zshrc | wc -l)" == "0" ]; then echo "export PATH=$PATH:~/.local/bin" >> ~/.zshrc; fi
+
+# Utils
+if [ ! -d "$HOME/.local/bin" ]; then mkdir -p $HOME/.local/bin; fi
+ln -s $(pwd)/utils/* "$HOME/.local/bin/"
 
 # ZSH Alias
 if [ "$(grep "zsh_alias" ~/.zshrc | wc -l)" == "0" ]; then echo "source ~/.zsh_alias" >> ~/.zshrc; fi
@@ -21,3 +26,5 @@ if [ ! -d "$HOME/.config" ]; then mkdir -p "$HOME/.config"; fi
 ln -s $(pwd)/i3 "$HOME/.config/i3"
 ln -s $(pwd)/i3blocks "$HOME/.config/i3blocks"
 ln -s $(pwd)/alacritty "$HOME/.config/alacritty"
+ln -s $(pwd)/libinput-gestures/libinput-gestures.conf "$HOME/.config/libinput-gestures.conf"
+

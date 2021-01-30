@@ -193,6 +193,7 @@ bindsym Mod1+r mode "resize"
 bindsym Ctrl+Right workspace next
 bindsym Ctrl+Left workspace prev
 bindsym Mod1+Ctrl+4 exec flameshot gui
+
 # Lock Screen
 bindsym $mod+shift+x exec betterlockscreen -l dim
 
