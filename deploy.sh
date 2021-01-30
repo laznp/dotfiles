@@ -10,8 +10,9 @@ if [ ! -f "$NVIM_DIR/init.vim" ]; then ln -s $(pwd)/vim/vimrc $NVIM_DIR/init.vim
 if [ ! -f "$NVIM_DIR/py_header" ]; then ln -s $(pwd)/vim/py_header $NVIM_DIR/py_header; fi
 if [ ! -f "$NVIM_DIR/snippets/python.snippets" ]; then ln -s $(pwd)/vim/python.snippets $NVIM_DIR/snippets/python.snippets; fi
 
-# ZSH Aliases
+# ZSH
 if [ ! -f "$HOME/.zsh_alias" ]; then ln -s $(pwd)/zsh/zsh_alias $HOME/.zsh_alias; fi
+echo "source ~/.zsh_alias" >> ~/.zshrc
 
 # Automate i3, i3blocks and Alacritty
 if [ ! -d "$HOME/.config" ]; then mkdir -p "$HOME/.config"; fi

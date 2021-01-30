@@ -9,6 +9,8 @@
 # layout, use the i3-config-wizard
 #
 
+set $mod Mod1
+
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 font pango:'Consolas NF' 8
@@ -119,11 +121,11 @@ bindsym Mod1+minus scratchpad show
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "1"
-set $ws2 "2"
-set $ws3 "3"
-set $ws4 "4"
-set $ws5 "5"
+set $ws1 "1:"
+set $ws2 "2:"
+set $ws3 "3:"
+set $ws4 "4:ﭵ"
+set $ws5 "5:"
 set $ws6 "6"
 set $ws7 "7"
 set $ws8 "8"
@@ -186,30 +188,38 @@ mode "resize" {
         bindsym Mod1+r mode "default"
 }
 
+# Custom Binding
 bindsym Mod1+r mode "resize"
+bindsym Ctrl+Right workspace next
+bindsym Ctrl+Left workspace prev
+bindsym Mod1+Ctrl+4 exec scrot -s '/tmp/%F_%T_$wx$h.png' -e 'xclip -selection clipboard -target image/png -i $f'
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
 	position top
-	#status_command i3status -c $HOME/.i3status.conf
 	status_command i3blocks
-	font xft:Consolas NF:10, Consolas NF 10
+	font xft:Consolas NF:8, Consolas NF 10
 }
-
-# Exec Polybar
-# exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 # i3 Gaps
 for_window [class="^.*"] border pixel 1
 gaps inner 10
 gaps outer 0
-#border_radius 5
+smart_gaps on
 
-# Only enable gaps on a workspace when there is at least one container
-#smart_gaps on
+# Assign Windows
+assign [class="google-chrome"] $ws2
+assign [class="Alacritty"] $ws3
+assign [class="spotify"] $ws4
+assign [class="telegram-desktop"] $ws5
 
-# rounded corners
+# Move workspace when monitor detected
+workspace $ws1 output eDP-1
+workspace $ws2 output HDMI-1
+workspace $ws3 output HDMI-1
+workspace $ws4 output HDMI-1
+workspace $ws5 output HDMI-1
 
 # Feh Background
-exec_always --no-startup-id feh --bg-scale $HOME/Downloads/arch-linux-hd.jpg
+#exec_always --no-startup-id feh --bg-scale $HOME/Downloads/arch-linux-hd.jpg
