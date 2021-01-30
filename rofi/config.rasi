@@ -1,3 +1,6 @@
 configuration {
 	theme: "/usr/share/rofi/themes/Arc-Dark.rasi";
+	lines: 10;
+	font: "Consolas NF 10";
+	terminal: "alacritty";
 }
