@@ -70,7 +70,7 @@ window:
 font:
   normal:
     family: Consolas NF
-    style: Book
+    style: Regular
   bold:
     family: Consolas NF
     style: Bold

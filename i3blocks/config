@@ -11,8 +11,8 @@ separator=true
 separator_block_width=15
 
 [NETWORK]
-label=直
-command=ip a | grep -oe '[0-9\.]\+/24' | awk -F '/' '{ print $1 }'
+#command=ip addr show dev wlp0s20f3 | grep -oe '[0-9\.]\+/24' | awk -F '/' '{ print $1 }'
+command=echo "$(bash ~/.config/i3blocks/network-state.sh)"
 interval=5
 
 [VOLUME]
@@ -23,8 +23,15 @@ signal=1
 
 [MEM]
 label=
-command=free -h | awk '/Mem:/ { printf("%5s/%s \n", $3, $2) }'
-interval=1
+#command=free -h | awk '/Mem:/ { printf("%5s/%s \n", $3, $2) }'
+command=free -h | awk '/Mem:/ { printf("%5s \n", $3) }'
+interval=5
+color=#ffffff
+
+[CPU]
+label=
+command=mpstat | awk '$3 ~ /CPU/ { for(i=1;i<=NF;i++) { if ($i ~ /%idle/) field=i } } $3 ~ /all/ { print 100 - $field }'
+interval=5
 color=#ffffff
 
 [DISK]
@@ -37,25 +44,22 @@ color=#ffffff
 command=echo "$(bash ~/.config/i3blocks/battery-state.sh)"
 interval=2
 
-[TIME]
+[DATE]
 label=
-command=date '+%a %d %b %H:%M'
-interval=1
+command=date '+%a, %d %b %Y'
+interval=3600
 color=#ffffff
+
+[TIME]
+label=
+command=date '+%H:%M'
+interval=5
+color=#ffffff
+
 
 [PERSON]
 label=
 color=#ffffff
 command=echo "Lazuardi N Putra"
 interval=once
-
-[click]
-full_text=ﰇ
-command=reboot
-color=#FFFFFF
-
-[click]
-full_text=
-command=poweroff
-color=#FFFFFF
 
