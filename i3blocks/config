@@ -34,12 +34,6 @@ command=mpstat | awk '$3 ~ /CPU/ { for(i=1;i<=NF;i++) { if ($i ~ /%idle/) field=
 interval=5
 color=#ffffff
 
-[DISK]
-label=
-command=df -h / | awk '/\//{ printf("%4s \n", $4) }' | tr -d ' '
-interval=2
-color=#ffffff
-
 [BATTERY]
 command=echo "$(bash ~/.config/i3blocks/battery-state.sh)"
 interval=2
