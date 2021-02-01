@@ -240,7 +240,7 @@ assign [class="telegram-desktop"] $ws5
 #workspace $ws5 output HDMI-1
 
 # Feh Background
-exec_always --no-startup-id feh --bg-scale $HOME/Pictures/wallpaper-laz.png
+exec_always --no-startup-id feh --bg-scale $HOME/.wallpaper.png
 
 # Tint2
  #exec_always --no-startup-id tint2

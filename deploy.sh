@@ -28,4 +28,4 @@ ln -s $(pwd)/i3blocks "$HOME/.config/i3blocks"
 ln -s $(pwd)/alacritty "$HOME/.config/alacritty"
 ln -s $(pwd)/rofi "$HOME/.config/rofi"
 ln -s $(pwd)/libinput-gestures/libinput-gestures.conf "$HOME/.config/libinput-gestures.conf"
-
+ln -s $(pwd)/wallpaper.png "$HOME/.wallpaper.png"
