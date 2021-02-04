@@ -90,7 +90,7 @@ border_bottom=2
 
 [cpu]
 label=
-command=uptime | awk '{ print $8 }' | tr -d ',' | sed -e 's/$/ /'
+command=uptime | awk '{ print $9 }' | tr -d ',' | sed -e 's/$/ /'
 interval=2
 color=#282c34
 background=#88c0d0

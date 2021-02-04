@@ -11,6 +11,7 @@ alias sed="sed"
 alias v="nvim"
 alias burpsuite="java -noverify -javaagent:"/Users/nakama/Downloads/BurpSuitePro/burp-loader-x-Ai.jar" -Xmx2048m -jar "/Users/nakama/Downloads/BurpSuitePro/burpsuite_pro_v2020.9.2.jar""
 alias ls="$(which ls_extended)"
+alias cat="$(which bat)"
 
 # Run python3 on every filename with .py extension
 alias -s py="python3"
