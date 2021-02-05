@@ -411,6 +411,7 @@ type = custom/script
 exec = echo "玲"
 format = <label>
 click-left = playerctl previous spotify
+format-foreground = ${colors.od-yellow}
 
 [module/spotify-play-pause]
 type = custom/ipc
@@ -418,12 +419,15 @@ hook-0 = echo ""
 hook-1 = echo ""
 initial = 1
 click-left = playerctl play-pause spotify
+format = <output>
+format-foreground = ${colors.od-yellow}
 
 [module/spotify-next]
 type = custom/script
 exec = echo "怜"
 format = <label>
 click-left = playerctl next spotify
+format-foreground = ${colors.od-yellow}
 
 [settings]
 screenchange-reload = true
