@@ -223,9 +223,9 @@ bindsym $mod+shift+x exec betterlockscreen -l dim
 
 # i3 Gaps
 for_window [class="^.*"] border pixel 1
-gaps inner 15
+gaps inner 10
 gaps outer 0
-#smart_gaps on
+smart_gaps on
 
 # Assign Windows
 assign [instance="^(?i)google-chrome" class="^(?i)google-chrome"] $ws2
