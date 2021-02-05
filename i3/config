@@ -221,11 +221,18 @@ bindsym $mod+shift+x exec betterlockscreen -l dim
 #    }
 #}
 
+# class                 border  backgr. text    indicator child_border
+#client.focused          #61AFEF #61AFEF #ffffff #61AFEF   #285577
+#client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
+#client.unfocused        #333333 #222222 #888888 #292d2e   #222222
+#client.urgent           #2f343a #900000 #ffffff #900000   #900000
+#client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+
 # i3 Gaps
 for_window [class="^.*"] border pixel 1
-gaps inner 10
-gaps outer 0
-smart_gaps on
+gaps inner 15
+gaps outer 10
+#smart_gaps on
 
 # Assign Windows
 assign [instance="^(?i)google-chrome" class="^(?i)google-chrome"] $ws2
