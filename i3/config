@@ -122,11 +122,12 @@ bindsym Mod1+minus scratchpad show
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "1"
-set $ws2 "2"
-set $ws3 "3"
-set $ws4 "4"
-set $ws5 "5"
+
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
 set $ws6 "6"
 set $ws7 "7"
 set $ws8 "8"
@@ -204,33 +205,33 @@ bindsym $mod+shift+x exec betterlockscreen -l dim
 #	position top
 #	status_command i3blocks -c ~/.config/i3blocks/config
 #}
-bar {
-	position top
-	tray_output primary
-	strip_workspace_numbers yes
-    status_command i3blocks -c ~/.config/i3blocks/config
-	colors {
-		separator 			#282c34
-		background 			#282c34
-		statusline 			#dddddd
-		focused_workspace 	#88c0d0 #88c0d0 #282c34 #282c34
-		active_workspace 	#333333 #33333 #8fbcbb #8fbcbb
-		inactive_workspace 	#3b4252 #3b4252 #d8dee9 #d8dee9
-		urgent_workspace 	#2f343a #900000 #eceff4 #eceff4
-	}
-}
+#bar {
+#    position top
+#    tray_output primary
+#    strip_workspace_numbers yes
+#    status_command i3blocks -c ~/.config/i3blocks/config
+#    colors {
+#        separator 			#282c34
+#        background 			#282c34
+#        statusline 			#dddddd
+#        focused_workspace 	#88c0d0 #88c0d0 #282c34 #282c34
+#        active_workspace 	#333333 #33333 #8fbcbb #8fbcbb
+#        inactive_workspace 	#3b4252 #3b4252 #d8dee9 #d8dee9
+#        urgent_workspace 	#2f343a #900000 #eceff4 #eceff4
+#    }
+#}
 
 # i3 Gaps
 for_window [class="^.*"] border pixel 1
-gaps inner 10
+gaps inner 15
 gaps outer 0
-smart_gaps on
+#smart_gaps on
 
 # Assign Windows
 assign [instance="^(?i)google-chrome" class="^(?i)google-chrome"] $ws2
 assign [class="Alacritty"] $ws3
-assign [class="^(?i)Spotify" instance="^(?i)spotify"] $ws4
-assign [class="telegram-desktop"] $ws5
+for_window [class="Spotify"] move scratchpad
+assign [class="TelegramDesktop"] $ws5
 
 # Move workspace when monitor detected
 #workspace $ws1 output eDP-1
@@ -242,5 +243,11 @@ assign [class="telegram-desktop"] $ws5
 # Feh Background
 exec_always --no-startup-id feh --bg-scale $HOME/.wallpaper.png
 
-# Tint2
- #exec_always --no-startup-id tint2
+# Picom
+exec_always --no-startup-id picom
+
+# Polybar
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+
+# Libinput gesture
+exec_always --no-startup-id libinput-gestures-setup start
