@@ -56,7 +56,7 @@ bindsym Mod1+Shift+q kill
 
 # start dmenu (a program launcher)
 #bindsym Mod1+space exec --no-startup-id dmenu_run -fn "Consolas NF-10"
-bindsym Mod1+space exec --no-startup-id "rofi -combi-modi run,ssh,window -show combi"
+bindsym Mod1+space exec --no-startup-id "rofi -modi drun,ssh -show drun"
 # A more modern dmenu replacement is rofi:
 # bindsym Mod1+d exec rofi -modi drun,run -show drun
 # There also is i3-dmenu-desktop which only displays applications shipping a
@@ -221,12 +221,20 @@ bindsym $mod+shift+x exec betterlockscreen -l dim
 #    }
 #}
 
-# class                 border  backgr. text    indicator child_border
-#client.focused          #61AFEF #61AFEF #ffffff #61AFEF   #285577
-#client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
-#client.unfocused        #333333 #222222 #888888 #292d2e   #222222
-#client.urgent           #2f343a #900000 #ffffff #900000   #900000
-#client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+set $black "#282C34"
+set $red "#E06C75"
+set $green "#98C379"
+set $yellow "#E5C07B"
+set $blue "#61AFEF"
+set $purple "#C678DD"
+set $grey "#ABB2BF"
+
+# class						border		backgr.		text		indicator		child_border
+client.focused				$blue 		$blue 		$black		$blue 			$blue
+client.focused_inactive		$black 		$black		$grey		$black			$black
+client.unfocused			$black 		$black		$grey 		$black			$black
+client.urgent				$red 		$red 		$black		$red 			$red
+client.placeholder			$purple 	$purple 	$black		$purple 		$purple
 
 # i3 Gaps
 for_window [class="^.*"] border pixel 1
@@ -239,6 +247,7 @@ assign [instance="^(?i)google-chrome" class="^(?i)google-chrome"] $ws2
 assign [class="Alacritty"] $ws3
 for_window [class="Spotify"] move scratchpad
 assign [class="TelegramDesktop"] $ws5
+assign [class="Thunar"] $ws6
 
 # Move workspace when monitor detected
 #workspace $ws1 output eDP-1

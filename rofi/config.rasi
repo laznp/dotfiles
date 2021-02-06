@@ -1,6 +1,85 @@
 configuration {
-	theme: "/usr/share/rofi/themes/Arc-Dark.rasi";
-	lines: 10;
-	font: "Consolas NF 10";
-	terminal: "alacritty";
+  lines: 10;
+  font: "FuraCode Nerd Font 10";
+  terminal: "alacritty";
+  display-drun: "";
+  display-ssh: "";
+}
+
+* {
+  black:      #282C34;
+  red:        #E06C75;
+  green:      #98C379;
+  yellow:     #E5C07B;
+  blue:       #61AFEF;
+  purple:     #C678DD;
+  cyan:       #56B6C2;
+
+  spacing: 0;
+  background-color: transparent;
+  text-color: @text;
+}
+
+window {
+  transparency: "real";
+  fullscreen: true;
+  background-color: #282C34DD;
+}
+
+mainbox {
+  padding: 30% 30%;
+}
+
+inputbar {
+  margin: 0px 0px 20px 0px;
+  children: [prompt, entry];
+}
+
+prompt {
+  text-color: @blue;
+}
+
+entry {
+  margin: 0px 10px;
+  text-color: @purple;
+}
+
+listview {
+  spacing: 5px;
+  dynamic: true;
+  scrollbar: false;
+}
+
+element {
+  padding: 5px;
+  text-color: @green;
+  highlight: bold #98C379; /* green */
+  border-radius: 2px;
+}
+
+element selected {
+  background-color: @green;
+  text-color: @black;
+}
+
+element urgent, element selected urgent {
+  text-color: @red;
+}
+
+element active, element selected active {
+  text-color: @purple;
+}
+
+message {
+  padding: 5px;
+  border-radius: 3px;
+  background-color: @yellow;
+  border: 1px;
+  border-color: @cyan;
+}
+
+button selected {
+  padding: 5px;
+  border-radius: 3px;
+  background-color: @yellow;
 }

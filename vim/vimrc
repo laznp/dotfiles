@@ -172,6 +172,8 @@ au BufNewFile,BufRead *.py set autoindent tabstop=4 softtabstop=4 shiftwidth=4 e
 au BufNewFile,BufRead *.go set autoindent tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
 au BufNewFile,BufRead *.{yaml,yml} set autoindent tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 au BufNewFile,BufRead *.json set autoindent tabstop=4 softtabstop=4 shiftwidth=4 expandtab
+au BufNewFile,BufRead *.rasi setf css
+au BufNewFile,BufRead *.rasi set autoindent tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 nmap <leader>` :noh<CR>
 set list
 set listchars=tab:•·
