@@ -170,16 +170,16 @@ type = internal/xkeyboard
 blacklist-0 = num lock
 
 format-prefix = " "
-format-prefix-foreground = ${colors.od-blue}
+format-prefix-foreground = ${colors.od-aqua}
 ;format-prefix-underline = ${colors.secondary}
 
 label-layout = %layout%
 ;label-layout-underline = ${colors.secondary}
-label-layout-foreground = ${colors.od-blue}
+label-layout-foreground = ${colors.od-aqua}
 
 label-indicator-padding = 2
 label-indicator-margin = 1
-label-indicator-background = ${colors.od-blue}
+label-indicator-background = ${colors.od-aqua}
 ;label-indicator-underline = ${colors.secondary}
 
 [module/filesystem]
