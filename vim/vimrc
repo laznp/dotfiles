@@ -56,6 +56,7 @@ Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 "Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'kyoz/purify', { 'rtp': 'vim' }
 Plug 'andrewstuart/vim-kubernetes'
+Plug 'mboughaba/i3config.vim'
 call plug#end()
 
 " NERDCommenter
@@ -174,6 +175,14 @@ au BufNewFile,BufRead *.{yaml,yml} set autoindent tabstop=2 softtabstop=2 shiftw
 au BufNewFile,BufRead *.json set autoindent tabstop=4 softtabstop=4 shiftwidth=4 expandtab
 au BufNewFile,BufRead *.rasi setf css
 au BufNewFile,BufRead *.rasi set autoindent tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+
+aug i3config_ft_detection
+  au!
+  au BufNewFile,BufRead ~/.config/i3/config set filetype=i3config
+  au BufNewFile,BufRead ~/Projects/dotfiles/i3/config set filetype=i3config
+  au BufNewFile,BufRead i3/config set filetype=i3config
+aug end
+
 nmap <leader>` :noh<CR>
 set list
 set listchars=tab:•·
