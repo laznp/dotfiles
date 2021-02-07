@@ -53,6 +53,11 @@ border-color = #00000000
 modules-left = i3 spotify spotify-prev spotify-play-pause spotify-next
 modules-center = xwindow
 modules-right = vpn filesystem pulseaudio xkeyboard battery memory cpu wlan date powermenu
+font-0 = Trebuchet MS:fontformat=truetype:size=10:antialias=true;0
+font-1 = Iosevka:pixelsize=10;1
+font-2 = Font Awesome 5 Free:pixelsize=10;1
+font-3 = Font Awesome 5 Brands:pixelsize=10;1
+font-4 = Font Awesome 5 Solid:pixelsize=10;1
 
 [bar/eDP-1]
 enable-ipc = true
@@ -79,11 +84,11 @@ padding-right = ${vars.padding-right}
 module-margin-left = ${vars.module-margin-left}
 module-margin-right = ${vars.module-margin-right}
 
-font-0 = Trebuchet MS:fontformat=truetype:size=10:antialias=true;0
-font-1 = Iosevka:pixelsize=10;1
-font-2 = Font Awesome 5 Free:pixelsize=10;1
-font-3 = Font Awesome 5 Brands:pixelsize=10;1
-font-4 = Font Awesome 5 Solid:pixelsize=10;1
+font-0 = ${vars.font-0}
+font-1 = ${vars.font-1}
+font-2 = ${vars.font-2}
+font-3 = ${vars.font-3}
+font-4 = ${vars.font-4}
 
 modules-left = ${vars.modules-left}
 modules-center = ${vars.modules-center}
@@ -132,11 +137,11 @@ padding-right = ${vars.padding-right}
 module-margin-left = ${vars.module-margin-left}
 module-margin-right = ${vars.module-margin-right}
 
-font-0 = Trebuchet MS:fontformat=truetype:size=10:antialias=true;0
-font-1 = Iosevka:pixelsize=10;1
-font-2 = Font Awesome 5 Free:pixelsize=10;1
-font-3 = Font Awesome 5 Brands:pixelsize=10;1
-font-4 = Font Awesome 5 Solid:pixelsize=10;1
+font-0 = ${vars.font-0}
+font-1 = ${vars.font-1}
+font-2 = ${vars.font-2}
+font-3 = ${vars.font-3}
+font-4 = ${vars.font-4}
 
 modules-left = ${vars.modules-left}
 modules-center = ${vars.modules-center}
@@ -163,7 +168,7 @@ cursor-scroll = ns-resize
 [module/xwindow]
 type = internal/xwindow
 label = %title:0:30:...%
-label-foreground = ${colors.od-purple}
+label-foreground = ${colors.od-blue}
 
 [module/xkeyboard]
 type = internal/xkeyboard
