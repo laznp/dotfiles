@@ -20,6 +20,8 @@ set foldmethod=indent
 set foldlevelstart=99
 set termguicolors
 set formatoptions-=cro
+set cursorline
+set cursorcolumn
 highlight Comment cterm=italic gui=italic
 
 " Download Vim Plug if not exist
@@ -167,6 +169,7 @@ endfunction
 "Custom
 command! Reload execute "source ~/.config/nvim/init.vim"
 set background=dark
+set splitbelow splitright
 colorscheme onedark
 let g:onedark_terminal_italics=1
 au BufNewFile,BufRead *.py set autoindent tabstop=4 softtabstop=4 shiftwidth=4 expandtab
@@ -192,3 +195,9 @@ nnoremap <F5> :!go run %<CR>
 nnoremap <F6> za
 nnoremap <F7> :call ToggleSyntastic()<CR>
 nnoremap <F8> :TagbarToggle<CR>
+nmap <leader>v :vsp<CR>
+nmap <leader>h :sp<CR>
+nmap <C-h> <C-w>h
+nmap <C-j> <C-w>j
+nmap <C-k> <C-w>k
+nmap <C-l> <C-w>l
