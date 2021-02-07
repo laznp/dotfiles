@@ -74,6 +74,8 @@ let g:NERDTreeMinimalUI=1
 nmap <F2> :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
 let g:NERDTreeIgnore=['__pycache__','.git','.github','.DS_Store']
+let g:NERDTreeDirArrowExpandable = ''
+let g:NERDTreeDirArrowCollapsible = ''
 
 " DevIcons
 let g:webdevicons_enable_nerdtree = 1
@@ -169,7 +171,8 @@ endfunction
 "Custom
 command! Reload execute "source ~/.config/nvim/init.vim"
 set background=dark
-set splitbelow splitright
+set splitbelow
+set splitright
 colorscheme onedark
 let g:onedark_terminal_italics=1
 au BufNewFile,BufRead *.py set autoindent tabstop=4 softtabstop=4 shiftwidth=4 expandtab
