@@ -4,6 +4,7 @@ configuration {
   terminal: "alacritty";
   display-drun: "";
   display-ssh: "";
+  display-calc: "";
 }
 
 * {
@@ -70,16 +71,18 @@ element active, element selected active {
   text-color: @purple;
 }
 
-message {
-  padding: 5px;
-  border-radius: 3px;
-  background-color: @yellow;
-  border: 1px;
-  border-color: @cyan;
+textbox {
+  text-color: @green;
 }
 
-button selected {
-  padding: 5px;
-  border-radius: 3px;
-  background-color: @yellow;
-}
+/*message {*/
+/*  padding: 5px;*/
+/*  border-radius: 3px;*/
+/*  border: 1px;*/
+/*}*/
+
+/*button selected {*/
+/*  padding: 5px;*/
+/*  border-radius: 3px;*/
+/*  background-color: @yellow;*/
+/*}*/

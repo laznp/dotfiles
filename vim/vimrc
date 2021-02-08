@@ -8,6 +8,7 @@ set nowrap
 set noswapfile
 set incsearch
 set hlsearch
+
 filetype plugin indent on
 set fileformat=unix
 set encoding=utf-8
@@ -37,7 +38,6 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'jiangmiao/auto-pairs'
 Plug 'scrooloose/nerdtree'
 Plug 'preservim/nerdcommenter'
-"Plug 'sirver/ultisnips'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-fugitive'
@@ -85,12 +85,6 @@ let g:webdevicons_conceal_nerdtree_brackets = 1
 nmap <leader>1 :bp<CR>
 nmap <leader>2 :bn<CR>
 nmap <leader>w :bd<CR>
-
-" UltiSnips
-let g:UltiSnipsSnippetDirectory=[$HOME.'/.config/nvim/snippets']
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 " Delete Trailing Space
 autocmd BufWritePre * :%s/\s\+$//e
@@ -204,3 +198,8 @@ nmap <C-h> <C-w>h
 nmap <C-j> <C-w>j
 nmap <C-k> <C-w>k
 nmap <C-l> <C-w>l
+
+" Template
+nnoremap \py :-1read $HOME/.config/nvim/template/py<CR>2jf:a
+nnoremap \go :-1read $HOME/.config/nvim/template/go<CR>7ja
+nnoremap \html :-1read $HOME/.config/nvim/template/html<CR>3jf>a

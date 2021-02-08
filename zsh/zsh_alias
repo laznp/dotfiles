@@ -1,16 +1,14 @@
 # Alias Infinitec SSH
 alias infi-ubuntu="ssh -i ~/Downloads/InfiCert/cp-station-dev-key.pem -l ubuntu"
-alias infi-ec2="ssh -i ~/Downloads/cp-station-dev-key.pem -l ec2-user"
+alias infi-ec2="ssh -i ~/Downloads/InfiCert/cp-station-dev-key.pem -l ec2-user"
 
 # Alias Command
 alias tg="terragrunt"
 alias tf="terraform"
 alias py="python2"
 alias py3="python3"
-alias sed="sed"
 alias v="nvim"
 alias vim="nvim"
-alias burpsuite="java -noverify -javaagent:"/Users/nakama/Downloads/BurpSuitePro/burp-loader-x-Ai.jar" -Xmx2048m -jar "/Users/nakama/Downloads/BurpSuitePro/burpsuite_pro_v2020.9.2.jar""
 alias ls="$(which ls_extended)"
 alias cat="$(which bat)"
 
@@ -20,6 +18,9 @@ alias -s py="python3"
 # Shorthand for edit rc files
 alias vimrc="nvim ~/.config/nvim/init.vim"
 alias zshrc="nvim ~/.zshrc"
+alias zsh_alias="nvim ~/.zsh_alias"
+alias i3rc="nvim ~/.config/i3/config"
+alias polybarrc="nvim ~/.config/polybar/config"
 
 # Alias source zshrc
 alias reload="source $HOME/.zshrc"
@@ -77,3 +78,4 @@ alias parallel="sudo -b '/Applications/Parallels Desktop.app/Contents/MacOS/prl_
 alias pacman="sudo pacman"
 alias reboot="sudo reboot"
 alias podman="sudo podman"
+alias dual_mon="xrandr --auto --output HDMI-1 --mode 1920x1080 --right-of eDP-1"
