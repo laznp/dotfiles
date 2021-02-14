@@ -8,7 +8,6 @@ set nowrap
 set noswapfile
 set incsearch
 set hlsearch
-
 filetype plugin indent on
 set fileformat=unix
 set encoding=utf-8
@@ -24,6 +23,10 @@ set formatoptions-=cro
 set cursorline
 set cursorcolumn
 highlight Comment cterm=italic gui=italic
+inoremap <C-H> <Left>
+inoremap <C-J> <Down>
+inoremap <C-K> <Up>
+inoremap <C-L> <Right>
 
 " Download Vim Plug if not exist
 let need_to_install_plugins = 0
@@ -35,27 +38,25 @@ endif
 
 " Vim Plug
 call plug#begin('~/.config/nvim/plugged')
-Plug 'jiangmiao/auto-pairs'
+"Plug 'jiangmiao/auto-pairs'
 Plug 'scrooloose/nerdtree'
 Plug 'preservim/nerdcommenter'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
-Plug 'dikiaap/minimalist'
-Plug 'ctrlpvim/ctrlp.vim'
+"Plug 'dikiaap/minimalist'
 Plug 'sheerun/vim-polyglot'
 Plug 'preservim/tagbar'
-Plug 'wincent/terminus'
+"Plug 'wincent/terminus'
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
 Plug 'joshdick/onedark.vim'
 "Plug 'TaDaa/vimade'
 Plug 'ryanoasis/vim-devicons'
 Plug 'vim-syntastic/syntastic'
-Plug 'marciomazza/vim-brogrammer-theme'
-Plug 'vim-pandoc/vim-pandoc'
+"Plug 'marciomazza/vim-brogrammer-theme'
+"Plug 'vim-pandoc/vim-pandoc'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-"Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'kyoz/purify', { 'rtp': 'vim' }
 Plug 'andrewstuart/vim-kubernetes'
 Plug 'mboughaba/i3config.vim'
@@ -64,14 +65,14 @@ call plug#end()
 " NERDCommenter
 nmap <C-_> <Plug>NERDCommenterToggle
 vmap <C-_> <Plug>NERDCommenterToggle<CR>gv
-nmap <C-/> <Plug>NERDCommenterToggle
-vmap <C-/> <Plug>NERDCommenterToggle<CR>gv
+nnoremap <C-/> <Plug>NERDCommenterToggle
+vnoremap <C-/> <Plug>NERDCommenterToggle<CR>gv
 let g:NERDDefaultAlign = 'left'
 
 " NERDTree
 let NERDTreeQuitOnOpen=1
 let g:NERDTreeMinimalUI=1
-nmap <F2> :NERDTreeToggle<CR>
+nnoremap <F2> :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
 let g:NERDTreeIgnore=['__pycache__','.git','.github','.DS_Store']
 let g:NERDTreeDirArrowExpandable = ''
@@ -82,9 +83,9 @@ let g:webdevicons_enable_nerdtree = 1
 let g:webdevicons_conceal_nerdtree_brackets = 1
 
 " Tabs
-nmap <leader>1 :bp<CR>
-nmap <leader>2 :bn<CR>
-nmap <leader>w :bd<CR>
+nnoremap <leader>1 :bp<CR>
+nnoremap <leader>2 :bn<CR>
+nnoremap <leader>w :bd<CR>
 
 " Delete Trailing Space
 autocmd BufWritePre * :%s/\s\+$//e
@@ -129,13 +130,6 @@ let g:airline_mode_map = {
       \ 'v'      : 'V',
       \ 'V'      : 'V',
       \ }
-
-" CtrlP
-if executable('rg')
-let g:ctrlp_user_command = 'rg %s --files --hidden --color=never --glob ""'
-endif
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
-let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 
 " Syntastic
 set statusline+=%#warningmsg#
@@ -183,7 +177,7 @@ aug i3config_ft_detection
   au BufNewFile,BufRead i3/config set filetype=i3config
 aug end
 
-nmap <leader>` :noh<CR>
+nnoremap <leader>` :noh<CR>
 set list
 set listchars=tab:•·
 
@@ -192,12 +186,16 @@ nnoremap <F5> :!go run %<CR>
 nnoremap <F6> za
 nnoremap <F7> :call ToggleSyntastic()<CR>
 nnoremap <F8> :TagbarToggle<CR>
-nmap <leader>v :vsp<CR>
-nmap <leader>h :sp<CR>
-nmap <C-h> <C-w>h
-nmap <C-j> <C-w>j
-nmap <C-k> <C-w>k
-nmap <C-l> <C-w>l
+nnoremap <leader>v :vsp<CR>
+nnoremap <leader>h :sp<CR>
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+inoremap <C-h> <Left>
+inoremap <C-j> <Down>
+inoremap <C-k> <Up>
+inoremap <C-l> <Right>
 
 " Template
 nnoremap \py :-1read $HOME/.config/nvim/template/py<CR>2jf:a
