@@ -194,6 +194,7 @@ inoremap [ []<Left>
 inoremap ' ''<Left>
 inoremap " ""<Left>
 inoremap < <><Left>
+inoremap <C-Space> <C-n>
 
 " Template
 nnoremap \py :-1read $HOME/.config/nvim/template/py<CR>2jf:a

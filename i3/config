@@ -194,8 +194,6 @@ mode "resize" {
 bindsym Mod1+r mode "resize"
 bindsym Ctrl+Right workspace next
 bindsym Ctrl+Left workspace prev
-bindsym Ctrl+l workspace next
-bindsym Ctrl+h workspace prev
 bindsym --release Print exec flameshot gui
 
 # Lock Screen
