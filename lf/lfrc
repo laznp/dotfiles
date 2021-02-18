@@ -1,0 +1,5 @@
+set preview
+set hidden true
+set drawbox true
+set icons true
+set ignorecase true
