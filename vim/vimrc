@@ -175,6 +175,7 @@ command! Vimrc execute ":e ~/.config/nvim/init.vim"
 
 " Custom Keybinding
 nnoremap <leader>` :noh<CR>
+nnoremap <F2> :terminal<CR>a
 nnoremap <F5> :!go run %<CR>
 nnoremap <F6> za
 nnoremap <F7> :call ToggleSyntastic()<CR>
