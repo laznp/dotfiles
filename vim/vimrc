@@ -14,7 +14,6 @@ set encoding=utf-8
 set fileencoding=utf-8
 let mapleader = ' '
 set mouse=a
-let g:polyglot_disabled = ['autoindent']
 set clipboard+=unnamedplus
 set foldmethod=indent
 set foldlevelstart=99
@@ -25,6 +24,11 @@ set cursorcolumn
 set complete+=kspell
 set completeopt=menuone,longest
 set shortmess+=c
+set list
+set listchars=tab:•·
+set background=dark
+set splitbelow
+set splitright
 highlight Comment cterm=italic gui=italic
 
 " Download Vim Plug if not exist
@@ -55,9 +59,6 @@ Plug 'andrewstuart/vim-kubernetes'
 Plug 'mboughaba/i3config.vim'
 call plug#end()
 
-" AutoComplPop
-inoremap <expr> <CR> pumvisible() ? "<C-y>" : "<CR>"
-
 " NERDCommenter
 nmap <C-_> <Plug>NERDCommenterToggle
 vmap <C-_> <Plug>NERDCommenterToggle<CR>gv
@@ -74,17 +75,12 @@ let g:NERDTreeIgnore=['__pycache__','.git','.github','.DS_Store']
 let g:NERDTreeDirArrowExpandable = ''
 let g:NERDTreeDirArrowCollapsible = ''
 
+" Polyglot
+let g:polyglot_disabled = ['autoindent']
+
 " DevIcons
 let g:webdevicons_enable_nerdtree = 1
 let g:webdevicons_conceal_nerdtree_brackets = 1
-
-" Tabs
-nnoremap <leader>1 :bp<CR>
-nnoremap <leader>2 :bn<CR>
-nnoremap <leader>w :bd<CR>
-
-" Delete Trailing Space
-autocmd BufWritePre * :%s/\s\+$//e
 
 " Git Gutter
 highlight GitGutterAdd guifg=#009900 ctermfg=Green
@@ -152,57 +148,71 @@ function! ToggleSyntastic()
     SyntasticCheck
 endfunction
 
-"Custom
-command! Reload execute "source ~/.config/nvim/init.vim"
-set background=dark
-set splitbelow
-set splitright
+" Color Scheme
 colorscheme onedark
 let g:onedark_terminal_italics=1
 
-" Set Indent on File Read
+" Set Indent on File Read and Delete Trailing Space
 au BufNewFile,BufRead *.py set autoindent tabstop=4 softtabstop=4 shiftwidth=4 expandtab
 au BufNewFile,BufRead *.go set autoindent tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
 au BufNewFile,BufRead *.{yaml,yml} set autoindent tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 au BufNewFile,BufRead *.json set autoindent tabstop=4 softtabstop=4 shiftwidth=4 expandtab
 au BufNewFile,BufRead *.rasi setf css
 au BufNewFile,BufRead *.rasi set autoindent tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+au BufWritePre,BufRead * :%s/\s\+$//e
 
+" Set color on i3 Configuration
 aug i3config_ft_detection
-  au!
-  au BufNewFile,BufRead ~/.config/i3/config set filetype=i3config
-  au BufNewFile,BufRead ~/Projects/dotfiles/i3/config set filetype=i3config
-  au BufNewFile,BufRead i3/config set filetype=i3config
+	au!
+	au BufNewFile,BufRead ~/.config/i3/config set filetype=i3config
+	au BufNewFile,BufRead ~/Projects/dotfiles/i3/config set filetype=i3config
+	au BufNewFile,BufRead i3/config set filetype=i3config
 aug end
 
-nnoremap <leader>` :noh<CR>
-set list
-set listchars=tab:•·
+"Custom Command
+command! Reload execute "source ~/.config/nvim/init.vim"
 
-" Keybinding Remap
+" Custom Keybinding
+nnoremap <leader>` :noh<CR>
 nnoremap <F5> :!go run %<CR>
 nnoremap <F6> za
 nnoremap <F7> :call ToggleSyntastic()<CR>
 nnoremap <F8> :TagbarToggle<CR>
+
+" Split Keybinding
 nnoremap <leader>v :vsp<CR>
 nnoremap <leader>h :sp<CR>
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+
+" Navigation on Insert Mode Keybinding
 inoremap <C-h> <Left>
 inoremap <C-j> <Down>
 inoremap <C-k> <Up>
 inoremap <C-l> <Right>
+
+" Auto Pairs
 inoremap ( ()<Left>
 inoremap { {}<Left>
 inoremap [ []<Left>
 inoremap ' ''<Left>
 inoremap " ""<Left>
 inoremap < <><Left>
-inoremap <C-Space> <C-n>
 
-" Template
+" Tabs Keybinding
+nnoremap <leader>1 :bp<CR>
+nnoremap <leader>2 :bn<CR>
+nnoremap <leader>w :bd<CR>
+
+" Autocomplete Keybinding
+inoremap <C-Space> <C-n>
+inoremap <expr> <CR> pumvisible() ? "<C-y>" : "<CR>"
+inoremap <expr> <TAB> pumvisible() ? "<C-n>" : "<TAB>"
+inoremap <expr> <S-TAB> pumvisible() ? "<C-p>" : "<TAB>"
+
+" Template Keybinding
 nnoremap \py :-1read $HOME/.config/nvim/template/py<CR>2jf:a
 nnoremap \go :-1read $HOME/.config/nvim/template/go<CR>7ja
 nnoremap \html :-1read $HOME/.config/nvim/template/html<CR>3jf>a
