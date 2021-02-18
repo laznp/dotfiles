@@ -2,6 +2,7 @@
 let g:polyglot_disabled = ['autoindent']
 
 syntax enable
+set number
 set relativenumber
 set tabstop=4 shiftwidth=4
 set backspace=indent,eol,start
@@ -175,7 +176,7 @@ command! Vimrc execute ":e ~/.config/nvim/init.vim"
 
 " Custom Keybinding
 nnoremap <leader>` :noh<CR>
-nnoremap <F2> :terminal<CR>a
+nnoremap <F3> :terminal<CR>a
 nnoremap <F5> :!go run %<CR>
 nnoremap <F6> za
 nnoremap <F7> :call ToggleSyntastic()<CR>
