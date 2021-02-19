@@ -70,7 +70,7 @@ window:
 font:
   normal:
     family: Consolas NF
-    style: Regular
+    style: Bold
   bold:
     family: Consolas NF
     style: Bold
@@ -82,7 +82,7 @@ font:
     style: Book
 
   # Point size
-  size: 9.0
+  size: 8.0
 
   # Offset is the extra space around each character. `offset.y` can be thought
   # of as modifying the line spacing, and `offset.x` as modifying the letter
