@@ -1,10 +1,10 @@
 kind: pipeline
-type: docker
-name: testing
+name: test build image
 
 steps:
-  - name: greeting
-    image: alpine
-    commands:
-      - echo "hahha"
-      - apk add nginx
+  - name: build image
+    image: plugins/docker
+    settings:
+      repo: laznp/dotfiles
+      tags: latest
+
