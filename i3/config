@@ -194,7 +194,8 @@ mode "resize" {
 bindsym Mod1+r mode "resize"
 bindsym Ctrl+Right workspace next
 bindsym Ctrl+Left workspace prev
-bindsym --release Print exec flameshot gui
+#bindsym --release Print exec flameshot gui
+bindsym Print exec --no-startup-id xfce4-screenshooter -r
 
 # Lock Screen
 bindsym $mod+shift+x exec betterlockscreen -l dim
@@ -250,3 +251,6 @@ exec_always --no-startup-id libinput-gestures-setup start
 
 # TLP
 exec_always --no-startup-id sudo tlp start
+
+# XFCE4 Clipboard Manager
+exec_always --no-startup-id xfce4-clipman
