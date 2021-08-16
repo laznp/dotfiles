@@ -57,6 +57,18 @@ function kube_del(){
 	fi
 }
 
+function tkpssh() {
+	if [ $(echo $1 | grep "172.18" | wc -l) -eq 1 ]; then
+		ssh -i "/home/laznp/.ssh/office-new-stag.pem" -l root $1
+	elif [ $(echo $1 | grep "172.21" | wc -l) -eq 1 ]; then
+		ssh -i "~/.ssh/office-prod.pem" -l root $1
+	elif [ $(echo $1 | grep "192.168" | wc -l) -eq 1 ]; then
+		ssh -i "~/.ssh/office-jenkins.pem" -l root $1
+	else
+		echo "IP Address not recognize"
+	fi
+}
+
 # Alias git command
 alias gad="git add"
 alias gco="git checkout"
@@ -69,12 +81,10 @@ alias gdf="git diff"
 
 # Alias OpenVPN
 alias vpn="sudo openvpn ~/Downloads/laznp.ovpn"
-
-# Alias Parallel Desktop
-alias parallel="sudo -b '/Applications/Parallels Desktop.app/Contents/MacOS/prl_client_app'"
+alias officevpn="cd ~/openvpn; sudo openvpn office.ovpn"
 
 # Alias for Arch Linux
 alias pacman="sudo pacman"
 alias reboot="sudo reboot"
 alias podman="sudo podman"
-alias dual_mon="xrandr --auto --output HDMI-1 --mode 1920x1080 --right-of eDP-1"
+alias dual_mon="xrandr --auto --output HDMI-1 --mode 1920x1080 --left-of eDP-1"
