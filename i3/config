@@ -262,5 +262,8 @@ exec_always --no-startup-id sudo tlp start
 # Xrandr
 exec xrandr --auto --output HDMI-1 --mode 1920x1080 --left-of eDP-1
 
+# Dunst
+exec --no-startup-id dunst -config ~/.config/dunst/dunstrc
+
 # XFCE4 Clipboard Manager
 # exec_always --no-startup-id xfce4-clipman
