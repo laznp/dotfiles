@@ -234,6 +234,7 @@ assign [class="Alacritty"] $ws3
 for_window [class="Spotify"] move scratchpad
 assign [class="TelegramDesktop"] $ws4
 assign [class="Lens"] $ws5
+assign [class="Insomnia"] $ws5
 assign [class="Thunar"] $ws5
 assign [class="Lutris"] $ws6
 
@@ -266,4 +267,4 @@ exec xrandr --auto --output HDMI-1 --mode 1920x1080 --left-of eDP-1
 exec --no-startup-id dunst -config ~/.config/dunst/dunstrc
 
 # XFCE4 Clipboard Manager
-# exec_always --no-startup-id xfce4-clipman
+exec_always --no-startup-id xfce4-clipman
