@@ -69,27 +69,27 @@ window:
 # Font configuration
 font:
   normal:
-    family: Consolas NF
-    style: Bold
+    family: FiraCode Nerd Font
+    style: Medium
   bold:
-    family: Consolas NF
+    family: FiraCode Nerd Font
     style: Bold
   italic:
-    family: Consolas NF
+    family: FiraCode Nerd Font
     style: Italic
   bold_italic:
-    family: Consolas NF
+    family: FiraCode Nerd Font
     style: Book
 
   # Point size
-  size: 8.0
+  size: 9.0
 
   # Offset is the extra space around each character. `offset.y` can be thought
   # of as modifying the line spacing, and `offset.x` as modifying the letter
   # spacing.
   offset:
-    x: 0
-    y: -1
+    x: -1
+    y: 0
   # Glyph offset determines the locations of the glyphs within their cells with
   # the default being at the bottom. Increasing `x` moves the glyph to the
   # right, increasing `y` moves the glyph upward.

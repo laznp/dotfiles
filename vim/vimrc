@@ -61,6 +61,8 @@ Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'kyoz/purify', { 'rtp': 'vim' }
 Plug 'andrewstuart/vim-kubernetes'
 Plug 'mboughaba/i3config.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 call plug#end()
 
 " NERDCommenter
@@ -181,6 +183,7 @@ nnoremap <F5> :!go run %<CR>
 nnoremap <F6> za
 nnoremap <F7> :call ToggleSyntastic()<CR>
 nnoremap <F8> :TagbarToggle<CR>
+nnoremap <C-o> :Files<CR>
 
 " Split Keybinding
 nnoremap <leader>v :vsp<CR>
