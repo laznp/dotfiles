@@ -94,6 +94,10 @@ nmap ( <Plug>(GitGutterPrevHunk)
 let g:gitgutter_enabled = 1
 let g:gitgutter_map_keys = 0
 
+" FZF
+let g:fzf_layout = { 'down': '15%' }
+nnoremap <C-o> :Files<CR>
+
 " Vim Airline
 let g:airline_theme = "onedark"
 let g:airline_powerline_fonts = 1
@@ -183,7 +187,6 @@ nnoremap <F5> :!go run %<CR>
 nnoremap <F6> za
 nnoremap <F7> :call ToggleSyntastic()<CR>
 nnoremap <F8> :TagbarToggle<CR>
-nnoremap <C-o> :Files<CR>
 
 " Split Keybinding
 nnoremap <leader>v :vsp<CR>
