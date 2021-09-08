@@ -10,7 +10,7 @@ if [ ! -d "$NVIM_DIR/template" ]; then ln -s $(pwd)/vim/template $NVIM_DIR/; fi
 
 # ZSH
 if [ ! -f "$HOME/.zsh_alias" ]; then ln -s $(pwd)/zsh/zsh_alias $HOME/.zsh_alias; fi
-if [ "$(grep ".local/bin" ~/.zshrc | wc -l)" == "0" ]; then echo "export PATH=$PATH:~/.local/bin" >> ~/.zshrc; fi
+if [ ! -f "$HOME/.zshenv" ]; then ln -s $(pwd)/zsh/zshenv $HOME/.zshenv; fi
 
 # Utils
 if [ ! -d "$HOME/.local/bin" ]; then mkdir -p $HOME/.local/bin; fi
@@ -18,6 +18,9 @@ ln -s $(pwd)/utils/* "$HOME/.local/bin/"
 
 # ZSH Alias
 if [ "$(grep "zsh_alias" ~/.zshrc | wc -l)" == "0" ]; then echo "source ~/.zsh_alias" >> ~/.zshrc; fi
+
+# ZSH ENV
+if [ "$(grep "zshenv" ~/.zshrc | wc -l)" == "0" ]; then echo "source ~/.zshenv" >> ~/.zshrc; fi
 
 # Automate Config
 if [ ! -d "$HOME/.config" ]; then mkdir -p "$HOME/.config"; fi
@@ -31,3 +34,4 @@ ln -s $(pwd)/polybar "$HOME/.config/polybar"
 ln -s $(pwd)/libinput-gestures/libinput-gestures.conf "$HOME/.config/libinput-gestures.conf"
 ln -s $(pwd)/wallpaper.png "$HOME/.wallpaper.png"
 ln -s $(pwd)/betterlockscreen/betterlockscreenrc "$HOME/.config/betterlockscreenrc"
+ln -s $(pwd)/vivid/ "$HOME/.config/vivid"

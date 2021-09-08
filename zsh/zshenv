@@ -1,0 +1,12 @@
+# Exa Color with Vivid
+export EXA_COLORS="$(vivid generate $HOME/.config/vivid/onedark.yml)"
+
+# Default Editor to Neovim
+export EDITOR=$(which nvim)
+
+# Go Path
+export GOPATH=$HOME/Learning/go
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+
+# Add Path for Additional Utility
+export PATH=$PATH:~/.local/bin
