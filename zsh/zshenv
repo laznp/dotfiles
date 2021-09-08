@@ -10,3 +10,4 @@ export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
 # Add Path for Additional Utility
 export PATH=$PATH:~/.local/bin
+
