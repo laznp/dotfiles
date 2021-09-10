@@ -12,7 +12,7 @@ alias grep="$(which rg)"
 alias htop="$(which bpytop)"
 
 # Run python3 on every filename with .py extension
-alias -s py="python3"
+#alias -s py="python3"
 
 # Shorthand for edit rc files
 alias vimrc="nvim ~/.config/nvim/init.vim"
