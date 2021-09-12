@@ -7,5 +7,5 @@ if [ "$GET_STATE" == "Charging" ];  then
 elif [ "$GET_STATE" == "Full" ]; then
 	echo " Full $GET_PERCENTAGE "
 else
-	echo "  $GET_PERCENTAGE "
+	echo "    $GET_PERCENTAGE "
 fi

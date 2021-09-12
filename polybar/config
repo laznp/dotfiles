@@ -42,17 +42,20 @@ od-grey = #ABB2BF
 height = 30
 radius = 1.0
 width = 100%
-line-size = 2
+line-size = 1
 line-color = #f00
 padding-left = 0
 padding-right = 2
 module-margin-left = 1
 module-margin-right = 1
-border-size = 10
+border-size = 1
 border-color = #00000000
-modules-left = i3 spotify spotify-prev spotify-play-pause spotify-next
-modules-center = xwindow
-modules-right = vpn filesystem pulseaudio xkeyboard battery memory cpu wlan date powermenu
+;modules-left = i3 spotify spotify-prev spotify-play-pause spotify-next
+;modules-center = xwindow
+;modules-right = vpn filesystem pulseaudio xkeyboard battery memory cpu wlan date powermenu
+modules-left = spotify spotify-prev spotify-play-pause spotify-next
+;modules-center = xwindow
+modules-right = powermenu
 font-0 = Trebuchet MS:fontformat=truetype:size=10:antialias=true;0
 font-1 = Iosevka:pixelsize=10;1
 font-2 = Font Awesome 5 Free:pixelsize=10;1
@@ -96,6 +99,7 @@ modules-right = ${vars.modules-right}
 
 tray-position = right
 tray-padding = 2
+bottom = true
 ;tray-background = #0063ff
 
 ;wm-restack = bspwm
@@ -149,6 +153,7 @@ modules-right = ${vars.modules-right}
 
 tray-position = right
 tray-padding = 2
+bottom = true
 ;tray-background = #0063ff
 
 ;wm-restack = bspwm

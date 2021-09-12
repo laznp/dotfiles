@@ -12,7 +12,7 @@ alias grep="$(which rg)"
 alias htop="$(which bpytop)"
 
 # Run python3 on every filename with .py extension
-alias -s py="python3"
+#alias -s py="python3"
 
 # Shorthand for edit rc files
 alias vimrc="nvim ~/.config/nvim/init.vim"
@@ -68,7 +68,6 @@ alias gst="git status"
 alias gdf="git diff"
 
 # Alias for Arch Linux
-alias pacman="sudo pacman -Sy && sudo pacman"
+alias pacman="sudo pacman"
 alias reboot="sudo reboot"
-alias podman="sudo podman"
 alias dual_mon="xrandr --auto --output HDMI-1 --mode 1920x1080 --left-of eDP-1"

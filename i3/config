@@ -51,7 +51,7 @@ set $left h
 set $right l
 
 # use Mouse+Mod1 to drag floating windows to their wanted position
-#floating_modifier Mod1
+floating_modifier $mod
 
 # start a terminal
 #bindsym $mod+Return exec i3-sensible-terminal
@@ -129,16 +129,16 @@ bindsym $mod+plus scratchpad show
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
 
-set $ws1 "1"
-set $ws2 "2"
-set $ws3 "3"
-set $ws4 "4"
-set $ws5 "5"
-set $ws6 "6"
-set $ws7 "7"
-set $ws8 "8"
-set $ws9 "9"
-set $ws10 "10"
+set $ws1 "1  "
+set $ws2 "2  "
+set $ws3 "3  "
+set $ws4 "4  "
+set $ws5 "5  "
+set $ws6 "6  "
+set $ws7 "7  "
+set $ws8 "8  "
+set $ws9 "9  "
+set $ws10 "10 "
 
 # switch to workspace
 bindsym $mod+1 workspace number $ws1
@@ -174,11 +174,6 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -f '10' -m 'You pressed the exit
 # resize window (you can also use the mouse for that)
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
-
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
         bindsym $left       resize shrink width 5 px or 5 ppt
         bindsym $down       resize grow height 5 px or 5 ppt
         bindsym $up         resize shrink height 5 px or 5 ppt
@@ -196,11 +191,23 @@ mode "resize" {
         bindsym $mod+r mode "default"
 }
 
+# Caps Lock Indicator
+set $mode_caps 
+bindsym Caps_Lock mode "$mode_caps"
+bindsym Shift+Caps_Lock mode "$mode_caps"
+bindsym Ctrl+Caps_Lock mode "$mode_caps"
+bindsym $alt+Caps_Lock mode "$mode_caps"
+mode "$mode_caps" {
+        bindsym Caps_Lock mode "default"
+        bindsym Shift+Caps_Lock mode "default"
+        bindsym Ctrl+Caps_Lock mode "default"
+        bindsym $alt+Caps_Lock mode "default"
+}
+
 # Custom Binding
 bindsym $mod+r mode "resize"
 bindsym Ctrl+Right workspace next
 bindsym Ctrl+Left workspace prev
-#bindsym --release Print exec flameshot gui
 bindsym Print exec --no-startup-id xfce4-screenshooter -r
 
 # Lock Screen
@@ -224,8 +231,8 @@ client.placeholder			$purple 	$purple 	$black		$purple 		$purple
 
 # i3 Gaps
 for_window [class="^.*"] border pixel 1
-gaps inner 15
-gaps outer 10
+gaps inner 10
+gaps outer 5
 #smart_gaps on
 
 # Assign Windows
@@ -236,7 +243,6 @@ assign [class="TelegramDesktop"] $ws4
 assign [class="Lens"] $ws5
 assign [class="Insomnia"] $ws5
 assign [class="Thunar"] $ws5
-assign [class="Lutris"] $ws6
 
 # Move workspace when monitor detected
 #workspace $ws1 output eDP-1
@@ -245,11 +251,24 @@ assign [class="Lutris"] $ws6
 #workspace $ws4 output HDMI-1
 #workspace $ws5 output HDMI-1
 
-# Feh Background
-exec_always --no-startup-id feh --bg-scale $HOME/.wallpaper.png
+bar {
+	position top
+	font pango:Trebuchet MS, FiraCode Nerd Font 10
+	workspace_min_width 30
+	strip_workspace_numbers yes
+	status_command i3blocks -c $HOME/.config/i3blocks/config.od
+	colors {
+		background $black
+		statusline $blue
+		separator $grey
+		focused_workspace $blue $blue $black
+		active_workspace $blue $blue $black
+		inactive_workspace $black $black $grey
+		urgent_workspace $red $red $black
+		binding_mode $yellow $yellow $black
+	}
 
-# Picom
-exec_always --no-startup-id picom
+}
 
 # Polybar
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
@@ -267,4 +286,11 @@ exec xrandr --auto --output HDMI-1 --mode 1920x1080 --left-of eDP-1
 exec --no-startup-id dunst -config ~/.config/dunst/dunstrc
 
 # XFCE4 Clipboard Manager
-exec_always --no-startup-id xfce4-clipman
+exec_always --no-startup-id "killall xfce4-clipman || true && xfce4-clipman"
+
+# Feh Background
+exec_always --no-startup-id feh --bg-scale $HOME/.wallpaper.png
+
+# Picom
+exec_always --no-startup-id picom --config $HOME/.config/picom/picom.conf
+
