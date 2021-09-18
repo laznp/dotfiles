@@ -57,6 +57,22 @@ function kube_del(){
 	fi
 }
 
+function smf(){
+	IP_ADDR="103.78.96.226"
+	KEY_HOST="/home/laznp/.ssh/smf_rsa"
+	if [ "$1" = "docker" ]; then
+		ssh root@"$IP_ADDR" -i "$KEY_HOST" -p 2283
+	elif [ "$1" = "jenkins" ]; then
+		ssh root@"$IP_ADDR" -i "$KEY_HOST" -p 2282
+	elif [ "$1" = "gitlab" ]; then
+		ssh root@"$IP_ADDR" -i "$KEY_HOST" -p 2280
+	elif [ "$1" = "registry" ]; then
+		ssh root@"$IP_ADDR" -i "$KEY_HOST" -p 2281
+	elif [ "$1" = "monitoring" ]; then
+		ssh root@"$IP_ADDR" -i "$KEY_HOST" -p 2284
+	fi
+}
+
 # Alias git command
 alias gad="git add"
 alias gco="git checkout"
