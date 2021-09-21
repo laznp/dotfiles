@@ -69,16 +69,16 @@ window:
 # Font configuration
 font:
   normal:
-    family: FiraCode Nerd Font
+    family: FuraCode Nerd Font
     style: Medium
   bold:
-    family: FiraCode Nerd Font
+    family: FuraCode Nerd Font
     style: Bold
   italic:
-    family: FiraCode Nerd Font
+    family: FuraCode Nerd Font
     style: Italic
   bold_italic:
-    family: FiraCode Nerd Font
+    family: FuraCode Nerd Font
     style: Book
 
   # Point size
@@ -89,7 +89,7 @@ font:
   # spacing.
   offset:
     x: -1
-    y: 0
+    y: -1
   # Glyph offset determines the locations of the glyphs within their cells with
   # the default being at the bottom. Increasing `x` moves the glyph to the
   # right, increasing `y` moves the glyph upward.

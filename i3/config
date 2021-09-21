@@ -13,7 +13,7 @@ set $mod Mod1
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:Trebuchet MS, Iosevka 10
+font pango:FuraCode Nerd Font Medium, Iosevka 10
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -117,7 +117,7 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+a focus parent
 
 # focus the child container
-#bindsym $mod+d focus child
+bindsym $mod+d focus child
 
 # move the currently focused window to the scratchpad
 bindsym $mod+Shift+plus move scratchpad
@@ -128,17 +128,37 @@ bindsym $mod+plus scratchpad show
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
 
-set $ws1 "1  "
-set $ws2 "2  "
-set $ws3 "3  "
-set $ws4 "4  "
-set $ws5 "5  "
-set $ws6 "6  "
-set $ws7 "7  "
-set $ws8 "8  "
-set $ws9 "9  "
-set $ws10 "10 "
+#set $ws1 "1sys"
+#set $ws2 "2www"
+#set $ws3 "3dev"
+#set $ws4 "4util"
+#set $ws5 "5chat"
+#set $ws6 "6music"
+#set $ws7 "7pict"
+#set $ws8 "8video"
+#set $ws9 "9files"
+#set $ws10 "10[]="
+#set $ws1 "1  "
+#set $ws2 "2  "
+#set $ws3 "3  "
+#set $ws4 "4  "
+#set $ws5 "5  "
+#set $ws6 "6  "
+#set $ws7 "7  "
+#set $ws8 "8  "
+#set $ws9 "9  "
+#set $ws10 "10 "
 
 # switch to workspace
 bindsym $mod+1 workspace number $ws1
@@ -192,23 +212,25 @@ mode "resize" {
 }
 
 # Caps Lock Indicator
-set $mode_caps 
-bindsym Caps_Lock mode "$mode_caps"
-bindsym Shift+Caps_Lock mode "$mode_caps"
-bindsym Ctrl+Caps_Lock mode "$mode_caps"
-bindsym $alt+Caps_Lock mode "$mode_caps"
-mode "$mode_caps" {
-        bindsym Caps_Lock mode "default"
-        bindsym Shift+Caps_Lock mode "default"
-        bindsym Ctrl+Caps_Lock mode "default"
-        bindsym $alt+Caps_Lock mode "default"
-}
+#set $mode_caps 
+#bindsym Caps_Lock mode "$mode_caps"
+#bindsym Shift+Caps_Lock mode "$mode_caps"
+#bindsym Ctrl+Caps_Lock mode "$mode_caps"
+#bindsym $alt+Caps_Lock mode "$mode_caps"
+#mode "$mode_caps" {
+#        bindsym Caps_Lock mode "default"
+#        bindsym Shift+Caps_Lock mode "default"
+#        bindsym Ctrl+Caps_Lock mode "default"
+#        bindsym $alt+Caps_Lock mode "default"
+#}
 
 # Custom Binding
 bindsym $mod+r mode "resize"
 bindsym Ctrl+Right workspace next
 bindsym Ctrl+Left workspace prev
-bindsym Print exec --no-startup-id xfce4-screenshooter -r
+
+# Screenshot
+bindsym Print --release exec "import png:- | xclip -selection clipboard -t image/png -filter"
 
 # Lock Screen
 bindsym $mod+shift+x exec betterlockscreen -l dim
@@ -237,38 +259,50 @@ gaps outer 5
 
 # Assign Windows
 assign [instance="^(?i)google-chrome" class="^(?i)google-chrome"] $ws2
+assign [instance="^(?i)brave-browser" class="^(?i)brave-browser"] $ws2
 assign [class="Alacritty"] $ws3
-for_window [class="Spotify"] move scratchpad
-assign [class="TelegramDesktop"] $ws4
-assign [class="Lens"] $ws5
-assign [class="Insomnia"] $ws5
-assign [class="Thunar"] $ws5
+assign [class="Lens"] $ws4
+assign [class="Insomnia"] $ws4
+assign [class="TelegramDesktop"] $ws5
+for_window [class="Spotify"] move to workspace $ws6
+for_window [title="GIMP Startup"] move workspace $ws7
+for_window [class="Gimp"] move workspace $ws7
+#for_window [class="Spotify"] move scratchpad
+#assign [class="spotify"] $ws6
+assign [class="vlc"] $ws9
+assign [class="Thunar"] $ws9
 
 # Move workspace when monitor detected
-#workspace $ws1 output eDP-1
-#workspace $ws2 output HDMI-1
-#workspace $ws3 output HDMI-1
-#workspace $ws4 output HDMI-1
-#workspace $ws5 output HDMI-1
+workspace $ws1 output eDP-1
+workspace $ws2 output HDMI-1
+workspace $ws3 output HDMI-1
+workspace $ws4 output HDMI-1
+workspace $ws5 output HDMI-1
+workspace $ws6 output eDP-1
+workspace $ws7 output HDMI-1
+workspace $ws8 output HDMI-1
+workspace $ws9 output HDMI-1
+workspace $ws10 output HDMI-1
 
-bar {
-	position top
-	font pango:Trebuchet MS, FiraCode Nerd Font 10
-	workspace_min_width 30
-	strip_workspace_numbers yes
-	status_command i3blocks -c $HOME/.config/i3blocks/config.od
-	colors {
-		background $black
-		statusline $blue
-		separator $grey
-		focused_workspace $blue $blue $black
-		active_workspace $blue $blue $black
-		inactive_workspace $black $black $grey
-		urgent_workspace $red $red $black
-		binding_mode $yellow $yellow $black
-	}
+#bar {
+#    position top
+#    font pango:FuraCode Nerd Font Medium 9
+#    #workspace_min_width 30
+#    strip_workspace_numbers yes
+#    tray_output eDP-1
+#    status_command i3blocks -c $HOME/.config/i3blocks/config.od
+#    colors {
+#        background $black
+#        statusline $blue
+#        separator $grey
+#        focused_workspace $blue $blue $black
+#        active_workspace $blue $blue $black
+#        inactive_workspace $black $black $grey
+#        urgent_workspace $red $red $black
+#        binding_mode $yellow $yellow $black
+#    }
 
-}
+#}
 
 # Polybar
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
@@ -285,12 +319,18 @@ exec xrandr --auto --output HDMI-1 --mode 1920x1080 --left-of eDP-1
 # Dunst
 exec --no-startup-id dunst -config ~/.config/dunst/dunstrc
 
-# XFCE4 Clipboard Manager
-exec_always --no-startup-id "killall xfce4-clipman || true && xfce4-clipman"
-
 # Feh Background
 exec_always --no-startup-id feh --bg-scale $HOME/.wallpaper.png
 
 # Picom
 exec_always --no-startup-id picom --config $HOME/.config/picom/picom.conf
+
+# Alacritty
+exec alacritty
+
+# Spotify
+exec spotify
+
+# Google Chrome
+exec google-chrome-stable
 

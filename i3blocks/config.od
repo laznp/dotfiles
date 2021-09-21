@@ -99,7 +99,7 @@ border_bottom=2
 
 # Date Status
 [date]
-command=date '+   %a, %d %b %Y '
+command=date '+  %A, %d %B %Y '
 interval=60
 color=#282c34
 background=#98C379
@@ -114,6 +114,17 @@ command=date '+  %H:%M '
 interval=60
 color=#282c34
 background=#E06C75
+border=#282c34
+border_left=0
+border_right=0
+border_top=2
+border_bottom=2
+
+[hostname]
+command=echo "  $(hostname) "
+interval=once
+color=#282c34
+background=#61AFEF
 border=#282c34
 border_left=0
 border_right=0

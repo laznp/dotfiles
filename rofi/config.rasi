@@ -53,13 +53,13 @@ listview {
 
 element {
   padding: 5px;
-  text-color: @green;
-  highlight: bold #98C379; /* green */
+  text-color: @yellow;
+  highlight: bold #E5C07B; /* yellow */
   border-radius: 2px;
 }
 
 element selected {
-  background-color: @green;
+  background-color: @blue;
   text-color: @black;
 }
 

@@ -50,13 +50,13 @@ module-margin-left = 1
 module-margin-right = 1
 border-size = 1
 border-color = #00000000
-;modules-left = i3 spotify spotify-prev spotify-play-pause spotify-next
+modules-left = i3 spotify spotify-prev spotify-play-pause spotify-next
+modules-center = xwindow
+modules-right = vpn ping filesystem pulseaudio xkeyboard battery cpu memory wlan date powermenu
+;modules-left = spotify spotify-prev spotify-play-pause spotify-next
 ;modules-center = xwindow
-;modules-right = vpn filesystem pulseaudio xkeyboard battery memory cpu wlan date powermenu
-modules-left = spotify spotify-prev spotify-play-pause spotify-next
-;modules-center = xwindow
-modules-right = powermenu
-font-0 = Trebuchet MS:fontformat=truetype:size=10:antialias=true;0
+;modules-right = powermenu
+font-0 = FuraCode Nerd Font:style=Medium:fontformat=truetype:pixelsize=9:antialias=true;0
 font-1 = Iosevka:pixelsize=10;1
 font-2 = Font Awesome 5 Free:pixelsize=10;1
 font-3 = Font Awesome 5 Brands:pixelsize=10;1
@@ -99,7 +99,7 @@ modules-right = ${vars.modules-right}
 
 tray-position = right
 tray-padding = 2
-bottom = true
+bottom = false
 ;tray-background = #0063ff
 
 ;wm-restack = bspwm
@@ -153,7 +153,7 @@ modules-right = ${vars.modules-right}
 
 tray-position = right
 tray-padding = 2
-bottom = true
+bottom = false
 ;tray-background = #0063ff
 
 ;wm-restack = bspwm
@@ -240,13 +240,13 @@ label-urgent-padding = 2
 pin-workspaces = true
 ; Separator in between workspaces
 ;label-separator = |
-ws-icon-0 = 1;
-ws-icon-1 = 2;
-ws-icon-2 = 3;
-ws-icon-3 = 4;
-ws-icon-4 = 5;﯂
-;ws-icon-4 = 5;
-ws-icon-default = 
+ws-icon-0 = 1;sys
+ws-icon-1 = 2;www
+ws-icon-2 = 3;dev
+ws-icon-3 = 4;util
+ws-icon-4 = 5;chat
+ws-icon-5 = 6;music
+ws-icon-default = []=
 
 [module/cpu]
 type = internal/cpu
@@ -399,6 +399,9 @@ menu-0-1-foreground = ${colors.od-red}
 menu-0-2 = suspend
 menu-0-2-exec = betterlockscreen -s
 menu-0-2-foreground = ${colors.od-blue}
+menu-0-3 = logoff
+menu-0-3-exec = i3-msg exit
+menu-0-3-foreground = ${colors.od-purple}
 
 ; Custom Modules
 [module/vpn]
@@ -408,6 +411,13 @@ internal = 5
 exec = echo "嬨"
 format = <label>
 format-foreground = ${colors.od-aqua}
+
+[module/ping]
+type = custom/script
+exec = ping -c 1 8.8.8.8 | grep -o 'time=.*' | sed -e 's/time=//g' -e 's/\ //g'
+interval = 10
+format =  <label>
+format-foreground = ${colors.od-red}
 
 [module/spotify]
 type = custom/script
