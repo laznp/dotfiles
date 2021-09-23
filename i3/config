@@ -264,11 +264,10 @@ assign [class="Alacritty"] $ws3
 assign [class="Lens"] $ws4
 assign [class="Insomnia"] $ws4
 assign [class="TelegramDesktop"] $ws5
+for_window [class="Slack"] move to workspace $ws5
 for_window [class="Spotify"] move to workspace $ws6
 for_window [title="GIMP Startup"] move workspace $ws7
 for_window [class="Gimp"] move workspace $ws7
-#for_window [class="Spotify"] move scratchpad
-#assign [class="spotify"] $ws6
 assign [class="vlc"] $ws9
 assign [class="Thunar"] $ws9
 
@@ -285,11 +284,11 @@ workspace $ws9 output HDMI-1
 workspace $ws10 output HDMI-1
 
 #bar {
+#    tray_output eDP-1
 #    position top
 #    font pango:FuraCode Nerd Font Medium 9
 #    #workspace_min_width 30
 #    strip_workspace_numbers yes
-#    tray_output eDP-1
 #    status_command i3blocks -c $HOME/.config/i3blocks/config.od
 #    colors {
 #        background $black
@@ -301,7 +300,6 @@ workspace $ws10 output HDMI-1
 #        urgent_workspace $red $red $black
 #        binding_mode $yellow $yellow $black
 #    }
-
 #}
 
 # Polybar

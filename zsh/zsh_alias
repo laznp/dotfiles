@@ -11,6 +11,7 @@ alias ls="$(which exa) --icons -g --color-scale --git"
 alias cat="$(which bat)"
 alias grep="$(which rg)"
 alias htop="$(which bpytop)"
+alias wget="$(axel -n 16)"
 
 # Run python3 on every filename with .py extension
 #alias -s py="python3"
@@ -71,6 +72,16 @@ function smf(){
 		ssh root@"$IP_ADDR" -i "$KEY_HOST" -p 2281
 	elif [ "$1" = "monitoring" ]; then
 		ssh root@"$IP_ADDR" -i "$KEY_HOST" -p 2284
+	fi
+}
+
+function vpn() {
+	if [ "$1" = "start" ]; then
+		sudo systemctl start wg-quick@wg0.service
+		echo "VPN Started"
+	elif [ "$1" = "stop" ]; then
+		sudo systemctl stop wg-quick@wg0.service
+		echo "VPN Stopped"
 	fi
 }
 
