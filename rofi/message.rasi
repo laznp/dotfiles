@@ -1,0 +1,27 @@
+* {
+  font:             "FuraCode Nerd Font Medium 10";
+  background:       #282C34ff;
+  background-alt:   #282C34ff;
+  foreground:       #ffffffcc;
+  border:           #282C34ff;
+  border-alt:       #da717fff;
+  selected:         #61AFEFff;
+  urgent:           #E06C75ff;
+  background-color: @background;
+  text-color:       @selected;
+}
+
+window {
+    width:          360px;
+    padding:        25px;
+    border:         1px;
+    border-radius:  0px;
+    border-color:   @border;
+    location:       center;
+    y-offset:       -2em;
+}
+
+entry {
+    expand:         true;
+    text-color:     @selected;
+}

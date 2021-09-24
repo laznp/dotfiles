@@ -61,7 +61,7 @@ function kube_del(){
 
 function smf(){
 	IP_ADDR="103.78.96.226"
-	KEY_HOST="/home/laznp/.ssh/smf_rsa"
+	KEY_HOST="$HOME/.ssh/smf_rsa"
 	if [ "$1" = "docker" ]; then
 		ssh root@"$IP_ADDR" -i "$KEY_HOST" -p 2283
 	elif [ "$1" = "jenkins" ]; then
@@ -72,6 +72,24 @@ function smf(){
 		ssh root@"$IP_ADDR" -i "$KEY_HOST" -p 2281
 	elif [ "$1" = "monitoring" ]; then
 		ssh root@"$IP_ADDR" -i "$KEY_HOST" -p 2284
+	fi
+}
+
+function tkpssh() {
+	if [ $(echo $1 | \grep -E "^172.18" | wc -l) -eq 1 ]; then
+		ssh -i "~/.ssh/office-new-stag.pem" -l root $1
+	elif [ $(echo $1 | \grep -E "^172.21" | wc -l) -eq 1 ]; then
+		ssh -i "~/.ssh/office-prod.pem" -l root $1
+	elif [ $(echo $1 | \grep -E "^192.168" | wc -l) -eq 1 ]; then
+		ssh -i "~/.ssh/office-jenkins.pem" -l root $1
+	elif [ $(echo $1 | \grep -E "^10.21" | wc -l) -eq 1 ]; then
+		ssh -i "~/.ssh/office-gcp-stag.pem" -l root $1
+	elif [ $(echo $1 | \grep -E "^10.31" | wc -l) -eq 1 ]; then
+		ssh -i "~/.ssh/office-gcp-jenkins.pem" -l root $1
+	elif [ $(echo $1 | \grep -E "^10.41" | wc -l) -eq 1 ]; then
+		ssh -i "~/.ssh/office-gcp-prod.pem" -l root $1
+	else
+		echo "IP Address not recognize"
 	fi
 }
 

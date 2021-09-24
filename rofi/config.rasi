@@ -1,88 +1,193 @@
+/*
+ *
+ * Author  : Aditya Shakya
+ * Mail    : adi1090x@gmail.com
+ * Github  : @adi1090x
+ * Twitter : @adi1090x
+ *
+ */
+
 configuration {
-  lines: 10;
-  font: "FuraCode Nerd Font 10";
-  terminal: "alacritty";
-  display-drun: "";
-  display-ssh: "";
-  display-calc: "";
+    font: 							"FuraCode Nerd Font Medium 10";
+    terminal: "alacritty";
+    fixed-num-lines: 				true;
+    show-icons: 					false;
+    sidebar-mode: 					true;
+    scroll-method: 					0;
+    window-format: 					"[{w}] ··· {c} ···   {t}";
+    click-to-exit: 					true;
+    combi-hide-mode-prefix: 		false;
+    display-window: 				"";
+    display-windowcd: 				"";
+    display-run: 					"";
+    display-ssh: 					"";
+    display-drun: 					"";
+    display-combi: 					"";
+    display-calc: "";
 }
 
 * {
-  black:      #282C34;
-  red:        #E06C75;
-  green:      #98C379;
-  yellow:     #E5C07B;
-  blue:       #61AFEF;
-  purple:     #C678DD;
-  cyan:       #56B6C2;
+  al:      #00000000;
+  bg:      #282C34ff;
+  se:      #475C7Bff;
+  fg:      #ffffffcc;
+  ac:      #FDBB6Dff;
+  red:     #E06C75ff;
+  green:   #98C379ff;
+  yellow:  #E5C07Bff;
+  blue:    #61AFEFff;
+  purple:  #C678DDff;
+  cyan:    #56B6C2ff;
+}
 
-  spacing: 0;
-  background-color: transparent;
-  text-color: @text;
+/*@import "styles/colors.rasi"*/
+
+* {
+    background-color:             	@bg;
 }
 
 window {
-  transparency: "real";
-  fullscreen: true;
-  background-color: #282C34DD;
-}
-
-mainbox {
-  padding: 30% 30%;
-}
-
-inputbar {
-  margin: 0px 0px 20px 0px;
-  children: [prompt, entry];
+    border: 						0px;
+    border-color: 					@ac;
+    border-radius: 					2px;
+    padding: 						15;
+    width: 							20%;
 }
 
 prompt {
-  text-color: @blue;
+    spacing: 						0;
+    border: 						0;
+    text-color: 					@blue;
+}
+
+textbox-prompt-colon {
+    expand: 						false;
+    str: 							" ";
+    margin:							0px 4px 0px 0px;
+    text-color: 					inherit;
 }
 
 entry {
-  margin: 0px 10px;
-  text-color: @purple;
+    spacing:    					0;
+    text-color: 					@fg;
+}
+
+case-indicator {
+    spacing:    					0;
+    text-color: 					@fg;
+}
+
+inputbar {
+    spacing:    					0px;
+    text-color: 					@fg;
+    padding:    					1px;
+    children: 						[ prompt,textbox-prompt-colon,entry,case-indicator ];
+}
+
+mainbox {
+    border: 						0px;
+    border-color: 					@ac;
+    padding: 						6;
 }
 
 listview {
-  spacing: 5px;
-  dynamic: true;
-  scrollbar: false;
+    lines:							6;
+    columns:						1;
+    fixed-height: 					0;
+    border: 						0px;
+    border-color: 					@ac;
+    spacing: 						4px;
+    scrollbar: 						false;
+    padding: 						5px 5px 0px 5px;
+}
+
+element-text, element-icon {
+    background-color: #00000000;
+    text-color:       inherit;
 }
 
 element {
-  padding: 5px;
-  text-color: @yellow;
-  highlight: bold #E5C07B; /* yellow */
-  border-radius: 2px;
+    border: 						0px;
+    border-radius: 					1px;
+    padding: 						5px;
+}
+element normal.normal {
+    background-color: 				@bg;
+    text-color:       				@fg;
+}
+element normal.urgent {
+    background-color: 				@bg;
+    text-color:       				@red;
+}
+element normal.active {
+    background-color: 				@green;
+    text-color:       				@bg;
+}
+element selected.normal {
+    background-color: 				@blue;
+    text-color:       				@bg;
+}
+element selected.urgent {
+    background-color: 				@bg;
+    text-color:       				@red;
+}
+element selected.active {
+    background-color: 				@fg;
+    text-color:       				@bg;
+}
+element alternate.normal {
+    background-color: 				@bg;
+    text-color:       				@fg;
+}
+element alternate.urgent {
+    background-color: 				@bg;
+    text-color:       				@fg;
+}
+element alternate.active {
+    background-color: 				@bg;
+    text-color:       				@fg;
 }
 
-element selected {
-  background-color: @blue;
-  text-color: @black;
+sidebar {
+    border:       					0px;
+    border-color: 					@ac;
+    border-radius: 					0px;
 }
 
-element urgent, element selected urgent {
-  text-color: @red;
+button {
+    horizontal-align:               0.5;
+    vertical-align:                 0.5;
+    background-color:             	@bg;
+    margin: 						5px;
+    padding: 						5px;
+    text-color: 					@fg;
+    border: 						0px;
+    border-radius: 					2px;
+    border-color: 					@fg;
 }
 
-element active, element selected active {
-  text-color: @purple;
+button selected {
+    background-color:             	@blue;
+    text-color: 					@fg;
+    border: 						0px;
+    border-radius: 					1px;
+    border-color: 					@fg;
+}
+
+scrollbar {
+    width:        					4px;
+    border:       					0px;
+    handle-color: 					@fg;
+    handle-width: 					8px;
+    padding:      					0;
+}
+
+message {
+    border: 						0px;
+    border-color: 					@ac;
+    padding: 						1px;
 }
 
 textbox {
-  text-color: @green;
+    text-color: 					@fg;
 }
-
-/*message {*/
-/*  padding: 5px;*/
-/*  border-radius: 3px;*/
-/*  border: 1px;*/
-/*}*/
-
-/*button selected {*/
-/*  padding: 5px;*/
-/*  border-radius: 3px;*/
-/*  background-color: @yellow;*/
-/*}*/
