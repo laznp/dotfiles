@@ -95,7 +95,22 @@ let g:gitgutter_enabled = 1
 let g:gitgutter_map_keys = 0
 
 " FZF
-let g:fzf_layout = { 'down': '15%' }
+"let g:fzf_layout = { 'down': '15%' }
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.7 } }
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
 nnoremap <C-o> :Files<CR>
 
 " Vim Airline
@@ -191,6 +206,7 @@ nnoremap <F8> :TagbarToggle<CR>
 " Split Keybinding
 nnoremap <leader>v :vsp<CR>
 nnoremap <leader>h :sp<CR>
+nnoremap <leader>q <C-w>q
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k

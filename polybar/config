@@ -36,7 +36,7 @@ od-grey = #ABB2BF
 od-white = #FFF
 
 [vars]
-height = 30
+height = 40
 radius = 1.0
 width = 100%
 line-size = 0
@@ -54,10 +54,10 @@ border-color = #00000000
 ;modules-center = xwindow
 ;modules-right = vpn ping filesystem pulseaudio battery cpu memory wlan date powermenu
 ;modules-left = ping filesystem battery spotify spotify-prev spotify-play-pause spotify-next
-modules-left = archlinux ping filesystem battery pulseaudio
+modules-left = archlinux ping battery pulseaudio
 modules-center = i3
 modules-right = vpn cpu memory wlan date powermenu
-font-0 = FuraCode Nerd Font:style=Medium:fontformat=truetype:pixelsize=9:antialias=true;0
+font-0 = FuraCode Nerd Font:style=Medium:fontformat=truetype:pixelsize=11:antialias=true;2
 font-1 = Iosevka:pixelsize=10;1
 font-2 = Font Awesome 5 Free:pixelsize=10;1
 font-3 = Font Awesome 5 Brands:pixelsize=10;1
@@ -301,7 +301,7 @@ ramp-signal-foreground = ${colors.od-white}
 type = internal/date
 interval = 5
 
-date = "%b %e, %H:%M"
+date = "%b %e  %H:%M"
 ;date-alt = " %A, %b %e %Y"
 
 ;time =  %H:%M

@@ -25,23 +25,23 @@ options="$shutdown\n$reboot\n$lock\n$suspend\n$logout"
 chosen="$(echo -e "$options" | $rofi_command -p "﫵 $uptime" -dmenu -selected-row 2)"
 case $chosen in
     $shutdown)
-		#systemctl poweroff
-		msg
+		systemctl poweroff
+		#msg
 		;;
     $reboot)
-		#systemctl reboot
-		msg
+		systemctl reboot
+		#msg
 		;;
     $lock)
-		#betterlockscreen -l
-		msg
+		betterlockscreen -l
+		#msg
 		;;
     $suspend)
-		#systemctl suspend
-		msg
+		systemctl suspend
+		#msg
 		;;
     $logout)
-		#i3-msg exit
-		msg
+		i3-msg exit
+		#msg
 		;;
 esac

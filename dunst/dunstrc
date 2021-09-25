@@ -29,7 +29,7 @@
     # the top and down respectively.
     # The width can be negative.  In this case the actual width is the
     # screen width minus the width defined in within the geometry option.
-    geometry = "300x5-30+20"
+    geometry = "300x5-20-20"
 
     # Turn on the progess bar
     progress_bar = true
@@ -106,7 +106,7 @@
 
     ### Text ###
 
-    font = "FuraCode Nerd Font" 9
+    font = "FuraCode Nerd Font Medium" 9
 
     # The spacing between lines.  If the height is smaller than the
     # font height, it will get raised to the font height.
@@ -242,7 +242,7 @@
     # corners.
     # The radius will be automatically lowered if it exceeds half of the
     # notification height to avoid clipping text and/or icons.
-    corner_radius = 0
+    corner_radius = 1
 
     # Ignore the dbus closeNotification message.
     # Useful to enforce the timeout set by dunst configuration. Without this
@@ -329,7 +329,7 @@
     # Otherwise the "#" and following would be interpreted as a comment.
     background = "#282C34"
     foreground = "#ABB2BF"
-	frame_color = "ABB2BF"
+	frame_color = "#282C34"
     timeout = 5
     # Icon for notifications with low urgency, uncomment to enable
     #icon = /path/to/icon
@@ -337,7 +337,7 @@
 [urgency_normal]
     background = "#282C34"
     foreground = "#61AFEF"
-	frame_color = "#E5C07B"
+	frame_color = "#282C34"
     timeout = 5
     # Icon for notifications with normal urgency, uncomment to enable
     #icon = /path/to/icon
