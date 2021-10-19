@@ -41,14 +41,14 @@ radius = 1.0
 width = 100%
 line-size = 0
 line-color = #f00
-padding-left = 1
-padding-right = 1
-module-margin-left = 1
-module-margin-right = 1
+padding-left = 0
+padding-right = 0
+module-margin-left = 0
+module-margin-right = 0
 border-bottom-size = 0
-border-top-size = 10
-border-right-size = 10
-border-left-size = 10
+border-top-size = 0
+border-right-size = 0
+border-left-size = 0
 border-color = #00000000
 ;modules-left = i3 spotify spotify-prev spotify-play-pause spotify-next
 ;modules-center = xwindow
@@ -56,7 +56,7 @@ border-color = #00000000
 ;modules-left = ping filesystem battery spotify spotify-prev spotify-play-pause spotify-next
 modules-left = archlinux ping battery pulseaudio
 modules-center = i3
-modules-right = vpn cpu memory wlan date powermenu
+modules-right = vpn pray-remind cpu memory wlan date powermenu
 font-0 = FuraCode Nerd Font:style=Medium:fontformat=truetype:pixelsize=11:antialias=true;2
 font-1 = Iosevka:pixelsize=10;1
 font-2 = Font Awesome 5 Free:pixelsize=10;1
@@ -259,43 +259,50 @@ ws-icon-default = 
 [module/cpu]
 type = internal/cpu
 interval = 2
-format-prefix = " "
-format-prefix-foreground = ${colors.od-white}
-;format-underline = #f90000
-label = %percentage:2%%
-label-foreground = ${colors.od-wite}
+label =  %percentage:2%%
+label-foreground = ${colors.od-purple}
+;label-background = ${colors.od-purple}
+label-padding = 1
 
 [module/memory]
 type = internal/memory
 interval = 2
-format-prefix = " "
-format-prefix-foreground = ${colors.od-white}
-;format-underline = #4bffdc
-label = %percentage_used%%
-label-foreground = ${colors.od-white}
+label =  %percentage_used%%
+label-foreground = ${colors.od-yellow}
+;label-background = ${colors.od-yellow}
+label-padding = 1
 
 [module/wlan]
 type = internal/network
-interface = wlp0s20f3
+;interface = wlp0s20f3
+interface = wifi0
 interval = 3.0
 
-;format-connected = <ramp-signal> <label-connected>
-format-connected = <ramp-signal>
-;format-connected-underline = #9f78e1
-label-connected = %essid%
-label-connected-foreground = ${colors.od-white}
+;format-connected =  <ramp-signal>
+;format-connected = 
+;format-connected-background = ${colors.od-cyan}
+;format-connected-foreground = ${colors.od-cyan}
+;format-connected-paddding = 2
+;label-connected =  %essid%
+label-connected = 
+label-connected-foreground = ${colors.od-aqua}
+;label-connected-background = ${colors.od-aqua}
+label-connected-padding = 1
 
-format-disconnected = 睊
-;format-disconnected-underline = ${self.format-connected-underline}
-label-disconnected = %ifname% disconnected
+;format-disconnected = 睊
+;label-disconnected = %ifname% disconnected
+label-disconnected = 睊
 label-disconnected-foreground = ${colors.od-red}
+;label-disconnected-background = ${colors.od-aqua}
+label-disconnected-padding = 1
 
-ramp-signal-0 = 
-ramp-signal-1 = 
-ramp-signal-2 = 
-ramp-signal-3 = 
-ramp-signal-4 = 
-ramp-signal-foreground = ${colors.od-white}
+;ramp-signal-0 = 
+;ramp-signal-1 = 
+;ramp-signal-2 = 
+;ramp-signal-3 = 
+;ramp-signal-4 = 
+;ramp-signal-foreground = ${colors.od-white}
+;ramp-signal-background = ${colors.od-cyan}
 
 [module/date]
 type = internal/date
@@ -308,7 +315,9 @@ date = "%b %e  %H:%M"
 ;time-alt =  %H:%M
 
 format = <label>
-format-foreground = ${colors.od-white}
+format-foreground = ${colors.od-green}
+;format-background = ${colors.od-green}
+format-padding = 1
 ;format-underline = #0a6cf5
 
 ;label = %date% %time%
@@ -318,9 +327,14 @@ label = %date%
 type = internal/pulseaudio
 
 ;format-volume = <label-volume> <bar-volume>
-format-volume = <label-volume>
-label-volume =  %percentage%%
-label-volume-foreground = ${colors.od-white}
+format-volume =  <label-volume>
+format-volume-foreground = ${colors.od-yellow}
+;format-volume-background = ${colors.od-yellow}
+format-volume-padding = 1
+;label-volume =  %percentage%%
+;label-volume-foreground = ${colors.od-black}
+;label-volume-background = ${colors.od-yellow}
+;label-volume-padding = 2
 
 label-muted =  muted
 label-muted-foreground = #666
@@ -349,8 +363,13 @@ battery = BAT0
 adapter = ADP0
 full-at = 98
 
-format-charging = <animation-charging> <label-charging>
-label-charging-foreground = ${colors.od-white}
+format-charging = <animation-charging><label-charging>
+;format-charging-padding = 2
+;format-charging-background = ${colors.od-green}
+label-charging-foreground = ${colors.od-green}
+;label-charging-background = ${colors.od-green}
+label-charging-padding-right = 1
+label-charging-padding-left = 1
 ;format-charging-underline = #ffb52a
 
 ;format-discharging = <animation-discharging> <label-discharging>
@@ -374,7 +393,9 @@ animation-charging-1 =  
 animation-charging-2 =  
 animation-charging-3 =  
 animation-charging-4 =  
-animation-charging-foreground = ${colors.od-white}
+animation-charging-foreground = ${colors.od-green}
+animation-charging-padding-left = 1
+;animation-charging-background = ${colors.od-green}
 animation-charging-framerate = 750
 
 animation-discharging-0 = 
@@ -382,7 +403,8 @@ animation-discharging-1 = 
 animation-discharging-2 = 
 animation-discharging-3 = 
 animation-discharging-4 = 
-animation-discharging-foreground = ${colors.od-purple}
+animation-discharging-foreground = ${colors.od-black}
+animation-discharging-background = ${colors.od-green}
 animation-discharging-framerate = 750
 
 ;[module/powermenu]
@@ -416,19 +438,23 @@ animation-discharging-framerate = 750
 
 [module/powermenu]
 type = custom/script
-exec = echo "⏼ "
+exec = echo "⏼"
 click-left = $HOME/.config/rofi/powermenu.sh
 format = <label>
 format-foreground = ${colors.od-red}
+;format-background = ${colors.od-red}
+format-padding = 1
 
 ; Custom Modules
 
 [module/archlinux]
 type = custom/script
-exec = echo " "
+exec = echo ""
 interval = once
 format = <label>
 format-foreground = ${colors.od-blue}
+;format-background = ${colors.od-blue}
+format-padding = 1
 
 [module/vpn]
 type = custom/script
@@ -436,14 +462,18 @@ exec-if = pgrep -x wg-crypt-wg0
 internal = 5
 exec = echo "嬨"
 format = <label>
-format-foreground = ${colors.od-red}
+format-foreground = ${colors.od-blue}
+;format-background = ${colors.od-blue}
+format-padding = 1
 
 [module/ping]
 type = custom/script
 exec = ping -c 1 8.8.8.8 | grep -o 'time=.*' | sed -e 's/time=//g' -e 's/\ //g'
-interval = 10
+interval = 5
 format =  <label>
-format-foreground = ${colors.od-white}
+format-foreground = ${colors.od-purple}
+;format-background = ${colors.od-purple}
+format-padding = 1
 
 [module/spotify]
 type = custom/script
@@ -477,6 +507,14 @@ exec = echo "怜"
 format = <label>
 click-left = playerctl next spotify
 format-foreground = ${colors.od-yellow}
+
+[module/pray-remind]
+type = custom/script
+exec = "$HOME/.config/polybar/scripts/get_pray_time.py"
+format =  <label>
+format-foreground = ${colors.od-blue}
+interval = 30
+format-padding = 1
 
 [settings]
 screenchange-reload = true

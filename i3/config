@@ -268,13 +268,16 @@ assign [instance="^(?i)brave-browser" class="^(?i)brave-browser"] $ws2
 assign [class="Alacritty"] $ws3
 assign [class="Lens"] $ws4
 assign [class="Insomnia"] $ws4
+assign [class="VirtualBox Manager"] $ws4
 assign [class="TelegramDesktop"] $ws5
 for_window [class="Slack"] move to workspace $ws5
+for_window [class="discord"] move to workspace $ws5
 for_window [class="Spotify"] move to workspace $ws6
 for_window [title="GIMP Startup"] move workspace $ws7
 for_window [class="Gimp"] move workspace $ws7
 assign [class="vlc"] $ws8
 assign [class="Thunar"] $ws9
+for_window [instance="ranger" class="Alacritty"] move to workspace $ws9
 
 # Move workspace when monitor detected
 workspace $ws1 output eDP-1
@@ -317,14 +320,14 @@ exec_always --no-startup-id libinput-gestures-setup start
 exec_always --no-startup-id sudo tlp start
 
 # Xrandr
-exec xrandr --auto --output HDMI-1 --mode 1920x1080 --left-of eDP-1
+exec xrandr --auto --output HDMI-1 --mode 1920x1080 --rate 75 --left-of eDP-1
 
 # Dunst
 exec --no-startup-id dunst -config ~/.config/dunst/dunstrc
 
 # Feh Background
-#exec_always --no-startup-id feh --bg-scale $HOME/.wallpaper.png
-exec_always --no-startup-id feh --bg-scale $HOME/.wallpaper-light.png
+exec_always --no-startup-id feh --bg-scale $HOME/.wallpaper.png
+#exec_always --no-startup-id feh --bg-scale $HOME/.wallpaper-light.png
 
 # Picom
 exec_always --no-startup-id picom --config $HOME/.config/picom/picom.conf

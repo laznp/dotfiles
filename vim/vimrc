@@ -63,6 +63,7 @@ Plug 'andrewstuart/vim-kubernetes'
 Plug 'mboughaba/i3config.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'voldikss/vim-floaterm'
 call plug#end()
 
 " NERDCommenter
@@ -191,13 +192,18 @@ aug i3config_ft_detection
 	au BufNewFile,BufRead i3/config set filetype=i3config
 aug end
 
+" Floaterm
+let g:floaterm_keymap_toggle = '<F3>'
+let g:floaterm_autoclose = 2
+let g:floaterm_title = ""
+
 "Custom Command
 command! Reload execute "source ~/.config/nvim/init.vim"
 command! Vimrc execute ":e ~/.config/nvim/init.vim"
 
 " Custom Keybinding
 nnoremap <leader>` :noh<CR>
-nnoremap <F3> :terminal<CR>a
+"nnoremap <F3> :FloatermToggle<CR>
 nnoremap <F5> :!go run %<CR>
 nnoremap <F6> za
 nnoremap <F7> :call ToggleSyntastic()<CR>

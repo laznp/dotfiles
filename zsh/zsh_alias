@@ -11,7 +11,7 @@ alias ls="$(which exa) --icons -g --color-scale --git"
 alias cat="$(which bat)"
 alias grep="$(which rg)"
 alias htop="$(which bpytop)"
-alias wget="$(axel -n 16)"
+alias wget="axel -n 16"
 
 # Run python3 on every filename with .py extension
 #alias -s py="python3"
@@ -88,6 +88,10 @@ function tkpssh() {
 		ssh -i "~/.ssh/office-gcp-jenkins.pem" -l root $1
 	elif [ $(echo $1 | \grep -E "^10.41" | wc -l) -eq 1 ]; then
 		ssh -i "~/.ssh/office-gcp-prod.pem" -l root $1
+	elif [ "$1" = "teleport-prod" ]; then
+		ssh -i "~/.ssh/office-prod.pem" -l root 172.21.68.9
+	elif [ "$1" = "teleport-stag" ]; then
+		ssh -i "~/.ssh/office-new-stag.pem" -l root 172.18.71.176
 	else
 		echo "IP Address not recognize"
 	fi
