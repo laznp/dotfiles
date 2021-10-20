@@ -16,4 +16,3 @@ for key in pray_time:
             print(f"{key} in {difference.hour}:{difference.minute}")
             break
 
-
