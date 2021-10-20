@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 import requests as curl
-import notify2
 from datetime import datetime, timedelta
 
 key_list = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha']
@@ -9,7 +8,6 @@ data = curl.get(URL).json()
 pray_datetime = data['results']['datetime']
 pray_time = [ x['times'] for x in pray_datetime ][0]
 time_now = datetime.strptime(datetime.strftime(datetime.now(), "%H:%M"), "%H:%M")
-
 for key in pray_time:
     if key in key_list:
         pray_time_next = datetime.strptime(pray_time[key], "%H:%M")
@@ -17,4 +15,5 @@ for key in pray_time:
             difference = datetime.strptime(str(pray_time_next - time_now), "%H:%M:%S")
             print(f"{key} in {difference.hour}:{difference.minute}")
             break
+
 
