@@ -3,7 +3,7 @@ import requests as curl
 from datetime import datetime, timedelta
 
 key_list = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha']
-URL = f"https://api.pray.zone/v2/times/today.json?city=jakarta&school=9"
+URL = f"https://api.pray.zone/v2/times/today.json?city=bekasi"
 data = curl.get(URL).json()
 pray_datetime = data['results']['datetime']
 pray_time = [ x['times'] for x in pray_datetime ][0]
