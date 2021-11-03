@@ -31,7 +31,7 @@ font pango:FuraCode Nerd Font Medium, Iosevka 10
 #exec --no-startup-id nm-applet
 
 # Use pactl to adjust volume in PulseAudio.
-set $refresh_i3status pkill -RTMIN+1 i3blocks
+#set $refresh_i3status pkill -RTMIN+1 i3blocks
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && $refresh_i3status
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
@@ -141,27 +141,6 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
 
-#set $ws1 "1sys"
-#set $ws2 "2www"
-#set $ws3 "3dev"
-#set $ws4 "4util"
-#set $ws5 "5chat"
-#set $ws6 "6music"
-#set $ws7 "7pict"
-#set $ws8 "8video"
-#set $ws9 "9files"
-#set $ws10 "10[]="
-#set $ws1 "1  "
-#set $ws2 "2  "
-#set $ws3 "3  "
-#set $ws4 "4  "
-#set $ws5 "5  "
-#set $ws6 "6  "
-#set $ws7 "7  "
-#set $ws8 "8  "
-#set $ws9 "9  "
-#set $ws10 "10 "
-
 # switch to workspace
 bindsym $mod+1 workspace number $ws1
 bindsym $mod+2 workspace number $ws2
@@ -231,11 +210,11 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 bindsym Ctrl+Right workspace next
 bindsym Ctrl+Left workspace prev
-bindsym $mod+Shift+F workspace $ws9; exec alacritty -e "ranger"
+bindsym $mod+Shift+F exec alacritty -e "ranger"
 
 
 # Screenshot
-bindsym Print --release exec "import png:- | xclip -selection clipboard -t image/png -filter"
+bindsym Print --release exec "import png:- | xclip -selection clipboard -t image/png -filter && notify-send Screenshot 'Saved to clipboard.'"
 
 # Lock Screen
 bindsym $mod+shift+x exec betterlockscreen -l dim
@@ -258,29 +237,29 @@ client.placeholder			$purple 	$purple 	$black		$purple 		$purple
 
 # i3 Gaps
 for_window [class="^.*"] border pixel 1
+for_window [class="^.*"] split toggle
 gaps inner 10
 gaps outer 0
 #smart_gaps on
 
 # Assign Windows
-assign [instance="^(?i)google-chrome" class="^(?i)google-chrome"] $ws2
-assign [instance="^(?i)brave-browser" class="^(?i)brave-browser"] $ws2
-assign [class="Alacritty"] $ws3
-assign [class="Lens"] $ws4
-assign [class="Insomnia"] $ws4
-assign [class="VirtualBox Manager"] $ws4
+assign [instance="^(?i)google-chrome" class="^(?i)google-chrome"] $ws1
+assign [instance="^(?i)brave-browser" class="^(?i)brave-browser"] $ws1
+assign [class="Alacritty"] $ws2
+assign [class="Lens"] $ws3
+assign [class="Insomnia"] $ws3
+assign [class="VirtualBox Manager"] $ws3
 assign [class="TelegramDesktop"] $ws5
-for_window [class="Slack"] move to workspace $ws5
-for_window [class="discord"] move to workspace $ws5
+for_window [class="Slack"] move to workspace $ws4
+for_window [class="discord"] move to workspace $ws4
 for_window [class="Spotify"] move to workspace $ws6
 for_window [title="GIMP Startup"] move workspace $ws7
 for_window [class="Gimp"] move workspace $ws7
 assign [class="vlc"] $ws8
 assign [class="Thunar"] $ws9
-for_window [instance="ranger" class="Alacritty"] move to workspace $ws9
 
 # Move workspace when monitor detected
-workspace $ws1 output eDP-1
+workspace $ws1 output HDMI-1
 workspace $ws2 output HDMI-1
 workspace $ws3 output HDMI-1
 workspace $ws4 output HDMI-1

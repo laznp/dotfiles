@@ -79,10 +79,10 @@ font:
     style: Italic
   bold_italic:
     family: FiraCode Nerd Font
-    style: Book
+    style: Italic
 
   # Point size
-  size: 9.0
+  size: 8.0
 
   # Offset is the extra space around each character. `offset.y` can be thought
   # of as modifying the line spacing, and `offset.x` as modifying the letter
@@ -108,7 +108,7 @@ draw_bold_text_with_bright_colors: true
 
 colors:
   primary:
-    background: '0x282c34'
+    background: '0x1d2129'
     foreground: '0xabb2bf'
     bright_foreground: '0xe6efff'
 
@@ -551,9 +551,9 @@ live_config_reload: true
 #
 # If the same trigger is assigned to multiple actions, all of them are executed
 # in the order they were defined in.
-key_bindings:
-  - { key: V,          mods: Alt,                       action: Paste          }
-  - { key: C,          mods: Alt,                       action: Copy           }
+#key_bindings:
+  #- { key: V,          mods: Alt,                       action: Paste          }
+  #- { key: C,          mods: Alt,                       action: Copy           }
   #- { key: Paste,                                       action: Paste          }
   #- { key: Copy,                                        action: Copy           }
   #- { key: L,         mods: Control,                    action: ClearLogNotice }

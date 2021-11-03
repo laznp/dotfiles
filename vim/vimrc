@@ -52,18 +52,16 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'sheerun/vim-polyglot'
-Plug 'preservim/tagbar'
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
 Plug 'joshdick/onedark.vim'
 Plug 'ryanoasis/vim-devicons'
-Plug 'vim-syntastic/syntastic'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-Plug 'kyoz/purify', { 'rtp': 'vim' }
 Plug 'andrewstuart/vim-kubernetes'
 Plug 'mboughaba/i3config.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'voldikss/vim-floaterm'
+Plug 'vim-syntastic/syntastic'
 call plug#end()
 
 " NERDCommenter
@@ -78,7 +76,7 @@ let NERDTreeQuitOnOpen=1
 let g:NERDTreeMinimalUI=1
 nnoremap <F2> :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
-let g:NERDTreeIgnore=['__pycache__','.git','.github','.DS_Store']
+let g:NERDTreeIgnore=['__pycache__','.git','.github','.DS_Store','venv']
 let g:NERDTreeDirArrowExpandable = ''
 let g:NERDTreeDirArrowCollapsible = ''
 
@@ -96,7 +94,6 @@ let g:gitgutter_enabled = 1
 let g:gitgutter_map_keys = 0
 
 " FZF
-"let g:fzf_layout = { 'down': '15%' }
 let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.7 } }
 let g:fzf_colors =
 \ { 'fg':      ['fg', 'Normal'],
@@ -128,23 +125,23 @@ let g:airline_left_sep = ''
 let g:airline_right_sep = ''
 let g:airline_filetype_overrides = {'nerdtree': [ get(g:, 'NERDTreeStatusline', 'NERD'), '' ]}
 let g:airline_mode_map = {
-      \ '__'     : '-',
-      \ 'c'      : 'C',
-      \ 'i'      : 'I',
-      \ 'ic'     : 'I',
-      \ 'ix'     : 'I',
-      \ 'n'      : 'N',
-      \ 'multi'  : 'M',
-      \ 'ni'     : 'N',
-      \ 'no'     : 'N',
-      \ 'R'      : 'R',
-      \ 'Rv'     : 'R',
-      \ 's'      : 'S',
-      \ 'S'      : 'S',
-      \ 't'      : 'T',
-      \ 'v'      : 'V',
-      \ 'V'      : 'V',
-      \ }
+	  \ '__'     : '-',
+	  \ 'c'      : 'C',
+	  \ 'i'      : 'I',
+	  \ 'ic'     : 'I',
+	  \ 'ix'     : 'I',
+	  \ 'n'      : 'N',
+	  \ 'multi'  : 'M',
+	  \ 'ni'     : 'N',
+	  \ 'no'     : 'N',
+	  \ 'R'      : 'R',
+	  \ 'Rv'     : 'R',
+	  \ 's'      : 'S',
+	  \ 'S'      : 'S',
+	  \ 't'      : 'T',
+	  \ 'v'      : 'V',
+	  \ 'V'      : 'V',
+	  \ }
 
 " Syntastic
 set statusline+=%#warningmsg#
@@ -161,14 +158,14 @@ let g:syntastic_check_on_wq = 0
 "let g:syntastic_quiet_messages = { 'regex': 'W191\|E117\|E265\|E302\|E305\|E501\|E231\|E225' }
 let g:syntastic_quiet_messages = { 'regex': 'E501' }
 function! ToggleSyntastic()
-    for i in range(1, winnr('$'))
-        let bnum = winbufnr(i)
-        if getbufvar(bnum, '&buftype') == 'quickfix'
-            lclose
-            return
-        endif
-    endfor
-    SyntasticCheck
+	for i in range(1, winnr('$'))
+		let bnum = winbufnr(i)
+		if getbufvar(bnum, '&buftype') == 'quickfix'
+			lclose
+			return
+		endif
+	endfor
+	SyntasticCheck
 endfunction
 
 " Color Scheme
@@ -203,11 +200,10 @@ command! Vimrc execute ":e ~/.config/nvim/init.vim"
 
 " Custom Keybinding
 nnoremap <leader>` :noh<CR>
-"nnoremap <F3> :FloatermToggle<CR>
 nnoremap <F5> :!go run %<CR>
 nnoremap <F6> za
 nnoremap <F7> :call ToggleSyntastic()<CR>
-nnoremap <F8> :TagbarToggle<CR>
+"nnoremap <F8> :TagbarToggle<CR>
 
 " Split Keybinding
 nnoremap <leader>v :vsp<CR>
@@ -233,8 +229,8 @@ inoremap " ""<Left>
 inoremap < <><Left>
 
 " Tabs Keybinding
-nnoremap <leader>1 :bp<CR>
-nnoremap <leader>2 :bn<CR>
+nnoremap <S-TAB> :bp<CR>
+nnoremap <TAB> :bn<CR>
 nnoremap <leader>w :bd<CR>
 
 " Autocomplete Keybinding
