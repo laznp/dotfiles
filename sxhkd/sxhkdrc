@@ -65,7 +65,7 @@ alt + Return
 	alacritty
 
 # ROFI PROGRAM LAUNCHER
-alt + @space
+alt + space
 	rofi -no-lazy-grab -no-history -no-sort -show drun -modi ssh,drun,calc -theme /home/laznp/.config/rofi/config
 
 alt + shift + n

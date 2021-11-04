@@ -26,9 +26,9 @@ border-top-size = 5
 border-right-size = 0
 border-left-size = 0
 border-color = ${colors.background}
-modules-left = round-left bspwm round-right spacer round-left spotify round-right
+modules-left = archlinux round-left bspwm round-right spacer round-left spotify round-right
 ;modules-center = spotify
-modules-right = round-left vpn round-right spacer round-left ping round-right spacer round-left battery round-right spacer round-left pulseaudio round-right spacer round-left cpu memory round-right spacer round-left wlan round-right spacer round-left date round-right spacer round-left powermenu round-right
+modules-right = vpn spacer round-left ping round-right spacer round-left battery round-right spacer round-left pulseaudio round-right spacer round-left cpu memory round-right spacer round-left wlan round-right spacer round-left date round-right spacer round-left powermenu round-right
 font-0 = FuraCode Nerd Font:style=Medium:fontformat=truetype:pixelsize=11:antialias=true;3
 font-1 = Iosevka:pixelsize=17;4
 
@@ -45,7 +45,6 @@ content-background = ${colors.background}
 content-foreground = ${colors.background-alt}
 content = 
 content-font = 2
-
 
 [bar/eDP-1]
 enable-ipc = true
@@ -87,7 +86,7 @@ tray-padding = 0
 bottom = false
 ;tray-background = ${colors.background-alt}
 
-wm-restack = bspwm
+;wm-restack = bspwm
 ;wm-restack = i3
 
 ;override-redirect = true
@@ -184,7 +183,7 @@ enable-click = true
 enable-scroll = true
 reverse-scroll = false
 format = <label-state>
-ws-icon-0 = 1;%{F#61AFEF}
+ws-icon-0 = 1;%{F#98C379}
 ws-icon-1 = 2;%{F#E5C07B}
 ws-icon-2 = 3;%{F#95e1d3}﯂
 ws-icon-3 = 4;%{F#C678DD}
@@ -193,7 +192,7 @@ ws-icon-5 = 6;%{F#72C7D1}
 ws-icon-6 = 7;%{F#B888E2}
 ws-icon-7 = 8;%{F#E06C75}輸
 ws-icon-8 = 9;%{F#A3BE8C}
-ws-icon-default = %{F#61AFEF}
+ws-icon-default = %{F#61AFEF}﮼
 label-separator = " "
 label-separator-background = #2a2e36
 label-focused =  %icon%
@@ -215,6 +214,9 @@ label-urgent =  %icon%
 label-urgent-foreground = ${colors.od-red}
 label-urgent-background = ${colors.background-alt}
 label-urgent-padding = 1
+label-dimmed-background = ${colors.background-alt}
+label-dimmed-padding = 0
+label-dimmed-margin = 0
 
 [module/i3]
 type = internal/i3
@@ -278,7 +280,7 @@ format-background = ${colors.background-alt}
 type = internal/network
 interface = wifi0
 interval = 3.0
-label-connected = %essid% 
+label-connected = 
 label-connected-foreground = ${colors.od-blue}
 label-connected-background = ${colors.background-alt}
 label-disconnected = 睊
@@ -299,7 +301,7 @@ type = internal/pulseaudio
 
 ;format-volume = <label-volume> <bar-volume>
 format-volume =  <label-volume>
-format-volume-foreground = ${colors.od-yellow}
+format-volume-foreground = ${colors.od-aqua}
 format-volume-background = ${colors.background-alt}
 ;label-volume =  %percentage%%
 ;label-volume-foreground = ${colors.od-black}
@@ -401,8 +403,6 @@ internal = 5
 exec = echo "嬨"
 format = <label>
 format-foreground = ${colors.od-blue}
-format-background = ${colors.background-alt}
-
 
 [module/ping]
 type = custom/script

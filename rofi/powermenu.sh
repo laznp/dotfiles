@@ -41,7 +41,8 @@ case $chosen in
 		#msg
 		;;
     $logout)
-		i3-msg exit
+    	bspc quit
+		#i3-msg exit
 		#msg
 		;;
 esac
