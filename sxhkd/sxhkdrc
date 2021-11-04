@@ -1,51 +1,46 @@
 #!/usr/bin/env bash
 
 # MEDIA KEYS TO SET VOLUME
-super + {F1,F2,F3}
+alt + {F1,F2,F3}
 	{pactl set-sink-mute @DEFAULT_SINK@ toggle,pactl set-sink-volume @DEFAULT_SINK@ -5%,pactl set-sink-volume @DEFAULT_SINK@ +5%}
 
 # MEDIA KEY TO PLAY / PAUSE, NEXT, PREVIOUS
-ctrl + super + {Left,Right,space}
+alt + ctrl + {Left,Right,space}
 	playerctl {previous,next,play-pause}
 
 # RELOAD SXHKD
-super + Escape
+alt + Escape
 	pkill -USR1 -x sxhkd ; notify-send 'SXHKD' 'Config Reloaded.'
 
 # RELOAD BSPWM
-super + shift + r
+alt + shift + r
 	bspc wm -r
 
 # POWERMENU
-super + shift + e
+alt + shift + e
 	bash $HOME/.config/rofi/powermenu.sh
 
 # CLOSE AND KILL PROGRAM
-super + shift + q
-	bspc node -k
+alt + shift + q
+	bspc node -c
 
-# SET WINDOWS FULLSCREEN
-super + f
-	bspc node -t fullscreen
-
-# SET WINDOWS TILED
-super + shift + f
-	bspc node -t tiled
+# SET WINDOWS MONOCLE FULLSCREEN
+alt + f
+    bspc desktop -l next
 
 # SET WINDOWS FLOATING
-super + shift + a
-	bspc node -t floating
+alt + shift + {f,a}
+	bspc node -t {floating,tiled}
 
 # SWAP / FOCUS NODE POSITION
-super + {_,shift} + {h,j,k,l}
+alt + {_,shift} + {h,j,k,l}
 	bspc node -{f,s} {west,south,north,east}
 
-super + {_,shift} + {Left,Down,Up,Right}
+alt + {_,shift} + {Left,Down,Up,Right}
 	bspc node -{f,s} {west,south,north,east}
-
 
 # FOCUS / APPS TO ANOTHER DESKTOP
-super + {_,shift} + {1-9,0}
+alt + {_,shift} + {1-9,0}
     bspc {desktop -f,node -d} '^{1-9,10}'
 
 # FOCUS ANOTHER MONITOR BY ARROW
@@ -66,14 +61,14 @@ super + {Left,Down,Up,Right}
 
 # APPLICATION LAUNCHER KEYBIND
 # TERMINAL EMULATOR
-super + Return
+alt + Return
 	alacritty
 
 # ROFI PROGRAM LAUNCHER
-super + @space
+alt + @space
 	rofi -no-lazy-grab -no-history -no-sort -show drun -modi ssh,drun,calc -theme /home/laznp/.config/rofi/config
 
-super + shift + n
+alt + shift + n
 	alacritty -e "ranger"
 
 Print

@@ -1,21 +1,3 @@
-;==========================================================
-;
-;
-;   ██████╗  ██████╗ ██╗  ██╗   ██╗██████╗  █████╗ ██████╗
-;   ██╔══██╗██╔═══██╗██║  ╚██╗ ██╔╝██╔══██╗██╔══██╗██╔══██╗
-;   ██████╔╝██║   ██║██║   ╚████╔╝ ██████╔╝███████║██████╔╝
-;   ██╔═══╝ ██║   ██║██║    ╚██╔╝  ██╔══██╗██╔══██║██╔══██╗
-;   ██║     ╚██████╔╝███████╗██║   ██████╔╝██║  ██║██║  ██║
-;   ╚═╝      ╚═════╝ ╚══════╝╚═╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
-;
-;
-;   To learn more about how to configure Polybar
-;   go to https://github.com/polybar/polybar
-;
-;   The README contains a lot of information
-;
-;==========================================================
-
 [colors]
 background = #1D2129
 background-alt = #2A2E36
@@ -41,17 +23,29 @@ module-margin-left = 0
 module-margin-right = 0
 border-bottom-size = 5
 border-top-size = 5
-border-right-size = 5
-border-left-size = 5
+border-right-size = 0
+border-left-size = 0
 border-color = ${colors.background}
-modules-left = i3 spacer spotify
+modules-left = round-left bspwm round-right spacer round-left spotify round-right
 ;modules-center = spotify
-modules-right = vpn spacer ping spacer battery spacer pulseaudio spacer cpu memory spacer wlan spacer date spacer powermenu
+modules-right = round-left vpn round-right spacer round-left ping round-right spacer round-left battery round-right spacer round-left pulseaudio round-right spacer round-left cpu memory round-right spacer round-left wlan round-right spacer round-left date round-right spacer round-left powermenu round-right
 font-0 = FuraCode Nerd Font:style=Medium:fontformat=truetype:pixelsize=11:antialias=true;3
-font-1 = Iosevka:pixelsize=11;1
-font-2 = Font Awesome 5 Free:pixelsize=13;1
-font-3 = Font Awesome 5 Brands:pixelsize=13;1
-font-4 = Font Awesome 5 Solid:pixelsize=13;1
+font-1 = Iosevka:pixelsize=17;4
+
+[module/round-right]
+type = custom/text
+content-background = ${colors.background}
+content-foreground = ${colors.background-alt}
+content = 
+content-font = 2
+
+[module/round-left]
+type = custom/text
+content-background = ${colors.background}
+content-foreground = ${colors.background-alt}
+content = 
+content-font = 2
+
 
 [bar/eDP-1]
 enable-ipc = true
@@ -59,7 +53,7 @@ monitor = ${env:MONITOR:eDP-1}
 width = ${vars.width}
 height = ${vars.height}
 ;offset-x = 3%
-;offset-y = 3%
+;offset-y = 1%
 radius = ${vars.radius}
 fixed-center = true
 
@@ -83,9 +77,6 @@ module-margin-right = ${vars.module-margin-right}
 
 font-0 = ${vars.font-0}
 font-1 = ${vars.font-1}
-font-2 = ${vars.font-2}
-font-3 = ${vars.font-3}
-font-4 = ${vars.font-4}
 
 modules-left = ${vars.modules-left}
 modules-center = ${vars.modules-center}
@@ -94,9 +85,9 @@ modules-right = ${vars.modules-right}
 tray-position = right
 tray-padding = 0
 bottom = false
-;tray-background = #0063ff
+;tray-background = ${colors.background-alt}
 
-;wm-restack = bspwm
+wm-restack = bspwm
 ;wm-restack = i3
 
 ;override-redirect = true
@@ -140,9 +131,6 @@ module-margin-right = ${vars.module-margin-right}
 
 font-0 = ${vars.font-0}
 font-1 = ${vars.font-1}
-font-2 = ${vars.font-2}
-font-3 = ${vars.font-3}
-font-4 = ${vars.font-4}
 
 modules-left = ${vars.modules-left}
 modules-center = ${vars.modules-center}
@@ -152,7 +140,7 @@ tray-position = none
 tray-padding = 2
 bottom = false
 
-;wm-restack = bspwm
+wm-restack = bspwm
 
 cursor-click = pointer
 cursor-scroll = ns-resize
@@ -168,16 +156,13 @@ blacklist-0 = num lock
 
 format-prefix = " "
 format-prefix-foreground = ${colors.od-aqua}
-;format-prefix-underline = ${colors.secondary}
 
 label-layout = %layout%
-;label-layout-underline = ${colors.secondary}
 label-layout-foreground = ${colors.od-aqua}
 
 label-indicator-padding = 2
 label-indicator-margin = 1
 label-indicator-background = ${colors.od-aqua}
-;label-indicator-underline = ${colors.secondary}
 
 [module/filesystem]
 type = internal/fs
@@ -226,8 +211,8 @@ label-empty-foreground = ${colors.od-blue}
 label-empty-padding = 1
 label-empty-background = ${colors.background-alt}
 label-empty-margin = 0
-label-urgent = %icon%
-label-urgent-foreground = #88C0D0
+label-urgent =  %icon%
+label-urgent-foreground = ${colors.od-red}
 label-urgent-background = ${colors.background-alt}
 label-urgent-padding = 1
 
@@ -243,21 +228,23 @@ label-focused-padding = 1
 label-focused-background = #464a52
 label-focused-margin = 0
 label-unfocused = %icon%
-label-unfocused-padding = 2
+label-unfocused-padding = 1
 label-unfocused-foreground = ${colors.od-white}
 label-empty = %icon%
 label-empty-foreground = ${colors.od-blue}
-label-empty-padding = 1
+label-empty-padding = 0
 label-empty-background = ${colors.background-alt}
 label-empty-margin = 0
 label-urgent = %icon%
 label-urgent-foreground = #88C0D0
-label-urgent-background = ${colors.background-alt}
+label-urgent-background = ${colors.of-red}
 label-urgent-padding = 1
 label-visible = %icon%
 label-visible-background = ${colors.background}
 label-visible-foreground = ${colors.od-black}
-label-visible-padding = ${self.label-focused-padding}
+label-visible-padding = 0
+label-separator = " "
+label-separator-background = ${colors.background}
 ws-icon-0 = 1;%{F#61AFEF}
 ws-icon-1 = 2;%{F#E06C75}
 ws-icon-2 = 3;%{F#95e1d3}﯂
@@ -276,7 +263,7 @@ interval = 2
 label =  %percentage:2%%
 label-foreground = ${colors.od-purple}
 ;label-background = ${colors.background}
-label-padding = 1
+label-padding-right = 1
 format-background = ${colors.background-alt}
 
 [module/memory]
@@ -284,7 +271,7 @@ type = internal/memory
 interval = 2
 label =  %percentage_used%%
 label-foreground = ${colors.od-yellow}
-label-padding = 1
+label-padding-left = 1
 format-background = ${colors.background-alt}
 
 [module/wlan]
@@ -293,11 +280,9 @@ interface = wifi0
 interval = 3.0
 label-connected = %essid% 
 label-connected-foreground = ${colors.od-blue}
-label-connected-padding = 1
 label-connected-background = ${colors.background-alt}
 label-disconnected = 睊
 label-disconnected-foreground = ${colors.od-red}
-label-disconnected-padding = 1
 label-disconnected-background = ${colors.background-alt}
 
 [module/date]
@@ -307,7 +292,6 @@ date = "%b %e  %H:%M"
 format = <label>
 format-foreground = ${colors.od-green}
 format-background = ${colors.background-alt}
-format-padding = 1
 label = %date%
 
 [module/pulseaudio]
@@ -317,7 +301,6 @@ type = internal/pulseaudio
 format-volume =  <label-volume>
 format-volume-foreground = ${colors.od-yellow}
 format-volume-background = ${colors.background-alt}
-format-volume-padding = 1
 ;label-volume =  %percentage%%
 ;label-volume-foreground = ${colors.od-black}
 ;label-volume-background = ${colors.od-yellow}
@@ -326,7 +309,6 @@ format-volume-padding = 1
 label-muted = 
 label-muted-foreground = ${colors.od-red}
 label-muted-background = ${colors.background-alt}
-label-muted-padding = 1
 
 bar-volume-width = 10
 bar-volume-foreground-0 = ${colors.od-green}
@@ -357,7 +339,6 @@ format-charging = <animation-charging><label-charging>
 format-charging-background = ${colors.background-alt}
 label-charging-foreground = ${colors.od-green}
 ;label-charging-background = ${colors.od-green}
-label-charging-padding-right = 1
 label-charging-padding-left = 1
 ;format-charging-underline = #ffb52a
 
@@ -383,7 +364,6 @@ animation-charging-2 =  
 animation-charging-3 =  
 animation-charging-4 =  
 animation-charging-foreground = ${colors.od-green}
-animation-charging-padding-left = 1
 ;animation-charging-background = ${colors.od-green}
 animation-charging-framerate = 750
 
@@ -403,17 +383,15 @@ click-left = $HOME/.config/rofi/powermenu.sh
 format = <label>
 format-foreground = ${colors.od-red}
 format-background = ${colors.background-alt}
-format-padding = 1
 
 ; Custom Modules
-
 [module/archlinux]
 type = custom/script
 exec = echo ""
 interval = once
 format = <label>
 format-foreground = ${colors.od-blue}
-;format-background = ${colors.od-blue}
+;format-background = ${colors.background}
 format-padding = 1
 
 [module/vpn]
@@ -423,9 +401,8 @@ internal = 5
 exec = echo "嬨"
 format = <label>
 format-foreground = ${colors.od-blue}
-;format-background = ${colors.od-blue}
-format-padding = 1
-format-font = 6
+format-background = ${colors.background-alt}
+
 
 [module/ping]
 type = custom/script
@@ -434,7 +411,6 @@ interval = 5
 format =  <label>
 format-foreground = ${colors.od-purple}
 format-background = ${colors.background-alt}
-format-padding = 1
 
 [module/spotify]
 type = custom/script
@@ -443,8 +419,7 @@ exec = ~/.config/polybar/scripts/scroll_spotify_status.sh
 format = <label>
 format-prefix = " "
 format-foreground = ${colors.od-green}
-format-padding = 1
-format-background = #2a2e36
+format-background = ${colors.background-alt}
 
 [module/spotify-prev]
 type = custom/script
