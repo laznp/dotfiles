@@ -8,22 +8,22 @@
  */
 
 configuration {
-    font: 							"FuraCode Nerd Font Medium 10";
-    terminal: "alacritty";
-    fixed-num-lines: 				true;
-    show-icons: 					false;
-    sidebar-mode: 					true;
-    scroll-method: 					0;
-    window-format: 					"[{w}] ··· {c} ···   {t}";
-    click-to-exit: 					true;
-    combi-hide-mode-prefix: 		false;
-    display-window: 				"";
-    display-windowcd: 				"";
-    display-run: 					"";
-    display-ssh: 					"";
-    display-drun: 					"";
-    display-combi: 					"";
-    display-calc: "";
+    font:                       "FuraCode Nerd Font Medium 10";
+    terminal:                   "alacritty";
+    fixed-num-lines:            true;
+    show-icons:                 false;
+    sidebar-mode:               true;
+    scroll-method:              0;
+    window-format:              "[{w}] ··· {c} ···   {t}";
+    click-to-exit:              true;
+    combi-hide-mode-prefix:     false;
+    display-window:             "";
+    display-windowcd:           "";
+    display-run:                "";
+    display-ssh:                "";
+    display-drun:               "";
+    display-combi:              "";
+    display-calc:               "";
 }
 
 * {

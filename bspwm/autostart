@@ -2,5 +2,6 @@
 libinput-gestures-setup start &
 sudo tlp start &
 dunst -config ~/.config/dunst/dunstrc &
-pgrep -x compton > /dev/null || compton --config $HOME/.config/compton/compton.conf &
+#pgrep -x compton > /dev/null || compton --config $HOME/.config/compton/compton.conf &
+pgrep -x picom > /dev/null || picom --config $HOME/.config/picom/picom.conf &
 xsetroot -cursor_name left_ptr &

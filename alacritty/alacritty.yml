@@ -11,8 +11,8 @@ window:
   #  y: 0
 
   padding:
-    x: 25
-    y: 25
+    x: 15
+    y: 15
 
   # Spread additional padding evenly around the terminal content.
   #dynamic_padding: false
@@ -108,7 +108,8 @@ draw_bold_text_with_bright_colors: true
 
 colors:
   primary:
-    background: '0x1d2129'
+    #background: '0x1d2129'
+    background: '0x0e111b'
     foreground: '0xabb2bf'
     bright_foreground: '0xe6efff'
 
