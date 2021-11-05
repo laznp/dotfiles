@@ -11,8 +11,8 @@ window:
   #  y: 0
 
   padding:
-    x: 15
-    y: 15
+    x: 25
+    y: 25
 
   # Spread additional padding evenly around the terminal content.
   #dynamic_padding: false
@@ -43,7 +43,7 @@ window:
   #title: Alacritty
 
   # Allow terminal applications to change Alacritty's window title.
-  #dynamic_title: true
+  dynamic_title: true
 
   # Window class (Linux/BSD only):
   #class:

@@ -145,7 +145,7 @@ bindsym Print --release exec "import png:- | xclip -selection clipboard -t image
 bindsym $mod+shift+x exec betterlockscreen -l dim
 # Color Scheme Configuration
 # class						border		backgr.		text		indicator		child_border
-client.focused				$blue 		$blue 		$black		$blue 			$blue
+client.focused				$blue 		$blue 		$black		$blue 			#5C6570
 client.focused_inactive		$black 		$black		$grey		$black			$black
 client.unfocused			$black 		$black		$grey 		$black			$black
 client.urgent				$red 		$red 		$black		$red 			$red
@@ -198,7 +198,7 @@ exec_always --no-startup-id feh --bg-scale $HOME/.wallpaper.png
 # Picom
 exec_always --no-startup-id picom --config $HOME/.config/picom/picom.conf
 # Alacritty
-exec alacritty
+#exec alacritty
 # Spotify
 exec spotify
 # Google Chrome
