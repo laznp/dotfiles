@@ -76,10 +76,10 @@ font:
     style: Bold
   italic:
     family: FiraCode Nerd Font
-    style: Italic
+    style: Medium
   bold_italic:
     family: FiraCode Nerd Font
-    style: Medium
+    style: Italic
 
   # Point size
   size: 9.0
@@ -109,7 +109,8 @@ draw_bold_text_with_bright_colors: true
 colors:
   primary:
     #background: '0x1d2129'
-    background: '0x0e111b'
+    #background: '0x1e222a'
+    background: '0x1f2329'
     foreground: '0xabb2bf'
     bright_foreground: '0xe6efff'
 
