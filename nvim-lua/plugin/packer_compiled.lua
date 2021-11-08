@@ -69,6 +69,11 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
+  ["FTerm.nvim"] = {
+    loaded = true,
+    path = "/home/laznp/.local/share/nvim/site/pack/packer/start/FTerm.nvim",
+    url = "https://github.com/numtostr/FTerm.nvim"
+  },
   ["fzf-lua"] = {
     loaded = true,
     path = "/home/laznp/.local/share/nvim/site/pack/packer/start/fzf-lua",
@@ -95,21 +100,14 @@ _G.packer_plugins = {
     url = "https://github.com/vijaymarupudi/nvim-fzf"
   },
   ["nvim-tabline"] = {
-    config = { "\27LJ\1\2|\0\0\2\0\4\0\a4\0\0\0%\1\1\0>\0\2\0027\0\2\0003\1\3\0>\0\2\1G\0\1\0\1\0\4\16show_modify\2\21modify_indicator\b\fno_name\14[No name]\15show_index\1\nsetup\ftabline\frequire\0" },
     loaded = true,
     path = "/home/laznp/.local/share/nvim/site/pack/packer/start/nvim-tabline",
     url = "https://github.com/crispgm/nvim-tabline"
   },
   ["nvim-tree.lua"] = {
-    config = { "\27LJ\1\2;\0\0\2\0\3\0\a4\0\0\0%\1\1\0>\0\2\0027\0\2\0002\1\0\0>\0\2\1G\0\1\0\nsetup\14nvim-tree\frequire\0" },
     loaded = true,
     path = "/home/laznp/.local/share/nvim/site/pack/packer/start/nvim-tree.lua",
     url = "https://github.com/kyazdani42/nvim-tree.lua"
-  },
-  ["nvim-treesitter"] = {
-    loaded = true,
-    path = "/home/laznp/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
-    url = "https://github.com/nvim-treesitter/nvim-treesitter"
   },
   ["nvim-web-devicons"] = {
     loaded = true,
@@ -126,27 +124,19 @@ _G.packer_plugins = {
     path = "/home/laznp/.local/share/nvim/site/pack/packer/start/packer.nvim",
     url = "https://github.com/wbthomason/packer.nvim"
   },
-  syntastic = {
+  ["vim-fugitive"] = {
     loaded = true,
-    path = "/home/laznp/.local/share/nvim/site/pack/packer/start/syntastic",
-    url = "https://github.com/vim-syntastic/syntastic"
+    path = "/home/laznp/.local/share/nvim/site/pack/packer/start/vim-fugitive",
+    url = "https://github.com/tpope/vim-fugitive"
   },
-  ["vim-floaterm"] = {
+  ["vim-gitgutter"] = {
     loaded = true,
-    path = "/home/laznp/.local/share/nvim/site/pack/packer/start/vim-floaterm",
-    url = "https://github.com/voldikss/vim-floaterm"
+    path = "/home/laznp/.local/share/nvim/site/pack/packer/start/vim-gitgutter",
+    url = "https://github.com/airblade/vim-gitgutter"
   }
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: nvim-tabline
-time([[Config for nvim-tabline]], true)
-try_loadstring("\27LJ\1\2|\0\0\2\0\4\0\a4\0\0\0%\1\1\0>\0\2\0027\0\2\0003\1\3\0>\0\2\1G\0\1\0\1\0\4\16show_modify\2\21modify_indicator\b\fno_name\14[No name]\15show_index\1\nsetup\ftabline\frequire\0", "config", "nvim-tabline")
-time([[Config for nvim-tabline]], false)
--- Config for: nvim-tree.lua
-time([[Config for nvim-tree.lua]], true)
-try_loadstring("\27LJ\1\2;\0\0\2\0\3\0\a4\0\0\0%\1\1\0>\0\2\0027\0\2\0002\1\0\0>\0\2\1G\0\1\0\nsetup\14nvim-tree\frequire\0", "config", "nvim-tree.lua")
-time([[Config for nvim-tree.lua]], false)
 if should_profile then save_profiles() end
 
 end)

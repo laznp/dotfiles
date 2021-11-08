@@ -13,10 +13,10 @@ return require('packer').startup(function()
     use "airblade/vim-gitgutter"
     use "tpope/vim-fugitive"
 	use 'nvim-lualine/lualine.nvim'
+	use "crispgm/nvim-tabline"
 	use {
 		'kyazdani42/nvim-tree.lua',
 		requires = 'kyazdani42/nvim-web-devicons',
-		config = function() require'nvim-tree'.setup {} end
 	}
 	use {
 		'ibhagwan/fzf-lua',
@@ -24,17 +24,6 @@ return require('packer').startup(function()
 			'vijaymarupudi/nvim-fzf',
 			'kyazdani42/nvim-web-devicons'
 		}
-	}
-	use {
-		'crispgm/nvim-tabline',
-		config = function()
-			require('tabline').setup({
-				show_index = false,
-				show_modify = true,
-				modify_indicator = '',
-				no_name = '[No name]',
-			})
-		end
 	}
 
 end)
