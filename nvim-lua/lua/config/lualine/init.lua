@@ -9,7 +9,7 @@ require('lualine').setup({
 	},
 	sections = {
 		lualine_a = {'mode'},
-		lualine_b = {'branch', 'diff', {'diagnostics', sources = {'nvim_lsp', 'coc'}}},
+		lualine_b = {'diff', {'diagnostics', sources = {'nvim_lsp', 'coc'}}, {'b:gitsigns_head', icon = ''}, },
 		lualine_c = {'filename'},
 		lualine_x = {'filetype'},
 		lualine_y = {'progress'},
@@ -22,6 +22,7 @@ require('lualine').setup({
 		lualine_x = {},
 		lualine_y = {},
 		lualine_z = {'hostname'}
-	}
+	},
+	extentions = {'fzf','nvim-tree'}
 })
 

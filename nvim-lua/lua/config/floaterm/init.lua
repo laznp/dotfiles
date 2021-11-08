@@ -1,8 +1,22 @@
-require'FTerm'.setup({
-    border = 'double',
-    dimensions  = {
-        height = 0.9,
-        width = 0.9,
-    },
-	blend = 5,
-})
+require("toggleterm").setup{
+	size = 20,
+	open_mapping = [[<F3>]],
+	hide_numbers = true,
+	shade_filetypes = {},
+	shade_terminals = true,
+	shading_factor = '1',
+	start_in_insert = true,
+	insert_mappings = true,
+	persist_size = true,
+	direction = 'float',
+	close_on_exit = true,
+	shell = vim.o.shell,
+	float_opts = {
+		border = 'curved',
+		winblend = 5,
+		highlights = {
+			border = "Normal",
+			background = "Normal",
+		}
+	}
+}

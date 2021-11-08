@@ -13,7 +13,6 @@ vim.o.fileencoding = "utf-8"
 vim.o.mouse = 'a'
 vim.o.foldmethod = "indent"
 vim.o.foldlevelstart = 99
-vim.o.completeopt = "menuone,noselect"
 vim.o.cursorline = true
 vim.o.cursorcolumn = true
 vim.o.list = true
@@ -27,20 +26,15 @@ vim.o.showmode = false
 vim.o.showtabline = 4
 vim.o.clipboard = vim.o.clipboard .. 'unnamedplus'
 vim.o.shortmess = vim.o.shortmess .. 'c'
+vim.o.pumheight = 10
 vim.g.syntax = "enable"
+vim.g.completeopt = "menu,menuone,noselect,noinsert"
+vim.cmd("filetype plugin indent on")
 vim.cmd("set formatoptions-=cro")
 vim.cmd("set complete+=kspell")
 vim.cmd("set listchars=tab:•·")
 vim.cmd("command! Reload execute 'source ~/.config/nvim/init.lua'")
 vim.cmd("command! Vimrc execute ':e ~/.config/nvim/init.lua'")
 vim.api.nvim_exec([[
-	au BufNewFile,BufRead *.py set autoindent tabstop=4 softtabstop=4 shiftwidth=4 expandtab
-	au BufNewFile,BufRead *.go set autoindent tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
-	au BufNewFile,BufRead *.lua set autoindent tabstop=4 softtabstop=4 shiftwidth=4 expandtab
-	au BufNewFile,BufRead *.{yaml,yml} set autoindent tabstop=2 softtabstop=2 shiftwidth=2 expandtab
-	au BufNewFile,BufRead *.json set autoindent tabstop=4 softtabstop=4 shiftwidth=4 expandtab
-	au BufNewFile,BufRead *.rasi setf css
-	au BufNewFile,BufRead *.rasi set autoindent tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 	au BufWritePre,BufRead * :%s/\s\+$//e
-
 ]],false)

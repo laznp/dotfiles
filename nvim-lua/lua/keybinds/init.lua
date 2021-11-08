@@ -50,5 +50,5 @@ map('n', '<C-b>', ':FzfLua buffers<CR>', { noremap = true, silent = true })
 map('n', '<CR>', ':noh<CR><CR>', { noremap = true, silent = true })
 
 -- launch fterm
-map('n', '<F3>', ':lua require("FTerm").toggle()<CR>', { noremap = true, silent = true })
-map('t', '<F3>', 'exit<CR>', { noremap = true, silent = true }) -- send exit command to terminal
+--map('n', '<F3>', ':lua require("FTerm").toggle()<CR>', { noremap = true, silent = true })
+--map('t', '<F3>', 'exit<CR>', { noremap = true, silent = true }) -- send exit command to terminal
