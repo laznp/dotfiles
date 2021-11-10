@@ -29,10 +29,6 @@ map('n', '<S-TAB>', ':bprev<CR>', { noremap = true, silent = true })
 map('n', '<TAB>', ':bnext<CR>', { noremap = true, silent = true })
 map('n', '<S-q>', ':bdelete<CR>', { noremap = true, silent = true })
 
--- autocomplete
---map('i', '<expr><TAB>', 'pumvisible() ? \"\\<C-n>\" : \"\\<TAB>\"', { noremap = true, silent = true })
---map('i', '<expr><S-TAB>', 'pumvisible() ? \"\\<C-p>\" : \"\\<TAB>\"', { noremap = true, silent = true })
-
 -- nerdcommenter
 map('n', '<C-_>', '<Plug>NERDCommenterToggle', { silent = true })
 map('n', '<C-/>', '<Plug>NERDCommenterToggle', { noremap = true, silent = true })
@@ -43,12 +39,16 @@ map('v', '<C-/>', '<Plug>NERDCommenterToggle<CR>gv', { noremap = true, silent = 
 map('n', '<C-f>', ':FzfLua files<CR>', { noremap = true, silent = true })
 map('n', '<C-b>', ':FzfLua buffers<CR>', { noremap = true, silent = true })
 map('n', '<C-g>', ':FzfLua grep<CR>', { noremap = true, silent = true })
---map('n', '<C-f>', ':Telescope find_files<CR>', { noremap = true, silent = true })
---map('n', '<C-b>', ':Telescope buffers<CR>', { noremap = true, silent = true })
---
+
 -- clear search
 map('n', '<CR>', ':noh<CR><CR>', { noremap = true, silent = true })
 
--- launch fterm
---map('n', '<F3>', ':lua require("FTerm").toggle()<CR>', { noremap = true, silent = true })
---map('t', '<F3>', 'exit<CR>', { noremap = true, silent = true }) -- send exit command to terminal
+-- selection right with shift
+-- map('n', '<S-l>', 'v<Right>', { noremap = true, silent = true})
+-- map('i', '<S-Right>', '<C-o><Right><ESC>v<Right>', { noremap = true, silent = true})
+-- map('v', '<S-l>', '<Right>', { noremap = true, silent = true})
+
+-- selection left with shift
+-- map('n', '<S-h>', 'v<Left>', { noremap = true, silent = true})
+-- map('i', '<S-Left>', '<ESC>v<Left>', { noremap = true, silent = true})
+-- map('v', '<S-h>', '<Left>', { noremap = true, silent = true})

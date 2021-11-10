@@ -9,6 +9,7 @@ end
 
 -- Setup nvim-cmp.
 local cmp = require'cmp'
+local lspkind = require('lspkind')
 
 cmp.setup({
 	snippet = {
@@ -50,14 +51,19 @@ cmp.setup({
 			end
 		end, { "i", "s" }),
 	},
+	formatting = {
+		format = lspkind.cmp_format({with_text = false, maxwidth = 50})
+	},
 	sources = cmp.config.sources({
 		{ name = 'nvim_lsp' },
-		{ name = 'vsnip' }, -- For vsnip users.
-		-- { name = 'luasnip' }, -- For luasnip users.
-		-- { name = 'ultisnips' }, -- For ultisnips users.
-		-- { name = 'snippy' }, -- For snippy users.
-	}, {
-			{ name = 'buffer' },
-		})
+		{ name = 'vsnip' },
+		{ name = 'buffer' },
+	})
 })
 
+local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+
+for type, icon in pairs(signs) do
+	local hl = "DiagnosticSign" .. type
+	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end

@@ -12,5 +12,6 @@ require('config.fzflua')
 require('config.nvimtree')
 require('config.lualine')
 require('config.tabline')
--- require('config.autocomplete')
---
+require('config.lsp.cmp')
+require('config.lsp.servers')
+require('config.lsp.saga')

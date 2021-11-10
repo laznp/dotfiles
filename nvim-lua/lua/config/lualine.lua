@@ -1,3 +1,7 @@
+vim.api.nvim_exec([[
+	au BufEnter,BufWinEnter,WinEnter,CmdwinEnter * if bufname('%') == "NvimTree" | set laststatus=0 | else | set laststatus=2 | endif
+]], false)
+
 local function diff_source()
   local gitsigns = vim.b.gitsigns_status_dict
   if gitsigns then
@@ -9,6 +13,41 @@ local function diff_source()
   end
 end
 
+
+local function set_mode()
+	local map_mode = {
+	['n']    = '',
+	['no']   = '',
+	['nov']  = '',
+	['noV']  = '',
+	['no'] = '',
+	['niI']  = '',
+	['niR']  = '',
+	['niV']  = '',
+	['i']   = '',
+	['ic']  = '',
+	['ix']  = '',
+	['s']   = '',
+	['S']   = '',
+	['v']   = '',
+	['V']   = '',
+	['']  = '',
+	['r']   = '﯒',
+	['r?']  = '',
+	['c']   = '',
+	['t']   = '',
+	['!']   = '',
+	['R']   = '',
+	}
+	local mode_code = vim.fn.mode()
+	return map_mode[mode_code]
+end
+
+local function set_filename()
+	return vim.fn.expand('%:f')
+end
+
+
 require'lualine'.setup {
   options = {
     icons_enabled = true,
@@ -19,10 +58,10 @@ require'lualine'.setup {
     always_divide_middle = true,
   },
   sections = {
-    lualine_a = {'mode'},
-    lualine_b = {{'diff', source=diff_source}, 'branch', 
+    lualine_a = { set_mode },
+    lualine_b = {{'diff', source=diff_source}, 'branch',
                   {'diagnostics', sources={'nvim_lsp', 'coc'}}},
-    lualine_c = {'filename'},
+    lualine_c = {set_filename},
     lualine_x = {'filetype'},
     lualine_y = {'progress'},
     lualine_z = {'location'}

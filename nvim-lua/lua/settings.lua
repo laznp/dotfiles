@@ -20,7 +20,7 @@ vim.o.background = "dark"
 vim.o.splitbelow = true
 vim.o.splitright = true
 vim.o.termguicolors = true
-vim.o.wrap = true
+vim.o.wrap = false
 vim.o.swapfile = false
 vim.o.showmode = false
 vim.o.showtabline = 2
@@ -36,7 +36,7 @@ vim.cmd("set complete+=kspell")
 vim.cmd("set listchars=tab:•·")
 vim.cmd("command! Reload execute 'source ~/.config/nvim/init.lua'")
 vim.cmd("command! Vimrc execute ':e ~/.config/nvim/init.lua'")
---vim.api.nvim_exec([[
-	--au BufWritePre,BufRead * :%s/\s\+$//e
---]],false)
+vim.api.nvim_exec([[
+	au BufWritePre,BufRead * :%s/\s\+$//e
+]],false)
 

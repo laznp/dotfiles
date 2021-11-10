@@ -4,17 +4,17 @@ vim.g.nvim_tree_icons = {
     default = '',
     symlink = '',
     git = {
-       unstaged = "✗",
-       staged = "✓",
+       unstaged = "",
+       staged = "",
        unmerged = "",
        renamed = "➜",
-       untracked = "★",
-       deleted = "",
-       ignored = "◌"
-       },
+       untracked = "﯂",
+       deleted = "",
+       ignored = ""
+    },
     folder = {
-       arrow_open = "",
-       arrow_closed = "",
+       arrow_open = "",
+       arrow_closed = "",
        default = "",
        open = "",
        empty = "",
@@ -22,7 +22,7 @@ vim.g.nvim_tree_icons = {
        symlink = "",
        symlink_open = "",
        }
-     }
+}
 
 
 require'nvim-tree'.setup {
