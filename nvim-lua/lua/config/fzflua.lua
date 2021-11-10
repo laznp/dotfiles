@@ -1,53 +1,29 @@
 local actions = require "fzf-lua.actions"
 require'fzf-lua'.setup {
   winopts = {
-    -- split         = "belowright new",-- open in a split instead?
-                                        -- "belowright new"  : split below
-                                        -- "aboveleft new"   : split above
-                                        -- "belowright vnew" : split right
-                                        -- "aboveleft vnew   : split left
-    -- Only valid when using a float window
-    -- (i.e. when 'split' is not defined)
     height           = 0.85,            -- window height
     width            = 0.80,            -- window width
     row              = 0.35,            -- window row position (0=top, 1=bottom)
     col              = 0.50,            -- window col position (0=left, 1=right)
-    -- border argument passthrough to nvim_open_win(), also used
-    -- to manually draw the border characters around the preview
-    -- window, can be set to 'false' to remove all borders or to
-    -- 'none', 'single', 'double' or 'rounded' (default)
     border           = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
     fullscreen       = false,           -- start fullscreen?
     hl = {
       normal         = 'Normal',        -- window normal color (fg+bg)
       border         = 'Normal',        -- border color (try 'FloatBorder')
-      -- Only valid with the builtin previewer:
       cursor         = 'Cursor',        -- cursor highlight (grep/LSP matches)
       cursorline     = 'CursorLine',    -- cursor line
-      -- title       = 'Normal',        -- preview border title (file/buffer)
-      -- scrollbar_f = 'PmenuThumb',    -- scrollbar "full" section highlight
-      -- scrollbar_e = 'PmenuSbar',     -- scrollbar "empty" section highlight
     },
     preview = {
-      -- default     = 'bat',           -- override the default previewer?
-                                        -- default uses the 'builtin' previewer
       border         = 'border',        -- border|noborder, applies only to
-                                        -- native fzf previewers (bat/cat/git/etc)
       wrap           = 'nowrap',        -- wrap|nowrap
       hidden         = 'nohidden',      -- hidden|nohidden
       vertical       = 'down:45%',      -- up|down:size
       horizontal     = 'right:60%',     -- right|left:size
       layout         = 'flex',          -- horizontal|vertical|flex
       flip_columns   = 120,             -- #cols to switch to horizontal on flex
-      -- Only valid with the builtin previewer:
       title          = true,            -- preview border title (file/buf)?
       scrollbar      = 'float',         -- `false` or string:'float|border'
-                                        -- float:  in-window floating border 
-                                        -- border: in-border chars (see below)
-      scrolloff      = '-2',            -- float scrollbar offset from right
-                                        -- applies only when scrollbar = 'float'
       scrollchars    = {'█', '' },      -- scrollbar chars ({ <full>, <empty> }
-                                        -- applies only when scrollbar = 'border'
     },
     on_create = function()
       -- called once upon creation of the fzf main window
@@ -57,9 +33,6 @@ require'fzf-lua'.setup {
     end,
   },
   keymap = {
-    -- These override the default tables completely
-    -- no need to set to `false` to disable a bind
-    -- delete or modify is sufficient
     builtin = {
       -- neovim `:tmap` mappings for the fzf win
       ["<F2>"]        = "toggle-fullscreen",
@@ -82,26 +55,14 @@ require'fzf-lua'.setup {
       ["ctrl-a"]      = "beginning-of-line",
       ["ctrl-e"]      = "end-of-line",
       ["alt-a"]       = "toggle-all",
-      -- Only valid with fzf previewers (bat/cat/git/etc)
-      ["f3"]          = "toggle-preview-wrap",
-      ["f4"]          = "toggle-preview",
-      ["shift-down"]  = "preview-page-down",
-      ["shift-up"]    = "preview-page-up",
     },
   },
-  -- use skim instead of fzf?
-  -- https://github.com/lotabout/skim
-  -- fzf_bin          = 'sk',
   fzf_opts = {
-    -- options are sent as `<left>=<right>`
-    -- set to `false` to remove a flag
-    -- set to '' for a non-value flag
-    -- for raw args use `fzf_args` instead
     ['--ansi']        = '',
     ['--prompt']      = '> ',
     ['--info']        = 'inline',
     ['--height']      = '100%',
-    ['--layout']      = 'reverse',
+    ['--layout']      = 'default',
   },
   -- fzf '--color=' options (optional)
   --[[ fzf_colors = {
@@ -143,7 +104,6 @@ require'fzf-lua'.setup {
     },
     builtin = {
       delay           = 100,          -- delay(ms) displaying the preview
-                                      -- prevents lag on fast scrolling
       syntax          = true,         -- preview syntax highlight?
       syntax_limit_l  = 0,            -- syntax limit (lines), 0=nolimit
       syntax_limit_b  = 1024*1024,    -- syntax limit (bytes), 0=nolimit
@@ -152,14 +112,14 @@ require'fzf-lua'.setup {
   -- provider setup
   files = {
     -- previewer         = "cat",       -- uncomment to override previewer
-    prompt            = 'Files❯ ',
+    prompt            = '  ',
     cmd               = '',             -- "find . -type f -printf '%P\n'",
     git_icons         = true,           -- show git icons?
     file_icons        = true,           -- show file icons?
     color_icons       = true,           -- colorize file|git icons
     actions = {
       -- set bind to 'false' to disable
-      ["default"]     = actions.file_tabedit,
+      ["default"]     = actions.file_edit,
       ["ctrl-s"]      = actions.file_split,
       ["ctrl-v"]      = actions.file_vsplit,
       ["ctrl-t"]      = actions.file_tabedit,
@@ -170,14 +130,14 @@ require'fzf-lua'.setup {
   },
   git = {
     files = {
-      prompt          = 'GitFiles❯ ',
+      prompt          = ' ',
       cmd             = 'git ls-files --exclude-standard',
       git_icons       = true,           -- show git icons?
       file_icons      = true,           -- show file icons?
       color_icons     = true,           -- colorize file|git icons
     },
     status = {
-      prompt        = 'GitStatus❯ ',
+      prompt        = ' ',
       cmd           = "git status -s",
       previewer     = "git_diff",
       file_icons    = true,
@@ -185,7 +145,7 @@ require'fzf-lua'.setup {
       color_icons   = true,
     },
     commits = {
-      prompt          = 'Commits❯ ',
+      prompt          = '  ',
       cmd             = "git log --pretty=oneline --abbrev-commit --color",
       preview         = "git show --pretty='%Cred%H%n%Cblue%an%n%Cgreen%s' --color {1}",
       actions = {
@@ -193,7 +153,7 @@ require'fzf-lua'.setup {
       },
     },
     bcommits = {
-      prompt          = 'BCommits❯ ',
+      prompt          = '  ',
       cmd             = "git log --pretty=oneline --abbrev-commit --color",
       preview         = "git show --pretty='%Cred%H%n%Cblue%an%n%Cgreen%s' --color {1}",
       actions = {
@@ -204,7 +164,7 @@ require'fzf-lua'.setup {
       },
     },
     branches = {
-      prompt          = 'Branches❯ ',
+      prompt          = ' ',
       cmd             = "git branch --all --color",
       preview         = "git log --graph --pretty=oneline --abbrev-commit --color {1}",
       actions = {
@@ -274,7 +234,7 @@ require'fzf-lua'.setup {
     }
   },
   colorschemes = {
-    prompt            = 'Colorschemes❯ ',
+    prompt            = '  ',
     live_preview      = true,       -- apply the colorscheme on preview?
     actions = {
       ["default"]     = actions.colorscheme,

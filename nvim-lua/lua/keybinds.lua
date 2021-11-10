@@ -1,8 +1,5 @@
 local map = vim.api.nvim_set_keymap
 vim.g.mapleader = ' '
--- clear highlight
-map('n', '<Leader>`', ':noh<CR>', { noremap = true, silent = true })
-
 -- toogle file explorer
 map('n', '<F2>', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
 
@@ -30,11 +27,11 @@ map('i', '<C-l>', '<Right>', { noremap = true, silent = true })
 -- tab buffer movement
 map('n', '<S-TAB>', ':bprev<CR>', { noremap = true, silent = true })
 map('n', '<TAB>', ':bnext<CR>', { noremap = true, silent = true })
-map('n', '<Leader>w', ':bdelete<CR>', { noremap = true, silent = true })
+map('n', '<S-q>', ':bdelete<CR>', { noremap = true, silent = true })
 
 -- autocomplete
-map('i', '<expr><TAB>', 'pumvisible() ? \"\\<C-n>\" : \"\\<TAB>\"', { noremap = true, silent = true })
-map('i', '<expr><S-TAB>', 'pumvisible() ? \"\\<C-p>\" : \"\\<TAB>\"', { noremap = true, silent = true })
+--map('i', '<expr><TAB>', 'pumvisible() ? \"\\<C-n>\" : \"\\<TAB>\"', { noremap = true, silent = true })
+--map('i', '<expr><S-TAB>', 'pumvisible() ? \"\\<C-p>\" : \"\\<TAB>\"', { noremap = true, silent = true })
 
 -- nerdcommenter
 map('n', '<C-_>', '<Plug>NERDCommenterToggle', { silent = true })
@@ -45,6 +42,7 @@ map('v', '<C-/>', '<Plug>NERDCommenterToggle<CR>gv', { noremap = true, silent = 
 -- fzf
 map('n', '<C-f>', ':FzfLua files<CR>', { noremap = true, silent = true })
 map('n', '<C-b>', ':FzfLua buffers<CR>', { noremap = true, silent = true })
+map('n', '<C-g>', ':FzfLua grep<CR>', { noremap = true, silent = true })
 --map('n', '<C-f>', ':Telescope find_files<CR>', { noremap = true, silent = true })
 --map('n', '<C-b>', ':Telescope buffers<CR>', { noremap = true, silent = true })
 --

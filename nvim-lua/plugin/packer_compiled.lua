@@ -69,31 +69,6 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
-  ["cmp-buffer"] = {
-    loaded = true,
-    path = "/home/laznp/.local/share/nvim/site/pack/packer/start/cmp-buffer",
-    url = "https://github.com/hrsh7th/cmp-buffer"
-  },
-  ["cmp-cmdline"] = {
-    loaded = true,
-    path = "/home/laznp/.local/share/nvim/site/pack/packer/start/cmp-cmdline",
-    url = "https://github.com/hrsh7th/cmp-cmdline"
-  },
-  ["cmp-nvim-lsp"] = {
-    loaded = true,
-    path = "/home/laznp/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp",
-    url = "https://github.com/hrsh7th/cmp-nvim-lsp"
-  },
-  ["cmp-path"] = {
-    loaded = true,
-    path = "/home/laznp/.local/share/nvim/site/pack/packer/start/cmp-path",
-    url = "https://github.com/hrsh7th/cmp-path"
-  },
-  ["cmp-vsnip"] = {
-    loaded = true,
-    path = "/home/laznp/.local/share/nvim/site/pack/packer/start/cmp-vsnip",
-    url = "https://github.com/hrsh7th/cmp-vsnip"
-  },
   ["fzf-lua"] = {
     loaded = true,
     path = "/home/laznp/.local/share/nvim/site/pack/packer/start/fzf-lua",
@@ -107,7 +82,7 @@ _G.packer_plugins = {
   ["lualine.nvim"] = {
     loaded = true,
     path = "/home/laznp/.local/share/nvim/site/pack/packer/start/lualine.nvim",
-    url = "https://github.com/nvim-lualine/lualine.nvim"
+    url = "https://github.com/hoob3rt/lualine.nvim"
   },
   nerdcommenter = {
     loaded = true,
@@ -119,11 +94,6 @@ _G.packer_plugins = {
     path = "/home/laznp/.local/share/nvim/site/pack/packer/start/nvim-autopairs",
     url = "https://github.com/windwp/nvim-autopairs"
   },
-  ["nvim-cmp"] = {
-    loaded = true,
-    path = "/home/laznp/.local/share/nvim/site/pack/packer/start/nvim-cmp",
-    url = "https://github.com/hrsh7th/nvim-cmp"
-  },
   ["nvim-colorizer.lua"] = {
     loaded = true,
     path = "/home/laznp/.local/share/nvim/site/pack/packer/start/nvim-colorizer.lua",
@@ -133,16 +103,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/laznp/.local/share/nvim/site/pack/packer/start/nvim-fzf",
     url = "https://github.com/vijaymarupudi/nvim-fzf"
-  },
-  ["nvim-lspconfig"] = {
-    loaded = true,
-    path = "/home/laznp/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
-    url = "https://github.com/neovim/nvim-lspconfig"
-  },
-  ["nvim-tabline"] = {
-    loaded = true,
-    path = "/home/laznp/.local/share/nvim/site/pack/packer/start/nvim-tabline",
-    url = "https://github.com/crispgm/nvim-tabline"
   },
   ["nvim-tree.lua"] = {
     loaded = true,
@@ -174,30 +134,15 @@ _G.packer_plugins = {
     path = "/home/laznp/.local/share/nvim/site/pack/packer/start/plenary.nvim",
     url = "https://github.com/nvim-lua/plenary.nvim"
   },
-  ["shade.nvim"] = {
+  ["tabline.nvim"] = {
     loaded = true,
-    path = "/home/laznp/.local/share/nvim/site/pack/packer/start/shade.nvim",
-    url = "https://github.com/sunjon/shade.nvim"
-  },
-  ["staline.nvim"] = {
-    loaded = true,
-    path = "/home/laznp/.local/share/nvim/site/pack/packer/start/staline.nvim",
-    url = "https://github.com/tamton-aquib/staline.nvim"
-  },
-  ["telescope.nvim"] = {
-    loaded = true,
-    path = "/home/laznp/.local/share/nvim/site/pack/packer/start/telescope.nvim",
-    url = "https://github.com/nvim-telescope/telescope.nvim"
+    path = "/home/laznp/.local/share/nvim/site/pack/packer/start/tabline.nvim",
+    url = "https://github.com/kdheepak/tabline.nvim"
   },
   ["toggleterm.nvim"] = {
     loaded = true,
     path = "/home/laznp/.local/share/nvim/site/pack/packer/start/toggleterm.nvim",
     url = "https://github.com/akinsho/toggleterm.nvim"
-  },
-  ["vim-vsnip"] = {
-    loaded = true,
-    path = "/home/laznp/.local/share/nvim/site/pack/packer/start/vim-vsnip",
-    url = "https://github.com/hrsh7th/vim-vsnip"
   }
 }
 

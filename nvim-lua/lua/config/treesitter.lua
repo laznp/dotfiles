@@ -1,7 +1,7 @@
 require'nvim-treesitter.configs'.setup {
 	ensure_installed = {
 		'c','python','bash','rust',
-		'cpp','hcl','lua','vim',
+		'cpp','hcl','lua','vim', 'dockerfile',
 		'go','javascript','css','html'
 	},
 	indent = {
