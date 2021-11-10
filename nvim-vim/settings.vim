@@ -6,10 +6,12 @@ set tabstop=4 shiftwidth=4
 set backspace=indent,eol,start
 set autoindent
 set showmatch
+set noshowmode
 set nowrap
 set noswapfile
 set incsearch
 set hlsearch
+
 set fileformat=unix
 set encoding=utf-8
 set fileencoding=utf-8
@@ -29,6 +31,7 @@ set listchars=tab:•·
 set background=dark
 set splitbelow
 set splitright
+set showtabline=2
 highlight Comment cterm=italic gui=italic
 
 

@@ -69,11 +69,6 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
-  ["FTerm.nvim"] = {
-    loaded = true,
-    path = "/home/laznp/.local/share/nvim/site/pack/packer/start/FTerm.nvim",
-    url = "https://github.com/numtostr/FTerm.nvim"
-  },
   ["cmp-buffer"] = {
     loaded = true,
     path = "/home/laznp/.local/share/nvim/site/pack/packer/start/cmp-buffer",
@@ -178,6 +173,21 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/laznp/.local/share/nvim/site/pack/packer/start/plenary.nvim",
     url = "https://github.com/nvim-lua/plenary.nvim"
+  },
+  ["shade.nvim"] = {
+    loaded = true,
+    path = "/home/laznp/.local/share/nvim/site/pack/packer/start/shade.nvim",
+    url = "https://github.com/sunjon/shade.nvim"
+  },
+  ["staline.nvim"] = {
+    loaded = true,
+    path = "/home/laznp/.local/share/nvim/site/pack/packer/start/staline.nvim",
+    url = "https://github.com/tamton-aquib/staline.nvim"
+  },
+  ["telescope.nvim"] = {
+    loaded = true,
+    path = "/home/laznp/.local/share/nvim/site/pack/packer/start/telescope.nvim",
+    url = "https://github.com/nvim-telescope/telescope.nvim"
   },
   ["toggleterm.nvim"] = {
     loaded = true,

@@ -9,6 +9,7 @@ endif
 " Vim Plug
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'preservim/nerdcommenter'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -25,5 +26,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'voldikss/vim-floaterm'
 Plug 'vim-syntastic/syntastic'
 Plug 'norcalli/nvim-colorizer.lua'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'jiangmiao/auto-pairs'
 call plug#end()
 lua require'colorizer'.setup()

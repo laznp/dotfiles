@@ -7,11 +7,11 @@ nnoremap <C-/> <Plug>NERDCommenterToggle
 vnoremap <C-/> <Plug>NERDCommenterToggle<CR>gv
 
 " nerdtree
-nnoremap <F2> :NERDTreeToggle<CR>
+nnoremap <silent> <F2> :NERDTreeToggle<CR>
 
 " fzf
-nnoremap <C-f> :Files<CR>
-nnoremap <C-b> :Buffers<CR>
+nnoremap <silent> <C-f> :Files<CR>
+nnoremap <silent> <C-b> :Buffers<CR>
 
 " split window
 nnoremap <leader>v :vsp<CR>
@@ -35,9 +35,9 @@ inoremap <C-k> <Up>
 inoremap <C-l> <Right>
 
 " tab buffer movement
-nnoremap <S-TAB> :bp<CR>
-nnoremap <TAB> :bn<CR>
-nnoremap <leader>w :bd<CR>
+nnoremap <silent> <S-TAB> :bp<CR>
+nnoremap <silent> <TAB> :bn<CR>
+nnoremap <silent> <S-q> :bd<CR>
 
 " fold
 nnoremap <F6> za
@@ -50,8 +50,18 @@ nnoremap <silent> <CR> :noh<CR><CR>
 
 " autocomplete
 inoremap <expr><TAB> pumvisible() ? "<C-n>" : "<TAB>"
-inoremap <expr><S-TAB> pumvisible() ? "<C-p>" : "<TAB>"
+inoremap <expr><S-TAB> pumvisible() ? "<C-p>" : "<S-TAB>"
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
+" selection left with shift
+nnoremap <S-h> v<left>
+inoremap <S-left> <esc>v<left>
+vnoremap <S-h> <left>
+
+" selection right with shift
+nnoremap <S-l> v<right>
+inoremap <S-right> <c-o><right><esc>v<right>
+vnoremap <S-l> <right>
 
 " template
 nnoremap \py :-1read $HOME/.config/nvim/template/py<CR>2jf:a

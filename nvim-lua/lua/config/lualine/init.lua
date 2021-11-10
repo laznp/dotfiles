@@ -21,7 +21,7 @@ require('lualine').setup({
 		lualine_c = {},
 		lualine_x = {},
 		lualine_y = {},
-		lualine_z = {'hostname'}
+		lualine_z = {'hostname'},
 	},
 	extentions = {'fzf','nvim-tree'}
 })

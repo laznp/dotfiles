@@ -1,7 +1,7 @@
 vim.o.number = true
 vim.o.relativenumber = true
-vim.o.tabstop = 4
-vim.o.shiftwidth = 4
+--vim.o.tabstop = 4
+--vim.o.shiftwidth = 4
 vim.o.backspace = "indent,eol,start"
 vim.o.autoindent = true
 vim.o.showmatch = true
@@ -23,7 +23,8 @@ vim.o.termguicolors = true
 vim.o.wrap = true
 vim.o.swapfile = false
 vim.o.showmode = false
-vim.o.showtabline = 4
+vim.o.showtabline = 2
+vim.o.laststatus = 2
 vim.o.clipboard = vim.o.clipboard .. 'unnamedplus'
 vim.o.shortmess = vim.o.shortmess .. 'c'
 vim.o.pumheight = 10
@@ -35,6 +36,7 @@ vim.cmd("set complete+=kspell")
 vim.cmd("set listchars=tab:•·")
 vim.cmd("command! Reload execute 'source ~/.config/nvim/init.lua'")
 vim.cmd("command! Vimrc execute ':e ~/.config/nvim/init.lua'")
-vim.api.nvim_exec([[
-	au BufWritePre,BufRead * :%s/\s\+$//e
-]],false)
+--vim.api.nvim_exec([[
+	--au BufWritePre,BufRead * :%s/\s\+$//e
+--]],false)
+

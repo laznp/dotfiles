@@ -11,8 +11,8 @@ window:
   #  y: 0
 
   padding:
-    x: 15
-    y: 15
+    x: 25
+    y: 25
 
   # Spread additional padding evenly around the terminal content.
   #dynamic_padding: false
@@ -79,7 +79,7 @@ font:
     style: Medium
   bold_italic:
     family: FiraCode Nerd Font
-    style: Italic
+    style: Medium
 
   # Point size
   size: 9.0

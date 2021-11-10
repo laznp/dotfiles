@@ -11,11 +11,11 @@ map('n', '<C-h>', '<C-w>h', { noremap = true, silent = true })
 map('n', '<C-j>', '<C-w>j', { noremap = true, silent = true })
 map('n', '<C-k>', '<C-w>k', { noremap = true, silent = true })
 map('n', '<C-l>', '<C-w>l', { noremap = true, silent = true })
+map('n', '<C-q>', '<C-w>q', { noremap = true, silent = true })
 
 -- split window
 map('n', '<Leader>v', ':vsp<CR>', { noremap = true, silent = true })
 map('n', '<Leader>h', ':sp<CR>', { noremap = true, silent = true })
-map('n', '<Leader>q', '<C-w>q', { noremap = true, silent = true })
 
 -- indenting
 map('v', '<', '<gv', { noremap = true, silent = true })
@@ -28,9 +28,9 @@ map('i', '<C-k>', '<Up>', { noremap = true, silent = true })
 map('i', '<C-l>', '<Right>', { noremap = true, silent = true })
 
 -- tab buffer movement
-map('n', '<S-TAB>', ':bp<CR>', { noremap = true, silent = true })
-map('n', '<TAB>', ':bn<CR>', { noremap = true, silent = true })
-map('n', '<Leader>w', ':bd<CR>', { noremap = true, silent = true })
+map('n', '<S-TAB>', ':bprev<CR>', { noremap = true, silent = true })
+map('n', '<TAB>', ':bnext<CR>', { noremap = true, silent = true })
+map('n', '<Leader>w', ':bdelete<CR>', { noremap = true, silent = true })
 
 -- autocomplete
 map('i', '<expr><TAB>', 'pumvisible() ? \"\\<C-n>\" : \"\\<TAB>\"', { noremap = true, silent = true })
@@ -45,7 +45,9 @@ map('v', '<C-/>', '<Plug>NERDCommenterToggle<CR>gv', { noremap = true, silent = 
 -- fzf
 map('n', '<C-f>', ':FzfLua files<CR>', { noremap = true, silent = true })
 map('n', '<C-b>', ':FzfLua buffers<CR>', { noremap = true, silent = true })
-
+--map('n', '<C-f>', ':Telescope find_files<CR>', { noremap = true, silent = true })
+--map('n', '<C-b>', ':Telescope buffers<CR>', { noremap = true, silent = true })
+--
 -- clear search
 map('n', '<CR>', ':noh<CR><CR>', { noremap = true, silent = true })
 
