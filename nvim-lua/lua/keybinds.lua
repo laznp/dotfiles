@@ -47,12 +47,6 @@ map('n', '<CR>', ':noh<CR><CR>', { noremap = true, silent = true })
 map('n', '<S-h>', '0', { noremap = true, silent = true})
 map('n', '<S-l>', '$', { noremap = true, silent = true})
 
--- selection right with shift
--- map('n', '<S-l>', 'v<Right>', { noremap = true, silent = true})
--- map('i', '<S-Right>', '<C-o><Right><ESC>v<Right>', { noremap = true, silent = true})
--- map('v', '<S-l>', '<Right>', { noremap = true, silent = true})
-
--- selection left with shift
--- map('n', '<S-h>', 'v<Left>', { noremap = true, silent = true})
--- map('i', '<S-Left>', '<ESC>v<Left>', { noremap = true, silent = true})
--- map('v', '<S-h>', '<Left>', { noremap = true, silent = true})
+-- selection to beginning/end of line with shift
+map('v', '<S-l>', '$<Left>', { noremap = true, silent = true})
+map('v', '<S-h>', '0', { noremap = true, silent = true})

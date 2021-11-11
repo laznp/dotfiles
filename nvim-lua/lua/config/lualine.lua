@@ -59,13 +59,12 @@ require'lualine'.setup {
   },
   sections = {
     lualine_a = { set_mode },
-    lualine_b = {
-      {'diff', source=diff_source },
-      'branch',
-      {'diagnostics', sources={'nvim_lsp', 'coc'}}
+    lualine_b = { set_filename },
+    lualine_c = {'filetype'},
+    lualine_x = {
+        {'diff', source=diff_source }, 'branch',
+        {'diagnostics', sources={'nvim_lsp', 'coc'}}
     },
-    lualine_c = {set_filename},
-    lualine_x = {'filetype'},
     lualine_y = {'progress'},
     lualine_z = {'location'}
   },

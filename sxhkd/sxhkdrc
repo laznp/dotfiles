@@ -9,7 +9,7 @@ alt + ctrl + {Left,Right,space}
 	playerctl {previous,next,play-pause}
 
 # RELOAD SXHKD
-alt + Escape
+alt + ctrl + Escape
 	pkill -USR1 -x sxhkd ; notify-send 'SXHKD' 'Config Reloaded.'
 
 # RELOAD BSPWM
@@ -61,17 +61,14 @@ super + {Left,Down,Up,Right}
 # APPLICATION LAUNCHER KEYBIND
 # TERMINAL EMULATOR
 alt + Return
-	alacritty
+	alacritty -t "Alacritty"
 
 # ROFI PROGRAM LAUNCHER
 alt + space
 	rofi -no-lazy-grab -no-history -no-sort -show drun -modi ssh,drun,calc -theme /home/laznp/.config/rofi/config
 
 alt + shift + n
-	alacritty -e "ranger"
-
-alt + shift + p
-	spotify && sleep 2 && wmctrl -r Spotify -t 5
+	alacritty -t "Ranger" -e "ranger" && wmctrl -r "Ranger" -t 9
 
 Print
 	import png:- | xclip -selection clipboard -t image/png -filter && notify-send Screenshot 'Saved to clipboard.'
