@@ -1,6 +1,6 @@
 require('nvim-autopairs').setup{
-	check_ts = true,
-	disable_filetype = { "vim" },
+    check_ts = true,
+    disable_filetype = { "vim" },
 }
 local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 local cmp = require('cmp')

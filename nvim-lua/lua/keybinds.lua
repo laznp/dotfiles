@@ -43,6 +43,10 @@ map('n', '<C-g>', ':FzfLua grep<CR>', { noremap = true, silent = true })
 -- clear search
 map('n', '<CR>', ':noh<CR><CR>', { noremap = true, silent = true })
 
+-- jump to beginnig/end of line
+map('n', '<S-h>', '0', { noremap = true, silent = true})
+map('n', '<S-l>', '$', { noremap = true, silent = true})
+
 -- selection right with shift
 -- map('n', '<S-l>', 'v<Right>', { noremap = true, silent = true})
 -- map('i', '<S-Right>', '<C-o><Right><ESC>v<Right>', { noremap = true, silent = true})

@@ -1,7 +1,8 @@
 vim.o.number = true
 vim.o.relativenumber = true
---vim.o.tabstop = 4
---vim.o.shiftwidth = 4
+vim.o.tabstop = 4
+vim.o.shiftwidth = 4
+vim.o.expandtab = true
 vim.o.backspace = "indent,eol,start"
 vim.o.autoindent = true
 vim.o.showmatch = true
@@ -37,6 +38,6 @@ vim.cmd("set listchars=tab:•·")
 vim.cmd("command! Reload execute 'source ~/.config/nvim/init.lua'")
 vim.cmd("command! Vimrc execute ':e ~/.config/nvim/init.lua'")
 vim.api.nvim_exec([[
-	au BufWritePre,BufRead * :%s/\s\+$//e
+    au BufWritePre,BufRead * :%s/\s\+$//e
 ]],false)
 
