@@ -50,3 +50,7 @@ map('n', '<S-l>', '$', { noremap = true, silent = true})
 -- selection to beginning/end of line with shift
 map('v', '<S-l>', '$<Left>', { noremap = true, silent = true})
 map('v', '<S-h>', '0', { noremap = true, silent = true})
+
+map('n', '<S-j>', 'L', { noremap = true, silent = true})
+map('n', '<S-K>', 'H', { noremap = true, silent = true})
+
