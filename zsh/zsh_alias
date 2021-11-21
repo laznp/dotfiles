@@ -23,97 +23,90 @@ alias zsh_alias="nvim ~/.zsh_alias"
 alias i3rc="nvim ~/.config/i3/config"
 alias polybarrc="nvim ~/.config/polybar/config"
 
+function autoedit() {
+    if [ -z "$1" ]; then
+        exit 0
+    else
+        cd "$HOME/.config/$1"
+        nvim +NvimTreeToggle
+    fi
+}
+
 # Alias source zshrc
 alias reload="source $HOME/.zshrc"
 
 # Alias reverse proxy with port as arguments
 function publish() {
-	ssh -nN -R 11227:localhost:"$1" zoelabs
+    ssh -nN -R 11227:localhost:"$1" zoelabs
 }
 
 # Alias create new python virtualenv
 function pyenv() {
-	if [ -z "$1" ]; then
-		python3 -m venv venv
-	else
-		python3 -m venv "$1"
-	fi
+    if [ -z "$1" ]; then
+        python3 -m venv venv
+    else
+        python3 -m venv "$1"
+    fi
 }
 
 # Alias activating python virtualenv on directory
 function activate() {
-	if [ -z "$1" ]; then
-		source ./venv/bin/activate
-	else
-		source ./$1/bin/activate
-	fi
+    if [ -z "$1" ]; then
+        source ./venv/bin/activate
+    else
+        source ./$1/bin/activate
+    fi
 }
 
 function kube_del(){
-	if [ -z "1" ]; then
-		echo "No Context Found.."
-	else
-		kubectl config unset users."$1"
-		kubectl config unset clusters."$1"
-		kubectl config unset contexts."$1"
-	fi
-}
-
-function smf(){
-	IP_ADDR="103.78.96.226"
-	KEY_HOST="$HOME/.ssh/smf_rsa"
-	if [ "$1" = "docker" ]; then
-		ssh root@"$IP_ADDR" -i "$KEY_HOST" -p 2283
-	elif [ "$1" = "jenkins" ]; then
-		ssh root@"$IP_ADDR" -i "$KEY_HOST" -p 2282
-	elif [ "$1" = "gitlab" ]; then
-		ssh root@"$IP_ADDR" -i "$KEY_HOST" -p 2280
-	elif [ "$1" = "registry" ]; then
-		ssh root@"$IP_ADDR" -i "$KEY_HOST" -p 2281
-	elif [ "$1" = "monitoring" ]; then
-		ssh root@"$IP_ADDR" -i "$KEY_HOST" -p 2284
-	fi
+    if [ -z "1" ]; then
+        echo "No Context Found.."
+    else
+        kubectl config unset users."$1"
+        kubectl config unset clusters."$1"
+        kubectl config unset contexts."$1"
+    fi
 }
 
 function tkpssh() {
-	if [ $(echo $1 | \grep -E "^172.18" | wc -l) -eq 1 ]; then
-		ssh -i "~/.ssh/office-new-stag.pem" -l root $1
-	elif [ $(echo $1 | \grep -E "^172.21" | wc -l) -eq 1 ]; then
-		ssh -i "~/.ssh/office-prod.pem" -l root $1
-	elif [ $(echo $1 | \grep -E "^192.168" | wc -l) -eq 1 ]; then
-		ssh -i "~/.ssh/office-jenkins.pem" -l root $1
-	elif [ $(echo $1 | \grep -E "^10.21" | wc -l) -eq 1 ]; then
-		ssh -i "~/.ssh/office-gcp-stag.pem" -l root $1
-	elif [ $(echo $1 | \grep -E "^10.31" | wc -l) -eq 1 ]; then
-		ssh -i "~/.ssh/office-gcp-jenkins.pem" -l root $1
-	elif [ $(echo $1 | \grep -E "^10.41" | wc -l) -eq 1 ]; then
-		ssh -i "~/.ssh/office-gcp-prod.pem" -l root $1
-	elif [ "$1" = "teleport-prod" ]; then
-		ssh -i "~/.ssh/office-prod.pem" -l root 172.21.68.9
-	elif [ "$1" = "teleport-stag" ]; then
-		ssh -i "~/.ssh/office-new-stag.pem" -l root 172.18.71.176
-	else
-		echo "IP Address not recognize"
-	fi
+    if [ $(echo $1 | \grep -E "^172.18" | wc -l) -eq 1 ]; then
+        ssh -i "~/.ssh/office-new-stag.pem" -l root $1
+    elif [ $(echo $1 | \grep -E "^172.21" | wc -l) -eq 1 ]; then
+        ssh -i "~/.ssh/office-prod.pem" -l root $1
+    elif [ $(echo $1 | \grep -E "^192.168" | wc -l) -eq 1 ]; then
+        ssh -i "~/.ssh/office-jenkins.pem" -l root $1
+    elif [ $(echo $1 | \grep -E "^10.21" | wc -l) -eq 1 ]; then
+        ssh -i "~/.ssh/office-gcp-stag.pem" -l root $1
+    elif [ $(echo $1 | \grep -E "^10.31" | wc -l) -eq 1 ]; then
+        ssh -i "~/.ssh/office-gcp-jenkins.pem" -l root $1
+    elif [ $(echo $1 | \grep -E "^10.41" | wc -l) -eq 1 ]; then
+        ssh -i "~/.ssh/office-gcp-prod.pem" -l root $1
+    elif [ "$1" = "teleport-prod" ]; then
+        ssh -i "~/.ssh/office-prod.pem" -l root 172.21.68.9
+    elif [ "$1" = "teleport-stag" ]; then
+        ssh -i "~/.ssh/office-new-stag.pem" -l root 172.18.71.176
+    else
+        echo "IP Address not recognize"
+    fi
 }
 
 function vpn() {
-	if [ "$1" = "start" ]; then
-		sudo systemctl start wg-quick@wg0.service
-		echo "VPN Started"
-	elif [ "$1" = "stop" ]; then
-		sudo systemctl stop wg-quick@wg0.service
-		echo "VPN Stopped"
-	fi
+    if [ "$1" = "start" ]; then
+        sudo systemctl start wg-quick@wg0.service
+        echo "VPN Started"
+    elif [ "$1" = "stop" ]; then
+        sudo systemctl stop wg-quick@wg0.service
+        echo "VPN Stopped"
+    fi
 }
 
 function vimswitch() {
-	rm ~/.config/nvim || true
-	if [ "$1" = "lua" ]; then
-		ln -sf ~/projects/dotfiles/nvim-lua ~/.config/nvim
-	elif [ "$1" = "vim" ]; then
-		ln -sf ~/projects/dotfiles/nvim-vim ~/.config/nvim
-	fi
+    rm ~/.config/nvim || true
+    if [ "$1" = "lua" ]; then
+        ln -sf ~/projects/dotfiles/nvim-lua ~/.config/nvim
+    elif [ "$1" = "vim" ]; then
+        ln -sf ~/projects/dotfiles/nvim-vim ~/.config/nvim
+    fi
 }
 
 # Alias git command

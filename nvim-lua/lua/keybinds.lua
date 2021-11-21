@@ -43,14 +43,14 @@ map('n', '<C-g>', ':FzfLua grep<CR>', { noremap = true, silent = true })
 -- clear search
 map('n', '<CR>', ':noh<CR><CR>', { noremap = true, silent = true })
 
--- jump to beginnig/end of line
+-- jump to beginnig/end of line or jump to beginning/end of buffer paragraph
 map('n', '<S-h>', '0', { noremap = true, silent = true})
 map('n', '<S-l>', '$', { noremap = true, silent = true})
+map('n', '<S-j>', 'L', { noremap = true, silent = true})
+map('n', '<S-K>', 'H', { noremap = true, silent = true})
 
 -- selection to beginning/end of line with shift
 map('v', '<S-l>', '$<Left>', { noremap = true, silent = true})
 map('v', '<S-h>', '0', { noremap = true, silent = true})
 
-map('n', '<S-j>', 'L', { noremap = true, silent = true})
-map('n', '<S-K>', 'H', { noremap = true, silent = true})
 

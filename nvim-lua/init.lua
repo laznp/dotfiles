@@ -1,6 +1,8 @@
 require('settings')
 require('plugins')
 require('keybinds')
+require('keybinds')
+require('config.nodemcu')
 require('config.onedark')
 require('config.toggleterm')
 require('config.gitsigns')

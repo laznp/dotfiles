@@ -88,7 +88,7 @@ tray-position = right
 tray-padding = 0
 bottom = false
 ;tray-background = ${colors.background-alt}
-;wm-restack = bspwm
+wm-restack = bspwm
 ;wm-restack = i3
 ;override-redirect = true
 ;scroll-up = bspwm-desknext
@@ -410,7 +410,7 @@ format-foreground = ${colors.od-blue}
 
 [module/ping]
 type = custom/script
-exec = ping -c 1 8.8.8.8 | grep -o 'time=.*' | sed -e 's/time=//g' -e 's/\ //g'
+exec = ping -c 1 google.com | grep -o 'time=.*' | sed -e 's/time=//g' -e 's/\ //g'
 interval = 5
 format =  <label>
 format-foreground = ${colors.od-purple}
