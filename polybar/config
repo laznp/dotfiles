@@ -292,7 +292,7 @@ label-disconnected-background = ${colors.background}
 [module/date]
 type = internal/date
 interval = 5
-date = "%b %e  %H:%M"
+date = "%a, %b %e  %H:%M"
 format = <label>
 format-foreground = ${colors.od-green}
 format-background = ${colors.background}

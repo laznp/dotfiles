@@ -41,4 +41,5 @@ vim.cmd("command! -nargs=+ NodeMCU lua require('config.nodemcu').load_command(<f
 vim.api.nvim_exec([[
     au BufWritePre,BufRead * :%s/\s\+$//e
     au BufNewFile,BufRead *.ino setf c
+    au BufNewFile,BufRead Jenkinsfile setf groovy
 ]],false)

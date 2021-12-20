@@ -12,6 +12,7 @@ alias cat="$(which bat)"
 alias grep="$(which rg)"
 alias htop="$(which bpytop)"
 alias wget="axel -n 16"
+alias vimdiff="nvim -d"
 
 # Run python3 on every filename with .py extension
 #alias -s py="python3"
@@ -123,3 +124,4 @@ alias gdf="git diff"
 alias pacman="sudo pacman"
 alias reboot="sudo reboot"
 alias dual_mon="xrandr --auto --output HDMI-1 --mode 1920x1080 --left-of eDP-1"
+alias k="kubectl"
