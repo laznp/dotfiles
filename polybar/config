@@ -185,7 +185,8 @@ format = <label-state>
 ws-icon-0 = 1;
 ws-icon-1 = 2;
 ws-icon-2 = 3;
-ws-icon-3 = 4;
+; ws-icon-3 = 4;
+ws-icon-3 = 4;
 ws-icon-4 = 5;
 ws-icon-5 = 6;
 ws-icon-6 = 7;
@@ -196,7 +197,7 @@ ws-icon-default = %{F#61AFEF}﮼
 label-separator = " "
 label-separator-background = ${colors.background}
 label-focused =  [%icon%]
-label-focused-foreground = #5E81AC
+label-focused-foreground = ${colors.od-blue}
 label-focused-padding = 1
 label-focused-background = ${colors.background}
 label-focused-margin = 0
@@ -402,7 +403,7 @@ format-padding = 1
 
 [module/vpn]
 type = custom/script
-exec-if = pgrep -x wg-crypt-wg0
+exec-if = pgrep -x openvpn
 internal = 5
 exec = echo "嬨"
 format = <label>

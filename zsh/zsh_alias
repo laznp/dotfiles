@@ -1,7 +1,3 @@
-# Alias Infinitec SSH
-alias infi-ubuntu="ssh -i ~/Downloads/InfiCert/cp-station-dev-key.pem -l ubuntu"
-alias infi-ec2="ssh -i ~/Downloads/InfiCert/cp-station-dev-key.pem -l ec2-user"
-
 # Alias Command
 alias py="python2"
 alias py3="python3"
@@ -59,44 +55,12 @@ function activate() {
     fi
 }
 
-function kube_del(){
-    if [ -z "1" ]; then
-        echo "No Context Found.."
-    else
-        kubectl config unset users."$1"
-        kubectl config unset clusters."$1"
-        kubectl config unset contexts."$1"
-    fi
-}
-
-function tkpssh() {
-    if [ $(echo $1 | \grep -E "^172.18" | wc -l) -eq 1 ]; then
-        ssh -i "~/.ssh/office-new-stag.pem" -l root $1
-    elif [ $(echo $1 | \grep -E "^172.21" | wc -l) -eq 1 ]; then
-        ssh -i "~/.ssh/office-prod.pem" -l root $1
-    elif [ $(echo $1 | \grep -E "^192.168" | wc -l) -eq 1 ]; then
-        ssh -i "~/.ssh/office-jenkins.pem" -l root $1
-    elif [ $(echo $1 | \grep -E "^10.21" | wc -l) -eq 1 ]; then
-        ssh -i "~/.ssh/office-gcp-stag.pem" -l root $1
-    elif [ $(echo $1 | \grep -E "^10.31" | wc -l) -eq 1 ]; then
-        ssh -i "~/.ssh/office-gcp-jenkins.pem" -l root $1
-    elif [ $(echo $1 | \grep -E "^10.41" | wc -l) -eq 1 ]; then
-        ssh -i "~/.ssh/office-gcp-prod.pem" -l root $1
-    elif [ "$1" = "teleport-prod" ]; then
-        ssh -i "~/.ssh/office-prod.pem" -l root 172.21.68.9
-    elif [ "$1" = "teleport-stag" ]; then
-        ssh -i "~/.ssh/office-new-stag.pem" -l root 172.18.71.176
-    else
-        echo "IP Address not recognize"
-    fi
-}
-
 function vpn() {
     if [ "$1" = "start" ]; then
-        sudo systemctl start wg-quick@wg0.service
+        sudo systemctl start openvpn-client@linkaja.service
         echo "VPN Started"
     elif [ "$1" = "stop" ]; then
-        sudo systemctl stop wg-quick@wg0.service
+        sudo systemctl stop openvpn-client@linkaja.service
         echo "VPN Stopped"
     fi
 }

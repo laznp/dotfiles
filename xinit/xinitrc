@@ -34,4 +34,4 @@ fi
 
 sxhkd &
 exec bspwm
-xssstart bash ~/.config/picom/flicker-workaround/picom.sh
+#xssstart bash ~/.config/picom/flicker-workaround/picom.sh
