@@ -22,7 +22,7 @@ alias polybarrc="nvim ~/.config/polybar/config"
 
 function autoedit() {
     if [ -z "$1" ]; then
-        exit 0
+        echo
     else
         cd "$HOME/.config/$1"
         nvim +NvimTreeToggle
@@ -88,4 +88,17 @@ alias gdf="git diff"
 alias pacman="sudo pacman"
 alias reboot="sudo reboot"
 alias dual_mon="xrandr --auto --output HDMI-1 --mode 1920x1080 --left-of eDP-1"
+
+# Alias Kubectl
 alias k="kubectl"
+alias kgp="kubectl get pods"
+alias kgs="kubectl get svc"
+alias kgd="kubectl get deployment"
+alias kgi="kubectl get ingress"
+alias kgn="kubectl get nodes"
+alias kap="kubectl apply"
+alias kdd="kubectl delete"
+alias kgx="kubectl config get-contexts -o name"
+alias kcx="kubectl config current-context"
+alias kux="kubectl config use-context"
+
