@@ -73,3 +73,6 @@ alt + shift + n
 Print
 	import png:- | xclip -selection clipboard -t image/png -filter && notify-send Screenshot 'Saved to clipboard.'
 
+# LOCKSCREEN
+super + l
+    betterlockscreen -l dimblur

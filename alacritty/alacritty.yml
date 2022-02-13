@@ -22,13 +22,13 @@ font:
     style: Medium
   bold:
     family: FiraCode Nerd Font
-    style: Bold
+    style: Medium
   italic:
-    family: FiraCode Nerd Font
-    style: Medium
+    family: Consolas NF
+    style: Bold Italic
   bold_italic:
-    family: FiraCode Nerd Font
-    style: Medium
+    family: Consolas NF
+    style: Bold Italic
 
   # Point size
   size: 9.0

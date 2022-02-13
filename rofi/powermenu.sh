@@ -33,7 +33,7 @@ case $chosen in
 		#msg
 		;;
     $lock)
-		betterlockscreen -l
+		betterlockscreen -l dimblur
 		#msg
 		;;
     $suspend)

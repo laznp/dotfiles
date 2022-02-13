@@ -6,7 +6,8 @@ export BSPWM_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/bspwm"
 if [ "$(xrandr | grep -sw 'connected' | wc -l)" = "2" ]; then
   bspc monitor eDP-1 -d 0
   bspc monitor HDMI-1 -d 1 2 3 4 5 6 7 8 9
-  xrandr --auto --output HDMI-1 --mode 1920x1080 --rate 75 --left-of eDP-1
+  # xrandr --auto --output HDMI-1 --mode 1920x1080 --rate 75 --left-of eDP-1
+  xrandr --auto --output HDMI-1 --auto --rate 75 --left-of eDP-1
   # xrandr \
       # --output eDP-1 --primary --mode 1920x1080 --pos 0x1080 --rotate normal \
       # --output HDMI-1 --mode 1920x1080 --pos 0x0 --rate 75 --rotate normal
@@ -38,7 +39,7 @@ bspc rule -a Slack:slack desktop='^4' monitor='^2'
 bspc rule -a TelegramDesktop desktop='^5' monitor='^2'
 bspc rule -a "Thunar" desktop='^9' monitor='^2'
 
-pgrep -x feh > /dev/null || feh --bg-scale $HOME/.wallpaper.png &
+pgrep -x feh > /dev/null || feh --bg-scale $HOME/.wallpaper-dark.png &
 export BSPWM_STATE="${XDG_DATA_HOME:-$HOME/.local/share}/bspwm-state.json"
 "$BSPWM_CONFIG/autostart" &
 $HOME/.config/polybar/launch.sh

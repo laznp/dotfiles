@@ -9,7 +9,7 @@ alias grep="$(which rg)"
 alias htop="$(which bpytop)"
 alias wget="axel -n 16"
 alias vimdiff="nvim -d"
-
+alias df="duf"
 # Run python3 on every filename with .py extension
 #alias -s py="python3"
 
@@ -97,7 +97,7 @@ alias kgd="kubectl get deployment"
 alias kgi="kubectl get ingress"
 alias kgn="kubectl get nodes"
 alias kap="kubectl apply"
-alias kdd="kubectl delete"
+alias krm="kubectl delete"
 alias kgx="kubectl config get-contexts -o name"
 alias kcx="kubectl config current-context"
 alias kux="kubectl config use-context"
