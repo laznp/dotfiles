@@ -2,6 +2,7 @@ local map = vim.api.nvim_set_keymap
 vim.g.mapleader = ' '
 -- toogle file explorer
 map('n', '<F2>', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
+map('n', '<S-y>', 'yy', { noremap = true, silent = true })
 
 -- windows movement
 map('n', '<C-h>', '<C-w>h', { noremap = true, silent = true })

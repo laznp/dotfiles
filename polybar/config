@@ -1,7 +1,7 @@
 [colors]
-;background = #1D2129
-background = #0E111B
-background-alt = #2A2E36
+background = #1D2329
+; background = #0E111B
+background-alt = #1f2329
 ; ONEDARK
 od-black = #282C34
 od-red = #E06C75
@@ -36,11 +36,11 @@ border-bottom-size = 5
 border-top-size = 5
 border-right-size = 0
 border-left-size = 0
-border-color = ${colors.od-black}
+border-color = ${colors.background-alt}
 modules-left = archlinux spacer round-left bspwm round-right
-; modules-center = spotify
-modules-right = vpn spacer round-left ping round-right spacer round-left battery round-right spacer round-left pulseaudio round-right spacer round-left cpu memory round-right spacer round-left wlan round-right spacer round-left date round-right spacer round-left powermenu round-right
-font-0 = FuraCode Nerd Font:style=Medium:fontformat=truetype:pixelsize=11:antialias=true;3
+modules-center = date
+modules-right = vpn spacer round-left ping round-right spacer round-left battery round-right spacer round-left pulseaudio round-right spacer round-left cpu memory round-right spacer round-left wlan round-right spacer round-left powermenu round-right
+font-0 = FuraCode Nerd Font:style=Medium:fontformat=truetype:pixelsize=9:antialias=true;3
 font-1 = Iosevka:size=16;4
 
 [module/round-right]
@@ -66,7 +66,7 @@ height = ${vars.height}
 ;offset-y = 1%
 radius = ${vars.radius}
 fixed-center = true
-background = ${colors.od-black}
+background = ${colors.background-alt}
 foreground = ${colors.od-black}
 line-size = ${vars.line-size}
 line-color = ${vars.line-color}
@@ -108,7 +108,7 @@ height = ${vars.height}
 ;offset-y = 10%
 radius = ${vars.radius}
 fixed-center = true
-background = ${colors.od-black}
+background = ${colors.background-alt}
 foreground = ${colors.od-black}
 line-size = ${vars.line-size}
 line-color = ${vars.line-color}
@@ -296,10 +296,10 @@ label-disconnected-background = ${colors.background}
 [module/date]
 type = internal/date
 interval = 5
-date = "%a, %b %e  %H:%M"
+date = "%A, %e %B %Y  %H:%M"
 format = <label>
-format-foreground = ${colors.od-green}
-format-background = ${colors.background}
+format-foreground = ${colors.od-white}
+format-background = ${colors.background-alt}
 label = %date%
 
 [module/pulseaudio]

@@ -1,4 +1,3 @@
-vim.g.nvim_tree_gitignore = 0
 vim.g.nvim_tree_quit_on_open = 1
 vim.g.nvim_tree_icons = {
     default = '',
@@ -51,6 +50,11 @@ require'nvim-tree'.setup {
     enable      = false,
     update_cwd  = false,
     ignore_list = {}
+  },
+  git = {
+    enable = true,
+    ignore = false,
+    timeout = 500,
   },
   system_open = {
     cmd  = nil,
