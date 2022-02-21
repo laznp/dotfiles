@@ -1,3 +1,5 @@
+LANG=en_US.UTF-8
+
 # Exa Color with Vivid
 export EXA_COLORS="$(vivid generate $HOME/.config/vivid/onedark.yml)"
 
