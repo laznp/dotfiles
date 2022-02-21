@@ -21,11 +21,11 @@ font:
     family: FiraCode Nerd Font
     style: Medium
   bold:
-    family: Fira Code Nerd Font
+    family: FiraCode Nerd Font
     style: Bold
   italic:
     family: Consolas Nerd Font Mono
-    style: Bold Italic
+    style: Italic
   bold_italic:
     family: Consolas Nerd Font Mono
     style: Bold Italic
