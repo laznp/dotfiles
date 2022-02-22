@@ -1,4 +1,3 @@
-vim.g.nvim_tree_quit_on_open = 1
 vim.g.nvim_tree_icons = {
     default = '',
     symlink = '',
@@ -20,7 +19,7 @@ vim.g.nvim_tree_icons = {
        empty_open = "",
        symlink = "",
        symlink_open = "",
-       }
+    }
 }
 
 
@@ -73,6 +72,17 @@ require'nvim-tree'.setup {
     mappings = {
       custom_only = false,
       list = {}
+    },
+    number = false,
+    relativenumber = false,
+    signcolumn = "yes"
+  },
+  actions = {
+    change_dir = {
+      global = false,
+    },
+    open_file = {
+      quit_on_open = true,
     }
   }
 }

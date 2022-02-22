@@ -76,3 +76,7 @@ Print
 # LOCKSCREEN
 super + l
     betterlockscreen -l dimblur
+
+# Spotify
+alt + shift + s
+    xdotool key alt+6; sleep 1; spotify

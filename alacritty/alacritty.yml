@@ -25,7 +25,7 @@ font:
     style: Bold
   italic:
     family: Consolas Nerd Font Mono
-    style: Italic
+    style: Bold Italic
   bold_italic:
     family: Consolas Nerd Font Mono
     style: Bold Italic
