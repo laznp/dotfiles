@@ -1,8 +1,13 @@
 #!/usr/bin/env bash
 
 # MEDIA KEYS TO SET VOLUME
-alt + {F1,F2,F3}
-	{pactl set-sink-mute @DEFAULT_SINK@ toggle,pactl set-sink-volume @DEFAULT_SINK@ -5%,pactl set-sink-volume @DEFAULT_SINK@ +5%}
+alt + F1
+	~/.local/bin/volume mute
+	# pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+alt + ctrl + {Down,Up}
+	~/.local/bin/volume {down,up}
+	# pactl {set-sink-volume @DEFAULT_SINK@ -5%,set-sink-volume @DEFAULT_SINK@ +5%}
 
 # MEDIA KEY TO PLAY / PAUSE, NEXT, PREVIOUS
 alt + ctrl + {Left,Right,space}
@@ -77,6 +82,3 @@ Print
 super + l
     betterlockscreen -l dimblur
 
-# Spotify
-alt + shift + s
-    xdotool key alt+6; sleep 1; spotify
