@@ -2,21 +2,30 @@
 
 icon_path=/home/laznp/.icons/WhiteSur-dark/status/symbolic/
 notify_id=506
-sink_nr=0   # use `pacmd list-sinks` to find out sink_nr
+check_bluetooth=$(pacmd list-sinks | grep "bluez" -B1 | grep index | grep -o '[0-9]' | wc -l)
+if [[ "$check_bluetooth" -gt 0 ]]; then
+    sink_nr=$(pacmd list-sinks | grep "bluez" -B1 | grep index | grep -o '[0-9]')
+else
+    sink_nr=0   # use `pacmd list-sinks` to find out sink_nr
+fi
 
 
 function get_volume {
-    pacmd list-sinks | awk '/\tvolume:/ { print $5 }' | tail -n+$((sink_nr+1)) | head -n1 | cut -d '%' -f 1
+    if [[ "$check_bluetooth" -gt 0 ]]; then
+        pacmd list-sinks | awk '/\tvolume:/ { print $5 }' | tail -n+$((sink_nr-1)) | head -n1 | cut -d '%' -f 1
+    else
+        pacmd list-sinks | awk '/\tvolume:/ { print $5 }' | tail -n+$((sink_nr+1)) | head -n1 | cut -d '%' -f 1
+    fi
 }
 
 function get_volume_icon {
-    if [ "$1" -lt 34 ]
+    if [[ "$1" -lt 34 ]]
     then
         echo -n "audio-volume-low-symbolic.svg"
-    elif [ "$1" -lt 67 ]
+    elif [[ "$1" -lt 67 ]]
     then
         echo -n "audio-volume-medium-symbolic.svg"
-    elif [ "$1" -le 100 ]
+    elif [[ "$1" -le 100 ]]
     then
         echo -n "audio-volume-high-symbolic.svg"
     else
@@ -25,15 +34,19 @@ function get_volume_icon {
 }
 
 function volume_notification {
-    volume=`get_volume`
-    vol_icon=`get_volume_icon $volume`
+    volume=$(get_volume)
+    vol_icon=$(get_volume_icon $volume)
     # bar=$(seq -s "─" $(($volume / 5)) | sed 's/[0-9]//g')
     # dunstify -r $notify_id -u low -i $icon_path$vol_icon $bar -h int:value:"$volume"
     dunstify -a "changevolume" -u low -r "$notify_id" -h int:value:"$volume" -i $icon_path$vol_icon "Volume: ${volume}%" -t 2000
 }
 
 function mute_notification {
-    muted=$(pacmd list-sinks | awk '/muted/ { print $2 }' | tail -n+$((sink_nr+1)) | head -n1)
+    if [[ "$check_bluetooth" -gt 0 ]]; then
+        muted=$(pacmd list-sinks | awk '/muted/ { print $2 }' | tail -n+$((sink_nr-1)) | head -n1)
+    else
+        muted=$(pacmd list-sinks | awk '/muted/ { print $2 }' | tail -n+$((sink_nr+1)) | head -n1)
+    fi
     if [ $muted == 'yes' ]
     then
         dunstify -r $notify_id -u critical -i ${icon_path}audio-volume-muted-symbolic.svg ""
@@ -44,11 +57,11 @@ function mute_notification {
 
 case $1 in
     up)
-        pactl set-sink-volume $sink_nr +5%
+        pactl set-sink-volume @DEFAULT_SINK@ +5%
         volume_notification
         ;;
     down)
-        pactl set-sink-volume $sink_nr -5%
+        pactl set-sink-volume @DEFAULT_SINK@ -5%
         volume_notification
 	    ;;
     mute)
