@@ -1,16 +1,26 @@
 colors:
   background_color: '282c34'
   white: '828997'
-  red: 'e06c75'
-  green: '98c379'
-  yellow: 'e5c07b'
+  red: 'e55561'
+  green: '8ebd6b'
+  yellow: 'e2b86b'
   blue: '61afef'
-  pink: 'ff6ac1'
-  cyan: '56b6c2'
+  pink: 'bf68d9'
+  cyan: '48b0bd'
 
+  # red: 'e06c75'
+  # green: '98c379'
+  # yellow: 'e5c07b'
+  # blue: '61afef'
+  # pink: 'ff6ac1'
+  # cyan: '56b6c2'
   black: '000000'
-  gray: '999999'
-  darkgray: '666666'
+  # gray: '999999'
+  # darkgray: '666666'
+  # darkergray: '333333'
+
+  gray: '7a818e'
+  darkgray: '535965'
   darkergray: '333333'
 
 core:

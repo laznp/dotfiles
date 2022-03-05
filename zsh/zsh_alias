@@ -87,7 +87,6 @@ alias gdf="git diff"
 # Alias for Arch Linux
 alias pacman="sudo pacman"
 alias reboot="sudo reboot"
-alias dual_mon="xrandr --auto --output HDMI-1 --mode 1920x1080 --left-of eDP-1"
 
 # Alias Kubectl
 alias k="kubectl"

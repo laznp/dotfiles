@@ -1,5 +1,4 @@
 [colors]
-; background = #1D2329
 background = #0E111B
 background-alt = #1f2329
 ; ONEDARK
@@ -31,7 +30,8 @@ border-color = ${colors.background-alt}
 modules-left = archlinux spacer round-left bspwm round-right
 ; modules-center = date
 ; modules-right = vpn spacer round-left ping round-right spacer round-left battery round-right spacer round-left pulseaudio round-right spacer round-left cpu memory round-right spacer round-left wlan round-right spacer round-left powermenu round-right
-modules-right = vpn spacer round-left ping round-right spacer round-left battery round-right spacer round-left pulseaudio round-right spacer round-left cpu memory round-right spacer round-left wlan round-right spacer round-left date round-right
+; modules-right = vpn spacer round-left ping round-right spacer round-left battery round-right spacer round-left pulseaudio round-right spacer round-left cpu memory round-right spacer round-left wlan round-right spacer round-left date round-right
+modules-right = vpn spacer round-left ping round-right spacer round-left battery round-right spacer round-left pulseaudio round-right spacer round-left wlan round-right spacer round-left date round-right
 font-0 = FuraCode Nerd Font:style=Medium:fontformat=truetype:pixelsize=11:antialias=true;3
 font-1 = Iosevka:size=16;4
 
@@ -293,7 +293,7 @@ type = internal/network
 interface = wifi0
 interval = 3.0
 label-connected = 
-label-connected-foreground = ${colors.od-blue}
+label-connected-foreground = ${colors.od-purple}
 label-connected-background = ${colors.background}
 label-disconnected = 睊
 label-disconnected-foreground = ${colors.od-red}
@@ -319,7 +319,7 @@ label = %date% %time%
 type = internal/pulseaudio
 ; format-volume = <label-volume> <bar-volume>
 format-volume =  <label-volume>
-format-volume-foreground = ${colors.od-aqua}
+format-volume-foreground = ${colors.od-blue}
 format-volume-background = ${colors.background}
 ; label-volume = %percentage%%
 ;label-volume-foreground = ${colors.od-black}
@@ -356,13 +356,13 @@ full-at = 98
 
 format-charging = <animation-charging><label-charging>
 format-charging-background = ${colors.background}
-label-charging-foreground = ${colors.od-green}
+label-charging-foreground = ${colors.od-yellow}
 label-charging-background = ${colors.background}
 label-charging-padding-left = 1
 
 format-discharging = <ramp-capacity><label-discharging>
 format-discharging-background = ${colors.background}
-label-discharging-foreground = ${colors.od-purple}
+label-discharging-foreground = ${colors.od-yellow}
 label-discharging-background = ${colors.background}
 label-discharging-padding-left = 1
 
@@ -375,7 +375,7 @@ ramp-capacity-1 = 
 ramp-capacity-2 = 
 ramp-capacity-3 = 
 ramp-capacity-4 = 
-ramp-capacity-foreground = ${colors.od-purple}
+ramp-capacity-foreground = ${colors.od-yellow}
 ramp-capacity-background = ${colors.background}
 
 animation-charging-0 =  
@@ -383,7 +383,7 @@ animation-charging-1 =  
 animation-charging-2 =  
 animation-charging-3 =  
 animation-charging-4 =  
-animation-charging-foreground = ${colors.od-green}
+animation-charging-foreground = ${colors.od-yellow}
 animation-charging-background = ${colors.background}
 animation-charging-framerate = 750
 
