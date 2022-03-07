@@ -13,6 +13,10 @@ alt + ctrl + {Down,Up}
 alt + ctrl + {Left,Right,space}
 	playerctl {previous,next,play-pause}
 
+# MEDIA KEY TO SET BRIGHTNESS
+alt + ctrl + {Prior,Next}
+    xbacklight {-inc,-dec} 10
+
 # RELOAD SXHKD
 alt + ctrl + Escape
 	pkill -USR1 -x sxhkd ; notify-send 'SXHKD' 'Config Reloaded.'
