@@ -31,7 +31,7 @@ modules-left = archlinux spacer round-left bspwm round-right
 ; modules-center = date
 ; modules-right = vpn spacer round-left ping round-right spacer round-left battery round-right spacer round-left pulseaudio round-right spacer round-left cpu memory round-right spacer round-left wlan round-right spacer round-left powermenu round-right
 ; modules-right = vpn spacer round-left ping round-right spacer round-left battery round-right spacer round-left pulseaudio round-right spacer round-left cpu memory round-right spacer round-left wlan round-right spacer round-left date round-right
-modules-right = vpn spacer round-left ping round-right spacer round-left battery round-right spacer round-left pulseaudio round-right spacer round-left wlan round-right spacer round-left date round-right
+modules-right = vpn spacer round-left ping round-right spacer round-left keybat twsbat round-right spacer round-left battery round-right spacer round-left pulseaudio round-right spacer round-left wlan round-right spacer round-left date round-right
 font-0 = FuraCode Nerd Font:style=Medium:fontformat=truetype:pixelsize=11:antialias=true;3
 font-1 = Iosevka:size=16;4
 
@@ -395,6 +395,22 @@ animation-discharging-4 = 
 animation-discharging-foreground = ${colors.od-black}
 animation-discharging-background = ${colors.od-green}
 animation-discharging-framerate = 750
+
+[module/keybat]
+type = custom/script
+exec = "$HOME/.local/bin/bluetooth_battery EE:FC:B4:FD:47:2E"
+format =  <label>%
+format-foreground = ${colors.od-aqua}
+format-background = ${colors.background}
+format-padding = 1
+
+[module/twsbat]
+type = custom/script
+exec = "$HOME/.local/bin/bluetooth_battery 74:5B:C5:7B:DB:A3"
+format =  <label>%
+format-foreground = ${colors.od-aqua}
+format-background = ${colors.background}
+format-padding = 1
 
 [module/powermenu]
 type = custom/script
