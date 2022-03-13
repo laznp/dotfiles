@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-MAC_ADDRESS=$(echo $1 | sed 's/\:/\_/g')
-dbus-send --print-reply=literal --system --dest=org.bluez /org/bluez/hci0/dev_$MAC_ADDRESS org.freedesktop.DBus.Properties.Get string:"org.bluez.Battery1" string:"Percentage" | grep -o '[0-9]\+'
