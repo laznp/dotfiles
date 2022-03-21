@@ -31,7 +31,7 @@ modules-left = archlinux spacer round-left bspwm round-right
 ; modules-center = date
 ; modules-right = vpn spacer round-left ping round-right spacer round-left battery round-right spacer round-left pulseaudio round-right spacer round-left cpu memory round-right spacer round-left wlan round-right spacer round-left powermenu round-right
 ; modules-right = vpn spacer round-left ping round-right spacer round-left battery round-right spacer round-left pulseaudio round-right spacer round-left cpu memory round-right spacer round-left wlan round-right spacer round-left date round-right
-modules-right = vpn spacer round-left ping round-right spacer round-left keybat twsbat round-right spacer round-left battery round-right spacer round-left pulseaudio round-right spacer round-left wlan round-right spacer round-left date round-right
+modules-right = vpn spacer round-left ping round-right spacer round-left battery round-right spacer round-left pulseaudio round-right spacer round-left wlan round-right spacer round-left date round-right
 font-0 = FuraCode Nerd Font:style=Medium:fontformat=truetype:pixelsize=11:antialias=true;3
 font-1 = Iosevka:size=16;4
 
@@ -396,32 +396,6 @@ animation-discharging-foreground = ${colors.od-black}
 animation-discharging-background = ${colors.od-green}
 animation-discharging-framerate = 750
 
-[module/keybat]
-type = custom/script
-exec = "upower -d | grep EE:FC:B4:FD:47:2E -A12 | grep percentage | grep -o '[0-9]\+'"
-interval = 60
-format =  <label>%
-format-foreground = ${colors.od-aqua}
-format-background = ${colors.background}
-format-padding = 1
-
-[module/twsbat]
-type = custom/script
-exec = "upower -d | grep 74:5B:C5:7B:DB:A3 -A12 | grep percentage | grep -o '[0-9]\+'"
-internal = 60
-format =  <label>%
-format-foreground = ${colors.od-aqua}
-format-background = ${colors.background}
-format-padding = 1
-
-[module/powermenu]
-type = custom/script
-exec = echo "⏼"
-click-left = $HOME/.config/rofi/powermenu.sh
-format = <label>
-format-foreground = ${colors.od-red}
-format-background = ${colors.background}
-
 ; Custom Modules
 [module/archlinux]
 type = custom/script
@@ -492,6 +466,32 @@ format-padding = 1
 type = custom/script
 exec = echo " "
 format-foreground = ${colors.background-alt}
+
+[module/keybat]
+type = custom/script
+exec = "upower -d | grep CB:8A:42:D5:43:91 -A12 | grep percentage | grep -o '[0-9]\+'"
+interval = 60
+format =  <label>%
+format-foreground = ${colors.od-aqua}
+format-background = ${colors.background}
+format-padding = 1
+
+[module/twsbat]
+type = custom/script
+exec = "upower -d | grep 74:5B:C5:7B:DB:A3 -A12 | grep percentage | grep -o '[0-9]\+'"
+internal = 60
+format =  <label>%
+format-foreground = ${colors.od-aqua}
+format-background = ${colors.background}
+format-padding = 1
+
+[module/powermenu]
+type = custom/script
+exec = echo "⏼"
+click-left = $HOME/.config/rofi/powermenu.sh
+format = <label>
+format-foreground = ${colors.od-red}
+format-background = ${colors.background}
 
 [settings]
 screenchange-reload = true
