@@ -25,10 +25,10 @@ font:
     family: FiraCode Nerd Font
     style: Bold
   italic:
-    family: Consolas Nerd Font Mono
+    family: Consolas NF
     style: Bold Italic
   bold_italic:
-    family: Consolas Nerd Font Mono
+    family: Consolas NF
     style: Bold Italic
 
   # Point size
@@ -48,7 +48,8 @@ colors:
   primary:
     # background: '0x1e2127'
     # background: '0x1e222a'
-    background: '0x1f2329'
+    # background: '0x1f2329'
+    background: '0x212221'
     foreground: '0xabb2bf'
     bright_foreground: '0xe6efff'
 

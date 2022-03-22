@@ -1,8 +1,7 @@
--- vim.g.colors_name = "onedark"
--- vim.g.onedark_style = "darker"
--- vim.g.onedark_italic_comment = true
-
 require('onedark').setup {
-    style = 'darker'
+    style = 'warmer',
+    colors = {
+        bg0 = '#212221'
+    }
 }
 require('onedark').load()

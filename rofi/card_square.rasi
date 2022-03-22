@@ -8,7 +8,7 @@
  */
 
 configuration {
-    font:                 "FuraCode Nerd Font Medium 25";
+    font:                 "Consolas NF Medium 25";
     show-icons:           false;
     icon-theme:           "Papirus";
     drun-display-format:  "{name}";
@@ -17,12 +17,12 @@ configuration {
 }
 
 * {
-    background:       #282C34ff;
-    background-alt:   #282C34ff;
+    background:       #212221ff;
+    background-alt:   #212221ff;
     foreground:       #ffffffcc;
     border:           #282C34ff;
     border-alt:       #da717fff;
-    selected:         #61AFEFff;
+    selected:         #767776ff;
     urgent:           #E06C75ff;
 }
 

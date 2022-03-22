@@ -14,7 +14,7 @@ ln -sf $(pwd)/utils/* "$HOME/.local/bin/"
 if [ ! -d "$HOME/.config" ]; then mkdir -p "$HOME/.config"; fi
 ln -sf $(pwd)/alacritty "$HOME/.config/alacritty"
 ln -sf $(pwd)/betterlockscreen/betterlockscreenrc "$HOME/.config/betterlockscreenrc"
-ln -sf $(pwd)/alacritty "$HOME/.config/bspwm"
+ln -sf $(pwd)/bspwm "$HOME/.config/bspwm"
 ln -sf $(pwd)/dunst "$HOME/.config/dunst"
 ln -sf $(pwd)/i3 "$HOME/.config/i3"
 ln -sf $(pwd)/i3blocks "$HOME/.config/i3blocks"

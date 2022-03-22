@@ -8,11 +8,11 @@ uptime=$(uptime -p | sed -e 's/up //g')
 rofi_command="rofi -theme $HOME/.config/rofi/card_square"
 
 # Options
-shutdown=""
-reboot=""
-lock=""
-suspend=""
-logout=""
+shutdown="襤"
+reboot="勒"
+lock=""
+suspend="鈴"
+logout=""
 
 # Message
 msg() {
