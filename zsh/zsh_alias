@@ -18,7 +18,7 @@ alias vimrc="nvim ~/.config/nvim/init.vim"
 alias zshrc="nvim ~/.zshrc"
 alias zsh_alias="nvim ~/.zsh_alias"
 alias i3rc="nvim ~/.config/i3/config"
-alias polybarrc="nvim ~/.config/polybar/config"
+alias polybarrc="nvim ~/.config/polybar/config.ini"
 
 function autoedit() {
     if [ -z "$1" ]; then
@@ -62,6 +62,8 @@ function vpn() {
     elif [ "$1" = "stop" ]; then
         sudo systemctl stop openvpn-client@linkaja.service
         echo "VPN Stopped"
+    elif [ "$1" = "status" ]; then
+        systemctl status openvpn-client@linkaja.service | grep Active | awk '{ print $2 }'
     fi
 }
 

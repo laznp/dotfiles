@@ -11,11 +11,11 @@ alt + ctrl + {Down,Up}
 
 # MEDIA KEY TO PLAY / PAUSE, NEXT, PREVIOUS
 alt + ctrl + {Left,Right,space}
-	playerctl {previous,next,play-pause}
+	playerctl {previous,next,play-pause} -p spotify
 
 # MEDIA KEY TO SET BRIGHTNESS
 alt + ctrl + {Prior,Next}
-    xbacklight {-inc,-dec} 10
+    sudo xbacklight {-inc,-dec} 10
 
 # RELOAD SXHKD
 alt + ctrl + Escape
@@ -70,7 +70,7 @@ super + {Left,Down,Up,Right}
 # APPLICATION LAUNCHER KEYBIND
 # TERMINAL EMULATOR
 alt + Return
-	alacritty -t "Alacritty"
+	prime-run alacritty -t "Alacritty"
 
 # ROFI PROGRAM LAUNCHER
 alt + space
@@ -81,6 +81,9 @@ alt + shift + n
 
 Print
 	import png:- | xclip -selection clipboard -t image/png -filter && notify-send Screenshot 'Saved to clipboard.'
+
+alt + c
+    ~/.config/bspwm/scratchpad Spotify spotify
 
 # LOCKSCREEN
 super + l

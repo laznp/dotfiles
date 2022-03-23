@@ -29,14 +29,15 @@ configuration {
 
 * {
   al:      #00000000;
-  bg:      #282C34ff;
+  bg:      #212221ff;
   se:      #475C7Bff;
   fg:      #ffffffcc;
   ac:      #FDBB6Dff;
   red:     #E06C75ff;
   green:   #98C379ff;
   yellow:  #E5C07Bff;
-  blue:    #61AFEFff;
+  /* blue:    #61AFEFff; */
+  blue:    #767776FF;
   purple:  #C678DDff;
   cyan:    #56B6C2ff;
 }
