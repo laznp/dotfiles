@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 libinput-gestures-setup start &
-sudo tlp start &
+# sudo tlp start &
 # dunst -config ~/.config/dunst/dunstrc &
 pgrep -x picom > /dev/null || picom --config $HOME/.config/picom/picom.conf --experimental-backends &
 xsetroot -cursor_name left_ptr &
