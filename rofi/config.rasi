@@ -8,8 +8,8 @@
  */
 
 configuration {
-    /* font:                       "FuraCode Nerd Font Medium 10"; */
-    font:                       "Consolas NF Bold 10";
+    font:                       "FiraCode Nerd Font SemiBold 9";
+    /* font:                       "Consolas NF Bold 10"; */
     terminal:                   "alacritty";
     fixed-num-lines:            true;
     show-icons:                 false;
@@ -37,7 +37,7 @@ configuration {
   green:   #98C379ff;
   yellow:  #E5C07Bff;
   /* blue:    #61AFEFff; */
-  blue:    #767776FF;
+  blue:    #D8DEE9FF;
   purple:  #C678DDff;
   cyan:    #56B6C2ff;
 }
@@ -171,7 +171,7 @@ button {
 
 button selected {
     background-color:             	@blue;
-    text-color: 					@fg;
+    text-color: 					@bg;
     border: 						0px;
     border-radius: 					1px;
     border-color: 					@fg;

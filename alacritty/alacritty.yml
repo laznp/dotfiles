@@ -19,10 +19,10 @@ window:
 # Font configuration
 font:
   normal:
-    family: JetBrainsMono Nerd Font
-    style: Medium
-  bold:
-    family: JetBrainsMono Nerd Font
+    family: FiraCode Nerd Font
+    style: SemiBold
+  bolt:
+    family: FiraCode Nerd Font
     style: Bold
   italic:
     family: JetBrainsMono Nerd Font
@@ -32,11 +32,11 @@ font:
     style: Bold Italic
 
   # Point size
-  size: 9.0
+  size: 8
 
   offset:
     x: -1
-    y: 0
+    y: -1
   # glyph_offset:
     # x: 0
     # y: 0
@@ -141,7 +141,7 @@ colors:
 #
 # Window opacity as a floating point number from `0.0` to `1.0`.
 # The value `0.0` is completely transparent and `1.0` is opaque.
-#background_opacity: 0.0
+# background_opacity: 0.0
 
 #selection:
   # This string contains all characters that are used as separators for
