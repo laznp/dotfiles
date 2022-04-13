@@ -19,10 +19,11 @@ window:
 # Font configuration
 font:
   normal:
-    family: FiraCode Nerd Font
-    style: SemiBold
+    # family: FiraCode Nerd Font
+    family: JetBrainsMono Nerd Font
+    style: Bold
   bolt:
-    family: FiraCode Nerd Font
+    family: JetBrainsMono Nerd Font
     style: Bold
   italic:
     family: JetBrainsMono Nerd Font
