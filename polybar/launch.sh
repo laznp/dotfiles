@@ -12,6 +12,7 @@ while pgrep -x polybar >/dev/null; do sleep 1; done
     # polybar $line &
 # done
 polybar HDMI-1 &
+# polybar eDP-1 &
 
 echo "Bar launched..."
 
