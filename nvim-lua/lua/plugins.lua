@@ -23,6 +23,7 @@ return require("packer").startup(function()
   use "hrsh7th/vim-vsnip"
   use "onsails/lspkind-nvim"
   use "arkav/lualine-lsp-progress"
+  use "hashivim/vim-terraform"
   use { 'tami5/lspsaga.nvim', branch = 'nvim51' }
   use {
     "nvim-treesitter/nvim-treesitter",

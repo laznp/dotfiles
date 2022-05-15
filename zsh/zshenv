@@ -20,8 +20,7 @@ export EDITOR=$(which nvim)
 # Go Path
 export GOMODCACHE="/home/laznp/learning/go/pkg/mod"
 export GOPATH="/home/laznp/learning/go"
-export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
-
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin:$HOME/Downloads/istio/bin
 # Add Path for Additional Utility
 export PATH=$PATH:~/.local/bin
 

@@ -8,8 +8,6 @@ sudo pip3 install pynvim # NeoVim Python3 Support
 if [ ! -d "$HOME/.local/bin" ]; then mkdir -p $HOME/.local/bin; fi
 ln -sf $(pwd)/utils/* "$HOME/.local/bin/"
 
-
-
 # Automate Config
 if [ ! -d "$HOME/.config" ]; then mkdir -p "$HOME/.config"; fi
 ln -sf $(pwd)/alacritty "$HOME/.config/alacritty"
@@ -31,6 +29,10 @@ ln -sf $(pwd)/wallpaper-light.png "$HOME/.wallpaper-light.png"
 ln -sf $(pwd)/xinit/xinitrc "$HOME/.xinitrc"
 ln -sf $(pwd)/zsh/zsh_alias "$HOME/.zsh_alias"
 ln -sf $(pwd)/zsh/zshenv "$HOME/.zshenv"
+
+# Fonts
+if [ ! -d "$HOME/.local/share" ]; then mkdir -p $HOME/.local/share; fi
+ln -sf $(pwd)/fonts "$HOME/.local/share/"
 
 # Systemd User
 if [ ! -d "$HOME/.config/systemd/user" ]; then mkdir -p $HOME/.config/systemd/user; fi

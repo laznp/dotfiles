@@ -89,6 +89,7 @@ alias gdf="git diff"
 # Alias for Arch Linux
 alias pacman="sudo pacman"
 alias reboot="sudo reboot"
+alias tf="terraform"
 
 # Alias Kubectl
 alias k="kubectl"

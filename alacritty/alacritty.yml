@@ -20,24 +20,25 @@ window:
 font:
   normal:
     # family: FiraCode Nerd Font
-    family: JetBrainsMono Nerd Font
+    # family: JetBrainsMono Nerd Font
+    family: Consolas Nerd Font
     style: Bold
-  bolt:
-    family: JetBrainsMono Nerd Font
+  bold:
+    family: Consolas Nerd Font
     style: Bold
   italic:
-    family: JetBrainsMono Nerd Font
+    family: Consolas Nerd Font
     style: Bold Italic
   bold_italic:
-    family: JetBrainsMono Nerd Font
+    family: Consolas Nerd Font
     style: Bold Italic
 
   # Point size
-  size: 8
+  size: 9
 
   offset:
     x: -1
-    y: -1
+    y: 0
   # glyph_offset:
     # x: 0
     # y: 0
