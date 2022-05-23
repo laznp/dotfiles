@@ -176,9 +176,6 @@ require'fzf-lua'.setup {
       ["D"]           = { icon = "D", color = "red" },
       ["A"]           = { icon = "A", color = "green" },
       ["?"]           = { icon = "?", color = "magenta" },
-      -- ["M"]          = { icon = "★", color = "red" },
-      -- ["D"]          = { icon = "✗", color = "red" },
-      -- ["A"]          = { icon = "+", color = "green" },
     },
   },
   grep = {

@@ -54,4 +54,6 @@ map('n', '<S-K>', 'H', { noremap = true, silent = true})
 map('v', '<S-l>', '$<Left>', { noremap = true, silent = true})
 map('v', '<S-h>', '0', { noremap = true, silent = true})
 
-
+-- autocomplete
+map('i', '<S-TAB>', 'pumvisible() ? "\\<C-p>" : "\\<TAB>"', {expr = true})
+map('i', '<TAB>', 'pumvisible() ? "\\<C-n>" : "\\<TAB>"', {expr = true})

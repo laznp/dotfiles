@@ -11,7 +11,6 @@ return require("packer").startup(function()
   use "norcalli/nvim-colorizer.lua"
   use "windwp/nvim-autopairs"
   use "kyazdani42/nvim-web-devicons"
-  use "akinsho/toggleterm.nvim"
   use "nvim-lua/plenary.nvim"
   use "neovim/nvim-lspconfig"
   use "hrsh7th/cmp-nvim-lsp"
@@ -21,10 +20,13 @@ return require("packer").startup(function()
   use "hrsh7th/nvim-cmp"
   use "hrsh7th/cmp-vsnip"
   use "hrsh7th/vim-vsnip"
+  use "akinsho/toggleterm.nvim"
   use "onsails/lspkind-nvim"
   use "arkav/lualine-lsp-progress"
   use "hashivim/vim-terraform"
-  use { 'tami5/lspsaga.nvim', branch = 'nvim51' }
+  -- use { 'tami5/lspsaga.nvim', branch = 'nvim51' }
+  use "haorenW1025/completion-nvim"
+  use "nvim-treesitter/completion-treesitter"
   use {
     "nvim-treesitter/nvim-treesitter",
     run = ":TSUpdate"

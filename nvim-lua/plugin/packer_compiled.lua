@@ -94,6 +94,16 @@ _G.packer_plugins = {
     path = "/home/laznp/.local/share/nvim/site/pack/packer/start/cmp-vsnip",
     url = "https://github.com/hrsh7th/cmp-vsnip"
   },
+  ["completion-nvim"] = {
+    loaded = true,
+    path = "/home/laznp/.local/share/nvim/site/pack/packer/start/completion-nvim",
+    url = "https://github.com/haorenW1025/completion-nvim"
+  },
+  ["completion-treesitter"] = {
+    loaded = true,
+    path = "/home/laznp/.local/share/nvim/site/pack/packer/start/completion-treesitter",
+    url = "https://github.com/nvim-treesitter/completion-treesitter"
+  },
   ["fzf-lua"] = {
     loaded = true,
     path = "/home/laznp/.local/share/nvim/site/pack/packer/start/fzf-lua",
@@ -108,11 +118,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/laznp/.local/share/nvim/site/pack/packer/start/lspkind-nvim",
     url = "https://github.com/onsails/lspkind-nvim"
-  },
-  ["lspsaga.nvim"] = {
-    loaded = true,
-    path = "/home/laznp/.local/share/nvim/site/pack/packer/start/lspsaga.nvim",
-    url = "https://github.com/tami5/lspsaga.nvim"
   },
   ["lualine-lsp-progress"] = {
     loaded = true,
@@ -193,6 +198,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/laznp/.local/share/nvim/site/pack/packer/start/toggleterm.nvim",
     url = "https://github.com/akinsho/toggleterm.nvim"
+  },
+  ["vim-terraform"] = {
+    loaded = true,
+    path = "/home/laznp/.local/share/nvim/site/pack/packer/start/vim-terraform",
+    url = "https://github.com/hashivim/vim-terraform"
   },
   ["vim-vsnip"] = {
     loaded = true,
