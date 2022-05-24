@@ -5,7 +5,8 @@ require'fzf-lua'.setup {
     width            = 0.80,            -- window width
     row              = 0.35,            -- window row position (0=top, 1=bottom)
     col              = 0.50,            -- window col position (0=left, 1=right)
-    border           = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
+    -- border           = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
+    border           = { '┌', '─', '┐', '│', '┘', '─', '└', '│' },
     fullscreen       = false,           -- start fullscreen?
     hl = {
       normal         = 'Normal',        -- window normal color (fg+bg)

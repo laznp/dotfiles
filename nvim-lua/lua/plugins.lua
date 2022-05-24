@@ -4,7 +4,18 @@ if fn.empty(fn.glob(install_path)) > 0 then
   packer_bootstrap = fn.system({"git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path})
 end
 
-return require("packer").startup(function()
+local packer = require "packer"
+local util = require "packer.util"
+local join_paths = util.join_paths
+local stdpath = vim.fn.stdpath
+
+local user_config = {
+    compile_path = join_paths(stdpath 'config', '.packer_compiled.lua'),
+}
+
+packer.init(user_config)
+
+return packer.startup(function()
   use "wbthomason/packer.nvim"
   use "preservim/nerdcommenter"
   use "navarasu/onedark.nvim"
