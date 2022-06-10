@@ -32,7 +32,8 @@ function get_volume_icon {
 function volume_notification {
     volume=$(get_volume)
     vol_icon=$(get_volume_icon $volume)
-    dunstify -a "changevolume" -u low -r "$notify_id" -h int:value:"$volume" -i $icon_path$vol_icon "Volume: ${volume}%" -t 2000
+    # dunstify -a "changevolume" -u low -r "$notify_id" -h int:value:"$volume" -i $icon_path$vol_icon "Volume: ${volume}%" -t 2000
+    dunstify -a "changevolume" -u low -r "$notify_id" -i $icon_path$vol_icon "Volume: ${volume}%" -t 2000
 }
 
 function mute_notification {
