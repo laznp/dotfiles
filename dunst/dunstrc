@@ -73,6 +73,7 @@
     #   %%  Literal %
     # Markup is allowed
     format = "<b>%s</b>\n%b"
+pgrep -x feh > /dev/null || feh --bg-scale $HOME/bitmap.png &
 
     # Alignment of message text.
     # Possible values are "left", "center" and "right".
@@ -148,8 +149,8 @@
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
     background = "#212221"
-    # foreground = "#D8DEE9"
-    foreground = "#98C379"
+    foreground = "#D8DEE9"
+    # foreground = "#98C379"
     frame_color = "#D8DEE900"
     timeout = 5
     #default_icon = /path/to/icon
@@ -173,8 +174,8 @@
 [Spotify]
     appname=Spotify
     background = "#212221"
-    # foreground = "#D8DEE9"
-    foreground = "#98C379"
+    foreground = "#D8DEE9"
+    # foreground = "#98C379"
     format = "<b>Now Playing</b>\n%s\n%b"
     timeout = 5
 
