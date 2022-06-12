@@ -83,7 +83,7 @@ Print
 	import png:- | xclip -selection clipboard -t image/png -filter && notify-send Screenshot 'Saved to clipboard.'
 
 alt + c
-    ~/.config/bspwm/scratchpad Spotify spotify
+    ~/.local/bin/scratchpad Spotify spotify
 
 # LOCKSCREEN
 super + l
