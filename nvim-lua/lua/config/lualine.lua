@@ -1,5 +1,5 @@
 vim.api.nvim_exec([[
-	au BufEnter,BufWinEnter,WinEnter,CmdwinEnter * if bufname('%') == "NvimTree" | set laststatus=0 | else | set laststatus=2 | endif
+    au BufEnter,BufWinEnter,BufAdd,BufNew,WinEnter,CmdwinEnter * if bufname('%') == "NvimTree_1" | set showtabline=1 laststatus=0 | else | set showtabline=2 laststatus=2 | endif
 ]], false)
 
 local function diff_source()
@@ -68,8 +68,9 @@ local config = {
     theme = 'onedark',
     component_separators = { left = '', right = ''},
     section_separators = { left = '', right = ''},
-    disabled_filetypes = {},
+    disabled_filetypes = {'NvimTree'},
     always_divide_middle = true,
+    globalstatus = true,
   },
   sections = {
     lualine_a = { set_mode },
@@ -98,7 +99,7 @@ local config = {
     lualine_y = {},
     lualine_z = {},
   },
-  extensions = {'fzf'}
+  extensions = {'fzf','nvim-tree','toggleterm'}
 }
 
 -- Inserts a component in lualine_c at left section
@@ -134,9 +135,8 @@ ins_left {
 		spinner = { pre = '', post = '' },
 		message = { commenced = 'In Progress', completed = 'Completed' },
 	},
-	display_components = { 'lsp_client_name', 'spinner', { 'title', 'percentage', 'message' } },
 	timer = { progress_enddelay = 500, spinner = 1000, lsp_client_name_enddelay = 1000 },
-	spinner_symbols = { '🌑 ', '🌒 ', '🌓 ', '🌔 ', '🌕 ', '🌖 ', '🌗 ', '🌘 ' },
+    spinner_symbols = { ' ', ' ', ' ', ' ', ' ', ' ' },
 }
 
 lualine.setup(config)

@@ -6,7 +6,6 @@ require'nvim-treesitter.configs'.setup {
         'lua',
         'vim',
         'dockerfile',
-        'yaml'
     },
     indent = {
         enable = true,
@@ -14,6 +13,7 @@ require'nvim-treesitter.configs'.setup {
     },
     highlight = {
         enable = true,
+        disable = {'yaml'},
         additional_vim_regex_highlighting = false,
     },
     autopairs = {

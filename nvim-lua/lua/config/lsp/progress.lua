@@ -14,7 +14,7 @@ local colors = {
 local config = {
   options = {
     icons_enabled = true,
-    theme = 'gruvbox',
+    theme = 'onedark',
     component_separators = {'', ''},
     section_separators = {'', ''},
     disabled_filetypes = {}
@@ -73,7 +73,7 @@ ins_left {
 		spinner = { pre = '', post = '' },
 		message = { commenced = 'In Progress', completed = 'Completed' },
 	},
-	display_components = { 'lsp_client_name', 'spinner', { 'title', 'percentage', 'message' } },
+    display_components = { 'lsp_client_name', 'spinner', { 'title', 'percentage', 'message' } },
 	timer = { progress_enddelay = 500, spinner = 1000, lsp_client_name_enddelay = 1000 },
-	spinner_symbols = { '🌑 ', '🌒 ', '🌓 ', '🌔 ', '🌕 ', '🌖 ', '🌗 ', '🌘 ' },
+	spinner_symbols = { ' ', ' ', ' ', ' ', ' ', ' ' },
 }
