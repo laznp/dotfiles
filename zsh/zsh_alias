@@ -14,7 +14,7 @@ alias df="duf"
 #alias -s py="python3"
 
 # Shorthand for edit rc files
-alias vimrc="nvim ~/.config/nvim/init.vim"
+alias vimrc="nvim ~/.config/nvim/init.lua"
 alias zshrc="nvim ~/.zshrc"
 alias zsh_alias="nvim ~/.zsh_alias"
 alias i3rc="nvim ~/.config/i3/config"
