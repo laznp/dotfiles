@@ -1,6 +1,6 @@
--- vim.api.nvim_exec([[
-    -- au BufEnter,BufWinEnter,BufAdd,BufNew,WinEnter,CmdwinEnter * if bufname('%') == "NvimTree_1" | set showtabline=1 laststatus=0 | else | set showtabline=2 laststatus=2 | endif
--- ]], false)
+vim.api.nvim_exec([[
+    au BufEnter,BufWinEnter,BufAdd,BufNew,WinEnter,CmdwinEnter * if bufname('%') == "NvimTree_1" | set laststatus=0 | else | set laststatus=3 | endif
+]], false)
 
 local function diff_source()
   local gitsigns = vim.b.gitsigns_status_dict
