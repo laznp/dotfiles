@@ -18,7 +18,7 @@ od-white = #D8DEE9
 [bar/base]
 width = 70%
 height = 40
-radius = 0
+radius = 5
 offset-y = 20
 fixed-center = true
 background = ${colors.background-alt}
@@ -37,40 +37,55 @@ module-margin-right = 0
 font-0 = FiraCode Nerd Font:style=SemiBold:fontformat=truetype:size=10:antialias=true;3
 font-1 = Iosevka:pixelsize=17;4
 tray-position = none
-tray-padding = 1
-tray-background = ${colors.background}
+tray-padding = 0
 cursor-click = pointer
 cursor-scroll = ns-resize
 override-redirect = false
 wm-restack = bspwm
 
-[bar/eDP-1]
-monitor = eDP-1
-inherit = bar/base
-height = 20
-width = 100%
-offset-x = 0
-offset-y = 0
-background = ${colors.background}
-modules-left = archlinux sp bspwm
-modules-center =
-modules-right  = vpn sp spotify sp headphone sp pulseaudio sp wlan sp battery sp date sp
-tray-position = right
-bottom = true
-
-[bar/HDMI-1]
+[bar/left]
 monitor = HDMI-1
 inherit = bar/base
-height = 20
-width = 100%
-offset-x = 0
-offset-y = 0
+width = 15%
+offset-x = 4%
 background = ${colors.background}
-modules-left = archlinux sp bspwm
-modules-center =
-modules-right  = vpn sp spotify sp headphone sp pulseaudio sp wlan sp battery sp date sp
-tray-position = none
+modules-center = sp headphone sp pulseaudio sp
 bottom = false
+
+[bar/center]
+monitor = HDMI-1
+inherit = bar/base
+width = 60%
+offset-x = 20%
+background = ${colors.background}
+modules-left = sp date sp
+modules-center = bspwm
+modules-right = sp wlan sp
+bottom = false
+padding-left = 2
+padding-right = 2
+
+[bar/right]
+monitor = HDMI-1
+inherit = bar/base
+width = 15%
+offset-x = 81%
+background = ${colors.background}
+modules-center = spotify
+bottom = false
+
+[bar/single]
+monitor = eDP-1
+inherit = bar/base
+width = 90%
+offset-x = 5%
+background = ${colors.background}
+modules-left = sp ping sp
+modules-center = vpn
+modules-right  = sp battery sp cpu sp memory sp
+tray-position = right
+bottom = true
+padding-left = 2
 
 
 [settings]

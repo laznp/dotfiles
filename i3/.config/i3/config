@@ -121,6 +121,11 @@ mode "resize" {
         bindsym Escape mode "default"
         bindsym $mod+r mode "default"
 }
+
+bar {
+    status_command i3blocks
+}
+
 # Caps Lock Indicator
 #set $mode_caps 
 #bindsym Caps_Lock mode "$mode_caps"
@@ -182,9 +187,9 @@ workspace $ws8 output HDMI-1
 workspace $ws9 output HDMI-1
 workspace $ws10 output HDMI-1
 # Fibonacci Layout
-exec --no-startup-id i3-fibbonaci && notify-send "i3" "Autotilling Started."
+# exec --no-startup-id i3-fibbonaci && notify-send "i3" "Autotilling Started."
 # Polybar
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+# exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 # Libinput gesture
 exec_always --no-startup-id libinput-gestures-setup start
 # TLP
