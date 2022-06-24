@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
 # MEDIA KEYS TO SET VOLUME
+XF86Audio{Play,Pause,Next,Prev}
+    dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.{Play,Pause,Next,Previous}
+
 alt + F1
 	~/.local/bin/volume mute
 	# pactl set-sink-mute @DEFAULT_SINK@ toggle
@@ -53,6 +56,8 @@ alt + {_,shift} + {1-9,0}
 
 # SWAP / FOCUS ANOTHER DESKTOP
 ctrl + {Left,Right}
+	bspc desktop -f {prev,next}
+alt + button{4,5}
 	bspc desktop -f {prev,next}
 
 # EXPAND WINDOWS

@@ -6,6 +6,7 @@ window:
   dimensions:
     columns: 120
     lines: 50
+  startup_mode: Maximized
 
   #position:
   #  x: 0
@@ -32,37 +33,37 @@ window:
     # style: Bold Italic
 
 # Font configuration
-font:
-  normal:
-    family: Consolas Nerd Font
-    style: Bold
-  bold:
-    family: Consolas Nerd Font
-    style: Bold
-  italic:
-    family: Consolas Nerd Font
-    style: Bold Italic
-  bold_italic:
-    family: Consolas Nerd Font
-    style: Bold Italic
-
-# Font configuration
 # font:
   # normal:
-    # family: FiraCode Nerd Font
-    # style: SemiBold
+    # family: Consolas Nerd Font
+    # style: Bold
   # bold:
-    # family: FiraCode Nerd Font
+    # family: Consolas Nerd Font
     # style: Bold
   # italic:
-    # family: JetBrainsMono Nerd Font
+    # family: Consolas Nerd Font
     # style: Bold Italic
   # bold_italic:
-    # family: JetBrainsMono Nerd Font
+    # family: Consolas Nerd Font
     # style: Bold Italic
 
+# Font configuration
+font:
+  normal:
+    family: FiraCode Nerd Font
+    style: SemiBold
+  bold:
+    family: FiraCode Nerd Font
+    style: Bold
+  italic:
+    family: JetBrainsMono Nerd Font
+    style: Bold Italic
+  bold_italic:
+    family: JetBrainsMono Nerd Font
+    style: Bold Italic
+
   # Point size
-  size: 9
+  size: 8
 
   offset:
     x: -1

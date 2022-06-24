@@ -1,19 +1,21 @@
 #!/usr/bin/env bash
+
 export BSPWM_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/bspwm"
-# bspc monitor HDMI-1 -d 1 2 3 4 5 6 7 8 9
-# bspc monitor eDP-1 -d 0
+export BSPWM_STATE="${XDG_DATA_HOME:-$HOME/.local/share}/bspwm-state.json"
 
 if [ "$(xrandr | grep -sw 'connected' | wc -l)" = "2" ]; then
   bspc monitor eDP-1 -d 7 8 9
   bspc monitor HDMI-1 -d 1 2 3 4 5 6
   # xrandr --auto --output HDMI-1 --auto --rate 75 --left-of eDP-1
-  xrandr --auto --output eDP-1 --auto --rate 75 --left-of HDMI-1
+  # xrandr --auto --output eDP-1 --auto --rate 75 --left-of HDMI-1
+  xrandr --output HDMI-1 --scale 1x1 --output eDP-1 --auto --rate 75 --left-of HDMI-1
   bspc wm --reorder-monitors HDMI-1 eDP-1
 else
   bspc monitor eDP-1 -d 1 2 3 4 5 6 7 8 9
   xrandr --auto
 fi
 
+# BSPWM CONFIG
 bspc config border_width			2
 bspc config window_gap				10
 bspc config split_ratio				0.50
@@ -25,6 +27,7 @@ bspc config normal_border_color		"#6e6e6e"
 bspc config focus_follows_pointer	false
 bspc config remove_disabled_monitor true
 
+# BSPWM RULE
 bspc rule -a Google-chrome:google-chrome desktop='^1' monitor='^2'
 bspc rule -a firefox:Navigator desktop='^1' monitor='^2'
 bspc rule -a Alacritty desktop='^2' monitor='^2'
@@ -38,8 +41,11 @@ bspc rule -a "Org.gnome.Nautilus":"org.gnome.Nautilus" desktop='^6' monitor='^2'
 bspc rule -a Slack:slack desktop='^7' monitor='^1'
 bspc rule -a *:*:'meet.google.com is sharing your screen.' hidden=true
 
+# BSPWM STARTUP
 pgrep -x feh > /dev/null || feh --bg-scale $HOME/.wallpaper-devops.png &
-export BSPWM_STATE="${XDG_DATA_HOME:-$HOME/.local/share}/bspwm-state.json"
-"$BSPWM_CONFIG/autostart" &
+libinput-gestures-setup start &
+# sudo tlp start &
+pgrep -x picom > /dev/null || picom --config $HOME/.config/picom/picom.conf --experimental-backends &
+xsetroot -cursor_name left_ptr &
 $HOME/.config/polybar/launch.sh
 

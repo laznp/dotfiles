@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+BRANCH_NAME=$(git symbolic-ref --short -q HEAD)
+if [ $? -eq 0 ]; then
+	if [ $BRANCH_NAME != "master"  ]; then
+		read -p "Commit Message : "
+		git pull origin master
+		git add .
+		git commit -m "${REPLY}"
+		git push origin "$BRANCH_NAME"
+	else
+		read -p "You're on Master Branch. Proceed? [y/n] "
+		if [ ${REPLY} == "y" ] || [ ${REPLY} == "yes" ]; then
+			read -p "Commit Message : "
+			git pull origin master
+			git add .
+			git commit -m "${REPLY}"
+			git push origin master
+		else
+			echo "Can't Proceed on Master Branch!"
+		fi
+	fi
+fi
+

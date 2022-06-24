@@ -7,15 +7,17 @@ killall -q polybar
 while pgrep -x polybar >/dev/null; do sleep 1; done
 
 # Launch
-polybar --list-monitors | awk -F ':' '{ print $1 }' | tr -d ' ' | while read line;
-do
-    polybar $line &
-done
-# polybar HDMI-1 &
-# polybar eDP-1 &
-# polybar single &
-# polybar left &
-# polybar center &
-# polybar right &
+# polybar --list-monitors | awk -F ':' '{ print $1 }' | tr -d ' ' | while read line;
+# do
+    # polybar $line &
+# done
+
+CHECK_MONITOR=$(polybar --list-monitors | awk -F ':' '{ print $1 }' | tr -d ' ' | grep "HDMI")
+if [ $CHECK_MONITOR ]; then
+    polybar HDMI-1 &
+else
+    polybar eDP-1 &
+fi
+
 echo "Bar launched..."
 
