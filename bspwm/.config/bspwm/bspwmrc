@@ -7,8 +7,7 @@ if [ "$(xrandr | grep -sw 'connected' | wc -l)" = "2" ]; then
   bspc monitor eDP-1 -d 7 8 9
   bspc monitor HDMI-1 -d 1 2 3 4 5 6
   # xrandr --auto --output HDMI-1 --auto --rate 75 --left-of eDP-1
-  # xrandr --auto --output eDP-1 --auto --rate 75 --left-of HDMI-1
-  xrandr --output HDMI-1 --scale 1x1 --output eDP-1 --auto --rate 75 --left-of HDMI-1
+  xrandr --auto --output eDP-1 --auto --rate 75 --left-of HDMI-1
   bspc wm --reorder-monitors HDMI-1 eDP-1
 else
   bspc monitor eDP-1 -d 1 2 3 4 5 6 7 8 9
@@ -34,6 +33,7 @@ bspc rule -a Alacritty desktop='^2' monitor='^2'
 bspc rule -a Alacritty:Alacritty:Ranger state=floating center=true
 bspc rule -a Lens desktop='^3' monitor='^2'
 bspc rule -a Insomnia desktop='^3' monitor='^2'
+bspc rule -a "VSCodium":"vscodium" desktop='^3' monitor='^2'
 bspc rule -a "VirtualBox Manager" desktop='^3' monitor='^2'
 bspc rule -a "Microsoft Teams - Preview":"microsoft teams - preview" desktop='^4' monitor='^2'
 bspc rule -a TelegramDesktop desktop='^5' monitor='^2'
