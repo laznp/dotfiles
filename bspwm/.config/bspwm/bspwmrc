@@ -42,7 +42,7 @@ bspc rule -a Slack:slack desktop='^7' monitor='^1'
 bspc rule -a *:*:'meet.google.com is sharing your screen.' hidden=true
 
 # BSPWM STARTUP
-pgrep -x feh > /dev/null || feh --bg-scale $HOME/.wallpaper-devops.png &
+pgrep -x feh > /dev/null || feh --bg-scale $HOME/.wallpaper-nord.webp &
 libinput-gestures-setup start &
 # sudo tlp start &
 pgrep -x picom > /dev/null || picom --config $HOME/.config/picom/picom.conf --experimental-backends &
