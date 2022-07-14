@@ -15,13 +15,13 @@ else
 fi
 
 # BSPWM CONFIG
-bspc config border_width			2
+bspc config border_width			1
 bspc config window_gap				10
 bspc config split_ratio				0.50
 bspc config borderless_monocle		true
 bspc config gapless_monocle			true
-# bspc config focused_border_color	"#ECEFF4"
-bspc config focused_border_color	"#61AFEF"
+bspc config focused_border_color	"#ECEFF4"
+# bspc config focused_border_color	"#61AFEF"
 bspc config normal_border_color		"#6e6e6e"
 bspc config focus_follows_pointer	false
 bspc config remove_disabled_monitor true
@@ -42,7 +42,8 @@ bspc rule -a Slack:slack desktop='^7' monitor='^1'
 bspc rule -a *:*:'meet.google.com is sharing your screen.' hidden=true
 
 # BSPWM STARTUP
-pgrep -x feh > /dev/null || feh --bg-scale $HOME/.wallpaper-nord.webp &
+# pgrep -x feh > /dev/null || feh --bg-scale $HOME/.wallpaper-nord.webp &
+pgrep -x feh > /dev/null || feh --bg-scale $HOME/.wallpaper-black.jpg &
 libinput-gestures-setup start &
 # sudo tlp start &
 pgrep -x picom > /dev/null || picom --config $HOME/.config/picom/picom.conf --experimental-backends &
