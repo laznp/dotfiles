@@ -4,9 +4,9 @@ env:
 
 window:
   dimensions:
-    columns: 120
+    columns: 220
     lines: 50
-  startup_mode: Maximized
+  startup_mode: Windowed
 
   #position:
   #  x: 0
