@@ -75,7 +75,7 @@ super + {Left,Down,Up,Right}
 # APPLICATION LAUNCHER KEYBIND
 # TERMINAL EMULATOR
 alt + Return
-	prime-run alacritty -t "Alacritty"
+    /home/laznp/.cargo/bin/alacritty -t "Alacritty"
 
 # ROFI PROGRAM LAUNCHER
 alt + space
