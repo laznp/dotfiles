@@ -1,24 +1,24 @@
 #!/usr/bin/env bash
 
 # MEDIA KEYS TO SET VOLUME
-XF86Audio{Play,Pause,Next,Prev}
-    dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.{Play,Pause,Next,Previous}
+#XF86Audio{Play,Pause,Next,Prev}
+#    dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.{Play,Pause,Next,Previous}
 
-alt + F1
-	~/.local/bin/volume mute
+#alt + F1
+#	~/.local/bin/volume mute
 	# pactl set-sink-mute @DEFAULT_SINK@ toggle
 
-alt + ctrl + {Down,Up}
-	~/.local/bin/volume {down,up}
+#alt + ctrl + {Down,Up}
+#	~/.local/bin/volume {down,up}
 	# pactl {set-sink-volume @DEFAULT_SINK@ -5%,set-sink-volume @DEFAULT_SINK@ +5%}
 
 # MEDIA KEY TO PLAY / PAUSE, NEXT, PREVIOUS
-alt + ctrl + {Left,Right,space}
-	playerctl {previous,next,play-pause} -p spotify
+#alt + ctrl + {Left,Right,space}
+#	playerctl {previous,next,play-pause} -p spotify
 
 # MEDIA KEY TO SET BRIGHTNESS
-alt + ctrl + {Prior,Next}
-    sudo xbacklight {-inc,-dec} 10
+#alt + ctrl + {Prior,Next}
+#    sudo xbacklight {-inc,-dec} 10
 
 # RELOAD SXHKD
 alt + ctrl + Escape
@@ -75,22 +75,25 @@ super + {Left,Down,Up,Right}
 # APPLICATION LAUNCHER KEYBIND
 # TERMINAL EMULATOR
 alt + Return
-    /home/laznp/.cargo/bin/alacritty -t "Alacritty"
+	alacritty -t "Alacritty"
 
 # ROFI PROGRAM LAUNCHER
+# alt + space
+	# rofi -no-lazy-grab -no-history -no-sort -show drun -modi ssh,drun,calc -theme /home/laznp/.config/rofi/config
+
 alt + space
-	rofi -no-lazy-grab -no-history -no-sort -show drun -modi ssh,drun,calc -theme /home/laznp/.config/rofi/config
+    dmenu_run
 
-alt + shift + n
-	alacritty -t "Ranger" -e "ranger"
+#alt + shift + n
+#	alacritty -t "Ranger" -e "ranger"
 
-Print
-	import png:- | xclip -selection clipboard -t image/png -filter && notify-send Screenshot 'Saved to clipboard.'
+#Print
+#	import png:- | xclip -selection clipboard -t image/png -filter && notify-send Screenshot 'Saved to clipboard.'
 
-alt + c
-    ~/.local/bin/scratchpad Spotify spotify
+#alt + c
+#    ~/.local/bin/scratchpad Spotify spotify
 
 # LOCKSCREEN
-super + l
-    betterlockscreen -l dimblur
+#super + l
+#    betterlockscreen -l dimblur
 

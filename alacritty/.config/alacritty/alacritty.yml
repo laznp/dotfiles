@@ -4,8 +4,8 @@ env:
 
 window:
   dimensions:
-    columns: 220
-    lines: 50
+    columns: 300
+    lines: 60
   startup_mode: Windowed
 
   #position:
@@ -80,8 +80,8 @@ colors:
     # background: '0x1e2127'
     # background: '0x1e222a'
     # background: '0x1f2329'
-    # background: '0x212221'
-    background: '0x101110'
+    background: '0x212221'
+    # background: '0x101110'
     foreground: '0xabb2bf'
     bright_foreground: '0xe6efff'
 

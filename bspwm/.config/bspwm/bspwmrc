@@ -10,7 +10,7 @@ if [ "$(xrandr | grep -sw 'connected' | wc -l)" = "2" ]; then
   # xrandr --auto --output eDP-1 --off --right-of HDMI-1
   bspc wm --reorder-monitors HDMI-1 eDP-1
 else
-  bspc monitor eDP-1 -d 1 2 3 4 5 6 7 8 9
+  bspc monitor HDMI-1 -d 1 2 3 4 5 6 7 8 9
   xrandr --auto
 fi
 
@@ -28,25 +28,26 @@ bspc config remove_disabled_monitor true
 
 # BSPWM RULE
 #bspc rule -a Google-chrome:google-chrome desktop='^1' monitor='^2'
+bspc rule -a Brave-browser:brave-browser desktop='^1'
 #bspc rule -a firefox:Navigator desktop='^1' monitor='^2'
-#bspc rule -a Alacritty desktop='^2' monitor='^2'
+bspc rule -a Alacritty desktop='^2'
 #bspc rule -a Alacritty:Alacritty:Ranger state=floating center=true
 # bspc rule -a Lens desktop='^3' monitor='^2'
 # bspc rule -a Insomnia desktop='^3' monitor='^2'
 # bspc rule -a "VSCodium":"vscodium" desktop='^3' monitor='^2'
 # bspc rule -a "VirtualBox Manager" desktop='^3' monitor='^2'
 # bspc rule -a "Microsoft Teams - Preview":"microsoft teams - preview" desktop='^4' monitor='^2'
-# bspc rule -a TelegramDesktop desktop='^5' monitor='^2'
+bspc rule -a TelegramDesktop desktop='^5'
 # bspc rule -a "Org.gnome.Nautilus":"org.gnome.Nautilus" desktop='^6' monitor='^2'
 # bspc rule -a Slack:slack desktop='^4' monitor='^2'
-# bspc rule -a *:*:'meet.google.com is sharing your screen.' hidden=true
+bspc rule -a *:*:'meet.google.com is sharing your screen.' hidden=true
 
 # BSPWM STARTUP
-
-# sudo tlp start &
-#pgrep -x picom > /dev/null || picom --config $HOME/.config/picom/picom.conf --experimental-backends &
+setxkbmap -option altwin:swap_lalt_lwin
+xinput set-prop 8 282 1
+# pgrep -x picom > /dev/null || picom --config $HOME/.config/picom/picom.conf --experimental-backends &
+pgrep -x picom > /dev/null || picom --config $HOME/.config/picom/picom.conf &
 pgrep -x feh > /dev/null || feh --bg-scale $HOME/.wallpaper-black.jpg &
-pgrep -x sxhkd > /dev/null || sxhkd &
 xsetroot -cursor_name left_ptr &
 $HOME/.config/polybar/launch.sh
 
