@@ -11,6 +11,10 @@ local config = ... or {}
 -- ensure config.properties is not nil
 config.properties = config.properties or {}
 
+-- unique device/node name tables
+device_names_table = nil
+node_names_table = nil
+
 -- preprocess rules and create Interest objects
 for _, r in ipairs(config.rules or {}) do
   r.interests = {}
@@ -41,21 +45,11 @@ function rulesApplyProperties(properties)
   end
 end
 
-function findDuplicate(parent, id, property, value)
-  for i = 0, id - 1, 1 do
-    local obj = parent:get_managed_object(i)
-    if obj and obj.properties[property] == value then
-      return true
-    end
-  end
-  return false
-end
-
 function nonempty(str)
   return str ~= "" and str or nil
 end
 
-function createNode(parent, id, type, factory, properties)
+function createNode(parent, id, obj_type, factory, properties)
   local dev_props = parent.properties
 
   -- set the device id and spa factory name; REQUIRED, do not change
@@ -125,11 +119,11 @@ function createNode(parent, id, type, factory, properties)
 
     -- deduplicate nodes with the same name
     for counter = 2, 99, 1 do
-      if findDuplicate(parent, id, "node.name", properties["node.name"]) then
-        properties["node.name"] = name .. "." .. counter
-      else
+      if node_names_table[properties["node.name"]] ~= true then
+        node_names_table[properties["node.name"]] = true
         break
       end
+      properties["node.name"] = name .. "." .. counter
     end
   end
 
@@ -170,9 +164,18 @@ function createNode(parent, id, type, factory, properties)
     end
   end
 
+  -- apply VM overrides
+  local vm_overrides = config.properties["vm.node.defaults"]
+  if nonempty(Core.get_vm_type()) and type(vm_overrides) == "table" then
+    for k, v in pairs(vm_overrides) do
+      properties[k] = v
+    end
+  end
+
   -- apply properties from config.rules
   rulesApplyProperties(properties)
   if properties["node.disabled"] then
+    node_names_table [properties ["node.name"]] = nil
     return
   end
 
@@ -186,6 +189,14 @@ function createDevice(parent, id, factory, properties)
   local device = SpaDevice(factory, properties)
   if device then
     device:connect("create-object", createNode)
+    device:connect("object-removed", function (parent, id)
+      local node = parent:get_managed_object(id)
+      if not node then
+        return
+      end
+
+      node_names_table[node.properties["node.name"]] = nil
+    end)
     device:activate(Feature.SpaDevice.ENABLED | Feature.Proxy.BOUND)
     parent:store_managed_object(id, device)
   else
@@ -193,7 +204,7 @@ function createDevice(parent, id, factory, properties)
   end
 end
 
-function prepareDevice(parent, id, type, factory, properties)
+function prepareDevice(parent, id, obj_type, factory, properties)
   -- ensure the device has an appropriate name
   local name = "alsa_card." ..
     (properties["device.name"] or
@@ -205,11 +216,11 @@ function prepareDevice(parent, id, type, factory, properties)
 
   -- deduplicate devices with the same name
   for counter = 2, 99, 1 do
-    if findDuplicate(parent, id, "device.name", properties["device.name"]) then
-      properties["device.name"] = name .. "." .. counter
-    else
+    if device_names_table[properties["device.name"]] ~= true then
+      device_names_table[properties["device.name"]] = true
       break
     end
+    properties["device.name"] = name .. "." .. counter
   end
 
   -- ensure the device has a description
@@ -263,6 +274,7 @@ function prepareDevice(parent, id, type, factory, properties)
   -- apply properties from config.rules
   rulesApplyProperties(properties)
   if properties["device.disabled"] then
+    device_names_table [properties ["device.name"]] = nil
     return
   end
 
@@ -337,16 +349,28 @@ function createMonitor ()
   -- handle create-object to prepare device
   m:connect("create-object", prepareDevice)
 
-  -- if dbus reservation, handle object-removed to destroy device reservations
-  if rd_plugin then
-    m:connect("object-removed", function (parent, id)
-      local device = parent:get_managed_object(id)
+  -- handle object-removed to destroy device reservations and recycle device name
+  m:connect("object-removed", function (parent, id)
+    local device = parent:get_managed_object(id)
+    if not device then
+      return
+    end
+
+    if rd_plugin then
       local rd_name = device.properties["api.dbus.ReserveDevice1"]
       if rd_name then
         rd_plugin:call("destroy-reservation", rd_name)
       end
-    end)
-  end
+    end
+    device_names_table[device.properties["device.name"]] = nil
+    for managed_node in device:iterate_managed_objects() do
+      node_names_table[managed_node.properties["node.name"]] = nil
+    end
+  end)
+
+  -- reset the name tables to make sure names are recycled
+  device_names_table = {}
+  node_names_table = {}
 
   -- activate monitor
   Log.info("Activating ALSA monitor")
@@ -371,7 +395,7 @@ end
 -- if the reserve-device plugin is enabled, at the point of script execution
 -- it is expected to be connected. if it is not, assume the d-bus connection
 -- has failed and continue without it
-if rd_plugin and rd_plugin["state"] ~= "connected" then
+if rd_plugin and rd_plugin:call("get-dbus")["state"] ~= "connected" then
   Log.message("reserve-device plugin is not connected to D-Bus, "
               .. "disabling device reservation")
   rd_plugin = nil
@@ -380,8 +404,9 @@ end
 -- handle rd_plugin state changes to destroy and re-create the ALSA monitor in
 -- case D-Bus service is restarted
 if rd_plugin then
-  rd_plugin:connect("notify::state", function (p, pspec)
-    local state = p["state"]
+  local dbus = rd_plugin:call("get-dbus")
+  dbus:connect("notify::state", function (b, pspec)
+    local state = b["state"]
     Log.info ("rd-plugin state changed to " .. state)
     if state == "connected" then
       Log.info ("Creating ALSA monitor")

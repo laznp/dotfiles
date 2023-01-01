@@ -123,6 +123,7 @@ function createLink (si, si_target, passthrough, exclusive)
       end
       Log.info (l, "activated si-standard-link")
     end
+    scheduleRescan()
   end)
 end
 
@@ -694,16 +695,17 @@ function handleLinkable (si)
     local link = lookupLink (si_id, si_flags[si_id].peer_id)
     if reconnect then
       if link ~= nil then
-        -- remove old link if active, otherwise schedule rescan
-        if ((link:get_active_features() & Feature.SessionItem.ACTIVE) ~= 0) then
-          si_flags[si_id].peer_id = nil
-          link:remove ()
-          Log.info (si, "... moving to new target")
-        else
-          scheduleRescan()
-          Log.info (si, "... scheduled rescan")
+        -- remove old link
+        if ((link:get_active_features() & Feature.SessionItem.ACTIVE) == 0) then
+          -- Link not yet activated. We don't want to remove it now, as that
+          -- may cause problems. Instead, give up for now. A rescan is scheduled
+          -- once the link activates.
+          Log.info (link, "Link to be moved was not activated, will wait for it.")
           return
         end
+        si_flags[si_id].peer_id = nil
+        link:remove ()
+        Log.info (si, "... moving to new target")
       end
     else
       if link ~= nil then
@@ -962,9 +964,7 @@ end)
 
 linkables_om:connect("object-removed", function (om, si)
   unhandleLinkable (si)
-  if si.properties["item.node.type"] ~= "stream" then
-    scheduleRescan ()
-  end
+  scheduleRescan ()
 end)
 
 devices_om:connect("object-added", function (om, device)

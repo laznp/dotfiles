@@ -9,7 +9,6 @@ local self = {}
 self.config = ... or {}
 self.config.persistent = self.config.persistent or {}
 self.active_profiles = {}
-self.best_profiles = {}
 self.default_profile_plugin = Plugin.find("default-profile")
 
 -- Preprocess persisten profiles and create Interest objects
@@ -123,52 +122,10 @@ function findBestProfile (device)
   return nil
 end
 
-function handleActiveProfile (device, dev_id, dev_name)
-  -- Get active profile
-  local profile = nil
-  for p in device:iterate_params("Profile") do
-    profile = parseParam(p, "Profile")
-  end
-  if profile == nil then
-    Log.info ("Cannot find active profile for device " .. dev_name)
-    return false
-  end
-
-  -- Update if it has changed
-  if self.active_profiles[dev_id] == nil or
-      self.active_profiles[dev_id].index ~= profile.index then
-    self.active_profiles[dev_id] = profile
-    Log.info ("Active profile changed to " .. profile.name .. " in " .. dev_name)
-    return true
-  end
-
-  return false
-end
-
-function handleBestProfile (device, dev_id, dev_name)
-  -- Find best profile
-  local profile = findBestProfile (device)
-  if profile == nil then
-    Log.info ("Cannot find best profile for device " .. dev_name)
-    return false
-  end
-
-  -- Update if it has changed
-  if self.best_profiles[dev_id] == nil or
-      self.best_profiles[dev_id].index ~= profile.index then
-    self.best_profiles[dev_id] = profile
-    Log.info ("Best profile changed to " .. profile.name .. " in " .. dev_name)
-    return true
-  end
-
-  return false
-end
-
 function handleProfiles (device, new_device)
   local dev_id = device["bound-id"]
   local dev_name = device.properties["device.name"]
 
-  local active_changed = handleActiveProfile (device, dev_id, dev_name)
   local def_profile = findDefaultProfile (device)
 
   -- Do not do anything if active profile is both persistent and default
@@ -183,29 +140,22 @@ function handleProfiles (device, new_device)
     return
   end
 
-  -- Set default device if active profile changed to off
-  if active_changed and self.active_profiles[dev_id] ~= nil and
-      self.active_profiles[dev_id].name == "off" then
-    if def_profile ~= nil then
-      if def_profile.available == "no" then
-        Log.info ("Default profile " .. def_profile.name .. " unavailable for " .. dev_name)
-      else
-        Log.info ("Found default profile " .. def_profile.name .. " for " .. dev_name)
-        setDeviceProfile (device, dev_id, dev_name, def_profile)
-        return
-      end
+  if def_profile ~= nil then
+    if def_profile.available == "no" then
+      Log.info ("Default profile " .. def_profile.name .. " unavailable for " .. dev_name)
     else
-      Log.info ("Default profile not found for " .. dev_name)
+      Log.info ("Found default profile " .. def_profile.name .. " for " .. dev_name)
+      setDeviceProfile (device, dev_id, dev_name, def_profile)
+      return
     end
+  else
+    Log.info ("Default profile not found for " .. dev_name)
   end
 
-  -- Otherwise just set the best profile if changed
-  local best_changed = handleBestProfile (device, dev_id, dev_name)
-  local best_profile = self.best_profiles[dev_id]
-  if best_changed and best_profile ~= nil then
+  local best_profile = findBestProfile (device)
+  if best_profile ~= nil then
+    Log.info ("Found best profile " .. best_profile.name .. " for " .. dev_name)
     setDeviceProfile (device, dev_id, dev_name, best_profile)
-  elseif best_profile ~= nil then
-    Log.info ("Best profile " .. best_profile.name .. " did not change on " .. dev_name)
   else
     Log.info ("Best profile not found on " .. dev_name)
   end
@@ -232,7 +182,6 @@ end)
 self.om:connect("object-removed", function (_, device)
   local dev_id = device["bound-id"]
   self.active_profiles[dev_id] = nil
-  self.best_profiles[dev_id] = nil
 end)
 
 self.om:activate()

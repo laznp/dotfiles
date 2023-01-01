@@ -1,8 +1,8 @@
 require('onedark').setup {
     style = 'warmer',
     colors = {
-        bg0 = '#212221'
-        -- bg0 = '#101110'
+        -- bg0 = '#212221'
+        bg0 = '#1E2127'
         -- bg0 = '#242424'
     }
 }

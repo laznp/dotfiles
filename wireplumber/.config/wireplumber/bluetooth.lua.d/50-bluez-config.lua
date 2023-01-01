@@ -29,6 +29,14 @@ bluez_monitor.properties = {
   -- Available values: any, none, hsphfpd, ofono, native
   --["bluez5.hfphsp-backend"] = "native",
 
+  -- HFP/HSP native backend modem (default: none).
+  -- Available values: none, any or the modem device string as found in
+  --   'Device' property of org.freedesktop.ModemManager1.Modem interface
+  --["bluez5.hfphsp-backend-native-modem"] = "none",
+
+  -- HFP/HSP hardware offload SCO support (default: false).
+  --["bluez5.hw-offload-sco"] = false,
+
   -- Properties for the A2DP codec configuration
   --["bluez5.default.rate"] = 48000,
   --["bluez5.default.channels"] = 2,
@@ -36,6 +44,18 @@ bluez_monitor.properties = {
   -- Register dummy AVRCP player, required for AVRCP volume function.
   -- Disable if you are running mpris-proxy or equivalent.
   --["bluez5.dummy-avrcp-player"] = true,
+
+  -- Opus Pro Audio mode settings
+  --["bluez5.a2dp.opus.pro.channels"] = 3,  -- no. channels
+  --["bluez5.a2dp.opus.pro.coupled-streams"] = 1,  -- no. joint stereo pairs, see RFC 7845 Sec. 5.1.1
+  --["bluez5.a2dp.opus.pro.locations"] = "FL,FR,LFE",  -- audio locations
+  --["bluez5.a2dp.opus.pro.max-bitrate"] = 600000,
+  --["bluez5.a2dp.opus.pro.frame-dms"] = 50,  -- frame duration in 1/10 ms: 25, 50, 100, 200, 400
+  --["bluez5.a2dp.opus.pro.bidi.channels"] = 1,  -- same settings for the return direction
+  --["bluez5.a2dp.opus.pro.bidi.coupled-streams"] = 0,
+  --["bluez5.a2dp.opus.pro.bidi.locations"] = "FC",
+  --["bluez5.a2dp.opus.pro.bidi.max-bitrate"] = 160000,
+  --["bluez5.a2dp.opus.pro.bidi.frame-dms"] = 400,
 
   -- Enable the logind module, which arbitrates which user will be allowed
   -- to have bluetooth audio enabled at any given time (particularly useful
@@ -83,6 +103,10 @@ bluez_monitor.rules = {
       -- Profile connected first
       -- Available values: a2dp-sink (default), headset-head-unit
       --["device.profile"] = "a2dp-sink",
+
+      -- Opus Pro Audio encoding mode: audio, voip, lowdelay
+      --["bluez5.a2dp.opus.pro.application"] = "audio",
+      --["bluez5.a2dp.opus.pro.bidi.application"] = "audio",
     },
   },
   {
@@ -107,10 +131,10 @@ bluez_monitor.rules = {
       --["session.suspend-timeout-seconds"] = 5,  -- 0 disables suspend
       --["monitor.channel-volumes"] = false,
 
-      -- A2DP source role, "input" or "playback"
+      -- Media source role, "input" or "playback"
       -- Defaults to "playback", playing stream to speakers
       -- Set to "input" to use as an input for apps
-      --["bluez5.a2dp-source-role"] = "input",
+      --["bluez5.media-source-role"] = "input",
     },
   },
 }
