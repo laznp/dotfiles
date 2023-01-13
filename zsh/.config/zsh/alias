@@ -76,6 +76,21 @@ function vimswitch() {
     fi
 }
 
+function willow_infra() {
+    cd $HOME/Projects/willow/infrastructure
+    if [ "$1" = "lazuardi-dev" ]; then
+        echo "Change project to lazuardi-dev"
+        source projects/lazuardi-dev/environment.sh
+        bash scripts/download-service-account-credentials.sh
+        gcloud config set project lazuardi-dev
+    elif [ "$1" = "staging" ]; then
+        echo "Change project to hellocontento-staging"
+        source projects/hellocontento-staging/environment.sh
+        bash scripts/download-service-account-credentials.sh
+        gcloud config set project hellocontento-staging
+    fi
+}
+
 # Alias git command
 alias gad="git add"
 alias gco="git checkout"
