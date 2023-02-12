@@ -1,63 +1,54 @@
 #!/usr/bin/env bash
 
+XF86Audio{Play,Pause,Next,Prev}
+    dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.{Play,Pause,Next,Previous}
+
 # MEDIA KEYS TO SET VOLUME
-#XF86Audio{Play,Pause,Next,Prev}
-#    dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.{Play,Pause,Next,Previous}
-
-#alt + F1
-#	~/.local/bin/volume mute
-	# pactl set-sink-mute @DEFAULT_SINK@ toggle
-
-#alt + ctrl + {Down,Up}
-#	~/.local/bin/volume {down,up}
-	# pactl {set-sink-volume @DEFAULT_SINK@ -5%,set-sink-volume @DEFAULT_SINK@ +5%}
+XF86Audio{LowerVolume,RaiseVolume,Mute}
+    pactl {set-sink-volume @DEFAULT_SINK@ -5%,set-sink-volume @DEFAULT_SINK@ +5%,set-sink-mute @DEFAULT_SINK@ toggle}
 
 # MEDIA KEY TO PLAY / PAUSE, NEXT, PREVIOUS
-#alt + ctrl + {Left,Right,space}
-#	playerctl {previous,next,play-pause} -p spotify
-
-# MEDIA KEY TO SET BRIGHTNESS
-#alt + ctrl + {Prior,Next}
-#    sudo xbacklight {-inc,-dec} 10
+super + ctrl + {Left,Right,space}
+	playerctl {previous,next,play-pause} -p spotify
 
 # RELOAD SXHKD
-alt + ctrl + Escape
+super + ctrl + Escape
 	pkill -USR1 -x sxhkd ; notify-send 'SXHKD' 'Config Reloaded.'
 
 # RELOAD BSPWM
-alt + shift + r
+super + shift + r
 	bspc wm -r
 
 # POWERMENU
-alt + shift + e
+super + shift + e
 	bash $HOME/.config/rofi/powermenu.sh
 
 # CLOSE AND KILL PROGRAM
-alt + shift + q
+super + shift + q
 	bspc node -c
 
 # SET WINDOWS MONOCLE FULLSCREEN
-alt + f
+super + f
     bspc desktop -l next
 
 # SET WINDOWS FLOATING
-alt + shift + {f,a}
+super + shift + {f,a}
 	bspc node -t {floating,tiled}
 
 # SWAP / FOCUS NODE POSITION
-alt + {_,shift} + {h,j,k,l}
+super + {_,shift} + {h,j,k,l}
 	bspc node -{f,s} {west,south,north,east}
-alt + {_,shift} + {Left,Down,Up,Right}
+super + {_,shift} + {Left,Down,Up,Right}
 	bspc node -{f,s} {west,south,north,east}
 
 # FOCUS / APPS TO ANOTHER DESKTOP
-alt + {_,shift} + {1-9,0}
+super + {_,shift} + {1-9,0}
     bspc {desktop -f,node -d} '^{1-9,10}'
 
 # SWAP / FOCUS ANOTHER DESKTOP
 ctrl + {Left,Right}
 	bspc desktop -f {prev,next}
-alt + button{4,5}
+super + button{8,9}
 	bspc desktop -f {prev,next}
 
 # EXPAND WINDOWS
@@ -74,21 +65,15 @@ super + {Left,Down,Up,Right}
 
 # APPLICATION LAUNCHER KEYBIND
 # TERMINAL EMULATOR
-alt + Return
+super + Return
 	alacritty -t "Alacritty"
 
 # ROFI PROGRAM LAUNCHER
-# alt + space
-	# rofi -no-lazy-grab -no-history -no-sort -show drun -modi ssh,drun,calc -theme /home/laznp/.config/rofi/config
+super + space
+    rofi -no-lazy-grab -no-history -no-sort -show drun -modi ssh,drun,calc -theme /home/laznp/.config/rofi/config
 
-alt + space
-    dmenu_run
-
-#alt + shift + n
-#	alacritty -t "Ranger" -e "ranger"
-
-#Print
-#	import png:- | xclip -selection clipboard -t image/png -filter && notify-send Screenshot 'Saved to clipboard.'
+Print
+    import png:- | xclip -selection clipboard -t image/png -filter && notify-send Screenshot 'Saved to clipboard.'
 
 #alt + c
 #    ~/.local/bin/scratchpad Spotify spotify

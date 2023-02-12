@@ -78,16 +78,21 @@ function vimswitch() {
 
 function willow_infra() {
     cd $HOME/Projects/willow/infrastructure
-    if [ "$1" = "lazuardi-dev" ]; then
+    if [ "$1" = "dev" ]; then
         echo "Change project to lazuardi-dev"
         source projects/lazuardi-dev/environment.sh
+        gcloud config configurations activate willow-dev
         bash scripts/download-service-account-credentials.sh
-        gcloud config set project lazuardi-dev
     elif [ "$1" = "staging" ]; then
         echo "Change project to hellocontento-staging"
         source projects/hellocontento-staging/environment.sh
+        gcloud config configurations activate willow-stag
         bash scripts/download-service-account-credentials.sh
-        gcloud config set project hellocontento-staging
+    elif [ "$1" = "production" ]; then
+        echo "Change project to hellocontento-production"
+        source projects/hellocontento-prod/environment.sh
+        gcloud config configurations activate willow-prod
+        bash scripts/download-service-account-credentials.sh
     fi
 }
 
@@ -95,7 +100,7 @@ function willow_infra() {
 alias gad="git add"
 alias gco="git checkout"
 alias gcob="git checkout -b"
-alias gcm="git commit -m"
+alias gcm="git commit -am"
 alias gps="git push origin"
 alias gpl="git pull origin"
 alias gst="git status"
