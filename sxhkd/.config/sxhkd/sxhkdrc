@@ -5,7 +5,8 @@ XF86Audio{Play,Pause,Next,Prev}
 
 # MEDIA KEYS TO SET VOLUME
 XF86Audio{LowerVolume,RaiseVolume,Mute}
-    pactl {set-sink-volume @DEFAULT_SINK@ -5%,set-sink-volume @DEFAULT_SINK@ +5%,set-sink-mute @DEFAULT_SINK@ toggle}
+    $HOME/.local/bin/volume {down,up,mute}
+    # pactl {set-sink-volume @DEFAULT_SINK@ -5%,set-sink-volume @DEFAULT_SINK@ +5%,set-sink-mute @DEFAULT_SINK@ toggle}
 
 # MEDIA KEY TO PLAY / PAUSE, NEXT, PREVIOUS
 super + ctrl + {Left,Right,space}

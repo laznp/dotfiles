@@ -14,20 +14,8 @@ alias df="duf"
 #alias -s py="python3"
 
 # Shorthand for edit rc files
-alias vimrc="nvim ~/.config/nvim/init.lua"
 alias zshrc="nvim ~/.zshrc"
 alias zsh_alias="nvim ~/.zsh_alias"
-alias i3rc="nvim ~/.config/i3/config"
-alias polybarrc="nvim ~/.config/polybar/config.ini"
-
-function autoedit() {
-    if [ -z "$1" ]; then
-        echo
-    else
-        cd "$HOME/.config/$1"
-        nvim +NvimTreeToggle
-    fi
-}
 
 # Alias source zshrc
 alias reload="source $HOME/.zshrc"
@@ -57,22 +45,19 @@ function activate() {
 
 function vpn() {
     if [ "$1" = "start" ]; then
-        sudo systemctl start openvpn-client@linkaja.service
-        echo "VPN Started"
+        if [ "$2" = "prod" ]; then
+            sudo systemctl start openvpn@la-prod.service
+            echo "VPN Started"
+        fi
     elif [ "$1" = "stop" ]; then
-        sudo systemctl stop openvpn-client@linkaja.service
-        echo "VPN Stopped"
+        if [ "$2" = "prod" ]; then
+            sudo systemctl stop openvpn@la-prod.service
+            echo "VPN Stopped"
+        fi
     elif [ "$1" = "status" ]; then
-        systemctl status openvpn-client@linkaja.service | grep Active | awk '{ print $2 }'
-    fi
-}
-
-function vimswitch() {
-    rm ~/.config/nvim || true
-    if [ "$1" = "lua" ]; then
-        ln -sf ~/projects/dotfiles/nvim-lua ~/.config/nvim
-    elif [ "$1" = "vim" ]; then
-        ln -sf ~/projects/dotfiles/nvim-vim ~/.config/nvim
+        if [ "$2" = "prod" ]; then
+            systemctl status openvpn@la-prod.service | grep Active | awk '{ print $2 }'
+        fi
     fi
 }
 

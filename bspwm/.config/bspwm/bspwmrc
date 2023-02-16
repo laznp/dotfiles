@@ -3,14 +3,15 @@ export BSPWM_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/bspwm"
 export BSPWM_STATE="${XDG_DATA_HOME:-$HOME/.local/share}/bspwm-state.json"
 
 sxhkd &
-xinput set-prop 9 283 1
+# nm-applet &
+xinput set-prop 14 283 1
 xsetroot -cursor_name left_ptr &
 if [ "$(xrandr -q | grep 'HDMI-1')" ]; then
-    xrandr --output DP-3 --primary --mode 2560x1440 --rate 75 --pos 0x0 --rotate normal \
-      --output HDMI-1 --mode 1920x1080 --rate 75 --rotate left --left-of DP-3
-    bspc monitor DP-3 -d 1 2 3 4 5 6
+    xrandr --output DP-1 --primary --mode 2560x1440 --rate 75 --pos 0x0 --rotate normal \
+      --output HDMI-1 --mode 1920x1080 --rate 75 --rotate left --left-of DP-1
+    bspc monitor DP-1 -d 1 2 3 4 5 6
     bspc monitor HDMI-1 -d 7 8 9
-    bspc wm --reorder-monitors DP-3 HDMI-1
+    bspc wm --reorder-monitors DP-1 HDMI-1
 fi
 
 # BSPWM CONFIG
