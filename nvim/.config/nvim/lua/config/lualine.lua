@@ -44,7 +44,8 @@ local function set_mode()
 end
 
 local function set_filename()
-	return vim.fn.expand('%:t')
+    -- return vim.fn.expand('%:t')
+	return vim.fn.expand('%:p')
 end
 
 local colors = {
@@ -74,7 +75,8 @@ local config = {
   },
   sections = {
     lualine_a = { set_mode },
-    lualine_b = { 'filename' },
+    lualine_b = { set_filename },
+    -- lualine_b = { 'filename' },
     lualine_c = {'filetype'},
     lualine_x = {
         {'diff', source=diff_source }, 'branch',

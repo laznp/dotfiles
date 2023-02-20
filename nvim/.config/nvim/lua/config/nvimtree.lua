@@ -8,7 +8,7 @@ require'nvim-tree'.setup { -- BEGIN_DEFAULT_OPTS
   ignore_buffer_on_setup = false,
   open_on_setup = false,
   open_on_setup_file = false,
-  open_on_tab = false,
+  open_on_tab = true,
   sort_by = "name",
   update_cwd = false,
   reload_on_bufenter = false,
@@ -132,7 +132,7 @@ require'nvim-tree'.setup { -- BEGIN_DEFAULT_OPTS
       max_folder_discovery = 300,
     },
     open_file = {
-      quit_on_open = true,
+      quit_on_open = false,
       resize_window = true,
       window_picker = {
         enable = true,
