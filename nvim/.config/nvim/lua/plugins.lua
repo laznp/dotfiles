@@ -35,6 +35,7 @@ return packer.startup(function()
   use "onsails/lspkind-nvim"
   use "arkav/lualine-lsp-progress"
   use "hashivim/vim-terraform"
+  use "ojroques/nvim-bufdel"
   -- use { 'tami5/lspsaga.nvim', branch = 'nvim51' }
   use "haorenW1025/completion-nvim"
   use "nvim-treesitter/completion-treesitter"

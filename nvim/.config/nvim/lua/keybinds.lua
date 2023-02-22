@@ -30,7 +30,7 @@ map('i', '<C-l>', '<Right>', { noremap = true, silent = true })
 -- tab buffer movement
 map('n', '<S-TAB>', ':bprev<CR>', { noremap = true, silent = true })
 map('n', '<TAB>', ':bnext<CR>', { noremap = true, silent = true })
-map('n', '<S-q>', ':bdelete<CR>', { noremap = true, silent = true })
+map('n', '<S-q>', ':BufDel<CR>', { noremap = true, silent = true })
 
 -- nerdcommenter
 map('n', '<C-_>', '<Plug>NERDCommenterToggle', { silent = true })
