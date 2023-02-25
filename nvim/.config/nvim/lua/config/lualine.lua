@@ -1,7 +1,3 @@
-vim.api.nvim_exec([[
-    au BufEnter,BufWinEnter,BufAdd,BufNew,WinEnter,CmdwinEnter * if bufname('%') == "NvimTree_1" | set laststatus=0 | else | set laststatus=3 | endif
-]], false)
-
 local function diff_source()
   local gitsigns = vim.b.gitsigns_status_dict
   if gitsigns then
@@ -93,14 +89,14 @@ local config = {
     lualine_y = {},
     lualine_z = {}
   },
-  tabline = {
-    lualine_a = {},
-    lualine_b = {},
-    lualine_c = { require'tabline'.tabline_buffers },
-    lualine_x = { require'tabline'.tabline_tabs },
-    lualine_y = {},
-    lualine_z = {},
-  },
+  -- tabline = {
+    -- lualine_a = {},
+    -- lualine_b = {},
+    -- lualine_c = { require'tabline'.tabline_buffers },
+    -- lualine_x = {},
+    -- lualine_y = {},
+    -- lualine_z = {},
+  -- },
   extensions = {'fzf','nvim-tree','toggleterm'}
 }
 
@@ -115,29 +111,29 @@ local function ins_right(component)
 end
 
 ins_left {
-	'lsp_progress',
-	-- display_components = { 'lsp_client_name', { 'title', 'percentage', 'message' }},
-	-- With spinner
+    'lsp_progress',
+    -- display_components = { 'lsp_client_name', { 'title', 'percentage', 'message' }},
+    -- With spinner
     display_components = { 'lsp_client_name', 'spinner', { 'title', 'percentage', 'message' }},
-	colors = {
-	  percentage  = colors.cyan,
-	  title  = colors.cyan,
-	  message  = colors.cyan,
-	  spinner = colors.cyan,
-	  lsp_client_name = colors.magenta,
-	  use = true,
-	},
-	separators = {
-		component = ' ',
-		progress = ' | ',
-		message = { pre = '(', post = ')'},
-		percentage = { pre = '', post = '%% ' },
-		title = { pre = '', post = ': ' },
-		lsp_client_name = { pre = '[', post = ']' },
-		spinner = { pre = '', post = '' },
-		message = { commenced = 'In Progress', completed = 'Completed' },
-	},
-	timer = { progress_enddelay = 500, spinner = 1000, lsp_client_name_enddelay = 1000 },
+    colors = {
+      percentage  = colors.cyan,
+      title  = colors.cyan,
+      message  = colors.cyan,
+      spinner = colors.cyan,
+      lsp_client_name = colors.magenta,
+      use = true,
+    },
+    separators = {
+        component = ' ',
+        progress = ' | ',
+        message = { pre = '(', post = ')'},
+        percentage = { pre = '', post = '%% ' },
+        title = { pre = '', post = ': ' },
+        lsp_client_name = { pre = '[', post = ']' },
+        spinner = { pre = '', post = '' },
+        message = { commenced = 'In Progress', completed = 'Completed' },
+    },
+    timer = { progress_enddelay = 500, spinner = 1000, lsp_client_name_enddelay = 1000 },
     spinner_symbols = { ' ', ' ', ' ', ' ', ' ', ' ' },
 }
 

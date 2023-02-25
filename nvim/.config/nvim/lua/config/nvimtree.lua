@@ -6,12 +6,9 @@ require'nvim-tree'.setup { -- BEGIN_DEFAULT_OPTS
   hijack_netrw = true,
   hijack_unnamed_buffer_when_opening = false,
   ignore_buffer_on_setup = false,
-  open_on_setup = false,
-  open_on_setup_file = false,
-  open_on_tab = false,
   sort_by = "name",
   update_cwd = false,
-  reload_on_bufenter = false,
+  reload_on_bufenter = true,
   respect_buf_cwd = false,
   filters = {
     dotfiles = false,
@@ -172,3 +169,7 @@ require'nvim-tree'.setup { -- BEGIN_DEFAULT_OPTS
     },
   },
 }
+
+require("nvim-tree.api").tree.toggle({
+	focus = false,
+})

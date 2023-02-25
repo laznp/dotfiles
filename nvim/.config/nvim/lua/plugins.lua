@@ -36,7 +36,8 @@ return packer.startup(function()
   use "arkav/lualine-lsp-progress"
   use "hashivim/vim-terraform"
   use "ojroques/nvim-bufdel"
-  -- use { 'tami5/lspsaga.nvim', branch = 'nvim51' }
+  use "hoob3rt/lualine.nvim"
+  use {'akinsho/bufferline.nvim', tag = "v3.*", requires = 'nvim-tree/nvim-web-devicons'}
   use "haorenW1025/completion-nvim"
   use "nvim-treesitter/completion-treesitter"
   use {
@@ -58,9 +59,5 @@ return packer.startup(function()
   use {
     "kyazdani42/nvim-tree.lua",
     requires = "kyazdani42/nvim-web-devicons",
-  }
-  use {
-    "kdheepak/tabline.nvim",
-    requires = {"hoob3rt/lualine.nvim", "kyazdani42/nvim-web-devicons"}
   }
 end)

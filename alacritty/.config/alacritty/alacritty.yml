@@ -7,6 +7,7 @@ window:
     columns: 305
     lines: 65
   startup_mode: Windowed
+  opacity: 0.3
 
   #position:
   #  x: 0
@@ -26,10 +27,10 @@ font:
     family: LigaConsolas Nerd Font
     style: Bold
   italic:
-    family: JetBrainsMono Nerd Font
+    family: Source Code Pro
     style: Bold Italic
   bold_italic:
-    family: JetBrainsMono Nerd Font
+    family: Source Code Pro
     style: Bold Italic
 
 # Font configuration
