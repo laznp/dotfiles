@@ -7,7 +7,7 @@ window:
     columns: 305
     lines: 65
   startup_mode: Windowed
-  opacity: 0.3
+  opacity: 0.99
 
   #position:
   #  x: 0

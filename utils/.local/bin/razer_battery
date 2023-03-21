@@ -1,0 +1,21 @@
+#!/bin/env python
+from openrazer.client import DeviceManager
+
+device_manager = DeviceManager()
+
+mouse = None
+for device in device_manager.devices:
+    if "Razer Basilisk Ultimate (Receiver)" == device.name:
+        mouse = device
+
+if None == mouse:
+    print("n/a")
+    exit
+
+charging = ''
+if mouse.is_charging:
+    charging = ''
+    print("{} {}%".format(charging, mouse.battery_level))
+else:
+    print("{}%".format(mouse.battery_level))
+

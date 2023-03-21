@@ -80,6 +80,6 @@ Print
 #    ~/.local/bin/scratchpad Spotify spotify
 
 # LOCKSCREEN
-#super + l
-#    betterlockscreen -l dimblur
+ctrl + super + l
+   betterlockscreen -l dimblur
 

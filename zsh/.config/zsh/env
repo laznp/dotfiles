@@ -2,7 +2,16 @@ LANG=en_US.UTF-8
 
 # Kube PS1
 function get_cluster_short() {
-  echo "$1" | cut -d '/' -f2
+    if [ $(echo "$1" | grep 'arn') ] ; then
+        echo "$1" | cut -d '/' -f2
+    elif [ $(echo "$1" | grep 'gke') ] ; then
+        PROJECT_NAME=$(echo "$1" | awk -F'_' '{ print $2}')
+        REGION_NAME=$(echo "$1" | awk -F'_' '{ print $3}')
+        CLUSTER_NAME=$(echo "$1" | awk -F'_' '{ print $4}')
+        echo "$PROJECT_NAME 󰧞 $CLUSTER_NAME"
+        # echo "$1" | sed 's/gke_//g' | sed 's/_/ 󰧞 /g'
+    fi
+
 }
 source /opt/kube-ps1/kube-ps1.sh
 KUBE_PS1_NS_ENABLE=false
@@ -10,6 +19,7 @@ KUBE_PS1_SEPARATOR=" "
 KUBE_PS1_PREFIX=("")
 KUBE_PS1_SUFFIX=("")
 KUBE_PS1_CLUSTER_FUNCTION=get_cluster_short
+KUBE_PS1_SYMBOL_DEFAULT="󱃾 "
 
 # Exa Color with Vivid
 export EXA_COLORS="$(vivid generate $HOME/.config/vivid/onedark.yml)"

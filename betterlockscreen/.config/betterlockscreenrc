@@ -22,5 +22,5 @@ layoutcolor=ffffffff
 wrongcolor=d23c3dff
 modifcolor=d23c3dff
 bgcolor=00000000
-wallpaper_cmd="feh --bg-fill"
+wallpaper_cmd="feh --bg-scale"
 

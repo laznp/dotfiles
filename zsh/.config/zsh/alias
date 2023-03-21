@@ -68,6 +68,11 @@ function willow_infra() {
         source projects/lazuardi-dev/environment.sh
         gcloud config configurations activate willow-dev
         bash scripts/download-service-account-credentials.sh
+    elif [ "$1" = "unstable" ]; then
+        echo "Change project to hellocontento-unstable"
+        source projects/hellocontento-unstable/environment.sh
+        gcloud config configurations activate willow-unstable
+        bash scripts/download-service-account-credentials.sh
     elif [ "$1" = "staging" ]; then
         echo "Change project to hellocontento-staging"
         source projects/hellocontento-staging/environment.sh
