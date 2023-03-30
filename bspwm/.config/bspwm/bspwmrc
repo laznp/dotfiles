@@ -5,8 +5,10 @@ export BSPWM_STATE="${XDG_DATA_HOME:-$HOME/.local/share}/bspwm-state.json"
 sxhkd &
 
 # Set Natural Scrolling
-xinput | grep -e "Razer Razer Basilisk Ultimate Dongle" | grep pointer | awk -F '=' '{ print $2 }' | awk '{ print $1 }' | while read line; do xinput set-prop $line 283 1; done
-xinput | grep -e "Razer Basilisk Ultimate" | grep pointer | awk -F '=' '{ print $2 }' | awk '{ print $1 }' | while read line; do xinput set-prop $line 283 1; done
+xinput | grep -e "Razer Razer Basilisk Ultimate Dongle" | grep pointer | awk -F '=' '{ print $2 }' | awk '{ print $1 }' | while read line; do xinput set-prop $line "libinput Natural Scrolling Enabled" 1; done
+xinput | grep -e "Razer Razer Basilisk Ultimate Dongle" | grep pointer | awk -F '=' '{ print $2 }' | awk '{ print $1 }' | while read line; do xinput set-prop $line "libinput Accel Profile Enabled" 0, 1; done
+xinput | grep -e "Razer Basilisk Ultimate" | grep pointer | awk -F '=' '{ print $2 }' | awk '{ print $1 }' | while read line; do xinput set-prop $line "libinput Natural Scrolling Enabled" 1; done
+xinput | grep -e "Razer Basilisk Ultimate" | grep pointer | awk -F '=' '{ print $2 }' | awk '{ print $1 }' | while read line; do xinput set-prop $line "libinput Accel Profile Enabled" 0, 1; done
 
 # Turn on RAM LED
 openrgb -d 'Corsair Dominator Platinum RGB' -m Direct -c '6478fa'
@@ -39,6 +41,7 @@ bspc rule -a Brave-browser:brave-browser desktop='^1'
 bspc rule -a Alacritty desktop='^2'
 bspc rule -a Subl:subl desktop='^3'
 bspc rule -a Lens:lens desktop='^4'
+bspc rule -a Spotify:spotify desktop='^5'
 bspc rule -a Lutris:lutris desktop='^6'
 bspc rule -a "Microsoft Teams - Preview":"microsoft teams - preview" desktop='^7'
 bspc rule -a Slack:slack desktop='^8'
@@ -49,9 +52,11 @@ bspc rule -a *:*:'meet.google.com is sharing your screen.' hidden=true
 # BSPWM STARTUP
 setxkbmap -option altwin:swap_lalt_lwin
 pgrep -x picom > /dev/null || picom --config $HOME/.config/picom/picom.conf &
-# pgrep -x feh > /dev/null || feh --bg-scale $HOME/.wallpaper-laz-landscape.png $HOME/.wallpaper-laz-portrait.png &
 pgrep -x feh > /dev/null || feh --bg-scale $HOME/.wallpaper-road.jpg $HOME/.wallpaper-road.jpg &
 $HOME/.config/polybar/launch.sh
-corectrl &
-telegram-desktop &
-whatsapp-nativefier &
+pgrep -x corectrl || corectrl &
+pgrep -x telegram-desktop || telegram-desktop &
+pgrep -x whatsapp-nativefier || whatsapp-nativefier &
+
+# Notify Reload
+notify-send "BSPWM" "Config Reloaded!"

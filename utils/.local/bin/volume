@@ -1,14 +1,7 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
-icon_path=/home/laznp/.icons/WhiteSur-dark/status/symbolic/
+icon_path=/home/laznp/.icons/Reversal-blue-dark/status/symbolic/
 notify_id=506
-# check_bluetooth=$(pacmd list-sinks | grep "bluez" -B1 | grep index | grep -o '[0-9]' | wc -l)
-# if [[ "$check_bluetooth" -gt 0 ]]; then
-    # sink_nr=$(pacmd list-sinks | grep "bluez" -B1 | grep index | grep -o '[0-9]')
-# else
-    # sink_nr=0   # use `pacmd list-sinks` to find out sink_nr
-# fi
-
 
 function get_volume {
     pactl get-sink-volume @DEFAULT_SINK@ | \grep -o '[0-9]\+%' | head -n1 | cut -d '%' -f 1
@@ -32,21 +25,15 @@ function get_volume_icon {
 function volume_notification {
     volume=$(get_volume)
     vol_icon=$(get_volume_icon $volume)
-    # dunstify -a "changevolume" -u low -r "$notify_id" -h int:value:"$volume" -i $icon_path$vol_icon "Volume: ${volume}%" -t 2000
-    dunstify -a "changevolume" -u low -r "$notify_id" -i $icon_path$vol_icon "Volume: ${volume}%" -t 2000
+    notify-send -u normal -r "$notify_id" "Volume" -i $icon_path$vol_icon "${volume}%"
 }
 
 function mute_notification {
-    if [[ "$check_bluetooth" -gt 0 ]]; then
-        muted=$(pacmd list-sinks | awk '/muted/ { print $2 }' | tail -n+$((sink_nr-1)) | head -n1)
+    muted=$(pactl list sinks | grep $(pactl get-default-sink) -A10 | awk '/Mute/ { print $2 }')
+    if [ $muted == 'yes' ]; then
+        notify-send -u critical -r "$notify_id" "Volume" -i $icon_path"audio-volume-muted-blocking-symbolic.svg" "Muted"
     else
-        muted=$(pacmd list-sinks | awk '/muted/ { print $2 }' | tail -n+$((sink_nr+1)) | head -n1)
-    fi
-    if [ $muted == 'yes' ]
-    then
-        dunstify -r $notify_id -u critical -i ${icon_path}audio-volume-muted-symbolic.svg ""
-    else
-        dunstify -r $notify_id -u low -i ${icon_path}`get_volume_icon $(get_volume)` ""
+        notify-send -u normal -r "$notify_id" "Volume" -i $icon_path$(get_volume_icon) "$(get_volume)%"
     fi
 }
 
@@ -58,9 +45,9 @@ case $1 in
     down)
         pactl set-sink-volume @DEFAULT_SINK@ -5%
         volume_notification
-	    ;;
+        ;;
     mute)
-        pactl set-sink-mute $sink_nr toggle
+        pactl set-sink-mute @DEFAULT_SINK@ toggle
         mute_notification
         ;;
     *)
