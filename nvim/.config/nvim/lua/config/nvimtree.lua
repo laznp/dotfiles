@@ -170,6 +170,6 @@ require'nvim-tree'.setup { -- BEGIN_DEFAULT_OPTS
   },
 }
 
-require("nvim-tree.api").tree.toggle({
-	focus = false,
-})
+-- require("nvim-tree.api").tree.toggle({
+    -- focus = false,
+-- })

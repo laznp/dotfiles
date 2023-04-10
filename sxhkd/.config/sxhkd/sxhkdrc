@@ -28,13 +28,9 @@ super + shift + e
 super + shift + q
 	bspc node -c
 
-# SET WINDOWS MONOCLE FULLSCREEN
-super + f
-    bspc desktop -l next
-
 # SET WINDOWS FLOATING
-super + shift + {f,a}
-	bspc node -t {floating,tiled}
+super + f
+	bspc node focused -t \~floating
 
 # SWAP / FOCUS NODE POSITION
 super + {_,shift} + {h,j,k,l}
@@ -76,8 +72,8 @@ super + space
 Print
     import png:- | xclip -selection clipboard -t image/png -filter && notify-send Screenshot 'Saved to clipboard.'
 
-#alt + c
-#    ~/.local/bin/scratchpad Spotify spotify
+super + c
+   ~/.local/bin/scratchpad Spotify spotify
 
 # LOCKSCREEN
 ctrl + super + l
