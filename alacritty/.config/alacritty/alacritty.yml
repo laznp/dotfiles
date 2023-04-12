@@ -19,53 +19,53 @@ window:
   dynamic_title: true
 
 # Font configuration
+# font:
+  # normal:
+    # family: LigaConsolas Nerd Font
+    # style: Bold
+  # bold:
+    # family: LigaConsolas Nerd Font
+    # style: Bold
+  # italic:
+    # family: Source Code Pro
+    # style: Bold Italic
+  # bold_italic:
+    # family: Source Code Pro
+    # style: Bold Italic
+
+# Font configuration
+# font:
+#   normal:
+#     family: Iosevka Nerd Font
+#     style: SemiBold
+#   bold:
+#     family: Iosevka Nerd Font
+#     style: SemiBold
+#   italic:
+#     family: Iosevka Nerd Font
+#     style: SemiBold Oblique
+#   bold_italic:
+#     family: Iosevka Nerd Font
+#     style: SemiBold Oblique
+
+# Font configuration
 font:
   normal:
-    family: LigaConsolas Nerd Font
+    # family: FuraMono Nerd Font
+    family: JetBrainsMono Nerd Font
     style: Bold
   bold:
-    family: LigaConsolas Nerd Font
+    family: JetBrainsMono Nerd Font
     style: Bold
   italic:
-    family: Source Code Pro
+    family: JetBrainsMono Nerd Font
     style: Bold Italic
   bold_italic:
-    family: Source Code Pro
+    family: JetBrainsMono Nerd Font
     style: Bold Italic
 
-# Font configuration
-# font:
-#   normal:
-#     family: Iosevka Nerd Font
-#     style: SemiBold
-#   bold:
-#     family: Iosevka Nerd Font
-#     style: SemiBold
-#   italic:
-#     family: Iosevka Nerd Font
-#     style: SemiBold Oblique
-#   bold_italic:
-#     family: Iosevka Nerd Font
-#     style: SemiBold Oblique
-
-# Font configuration
-# font:
-#   normal:
-#     # family: FuraMono Nerd Font
-#     family: JetBrainsMono Nerd Font
-#     style: Medium
-#   bold:
-#     family: JetBrainsMono Nerd Font
-#     style: Medium
-#   italic:
-#     family: JetBrainsMono Nerd Font
-#     style: Bold Italic
-#   bold_italic:
-#     family: JetBrainsMono Nerd Font
-#     style: Bold Italic
-
   # Point size
-  size: 9
+  size: 8
 
   offset:
     x: -1
@@ -79,12 +79,13 @@ draw_bold_text_with_bright_colors: true
 
 colors:
   primary:
+    # background: '0x1e2127'
     background: '0x1e2127'
     # background: '0x1e222a'
     # background: '0x1f2329'
     # background: '0x212221'
     # background: '0x101110'
-    foreground: '0xabb2bf'
+    # foreground: '0xabb2bf'
     bright_foreground: '0xe6efff'
 
   # Normal colors

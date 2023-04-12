@@ -9,7 +9,7 @@ while pgrep -x polybar >/dev/null; do sleep 1; done
 # Launch
 polybar --list-monitors | awk -F ':' '{ print $1 }' | tr -d ' ' | while read line;
 do
-    polybar $line &
+    polybar -r $line &
 done
 
 # CHECK_MONITOR=$(polybar --list-monitors | awk -F ':' '{ print $1 }' | tr -d ' ' | grep "HDMI")
