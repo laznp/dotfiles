@@ -10,6 +10,8 @@ function get_cluster_short() {
         CLUSTER_NAME=$(echo "$1" | awk -F'_' '{ print $4}')
         echo "$PROJECT_NAME 󰧞 $CLUSTER_NAME"
         # echo "$1" | sed 's/gke_//g' | sed 's/_/ 󰧞 /g'
+    else
+        echo "$1"
     fi
 
 }
