@@ -1,13 +1,14 @@
 env:
   TERM: xterm-256color
-  WINIT_X11_SCALE_FACTOR: "1.08"
+    #  WINIT_X11_SCALE_FACTOR: "1.08"
 
 window:
   dimensions:
-    columns: 305
-    lines: 65
+    columns: 200
+    lines: 50
   startup_mode: Windowed
-  opacity: 0.99
+  opacity: 1.0
+  decorations: buttonless
 
   #position:
   #  x: 0
@@ -65,7 +66,7 @@ font:
     style: Bold Italic
 
   # Point size
-  size: 8
+  size: 11
 
   offset:
     x: -1

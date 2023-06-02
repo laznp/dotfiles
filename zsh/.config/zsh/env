@@ -15,13 +15,6 @@ function get_cluster_short() {
     fi
 
 }
-source /opt/kube-ps1/kube-ps1.sh
-KUBE_PS1_NS_ENABLE=false
-KUBE_PS1_SEPARATOR=" "
-KUBE_PS1_PREFIX=("")
-KUBE_PS1_SUFFIX=("")
-KUBE_PS1_CLUSTER_FUNCTION=get_cluster_short
-KUBE_PS1_SYMBOL_DEFAULT="󱃾 "
 
 # Exa Color with Vivid
 export EXA_COLORS="$(vivid generate $HOME/.config/vivid/onedark.yml)"
@@ -37,9 +30,6 @@ export PATH=$PATH:$GOROOT/bin:$GOPATH/bin:$HOME/Downloads/istio/bin
 export PATH=$PATH:~/.local/bin
 
 # For desktop session
-if systemctl -q is-active graphical.target && [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
-	exec startx
-fi
 
 export LC_ALL=en_US.UTF-8
 

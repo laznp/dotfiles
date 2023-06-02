@@ -1,0 +1,20 @@
+# Alacritty
+cmd - return : /Applications/Alacritty.app/Contents/MacOS/alacritty
+
+# focus window
+cmd - j : yabai -m window --focus south
+cmd - k : yabai -m window --focus north
+cmd - h : yabai -m window --focus west
+cmd - l : yabai -m window --focus east
+
+cmd - f : yabai -m window --toggle native-fullscreen
+
+# FOCUS / APPS TO ANOTHER DESKTOP
+cmd + ctrl - 1 : yabai -m window --space 1; yabai -m space --focus 1
+cmd + ctrl - 2 : yabai -m window --space 2; yabai -m space --focus 2
+cmd + ctrl - 3 : yabai -m window --space 3; yabai -m space --focus 3
+cmd + ctrl - 4 : yabai -m window --space 4; yabai -m space --focus 4
+cmd + ctrl - 5 : yabai -m window --space 5; yabai -m space --focus 5
+cmd + ctrl - 6 : yabai -m window --space 6; yabai -m space --focus 6
+
+cmd + shift - q : yabai -m window --close
