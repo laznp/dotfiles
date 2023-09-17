@@ -11,7 +11,7 @@ xinput | grep -e "Razer Basilisk Ultimate" | grep pointer | awk -F '=' '{ print 
 xinput | grep -e "Razer Basilisk Ultimate" | grep pointer | awk -F '=' '{ print $2 }' | awk '{ print $1 }' | while read line; do xinput set-prop $line "libinput Accel Profile Enabled" 0, 1; done
 
 # Turn on RAM LED
-openrgb -d 'Corsair Dominator Platinum RGB' -m Direct -c '6478fa'
+openrgb -d 'Corsair Dominator Platinum' -m Direct -c '6478fa'
 
 xsetroot -cursor_name left_ptr &
 
@@ -45,6 +45,7 @@ bspc rule -a firefox:Navigator desktop='^1' monitor='^2'
 bspc rule -a Brave-browser:brave-browser desktop='^1'
 bspc rule -a Alacritty desktop='^2'
 bspc rule -a Subl:subl desktop='^3'
+bspc rule -a VSCodium:vscodium desktop='^3'
 bspc rule -a Lens:lens desktop='^4'
 bspc rule -a Spotify:spotify desktop='^5'
 bspc rule -a Lutris:lutris desktop='^6'

@@ -9,12 +9,17 @@ function get_cluster_short() {
         REGION_NAME=$(echo "$1" | awk -F'_' '{ print $3}')
         CLUSTER_NAME=$(echo "$1" | awk -F'_' '{ print $4}')
         echo "$PROJECT_NAME 󰧞 $CLUSTER_NAME"
-        # echo "$1" | sed 's/gke_//g' | sed 's/_/ 󰧞 /g'
     else
         echo "$1"
     fi
-
 }
+
+KUBE_PS1_CLUSTER_FUNCTION=get_cluster_short
+KUBE_PS1_SEPARATOR=" "
+KUBE_PS1_DIVIDER=" 󰧞 "
+KUBE_PS1_SUFFIX=""
+KUBE_PS1_PREFIX=""
+KUBE_PS1_NS_ENABLE=false
 
 # Exa Color with Vivid
 export EXA_COLORS="$(vivid generate $HOME/.config/vivid/onedark.yml)"
