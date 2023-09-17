@@ -1,0 +1,6 @@
+#!/usr/bin/bash
+
+cd $HOME/Projects/personal/notes
+git add .
+git commit -m "Update notes"
+git push origin main

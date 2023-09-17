@@ -42,24 +42,6 @@ function activate() {
     fi
 }
 
-function vpn() {
-    if [ "$1" = "start" ]; then
-        if [ "$2" = "prod" ]; then
-            sudo systemctl start openvpn@la-prod.service
-            echo "VPN Started"
-        fi
-    elif [ "$1" = "stop" ]; then
-        if [ "$2" = "prod" ]; then
-            sudo systemctl stop openvpn@la-prod.service
-            echo "VPN Stopped"
-        fi
-    elif [ "$1" = "status" ]; then
-        if [ "$2" = "prod" ]; then
-            systemctl status openvpn@la-prod.service | grep Active | awk '{ print $2 }'
-        fi
-    fi
-}
-
 function willow_infra() {
     cd $HOME/Projects/willow/infrastructure
     if [ "$1" = "dev" ]; then
