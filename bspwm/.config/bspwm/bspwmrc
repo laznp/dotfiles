@@ -57,6 +57,7 @@ bspc rule -a *:*:'meet.google.com is sharing your screen.' hidden=true
 
 # BSPWM STARTUP
 setxkbmap -option altwin:swap_lalt_lwin
+# setxkbmap -option ctrl:swap_lalt_lctl
 pgrep -x picom > /dev/null || picom --config $HOME/.config/picom/picom.conf &
 pgrep -x feh > /dev/null || feh --bg-scale $HOME/.wallpaper.png $HOME/.wallpaper-portrait.png &
 $HOME/.config/polybar/launch.sh

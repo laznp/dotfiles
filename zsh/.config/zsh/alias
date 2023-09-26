@@ -67,6 +67,19 @@ function willow_infra() {
     fi
 }
 
+function nebulae_infra() {
+    cd $HOME/Projects/nebulae/foodbag/terraform
+    if [ "$1" = "dev" ]; then
+        source projects/dev/environment.sh
+        gcloud config configurations activate nebulae-foodbag-dev
+        echo "Change project to Foodbag Dev"
+    elif [ "$1" = "prod" ]; then
+        source projects/production/environment.sh
+        gcloud config configurations activate nebulae-foodbag-prod
+        echo "Change project to Foodbag Dev"
+    fi
+}
+
 # Alias git command
 alias gad="git add"
 alias gco="git checkout"
