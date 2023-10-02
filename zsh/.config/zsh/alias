@@ -86,6 +86,9 @@ function autobahn_db() {
     if [ "$1" = "pq" ]; then
         DB_NAME="${2:-postgres}"
         psql -h localhost -U root "$DB_NAME"
+    elif [ "$1" = "dwh" ]; then
+        DB_NAME="${2:-postgres}"
+        psql -h localhost -U root "$DB_NAME" -p 5433
     elif [ "$1" = "mysql" ]; then
         mariadb -uroot -h127.0.0.1 -p
     fi
