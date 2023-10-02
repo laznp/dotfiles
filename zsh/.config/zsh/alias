@@ -73,10 +73,21 @@ function nebulae_infra() {
         source projects/dev/environment.sh
         gcloud config configurations activate nebulae-foodbag-dev
         echo "Change project to Foodbag Dev"
+        cd projects/dev
     elif [ "$1" = "prod" ]; then
         source projects/production/environment.sh
         gcloud config configurations activate nebulae-foodbag-prod
-        echo "Change project to Foodbag Dev"
+        echo "Change project to Foodbag Prod"
+        cd projects/production
+    fi
+}
+
+function autobahn_db() {
+    if [ "$1" = "pq" ]; then
+        DB_NAME="${2:-postgres}"
+        psql -h localhost -U root "$DB_NAME"
+    elif [ "$1" = "mysql" ]; then
+        mariadb -uroot -h127.0.0.1 -p
     fi
 }
 
