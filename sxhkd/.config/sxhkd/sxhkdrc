@@ -69,14 +69,17 @@ super + Return
 super + space
     rofi -no-lazy-grab -no-history -no-sort -show drun -modi ssh,drun,calc -theme /home/laznp/.config/rofi/config
 
-super + v
+super + a
     bash ~/.local/bin/audio-output
 
 Print
     import png:- | xclip -selection clipboard -t image/png -filter && notify-send Screenshot 'Saved to clipboard.'
 
-super + c
+super + s
    ~/.local/bin/scratchpad Spotify spotify
+
+super + e
+   ~/.local/bin/scratchpad nemo nemo
 
 # LOCKSCREEN
 ctrl + super + l

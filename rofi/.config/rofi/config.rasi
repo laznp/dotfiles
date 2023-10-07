@@ -8,8 +8,8 @@
  */
 
 configuration {
-    /* font:                       "FiraCode Nerd Font SemiBold 9"; */
-    font:                       "Consolas Nerd Font Bold 10";
+    font:                       "FiraCode Nerd Font SemiBold 9";
+    /* font:                       "Consolas Nerd Font Bold 10"; */
     terminal:                   "alacritty";
     fixed-num-lines:            true;
     show-icons:                 false;
@@ -18,18 +18,18 @@ configuration {
     window-format:              "[{w}] ··· {c} ···   {t}";
     click-to-exit:              true;
     combi-hide-mode-prefix:     false;
-    display-window:             "";
-    display-windowcd:           "";
-    display-run:                "";
-    display-ssh:                "";
-    display-drun:               "";
-    display-combi:              "";
-    display-calc:               "";
+    display-window:             " ";
+    display-windowcd:           " ";
+    display-run:                " ";
+    display-ssh:                " ";
+    display-drun:               " ";
+    display-combi:              " ";
+    display-calc:               " ";
 }
 
 * {
   al:      #00000000;
-  bg:      #212221ff;
+  bg:      #1e2127ff;
   se:      #475C7Bff;
   fg:      #ffffffcc;
   ac:      #FDBB6Dff;
