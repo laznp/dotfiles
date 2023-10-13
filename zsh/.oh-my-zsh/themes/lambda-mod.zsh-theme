@@ -1,5 +1,7 @@
 #!/usr/bin/env zsh
 
+source ~/.local/bin/kube-ps1.sh
+
 local LAMBDA="%(?,%{$fg_bold[blue]%} ,%{$fg_bold[red]%} )"
 if [[ "$USER" == "root" ]]; then USERCOLOR="red"; else USERCOLOR="yellow"; fi
 
