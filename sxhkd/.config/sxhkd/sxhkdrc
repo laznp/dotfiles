@@ -73,7 +73,8 @@ super + a
     bash ~/.local/bin/audio-output
 
 Print
-    import png:- | xclip -selection clipboard -t image/png -filter && notify-send Screenshot 'Saved to clipboard.'
+    flameshot gui
+    # import png:- | xclip -selection clipboard -t image/png -filter && notify-send Screenshot 'Saved to clipboard.'
 
 super + s
    ~/.local/bin/scratchpad Spotify spotify

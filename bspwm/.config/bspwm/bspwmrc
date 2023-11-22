@@ -15,7 +15,18 @@ xinput | grep -e "Razer Basilisk Ultimate" | grep pointer | awk -F '=' '{ print 
 xinput | grep -e "Razer Basilisk Ultimate" | grep pointer | awk -F '=' '{ print $2 }' | awk '{ print $1 }' | while read line; do xinput set-prop $line "libinput Accel Profile Enabled" 0, 1; done
 
 # Turn on RAM LED
-openrgb -d 'Corsair Dominator Platinum' -m Direct -c '6478fa'
+# openrgb -d 'Corsair Dominator Platinum' -m Direct -c '6478fa'
+# openrgb -d 'Corsair Dominator Platinum' -m Direct -c '789be1'
+
+# RAM
+openrgb -d 0 -m Direct -c 'ffffff'
+openrgb -d 2 -m Direct -c '96beff'
+openrgb -d 1 -m Direct -c 'ffffff'
+openrgb -d 3 -m Direct -c '96beff'
+
+# GPU
+openrgb -d 4 -z 1 -s 12 -m Direct -c "FFFFFF"
+# openrgb -d 4 -z 1 -s 12 -m Direct -c "96beff"
 
 # Set Cursor
 xsetroot -cursor_name left_ptr &
@@ -25,22 +36,26 @@ setxkbmap -option altwin:swap_lalt_lwin
 
 # Launch Compositor, Wallpaper, Polybar
 pgrep -x picom > /dev/null || picom --config $HOME/.config/picom/picom.conf &
-pgrep -x feh > /dev/null || feh --bg-scale $HOME/.wallpaper.png $HOME/.wallpaper-portrait.png &
+# pgrep -x feh > /dev/null || feh --bg-scale $HOME/.wallpaper.png $HOME/.wallpaper-portrait.png &
+pgrep -x feh > /dev/null || feh --bg-scale $HOME/.wallpaper.png $HOME/.wallpaper.png &
 $HOME/.config/polybar/launch.sh
 
 # Multiple Monitor Config
 if [ "$(xrandr -q | grep 'HDMI-A-0' | awk '{ print $2}')" == 'connected' ]; then
-    xrandr --output DisplayPort-0 --primary --mode 2560x1440 --rate 75 --pos 0x0 --rotate normal \
-      --output HDMI-1 --mode 1920x1080 --rate 75 --rotate left --left-of DP-1
-    bspc monitor DP-1 -d 1 2 3 4 5 6
-    bspc monitor HDMI-1 -d 7 8 9
-    bspc wm --reorder-monitors DP-1 HDMI-1
+    xrandr --output DisplayPort-0 --primary --mode 2560x1440 --rate 75 --set TearFree on \
+      --output HDMI-A-0 --rotate left --rate 75 --left-of DisplayPort-0
+    bspc monitor DisplayPort-0 -d 1 2 3 4 5 6
+    bspc monitor HDMI-A-0 -d 7 8 9
+    bspc wm --reorder-monitors DisplayPort-0 HDMI-A-0
 else
     xrandr --output DisplayPort-0 --primary --mode 2560x1440 --rate 75 --pos 0x0 --rotate normal --set TearFree on
     bspc monitor DisplayPort-0 -d 1 2 3 4 5 6 7 8 9
     bspc wm --reorder-monitors DisplayPort-0
 fi
-
+# TEMP
+    # xrandr --output auto
+    # bspc monitor HDMI-A-0 -d 1 2 3 4 5 6 7 8 9
+    # bspc wm --reorder-monitors HDMI-A-0
 # BSPWM Config
 bspc config border_width			2
 bspc config window_gap				15
@@ -56,6 +71,7 @@ bspc config pointer_motion_interval 7ms
 # Workspace Rule Config
 bspc rule -a firefox:Navigator desktop='^1' monitor='^2'
 bspc rule -a Brave-browser:brave-browser desktop='^1'
+bspc rule -a Google-chrome:google-chrome desktop='^1'
 bspc rule -a Alacritty desktop='^2'
 bspc rule -a Subl:subl desktop='^3'
 bspc rule -a VSCodium:vscodium desktop='^3'
@@ -63,10 +79,11 @@ bspc rule -a OpenLens:openlens desktop='^4'
 bspc rule -a Lens:lens desktop='^4'
 bspc rule -a Spotify:spotify desktop='^5'
 bspc rule -a Lutris:lutris desktop='^6'
+bspc rule -a bottles:bottles desktop='^6'
 bspc rule -a "Microsoft Teams - Preview":"microsoft teams - preview" desktop='^7'
 bspc rule -a Slack:slack desktop='^8'
 bspc rule -a TelegramDesktop:telegram-desktop desktop='^9'
-bspc rule -a Google-chrome:web.whatsapp.com desktop='^9'
+bspc rule -a whatsapp-nativefier-d40211:whatsapp-nativefier-d40211 desktop='^9'
 bspc rule -a *:*:'meet.google.com is sharing your screen.' hidden=true
 
 # Launch Application

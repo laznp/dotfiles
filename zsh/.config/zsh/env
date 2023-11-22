@@ -22,7 +22,9 @@ KUBE_PS1_PREFIX=""
 KUBE_PS1_NS_ENABLE=false
 
 # Exa Color with Vivid
-export EXA_COLORS="$(vivid generate $HOME/.config/vivid/onedark.yml)"
+# export EXA_COLORS="$(vivid generate $HOME/.config/vivid/onedark.yml)"
+# export EZA_COLORS="$(vivid generate $HOME/.config/vivid/onedark.yml)"
+# export LS_COLORS="$(vivid generate $HOME/.config/vivid/onedark.yml)"
 
 # Default Editor to Neovim
 export EDITOR=$(which nvim)

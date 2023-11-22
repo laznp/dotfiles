@@ -2,7 +2,8 @@
 alias py="python3"
 alias v="nvim"
 alias sv="sudo nvim"
-alias ls="$(which eza) --icons -g --color-scale --git"
+# alias ls="$(which eza) --icons -g --color-scale --git"
+alias ls="lsd"
 alias cat="$(which bat)"
 alias grep="$(which rg)"
 alias htop="$(which bpytop)"
@@ -49,21 +50,25 @@ function willow_infra() {
         source projects/lazuardi-dev/environment.sh
         gcloud config configurations activate willow-dev
         bash scripts/download-service-account-credentials.sh
+        cd projects/lazuardi-dev
     elif [ "$1" = "unstable" ]; then
         echo "Change project to hellocontento-unstable"
         source projects/hellocontento-unstable/environment.sh
         gcloud config configurations activate willow-unstable
         bash scripts/download-service-account-credentials.sh
+        cd projects/hellocontento-unstable
     elif [ "$1" = "staging" ]; then
         echo "Change project to hellocontento-staging"
         source projects/hellocontento-staging/environment.sh
         gcloud config configurations activate willow-stag
         bash scripts/download-service-account-credentials.sh
+        cd projects/hellocontento-staging
     elif [ "$1" = "production" ]; then
         echo "Change project to hellocontento-production"
         source projects/hellocontento-prod/environment.sh
         gcloud config configurations activate willow-prod
         bash scripts/download-service-account-credentials.sh
+        cd projects/hellocontento-prod
     fi
 }
 
