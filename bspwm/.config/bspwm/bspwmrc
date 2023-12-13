@@ -26,7 +26,6 @@ openrgb -d 3 -m Direct -c '96beff'
 
 # GPU
 openrgb -d 4 -z 1 -s 12 -m Direct -c "FFFFFF"
-# openrgb -d 4 -z 1 -s 12 -m Direct -c "96beff"
 
 # Set Cursor
 xsetroot -cursor_name left_ptr &
@@ -34,19 +33,15 @@ xsetroot -cursor_name left_ptr &
 # Swap Alt to Super
 setxkbmap -option altwin:swap_lalt_lwin
 
-# Launch Compositor, Wallpaper, Polybar
-pgrep -x picom > /dev/null || picom --config $HOME/.config/picom/picom.conf &
-# pgrep -x feh > /dev/null || feh --bg-scale $HOME/.wallpaper.png $HOME/.wallpaper-portrait.png &
-pgrep -x feh > /dev/null || feh --bg-scale $HOME/.wallpaper.png $HOME/.wallpaper.png &
-$HOME/.config/polybar/launch.sh
-
 # Multiple Monitor Config
 if [ "$(xrandr -q | grep 'HDMI-A-0' | awk '{ print $2}')" == 'connected' ]; then
     xrandr --output DisplayPort-0 --primary --mode 2560x1440 --rate 75 --set TearFree on \
-      --output HDMI-A-0 --rotate left --rate 75 --left-of DisplayPort-0
-    bspc monitor DisplayPort-0 -d 1 2 3 4 5 6
-    bspc monitor HDMI-A-0 -d 7 8 9
-    bspc wm --reorder-monitors DisplayPort-0 HDMI-A-0
+      --output DisplayPort-1 --rotate left --rate 75 --left-of DisplayPort-0 \
+      --output HDMI-A-0 --rotate right --rate 75 --right-of DisplayPort-0
+    bspc monitor DisplayPort-0 -d 1 2 3 4
+    bspc monitor DisplayPort-1 -d 5 6 7 8
+    bspc monitor HDMI-A-0 -d 9 10 11 12
+    bspc wm --reorder-monitors DisplayPort-0 DisplayPort-1 HDMI-A-0
 else
     xrandr --output DisplayPort-0 --primary --mode 2560x1440 --rate 75 --pos 0x0 --rotate normal --set TearFree on
     bspc monitor DisplayPort-0 -d 1 2 3 4 5 6 7 8 9
@@ -75,20 +70,29 @@ bspc rule -a Google-chrome:google-chrome desktop='^1'
 bspc rule -a Alacritty desktop='^2'
 bspc rule -a Subl:subl desktop='^3'
 bspc rule -a VSCodium:vscodium desktop='^3'
-bspc rule -a OpenLens:openlens desktop='^4'
-bspc rule -a Lens:lens desktop='^4'
-bspc rule -a Spotify:spotify desktop='^5'
-bspc rule -a Lutris:lutris desktop='^6'
-bspc rule -a bottles:bottles desktop='^6'
-bspc rule -a "Microsoft Teams - Preview":"microsoft teams - preview" desktop='^7'
-bspc rule -a Slack:slack desktop='^8'
-bspc rule -a TelegramDesktop:telegram-desktop desktop='^9'
-bspc rule -a whatsapp-nativefier-d40211:whatsapp-nativefier-d40211 desktop='^9'
+bspc rule -a Lutris:lutris desktop='^4'
+bspc rule -a bottles:bottles desktop='^4'
+bspc rule -a OpenLens:openlens desktop='^5'
+bspc rule -a Lens:lens desktop='^5'
+bspc rule -a Spotify:spotify desktop='^6'
+bspc rule -a TelegramDesktop:telegram-desktop desktop='^6'
+bspc rule -a whatsapp-nativefier-d40211:whatsapp-nativefier-d40211 desktop='^6'
+bspc rule -a "Microsoft Teams - Preview":"microsoft teams - preview" desktop='^9'
+bspc rule -a "Google-chrome":"teams.microsoft.com" desktop='^9'
+bspc rule -a Slack:slack desktop='^10'
+
 bspc rule -a *:*:'meet.google.com is sharing your screen.' hidden=true
 
 # Launch Application
 pgrep -x corectrl || corectrl &
 pgrep -x telegram-desktop || telegram-desktop &
+pgrep -x whatsapp-nativefier || whatsapp-nativefier &
+
+# Launch Compositor, Wallpaper, Polybar
+pgrep -x picom > /dev/null || picom --config $HOME/.config/picom/picom.conf &
+# pgrep -x feh > /dev/null || feh --bg-scale $HOME/.wallpaper.png $HOME/.wallpaper-portrait.png &
+pgrep -x feh > /dev/null || feh --bg-scale $HOME/.wallpaper.png $HOME/.wallpaper.png &
+$HOME/.config/polybar/launch.sh
 
 # Notify Reload
 notify-send "BSPWM" "Config Reloaded!"

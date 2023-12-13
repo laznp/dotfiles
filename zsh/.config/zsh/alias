@@ -10,6 +10,7 @@ alias htop="$(which bpytop)"
 alias wget="axel -n 16"
 alias vimdiff="nvim -d"
 alias df="duf"
+alias passbolt="/home/laznp/learning/go/bin/go-passbolt-cli"
 # Run python3 on every filename with .py extension
 #alias -s py="python3"
 
