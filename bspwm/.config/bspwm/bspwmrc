@@ -19,10 +19,10 @@ xinput | grep -e "Razer Basilisk Ultimate" | grep pointer | awk -F '=' '{ print 
 # openrgb -d 'Corsair Dominator Platinum' -m Direct -c '789be1'
 
 # RAM
-openrgb -d 0 -m Direct -c 'ffffff'
-openrgb -d 2 -m Direct -c '96beff'
-openrgb -d 1 -m Direct -c 'ffffff'
-openrgb -d 3 -m Direct -c '96beff'
+# openrgb -d 0 -m Direct -c 'ffffff'
+# openrgb -d 2 -m Direct -c '96beff'
+# openrgb -d 1 -m Direct -c 'ffffff'
+# openrgb -d 3 -m Direct -c '96beff'
 
 # GPU
 openrgb -d 4 -z 1 -s 12 -m Direct -c "FFFFFF"
@@ -69,6 +69,7 @@ bspc rule -a Brave-browser:brave-browser desktop='^1'
 bspc rule -a Google-chrome:google-chrome desktop='^1'
 bspc rule -a Alacritty desktop='^2'
 bspc rule -a Subl:subl desktop='^3'
+bspc rule -a NeoVim:NeoVim desktop='^3'
 bspc rule -a VSCodium:vscodium desktop='^3'
 bspc rule -a Lutris:lutris desktop='^4'
 bspc rule -a bottles:bottles desktop='^4'

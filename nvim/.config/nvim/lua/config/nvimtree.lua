@@ -10,9 +10,9 @@ require'nvim-tree'.setup { -- BEGIN_DEFAULT_OPTS
   update_cwd = false,
   reload_on_bufenter = true,
   respect_buf_cwd = false,
-  filters = {
-    dotfiles = false,
-  },
+  -- filters = {
+    -- dotfiles = true,
+  -- },
   view = {
     adaptive_size = true,
     centralize_selection = false,
@@ -102,7 +102,7 @@ require'nvim-tree'.setup { -- BEGIN_DEFAULT_OPTS
     },
   },
   filters = {
-    dotfiles = false,
+    dotfiles = true,
     custom = {},
     exclude = {},
   },

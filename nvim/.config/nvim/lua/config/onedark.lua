@@ -1,5 +1,6 @@
 require('onedark').setup  {
-    style = 'darker',
+    -- style = 'darker',
+    style = 'deep',
     transparent = true,
     term_colors = true,
     ending_tildes = false,

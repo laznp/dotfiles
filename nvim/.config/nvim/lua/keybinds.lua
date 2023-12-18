@@ -1,7 +1,7 @@
 local map = vim.keymap.set
 vim.g.mapleader = ' '
 -- toogle file explorer
-map('n', "<C-\\>", ':NvimTreeToggle<CR>', { noremap = true, silent = true })
+map('n', '<Leader><Bslash>', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
 
 -- yank 1 line
 map('n', '<S-y>', 'yy', { noremap = true, silent = true })
