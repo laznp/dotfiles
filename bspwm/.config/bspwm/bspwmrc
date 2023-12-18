@@ -19,10 +19,10 @@ xinput | grep -e "Razer Basilisk Ultimate" | grep pointer | awk -F '=' '{ print 
 # openrgb -d 'Corsair Dominator Platinum' -m Direct -c '789be1'
 
 # RAM
-# openrgb -d 0 -m Direct -c 'ffffff'
-# openrgb -d 2 -m Direct -c '96beff'
-# openrgb -d 1 -m Direct -c 'ffffff'
-# openrgb -d 3 -m Direct -c '96beff'
+openrgb -d 0 -m Direct -c 'ffffff'
+openrgb -d 2 -m Direct -c '96beff'
+openrgb -d 1 -m Direct -c 'ffffff'
+openrgb -d 3 -m Direct -c '96beff'
 
 # GPU
 openrgb -d 4 -z 1 -s 12 -m Direct -c "FFFFFF"
@@ -81,8 +81,8 @@ bspc rule -a whatsapp-nativefier-d40211:whatsapp-nativefier-d40211 desktop='^6'
 bspc rule -a "Microsoft Teams - Preview":"microsoft teams - preview" desktop='^9'
 bspc rule -a "Google-chrome":"teams.microsoft.com" desktop='^9'
 bspc rule -a Slack:slack desktop='^10'
-
 bspc rule -a *:*:'meet.google.com is sharing your screen.' hidden=true
+bspc rule -a ranger:ranger state="floating" follow="on" focus="on"
 
 # Launch Application
 pgrep -x corectrl || corectrl &
