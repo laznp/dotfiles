@@ -7,7 +7,7 @@ require('bufferline').setup {
         left_mouse_command = "buffer %d",
         middle_mouse_command = nil,
         indicator = {
-            icon = '▎', -- this should be omitted if indicator style is not 'icon'
+            icon = '▎',
             style = "icon",
         },
         buffer_close_icon = '',
@@ -22,7 +22,6 @@ require('bufferline').setup {
         offsets = {
             {
                 filetype = "NvimTree",
-                -- text = "File Explorer",
                 text = "",
                 text_align = "center",
                 separator = false,

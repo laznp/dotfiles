@@ -47,7 +47,7 @@ return packer.startup(function()
   use { "ibhagwan/fzf-lua",
     requires = {
       "vijaymarupudi/nvim-fzf",
-      "kyazdani42/nvim-web-devicons"
+      "nvim-tree/nvim-web-devicons"
     }
   }
   use {
@@ -57,7 +57,7 @@ return packer.startup(function()
     }
   }
   use {
-    "kyazdani42/nvim-tree.lua",
-    requires = "kyazdani42/nvim-web-devicons",
+    "nvim-tree/nvim-tree.lua",
+    requires = "nvim-tree/nvim-web-devicons",
   }
 end)

@@ -89,14 +89,6 @@ local config = {
     lualine_y = {},
     lualine_z = {}
   },
-  -- tabline = {
-    -- lualine_a = {},
-    -- lualine_b = {},
-    -- lualine_c = { require'tabline'.tabline_buffers },
-    -- lualine_x = {},
-    -- lualine_y = {},
-    -- lualine_z = {},
-  -- },
   extensions = {'fzf','nvim-tree','toggleterm'}
 }
 
