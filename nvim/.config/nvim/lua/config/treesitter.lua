@@ -8,6 +8,7 @@ require'nvim-treesitter.configs'.setup {
         'dockerfile',
         'terraform',
         'cpp',
+        'javascript'
     },
     indent = {
         enable = true,
@@ -15,7 +16,7 @@ require'nvim-treesitter.configs'.setup {
     },
     highlight = {
         enable = true,
-        disable = {'yaml','gitignore'},
+        disable = {'gitignore'},
         additional_vim_regex_highlighting = false,
     },
     autopairs = {

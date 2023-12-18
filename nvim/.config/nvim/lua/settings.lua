@@ -42,6 +42,6 @@ vim.cmd("command! -nargs=+ Kube lua require('config.kubectl').load_command(<f-ar
 vim.api.nvim_exec([[
     au BufWritePre,BufRead * :%s/\s\+$//e
     au BufNewFile,BufRead *.ino setf c
-    au BufNewFile,BufRead alias setf sh
-    au BufNewFile,BufRead Jenkinsfile setf groovy
+    au BufNewFile,BufRead *alias setf sh
+    au BufNewFile,BufRead *Jenkinsfile* setf groovy
 ]],false)
