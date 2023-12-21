@@ -69,4 +69,6 @@ map('v', "(", "qqc()<ESC>Pq", { noremap = true, silent = true })
 map('v', "{", "qqc{}<ESC>Pq", { noremap = true, silent = true })
 map('v', "[", "qqc[]<ESC>Pq", { noremap = true, silent = true })
 
+-- fine cmdline
+-- map('n', ':', '<cmd>FineCmdline<CR>', { noremap = true })
 

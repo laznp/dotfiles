@@ -64,6 +64,12 @@ return packer.startup(function()
         "nvim-tree/nvim-tree.lua",
         requires = "nvim-tree/nvim-web-devicons",
     }
+    use {
+        "VonHeikemen/fine-cmdline.nvim",
+        requires = {
+            "MunifTanjim/nui.nvim"
+        }
+    }
     -- use {
         -- "mg979/vim-visual-multi",
         -- branch = "master"
