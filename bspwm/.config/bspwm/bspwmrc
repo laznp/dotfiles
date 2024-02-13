@@ -14,15 +14,8 @@ xinput | grep -e "Razer Razer Basilisk Ultimate Dongle" | grep pointer | awk -F 
 xinput | grep -e "Razer Basilisk Ultimate" | grep pointer | awk -F '=' '{ print $2 }' | awk '{ print $1 }' | while read line; do xinput set-prop $line "libinput Natural Scrolling Enabled" 1; done
 xinput | grep -e "Razer Basilisk Ultimate" | grep pointer | awk -F '=' '{ print $2 }' | awk '{ print $1 }' | while read line; do xinput set-prop $line "libinput Accel Profile Enabled" 0, 1; done
 
-# Turn on RAM LED
-# openrgb -d 'Corsair Dominator Platinum' -m Direct -c '6478fa'
-# openrgb -d 'Corsair Dominator Platinum' -m Direct -c '789be1'
-
 # RAM
-openrgb -d 0 -m Direct -c 'ffffff'
-openrgb -d 2 -m Direct -c '96beff'
-openrgb -d 1 -m Direct -c 'ffffff'
-openrgb -d 3 -m Direct -c '96beff'
+openrgb -d 'Corsair Dominator Platinum' -m Direct -c 'ffffff'
 
 # GPU
 openrgb -d 4 -z 1 -s 12 -m Direct -c "FFFFFF"

@@ -8,7 +8,8 @@ require'nvim-treesitter.configs'.setup {
         'dockerfile',
         'terraform',
         'cpp',
-        'javascript'
+        'javascript',
+        'yaml'
     },
     indent = {
         enable = true,
