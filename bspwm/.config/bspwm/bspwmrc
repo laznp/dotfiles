@@ -81,7 +81,7 @@ bspc rule -a ranger:ranger state="floating" follow="on" focus="on"
 # Launch Application
 pgrep -x corectrl || corectrl &
 pgrep -x telegram-desktop || telegram-desktop &
-pgrep -x whatsapp-nativefier || whatsapp-nativefier &
+pgrep -x -f WhatsApp || whatsapp-nativefier &
 
 # Launch Compositor, Wallpaper, Polybar
 pgrep -x picom > /dev/null || picom --config $HOME/.config/picom/picom.conf &
