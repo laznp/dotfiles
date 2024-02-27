@@ -1,0 +1,19 @@
+# DBUS Environment
+exec-once=dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+
+# Waybar
+#exec-once = waybar -c ~/.config/waybar/config
+
+# Background
+exec-once = swaybg -i $HOME/.wallpaper/arch-nord-dark.png
+
+# RAM
+exec-once = openrgb -d 'Corsair Dominator Platinum' -m Direct -c 'ffffff'
+
+# GPU
+exec-once = openrgb -d 4 -z 1 -s 12 -m Direct -c "FFFFFF"
+
+# Apps
+exec-once = corectrl
+exec-once = whatsapp-nativefier
+exec-once = telegram-desktop

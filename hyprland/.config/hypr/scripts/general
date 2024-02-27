@@ -1,0 +1,73 @@
+input {
+    kb_layout = us
+
+    follow_mouse = yes
+
+    natural_scroll = true
+
+    # sensitivity = 0
+    # accel_profile = flat
+    force_no_accel = true
+}
+
+general {
+    gaps_in = 5
+    gaps_out = 10
+    border_size = 2
+
+    col.active_border = rgb(1E2127)
+    col.inactive_border = rgba(6e6e6eaa)
+
+    layout = dwindle
+    allow_tearing = false
+}
+
+decoration {
+    rounding = 5
+    blur {
+        enabled = true
+        size = 2
+        passes = 1
+        vibrancy = 0.1696
+    }
+
+    drop_shadow = true
+    shadow_range = 5
+    shadow_render_power = 3
+    shadow_ignore_window = true
+    col.shadow = rgba(1a1a1aee)
+}
+
+animations {
+    enabled = true
+    bezier = myBezier, 0.05, 0.9, 0.1, 1.05
+    animation = windows, 1, 7, myBezier
+    animation = windowsOut, 1, 7, default, popin 80%
+    animation = border, 1, 10, default
+    animation = borderangle, 1, 8, default
+    animation = fade, 1, 7, default
+    animation = workspaces, 1, 6, default
+}
+
+dwindle {
+    pseudotile = true
+    preserve_split = true
+}
+
+master {
+    new_is_master = true
+}
+
+gestures {
+    workspace_swipe = false
+}
+
+misc {
+    force_default_wallpaper = -1 # Set to 0 to disable the anime mascot wallpapers
+    focus_on_activate = 1
+    disable_hyprland_logo = 1
+}
+
+# device:razer-basilisk-ultimate-dongle {
+    # sensitivity = 1
+# }

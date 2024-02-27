@@ -37,6 +37,7 @@ return packer.startup(function()
     use "hashivim/vim-terraform"
     use "ojroques/nvim-bufdel"
     use "nvim-lualine/lualine.nvim"
+    use "lukas-reineke/indent-blankline.nvim"
     use {
         "akinsho/bufferline.nvim",
         tag = "v3.*",

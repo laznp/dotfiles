@@ -11,15 +11,16 @@ alias df="duf"
 alias passbolt="/home/laznp/learning/go/bin/go-passbolt-cli"
 # Run python3 on every filename with .py extension
 alias -s py="python3"
+alias v="nvim"
 
 # Shorthand for edit rc files
 alias zshrc="nvim ~/.zshrc"
-alias zsh_alias="nvim ~/.zsh_alias"
+alias zsh_alias="nvim ~/.config/zsh/alias"
 
 # Alias source zshrc
 alias reload="source $HOME/.zshrc"
 
-function v {
+function vim {
   (alacritty --class NeoVim -e nvim $@ >/dev/null 2>&1 &)
 }
 

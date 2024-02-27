@@ -1,0 +1,14 @@
+monitor=DP-2,1920x1080@75,0x0,1,transform,1
+monitor=DP-1,2560x1440@75,1080x0,1,transform,0
+monitor=HDMI-A-1,1920x1080@75,auto,1,transform,3
+
+workspace = 1, monitor:DP-1
+workspace = 2, monitor:DP-1
+workspace = 3, monitor:DP-1
+workspace = 4, monitor:DP-1
+workspace = 5, monitor:DP-1
+workspace = 6, monitor:DP-1
+workspace = 7, monitor:DP-2
+workspace = 8, monitor:DP-2
+workspace = 9, monitor:HDMI-A-1
+workspace = 10, monitor:HDMI-A-1
