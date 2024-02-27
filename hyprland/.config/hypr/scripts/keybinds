@@ -64,5 +64,6 @@ bind = $mainMod SHIFT, Q, killactive,
 bind = $mainMod SHIFT, E, exec, bash /home/laznp/.config/rofi/powermenu.sh
 bind = $mainMod, F, togglefloating,
 bind = $mainMod, A, exec, bash ~/.local/bin/audio-output
+bind = $mainMod, S, exec, bash /home/laznp/.config/rofi/statusmenu.sh
 bind = $mainMod, Space, exec, $menu
 bind = $mainMod, E, exec, $fileManager

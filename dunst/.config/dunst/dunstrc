@@ -22,7 +22,7 @@
     padding = 8
     horizontal_padding = 8
     text_icon_padding = 0
-    frame_width = 1
+    frame_width = 2
     frame_color = "#aaaaaaaa"
     separator_color = auto
     sort = yes
