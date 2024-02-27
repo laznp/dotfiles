@@ -22,7 +22,7 @@
     padding = 8
     horizontal_padding = 8
     text_icon_padding = 0
-    frame_width = 0
+    frame_width = 1
     frame_color = "#aaaaaaaa"
     separator_color = auto
     sort = yes
@@ -149,14 +149,14 @@
     # Otherwise the "#" and following would be interpreted as a comment.
     background = "#1e2127"
     foreground = "#D8DEE9"
-    frame_color = "#D8DEE9FF"
+    frame_color = "#D8DEE9"
     timeout = 5
     #default_icon = /path/to/icon
 
 [urgency_normal]
     background = "#1e2127"
     foreground = "#D8DEE9"
-    frame_color = "#D8DEE9FF"
+    frame_color = "#D8DEE9"
     timeout = 5
     # Icon for notifications with normal urgency, uncomment to enable
     #default_icon = /path/to/icon

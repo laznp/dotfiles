@@ -3,7 +3,7 @@
   background:       #282C34ff;
   background-alt:   #282C34ff;
   foreground:       #ffffffcc;
-  border:           #282C34ff;
+  border:           #ffffffcc;
   border-alt:       #da717fff;
   selected:         #61AFEFff;
   urgent:           #E06C75ff;

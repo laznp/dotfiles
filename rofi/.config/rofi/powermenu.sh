@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-theme="card_square"
 dir="$HOME/.config/rofi"
 
 uptime=$(uptime -p | sed -e 's/up //g')
@@ -8,11 +7,11 @@ uptime=$(uptime -p | sed -e 's/up //g')
 rofi_command="rofi -theme $HOME/.config/rofi/card_square"
 
 # Options
-shutdown="襤"
-reboot="勒"
-lock=""
-suspend="鈴"
-logout=""
+shutdown="襤 Poweroff"
+reboot="勒 Reboot"
+lock=" Lock"
+suspend="鈴  Sleep"
+logout="  Logout"
 
 # Message
 msg() {
@@ -20,9 +19,9 @@ msg() {
 }
 
 # Variable passed to rofi
-options="$shutdown\n$reboot\n$lock\n$suspend\n$logout"
+options="$shutdown\n$reboot\n$suspend\n$lock\n$logout"
 
-chosen="$(echo -e "$options" | $rofi_command -p "﫵 $uptime" -dmenu -selected-row 2)"
+chosen="$(echo -e "$options" | $rofi_command -lines 5 -p"﫵 $uptime" -dmenu -selected-row 2)"
 case $chosen in
     $shutdown)
 		sudo systemctl poweroff
@@ -41,7 +40,8 @@ case $chosen in
 		#msg
 		;;
     $logout)
-        bspc quit
+        # bspc quit
+        hyprctl dispatch exit
 		#i3-msg exit
 		#msg
 		;;

@@ -1,7 +1,7 @@
 input {
     kb_layout = us
 
-    follow_mouse = yes
+    follow_mouse = no
 
     natural_scroll = true
 
@@ -15,7 +15,7 @@ general {
     gaps_out = 10
     border_size = 2
 
-    col.active_border = rgb(1E2127)
+    col.active_border = rgba(ffffffcc)
     col.inactive_border = rgba(6e6e6eaa)
 
     layout = dwindle

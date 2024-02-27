@@ -33,7 +33,7 @@ configuration {
   bg:      #1e2127ff;
   se:      #475C7Bff;
   fg:      #ffffffcc;
-  ac:      #FDBB6Dff;
+  ac:      #ffffffcc;
   red:     #E06C75ff;
   green:   #98C379ff;
   yellow:  #E5C07Bff;
@@ -50,7 +50,7 @@ configuration {
 }
 
 window {
-    border: 						0px;
+    border: 						2px;
     border-color: 					@ac;
     border-radius: 					2px;
     padding: 						15;
