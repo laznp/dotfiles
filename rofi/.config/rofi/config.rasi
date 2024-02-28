@@ -52,10 +52,10 @@ configuration {
 window {
     border: 						2px;
     border-color: 					@ac;
-    border-radius: 					2px;
+    border-radius: 					10px;
     padding: 						15;
-    width: 							35%;
-    height:                         35%;
+    width: 							500px;
+    height:                         275px;
 }
 
 prompt {
@@ -112,7 +112,7 @@ element-text, element-icon {
 
 element {
     border: 						0px;
-    border-radius: 					1px;
+    border-radius: 					3px;
     padding: 						5px;
 }
 element normal.normal {

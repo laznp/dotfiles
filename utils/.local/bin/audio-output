@@ -3,5 +3,5 @@
 all_sinks=$(pactl list short sinks | grep -v "pci-0000" | cut -f 2)
 default_sink=$(pactl info | grep 'Default Sink' | cut -d : -f 2)
 active_sink=$(echo "$all_sinks" | grep -n $default_sink | cut -d : -f 1)
-selected_sink=$(echo "$all_sinks" | rofi -theme $HOME/.config/rofi/card_square -dmenu -i -p '󰋋 ')
+selected_sink=$(echo "$all_sinks" | rofi -theme $HOME/.config/rofi/card_square -dmenu -p '󰋋 ' -selected-row 2)
 pactl set-default-sink $selected_sink

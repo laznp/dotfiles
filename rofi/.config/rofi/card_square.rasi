@@ -32,10 +32,10 @@ configuration {
 window {
     border: 						2px;
     border-color: 					@ac;
-    border-radius: 					2px;
+    border-radius: 					10px;
     padding: 						15;
-    width: 							15%;
-    height:                         15%;
+    width: 							400px;
+    height:                         215px;
 }
 
 mainbox {
@@ -64,7 +64,7 @@ element-text, element-icon {
 
 element {
     border: 						0px;
-    border-radius: 					1px;
+    border-radius: 					3px;
     padding: 						5px;
 }
 element normal.normal {

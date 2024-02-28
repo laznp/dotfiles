@@ -6,23 +6,18 @@ XF86Audio{Play,Pause,Next,Prev}
 # MEDIA KEYS TO SET VOLUME
 XF86Audio{LowerVolume,RaiseVolume,Mute}
     $HOME/.local/bin/volume {down,up,mute}
-    # pactl {set-sink-volume @DEFAULT_SINK@ -5%,set-sink-volume @DEFAULT_SINK@ +5%,set-sink-mute @DEFAULT_SINK@ toggle}
 
 # MEDIA KEY TO PLAY / PAUSE, NEXT, PREVIOUS
 super + ctrl + {Left,Right,space}
 	playerctl {previous,next,play-pause} -p spotify
 
 # RELOAD SXHKD
-super + ctrl + Escape
-	pkill -USR1 -x sxhkd ; notify-send 'SXHKD' 'Config Reloaded.'
+# super + ctrl + Escape
+	# pkill -USR1 -x sxhkd ; notify-send 'SXHKD' 'Config Reloaded.'
 
 # RELOAD BSPWM
 super + shift + r
 	bspc wm -r
-
-# POWERMENU
-super + shift + e
-	bash $HOME/.config/rofi/powermenu.sh
 
 # CLOSE AND KILL PROGRAM
 super + shift + q
@@ -69,18 +64,23 @@ super + Return
 super + space
     rofi -no-lazy-grab -no-history -no-sort -show drun -modi ssh,drun,calc -theme /home/laznp/.config/rofi/config
 
-super + a
-    bash ~/.local/bin/audio-output
-
 Print
     flameshot gui
-    # import png:- | xclip -selection clipboard -t image/png -filter && notify-send Screenshot 'Saved to clipboard.'
 
-super + s
-   ~/.local/bin/scratchpad Spotify spotify
+# AUDIO OUTPUT MENU
+super + shift + a
+    bash ~/.local/bin/audio-output
+
+# STATUS MENU
+super + shift + s
+    bash ~/.local/bin/statusmenu
 
 super + e
    ~/.local/bin/scratchpad nemo nemo
+
+# POWER MENU
+super + shift + e
+    bash ~/.local/bin/powermenu
 
 # LOCKSCREEN
 ctrl + super + l
