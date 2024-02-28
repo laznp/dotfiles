@@ -4,6 +4,7 @@ export BSPWM_STATE="${XDG_DATA_HOME:-$HOME/.local/share}/bspwm-state.json"
 
 # SXHKD
 # pgrep -x sxhkd > /dev/null || killall sxhkd || sxhkd &
+systemctl --user start sxhkd.service
 
 # Set Natural Scrolling
 xinput | grep -e "Razer Razer Basilisk Ultimate Dongle" | grep pointer | awk -F '=' '{ print $2 }' | awk '{ print $1 }' | while read line; do xinput set-prop $line "libinput Natural Scrolling Enabled" 1; done
@@ -54,9 +55,10 @@ bspc config remove_disabled_monitor true
 bspc config pointer_motion_interval 7ms
 
 # Workspace Rule Config
-bspc rule -a firefox:Navigator desktop='^1' monitor='^2'
+bspc rule -a firefox:Navigator desktop='^1'
 bspc rule -a Brave-browser:brave-browser desktop='^1'
 bspc rule -a Google-chrome:google-chrome desktop='^1'
+bspc rule -a qutebrowser:qutebrowser desktop='^1'
 bspc rule -a Alacritty desktop='^2'
 bspc rule -a Subl:subl desktop='^3'
 bspc rule -a NeoVim:NeoVim desktop='^3'

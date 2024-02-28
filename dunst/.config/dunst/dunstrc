@@ -35,7 +35,7 @@
     # idle_threshold = 120
 
     ### Text ###
-    font = Fira Sans 9
+    font = FiraCode Nerd Font 9
     line_height = 0
 
     # Possible values are:
@@ -172,7 +172,7 @@
     appname=Spotify
     background = "#1e2127"
     foreground = "#D8DEE9"
-    format = "<b>Now Playing</b>\n%s\n%b"
+    format = "<b>Spotify</b>\n%s\n%b"
     timeout = 5
 
 # Every section that isn't one of the above is interpreted as a rules to

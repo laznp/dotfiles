@@ -68,6 +68,3 @@ misc {
     disable_hyprland_logo = 1
 }
 
-# device:razer-basilisk-ultimate-dongle {
-    # sensitivity = 1
-# }

@@ -82,6 +82,10 @@ super + e
 super + shift + e
     bash ~/.local/bin/powermenu
 
+# WINDOW SWITCHER
+super + Tab
+    rofi -modi window -show window -theme ~/.config/rofi/card_square.rasi
+
 # LOCKSCREEN
 ctrl + super + l
    betterlockscreen -l dimblur

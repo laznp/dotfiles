@@ -13,36 +13,28 @@ lock=" Lock"
 suspend="鈴  Sleep"
 logout="  Logout"
 
-# Message
-msg() {
-	rofi -theme "$dir/message.rasi" -e "Available Options  -  yes / y / no / n"
-}
-
 # Variable passed to rofi
 options="$shutdown\n$reboot\n$suspend\n$lock\n$logout"
 
 chosen="$(echo -e "$options" | $rofi_command -lines 5 -p"﫵 $uptime" -dmenu -selected-row 2)"
 case $chosen in
     $shutdown)
-		sudo systemctl poweroff
-		#msg
-		;;
+        sudo systemctl poweroff
+        ;;
     $reboot)
-		sudo systemctl reboot
-		#msg
-		;;
+        sudo systemctl reboot
+        ;;
     $lock)
-		betterlockscreen -l dimblur
-		#msg
-		;;
+        betterlockscreen -l dimblur
+        ;;
     $suspend)
-		sudo systemctl suspend
-		#msg
-		;;
+        sudo systemctl suspend
+        ;;
     $logout)
-        # bspc quit
-        hyprctl dispatch exit
-		#i3-msg exit
-		#msg
-		;;
+        if [[ "$XDG_CURRENT_DESKTOP" == "Hyprland" ]]; then
+            hyprctl dispatch exit
+        else
+            bspc quit
+        fi
+        ;;
 esac
