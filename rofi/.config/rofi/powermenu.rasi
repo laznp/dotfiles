@@ -1,5 +1,5 @@
 configuration {
-    font:                       "JetBrainsMono Nerd Font Bold 10";
+    font:                       "JetBrainsMono Nerd Font Bold 25";
     terminal:                   "alacritty";
     fixed-num-lines:            false;
     show-icons:                 false;
@@ -35,7 +35,7 @@ window {
     border-color: 					@ac;
     border-radius: 					10px;
     padding: 						15;
-    width: 							400px;
+    width: 							822px;
 }
 
 mainbox {
@@ -45,14 +45,15 @@ mainbox {
 }
 
 listview {
-    lines:							5;
+    lines:							6;
     columns:						1;
     fixed-height: 					1;
     border: 						0px;
     border-color: 					@ac;
     spacing: 						4px;
     scrollbar: 						false;
-    padding: 						5px 5px 5px 5px;
+    padding: 						0px 0px 0px 0px;
+    layout: horizontal;
 }
 
 element-text, element-icon {
@@ -64,7 +65,7 @@ element-text, element-icon {
 element {
     border: 						0px;
     border-radius: 					3px;
-    padding: 						5px;
+    padding: 						50px;
 }
 element normal.normal {
     background-color: 				@bg;

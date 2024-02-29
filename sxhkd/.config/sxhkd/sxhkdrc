@@ -65,7 +65,7 @@ super + space
     rofi -no-lazy-grab -no-history -no-sort -show drun -modi ssh,drun,calc -theme /home/laznp/.config/rofi/config
 
 Print
-    flameshot gui
+    bash ~/.local/bin/screenshot
 
 # AUDIO OUTPUT MENU
 super + shift + a

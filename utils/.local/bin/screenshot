@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+rofi_command="rofi -theme $HOME/.config/rofi/card_square"
+
+# Options
+area_save_cl="🖼️ Area   󱉥"
+area_cl="  Area   󰅇"
+full_save_cl="🖼️ Screen   󱉥"
+full_cl="  Screen   󰅇"
+
+# Variable passed to rofi
+options="$full_save_cl\n$full_cl\n$area_cl\n$area_save_cl"
+
+chosen="$(echo -e "$options" | $rofi_command -lines 3 -dmenu -selected-row 2)"
+case $chosen in
+    $area_save_cl)
+        sleep 0.25
+        flameshot gui -c -p "$HOME/Pictures"
+        notify-send --app-name="screenshot" "Screenshot" "Area saved and copied to clipboard"
+        ;;
+    $area_cl)
+        sleep 0.25
+        flameshot gui -c
+        notify-send --app-name="screenshot" "Screenshot" "Area copied to clipboard"
+        ;;
+    $full_save_cl)
+        sleep 0.25
+        flameshot screen -n 1 -c -p "$HOME/Pictures"
+        notify-send --app-name="screenshot" "Screenshot" "Screen saved and copied to clipboard"
+        ;;
+    $full_cl)
+        sleep 0.25
+        flameshot screen -c -n 1
+        notify-send --app-name="screenshot" "Screenshot" "Screen copied to clipboard"
+        ;;
+esac
