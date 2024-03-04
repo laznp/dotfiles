@@ -1,6 +1,7 @@
 # DBUS Environment
-exec-once = systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP QT_QPA_PLATFORMTHEME
 exec-once = dbus-update-activation-environment --systemd --all
+exec-once = systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP QT_QPA_PLATFORMTHEME
+exec-once = systemctl --user start xdg-desktop-portal-hyprland.service
 
 # Waybar
 #exec-once = waybar -c ~/.config/waybar/config
