@@ -1,4 +1,4 @@
-$mainMod = Alt_L
+$mainMod = Super
 
 $terminal = alacritty
 $menu = rofi -no-lazy-grab -no-history -no-sort -show drun -modi ssh,drun,calc -theme /home/laznp/.config/rofi/config
