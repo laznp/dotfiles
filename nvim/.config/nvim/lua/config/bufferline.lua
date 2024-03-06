@@ -10,21 +10,21 @@ require('bufferline').setup {
             icon = '▎',
             style = "icon",
         },
-        buffer_close_icon = '',
+        buffer_close_icon = '',
         modified_icon = '●',
-        close_icon = '',
+        close_icon = '',
         left_trunc_marker = '',
         right_trunc_marker = '',
-        max_name_length = 18,
+        max_name_length = 20,
         max_prefix_length = 15,
         truncate_names = true,
-        tab_size = 18,
+        tab_size = 20,
         offsets = {
             {
                 filetype = "NvimTree",
                 text = "",
                 text_align = "center",
-                separator = false,
+                separator = true,
                 highlight = "Directory"
             }
         },

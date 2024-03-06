@@ -71,6 +71,7 @@ return packer.startup(function()
             "MunifTanjim/nui.nvim"
         }
     }
+    use "alexghergh/nvim-tmux-navigation"
     -- use {
         -- "mg979/vim-visual-multi",
         -- branch = "master"
