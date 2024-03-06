@@ -1,5 +1,9 @@
 local map = vim.keymap.set
 vim.g.mapleader = ' '
+-- split window
+map('n', '<Leader>|', ':vsp<CR>', { noremap = true, silent = true })
+map('n', '<Leader>_', ':sp<CR>', { noremap = true, silent = true })
+
 -- toogle file explorer
 map('n', '<Leader><Bslash>', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
 
@@ -16,10 +20,6 @@ map('n', '<C-j>', ':NvimTmuxNavigateDown<CR>', { noremap = true, silent = true }
 map('n', '<C-k>', ':NvimTmuxNavigateUp<CR>', { noremap = true, silent = true })
 map('n', '<C-l>', ':NvimTmuxNavigateRight<CR>', { noremap = true, silent = true })
 map('n', '<C-q>', ':close<CR>', { noremap = true, silent = true })
-
--- split window
-map('n', '<Leader>v', ':vsp<CR>', { noremap = true, silent = true })
-map('n', '<Leader>h', ':sp<CR>', { noremap = true, silent = true })
 
 -- indenting
 map('v', '<', '<gv', { noremap = true, silent = true })
