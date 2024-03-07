@@ -9,35 +9,63 @@ local function diff_source()
   end
 end
 
-
 local function set_mode()
-	local map_mode = {
-	['n']    = ' ',
-	['no']   = ' ',
-	['nov']  = ' ',
-	['noV']  = ' ',
-	['no'] = ' ',
-	['niI']  = ' ',
-	['niR']  = ' ',
-	['niV']  = ' ',
-	['i']   = ' ',
-	['ic']  = ' ',
-	['ix']  = ' ',
-	['s']   = ' ',
-	['S']   = ' ',
-	['v']   = ' ',
-	['V']   = ' ',
-	['']  = ' ',
-	['r']   = '﯒ ',
-	['r?']  = ' ',
-	['c']   = ' ',
-	['t']   = ' ',
-	['!']   = ' ',
-	['R']   = ' ',
-	}
-	local mode_code = vim.fn.mode()
-	return map_mode[mode_code]
+    local map_mode = {
+    ['n']    = 'NORMAL',
+    ['no']   = 'NORMAL',
+    ['nov']  = 'NORMAL',
+    ['noV']  = 'NORMAL',
+    ['no'] = 'NORMAL',
+    ['niI']  = 'NORMAL',
+    ['niR']  = 'NORMAL',
+    ['niV']  = 'NORMAL',
+    ['i']   = 'INSERT',
+    ['ic']  = 'INSERT',
+    ['ix']  = 'INSERT',
+    ['s']   = 'INSERT',
+    ['S']   = 'INSERT',
+    ['v']   = 'VISUAL',
+    ['']  = 'VISUAL',
+    ['V']   = ' ',
+    ['r']   = '﯒ ',
+    ['r?']  = ' ',
+    ['c']   = 'COMMAND',
+    ['t']   = 'TERM',
+    ['!']   = 'TERM',
+    ['R']   = ' ',
+    }
+    local mode_code = vim.fn.mode()
+    return map_mode[mode_code]
 end
+
+-- local function set_mode()
+	-- local map_mode = {
+	-- ['n']    = ' ',
+	-- ['no']   = ' ',
+	-- ['nov']  = ' ',
+	-- ['noV']  = ' ',
+	-- ['no'] = ' ',
+	-- ['niI']  = ' ',
+	-- ['niR']  = ' ',
+	-- ['niV']  = ' ',
+	-- ['i']   = ' ',
+	-- ['ic']  = ' ',
+	-- ['ix']  = ' ',
+	-- ['s']   = ' ',
+	-- ['S']   = ' ',
+	-- ['v']   = ' ',
+	-- ['V']   = ' ',
+	-- ['']  = ' ',
+	-- ['r']   = '﯒ ',
+	-- ['r?']  = ' ',
+	-- ['c']   = ' ',
+	-- ['t']   = ' ',
+	-- ['!']   = ' ',
+	-- ['R']   = ' ',
+	-- }
+	-- local mode_code = vim.fn.mode()
+	-- return map_mode[mode_code]
+-- end
 
 local function set_filename()
     -- return vim.fn.expand('%:t')
@@ -62,7 +90,8 @@ local lualine = require 'lualine'
 local config = {
   options = {
     icons_enabled = true,
-    theme = 'onedark',
+    -- theme = 'onedark',
+    theme = 'catppuccin',
     component_separators = { left = '', right = ''},
     section_separators = { left = '', right = ''},
     disabled_filetypes = {'NvimTree'},

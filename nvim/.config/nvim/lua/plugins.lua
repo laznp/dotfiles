@@ -41,7 +41,13 @@ return packer.startup(function()
     use {
         "akinsho/bufferline.nvim",
         tag = "v3.*",
-        requires = "nvim-tree/nvim-web-devicons"
+        requires = "nvim-tree/nvim-web-devicons",
+        after = "catppuccin",
+          config = function()
+            require("bufferline").setup {
+              highlights = require("catppuccin.groups.integrations.bufferline").get()
+            }
+          end
     }
     use "haorenW1025/completion-nvim"
     use "nvim-treesitter/completion-treesitter"
@@ -72,6 +78,7 @@ return packer.startup(function()
         }
     }
     use "alexghergh/nvim-tmux-navigation"
+    use { "catppuccin/nvim", as = "catppuccin" }
     -- use {
         -- "mg979/vim-visual-multi",
         -- branch = "master"
