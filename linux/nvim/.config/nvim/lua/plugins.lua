@@ -40,14 +40,8 @@ return packer.startup(function()
     use "lukas-reineke/indent-blankline.nvim"
     use {
         "akinsho/bufferline.nvim",
-        tag = "v3.*",
+        tag = "*",
         requires = "nvim-tree/nvim-web-devicons",
-        after = "catppuccin",
-          config = function()
-            require("bufferline").setup {
-              highlights = require("catppuccin.groups.integrations.bufferline").get()
-            }
-          end
     }
     use "haorenW1025/completion-nvim"
     use "nvim-treesitter/completion-treesitter"
