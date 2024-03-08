@@ -45,8 +45,6 @@ bind = $mainMod SHIFT, 0, movetoworkspace, 10
 # NAVIGATE WORKSPACES
 bind = $mainMod, mouse_down, workspace, e+1
 bind = $mainMod, mouse_up, workspace, e-1
-bind = CTRL_L, right, workspace, e+1
-bind = CTRL_L, left, workspace, e-1
 
 # MOVE / RESIZE WINDOWS USING MOUSE
 bindm = $mainMod, mouse:272, movewindow
