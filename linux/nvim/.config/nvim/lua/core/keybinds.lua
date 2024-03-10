@@ -11,10 +11,6 @@ map('n', '<Leader><Bslash>', ':NvimTreeToggle<CR>', { noremap = true, silent = t
 map('n', '<S-y>', 'yy', { noremap = true, silent = true })
 
 -- windows movement
--- map('n', '<C-h>', '<C-w>h', { noremap = true, silent = true })
--- map('n', '<C-j>', '<C-w>j', { noremap = true, silent = true })
--- map('n', '<C-k>', '<C-w>k', { noremap = true, silent = true })
--- map('n', '<C-l>', '<C-w>l', { noremap = true, silent = true })
 map('n', '<C-h>', ':NvimTmuxNavigateLeft<CR>', { noremap = true, silent = true })
 map('n', '<C-j>', ':NvimTmuxNavigateDown<CR>', { noremap = true, silent = true })
 map('n', '<C-k>', ':NvimTmuxNavigateUp<CR>', { noremap = true, silent = true })

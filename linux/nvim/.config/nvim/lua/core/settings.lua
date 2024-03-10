@@ -45,4 +45,3 @@ vim.api.nvim_exec([[
     au BufNewFile,BufRead *alias setf sh
     au BufNewFile,BufRead *Jenkinsfile* setf groovy
 ]],false)
-vim.cmd.colorscheme "catppuccin"

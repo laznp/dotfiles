@@ -1,4 +1,10 @@
-require'nvim-tree'.setup { -- BEGIN_DEFAULT_OPTS
+return {
+	"nvim-tree/nvim-tree.lua",
+	dependencies = {
+		"nvim-tree/nvim-web-devicons"
+	},
+	config = function()
+		require'nvim-tree'.setup { -- BEGIN_DEFAULT_OPTS
   auto_reload_on_write = true,
   create_in_closed_folder = false,
   disable_netrw = true,
@@ -163,7 +169,5 @@ require'nvim-tree'.setup { -- BEGIN_DEFAULT_OPTS
     },
   },
 }
-
--- require("nvim-tree.api").tree.toggle({
-    -- focus = false,
--- })
+	end
+}
