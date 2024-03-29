@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-MAIN_MOD="super"
-
 XF86Audio{Play,Pause,Next,Prev}
     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.{Play,Pause,Next,Previous}
 
@@ -10,85 +8,85 @@ XF86Audio{LowerVolume,RaiseVolume,Mute}
     $HOME/.local/bin/volume {down,up,mute}
 
 # MEDIA KEY TO PLAY / PAUSE, NEXT, PREVIOUS
-$MAIN_MOD + ctrl + {Left,Right,space}
+super + ctrl + {Left,Right,space}
 	playerctl {previous,next,play-pause} -p spotify
 
 # RELOAD SXHKD
-# $MAIN_MOD + ctrl + Escape
+# super + ctrl + Escape
 	# pkill -USR1 -x sxhkd ; notify-send 'SXHKD' 'Config Reloaded.'
 
 # RELOAD BSPWM
-$MAIN_MOD + shift + r
+super + shift + r
 	bspc wm -r
 
 # CLOSE AND KILL PROGRAM
-$MAIN_MOD + shift + q
+super + shift + q
 	bspc node -c
 
 # SET WINDOWS FLOATING
-$MAIN_MOD + f
+super + f
 	bspc node focused -t \~floating
 
 # SWAP / FOCUS NODE POSITION
-$MAIN_MOD + {_,shift} + {h,j,k,l}
+super + {_,shift} + {h,j,k,l}
 	bspc node -{f,s} {west,south,north,east}
-$MAIN_MOD + {_,shift} + {Left,Down,Up,Right}
+super + {_,shift} + {Left,Down,Up,Right}
 	bspc node -{f,s} {west,south,north,east}
 
 # FOCUS / APPS TO ANOTHER DESKTOP
-$MAIN_MOD + {_,shift} + {1-9,0}
+super + {_,shift} + {1-9,0}
     bspc {desktop -f,node -d} '^{1-9,10}'
 
 # SWAP / FOCUS ANOTHER DESKTOP
 ctrl + {Left,Right}
 	bspc desktop -f {prev,next}
-$MAIN_MOD + button{8,9}
+super + button{8,9}
 	bspc desktop -f {prev,next}
 
 # EXPAND WINDOWS
-$MAIN_MOD + alt + {h,j,k,l}
+super + alt + {h,j,k,l}
 	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
 
 # SHRINK WINDOWS
-$MAIN_MOD + alt + shift + {h,j,k,l}
+super + alt + shift + {h,j,k,l}
 	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
 
 # MOVE FLOATING WINDOWS
-$MAIN_MOD + {Left,Down,Up,Right}
+super + {Left,Down,Up,Right}
 	bspc node -v {-20 0,0 20,0 -20,20 0}
 
 # APPLICATION LAUNCHER KEYBIND
 # TERMINAL EMULATOR
-$MAIN_MOD + Return
+super + Return
 	alacritty -t "Alacritty"
 
 # ROFI PROGRAM LAUNCHER
-$MAIN_MOD + space
+super + space
     rofi -no-lazy-grab -no-history -no-sort -show drun -modi ssh,drun,calc -theme /home/laznp/.config/rofi/config
 
 Print
     bash ~/.local/bin/screenshot
 
 # AUDIO OUTPUT MENU
-$MAIN_MOD + shift + a
+super + shift + a
     bash ~/.local/bin/audio-output
 
 # STATUS MENU
-$MAIN_MOD + shift + s
+super + shift + s
     bash ~/.local/bin/statusmenu
 
-$MAIN_MOD + e
+super + e
    ~/.local/bin/scratchpad nemo nemo
 
 # POWER MENU
-$MAIN_MOD + shift + e
+super + shift + e
     bash ~/.local/bin/powermenu
 
 # WINDOW SWITCHER
-$MAIN_MOD + Tab
+super + Tab
     rofi -modi window -show window -theme ~/.config/rofi/card_square.rasi
 
 # LOCKSCREEN
-ctrl + $MAIN_MOD + l
+ctrl + super + l
    betterlockscreen -l dimblur
 

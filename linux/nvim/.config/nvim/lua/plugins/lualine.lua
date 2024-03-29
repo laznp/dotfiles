@@ -28,7 +28,7 @@ return {
             ['s']   = 'INSERT',
             ['S']   = 'INSERT',
             ['v']   = 'VISUAL',
-            ['']  = 'VISUAL',
+            ['v']  = 'VISUAL',
             ['V']   = ' ',
             ['r']   = '﯒ ',
             ['r?']  = ' ',
@@ -57,14 +57,12 @@ return {
           red = '#ec5f67'
         }
 
-
         local lualine = require 'lualine'
 
         local config = {
           options = {
             icons_enabled = true,
-            -- theme = 'onedark',
-            theme = 'catppuccin',
+            theme = 'onedark',
             component_separators = { left = '', right = ''},
             section_separators = { left = '', right = ''},
             disabled_filetypes = {'NvimTree'},
@@ -73,8 +71,8 @@ return {
           },
           sections = {
             lualine_a = { set_mode },
-            -- lualine_b = { set_filename },
-            lualine_b = {},
+            lualine_b = { set_filename },
+            -- lualine_b = {},
             lualine_c = {'filetype'},
             lualine_x = {
             {'diff', source=diff_source }, 'branch',

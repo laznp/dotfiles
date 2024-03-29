@@ -35,10 +35,6 @@ vim.cmd("filetype plugin indent on")
 vim.cmd("set formatoptions-=cro")
 vim.cmd("set complete+=kspell")
 vim.cmd("set listchars=tab:•·")
-vim.cmd("command! Reload execute 'source ~/.config/nvim/init.lua'")
-vim.cmd("command! Vimrc execute ':e ~/.config/nvim/init.lua'")
-vim.cmd("command! -nargs=+ NodeMCU lua require('config.nodemcu').load_command(<f-args>)") -- Need Arduino CLI
-vim.cmd("command! -nargs=+ Kube lua require('config.kubectl').load_command(<f-args>)") -- Need Arduino CLI
 vim.api.nvim_exec([[
     au BufWritePre,BufRead * :%s/\s\+$//e
     au BufNewFile,BufRead *.ino setf c

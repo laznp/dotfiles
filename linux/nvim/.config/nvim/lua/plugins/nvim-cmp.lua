@@ -95,11 +95,11 @@ return {
         local capabilities = require('cmp_nvim_lsp').default_capabilities()
         -- require'lspconfig'.ansiblels.setup{}
         -- require'lspconfig'.dockerls.setup{}
-        require'lspconfig'.bashls.setup{}
-        require'lspconfig'.jsonls.setup { capabilities = capabilities }
+        -- require'lspconfig'.bashls.setup{}
+        -- require'lspconfig'.jsonls.setup { capabilities = capabilities }
         require'lspconfig'.pyright.setup{ capabilities = capabilities }
         require'lspconfig'.rust_analyzer.setup{ capabilities = capabilities }
         require'lspconfig'.terraformls.setup{ cmd = {'terraform-ls', 'serve'}, capabilities = capabilities }
-        require'lspconfig'.yamlls.setup{ capabilities = capabilities }
+        -- require'lspconfig'.yamlls.setup{ capabilities = capabilities }
     end
 }

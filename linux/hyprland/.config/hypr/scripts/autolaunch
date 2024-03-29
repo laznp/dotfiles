@@ -16,6 +16,6 @@ exec-once = openrgb -d 'Corsair Dominator Platinum' -m Direct -c 'ffffff'
 exec-once = openrgb -d 4 -z 1 -s 12 -m Direct -c "FFFFFF"
 
 # Apps
-exec-once = corectrl
+# exec-once = corectrl
 exec-once = whatsapp-nativefier
 exec-once = telegram-desktop

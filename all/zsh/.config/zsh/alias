@@ -16,6 +16,8 @@ alias v="nvim"
 # Shorthand for edit rc files
 alias zshrc="nvim ~/.zshrc"
 alias zsh_alias="nvim ~/.config/zsh/alias"
+alias slack_autobahn="google-chrome-stable --app=https://app.slack.com/client/T02GNBPNLH3/D05RMA27WHE"
+alias slack_nebulae="google-chrome-stable --app=https://app.slack.com/client/T5VAKUAMQ/C5ULDD4HW"
 
 # Alias source zshrc
 alias reload="source $HOME/.zshrc"
