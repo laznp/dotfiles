@@ -8,7 +8,7 @@ live_config_reload = true
 draw_bold_text_with_bright_colors = true
 
 [colors.bright]
-black = "0x1e2127"
+black = "0x93a4c3"
 blue = "0x41a7fc"
 cyan = "0x34bfd0"
 green = "0x8bcd5b"
@@ -46,23 +46,29 @@ foreground = "0x93a4c3"
 TERM = "xterm-256color"
 
 [font]
-size = 9
+size = 9.5
 
 [font.normal]
-family = "JetBrainsMono Nerd Font"
-style = "Bold"
+# family = "JetBrainsMono Nerd Font"
+# style = "Bold"
+family = "BlexMono Nerd Font"
+style = "SemiBold"
 
 [font.bold]
-family = "JetBrainsMono Nerd Font"
-style = "Bold"
+# family = "JetBrainsMono Nerd Font"
+# style = "Bold"
+family = "BlexMono Nerd Font"
+style = "SemiBold"
 
 [font.bold_italic]
-family = "JetBrainsMono Nerd Font"
+# family = "JetBrainsMono Nerd Font"
 style = "Bold Italic"
+family = "BlexMono Nerd Font"
 
 [font.italic]
-family = "JetBrainsMono Nerd Font"
+# family = "JetBrainsMono Nerd Font"
 style = "Bold Italic"
+family = "BlexMono Nerd Font"
 
 [font.offset]
 x = -1

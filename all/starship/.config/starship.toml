@@ -1,0 +1,81 @@
+# ~/.config/starship.toml
+# Get editor completions based on the config schema
+
+"$schema" = 'https://starship.rs/config-schema.json'
+format = """$os $directory$git_branch$git_status$character"""
+right_format = """$git_commit$all"""
+
+add_newline = true
+
+[character]
+success_symbol = "[](bold green)"
+error_symbol = "[](bold red)"
+
+[os]
+disabled = false
+format = "$symbol"
+
+[os.symbols]
+Arch = "[ ](fg:bright-blue)"
+Debian = "[ ](fg:red)"
+EndeavourOS = "[ ](fg:purple)"
+Fedora = "[ ](fg:blue)"
+NixOS = "[ ](fg:bright-white)"
+openSUSE = "[ ](fg:green)"
+SUSE = "[ ](fg:green)"
+
+[directory]
+format = "[$path](bg:black fg:purple) "
+read_only = "  "
+truncation_length = 4
+truncation_symbol = "~/…/"
+truncate_to_repo = false
+
+[git_branch]
+symbol = ""
+style = "bg:black fg:blue"
+format = "[$symbol $branch(:$remote_branch)]($style) "
+truncation_length = 20
+
+[git_status]
+format = '([\[$all_status$ahead_behind\]]($style) )'
+conflicted = '✘'
+up_to_date = ''
+untracked = '[?](purple)'
+stashed = '$'
+modified = '[!](yellow)'
+staged = '[++\($count\)](green)'
+renamed = '»'
+deleted = '-'
+
+[git_commit]
+commit_hash_length = 7
+only_detached = false
+style = 'bold red'
+format = '[󰊢 $hash$tag]($style) '
+
+[kubernetes]
+disabled = false
+format = '[󱃾 $context ](bold blue)'
+
+[[kubernetes.contexts]]
+context_pattern = "arn:aws:eks:.*:.*:cluster/(?<cluster>[\\w-]+)"
+context_alias = "$cluster"
+
+[docker_context]
+disabled = true
+
+[python]
+disabled = true
+
+[nodejs]
+disabled = true
+
+[package]
+disabled = true
+
+[aws]
+disabled = true
+
+[gcloud]
+disabled = true
