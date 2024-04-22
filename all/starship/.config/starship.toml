@@ -40,7 +40,7 @@ truncation_length = 20
 [git_status]
 format = '([$all_status$ahead_behind]($style) )'
 conflicted = '[✘ ][red]'
-up_to_date = '[󰸞 ](green)'
+up_to_date = ''
 untracked = '[?](purple)'
 stashed = '$'
 modified = '[!](yellow)'
@@ -48,6 +48,7 @@ staged = '[++\($count\)](green)'
 renamed = '»'
 deleted = '-'
 ahead = '⇡ '
+behind = '⇣ '
 
 [git_commit]
 commit_hash_length = 7
