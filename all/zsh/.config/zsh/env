@@ -1,7 +1,15 @@
+# LS_COLORS
+export LS_COLORS="$(vivid generate one-dark)"
+
+# Color
+autoload -Uz colors && colors
+
 # Autocompletion
 autoload -U compinit
 zstyle ':completion:*' menu select
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*' list-colors ''
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zmodload zsh/complist
 compinit
 _comp_options+=(globdots)
@@ -9,9 +17,6 @@ _comp_options+=(globdots)
 (( ${+ZSH_HIGHLIGHT_STYLES} )) || typeset -A ZSH_HIGHLIGHT_STYLES
 ZSH_HIGHLIGHT_STYLES[path]=none
 ZSH_HIGHLIGHT_STYLES[path_prefix]=none
-
-# Color
-autoload -Uz colors && colors
 
 # History
 export HISTFILE=~/.zsh_history
