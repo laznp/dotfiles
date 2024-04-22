@@ -36,11 +36,6 @@ function passgen() {
     tr -dc 'A-Za-z0-9' < /dev/urandom | head -c $1 ; echo
 }
 
-# Alias reverse proxy with port as arguments
-function publish() {
-    ssh -nN -R 11227:localhost:"$1" zoelabs
-}
-
 # Alias create new python virtualenv
 function pyenv() {
     if [ -z "$1" ]; then
@@ -58,35 +53,6 @@ function av() {
         source ./venv/bin/activate
     else
         source ./$1/bin/activate
-    fi
-}
-
-function willow_infra() {
-    cd $HOME/Projects/willow/infrastructure
-    if [ "$1" = "dev" ]; then
-        echo "Change project to lazuardi-dev"
-        source projects/lazuardi-dev/environment.sh
-        gcloud config configurations activate willow-dev
-        bash scripts/download-service-account-credentials.sh
-        cd projects/lazuardi-dev
-    elif [ "$1" = "unstable" ]; then
-        echo "Change project to hellocontento-unstable"
-        source projects/hellocontento-unstable/environment.sh
-        gcloud config configurations activate willow-unstable
-        bash scripts/download-service-account-credentials.sh
-        cd projects/hellocontento-unstable
-    elif [ "$1" = "staging" ]; then
-        echo "Change project to hellocontento-staging"
-        source projects/hellocontento-staging/environment.sh
-        gcloud config configurations activate willow-stag
-        bash scripts/download-service-account-credentials.sh
-        cd projects/hellocontento-staging
-    elif [ "$1" = "production" ]; then
-        echo "Change project to hellocontento-production"
-        source projects/hellocontento-prod/environment.sh
-        gcloud config configurations activate willow-prod
-        bash scripts/download-service-account-credentials.sh
-        cd projects/hellocontento-prod
     fi
 }
 
@@ -129,7 +95,6 @@ alias gdf="git diff"
 
 # Alias for Arch Linux
 alias pacman="sudo pacman"
-alias apt="sudo apt"
 alias reboot="sudo reboot"
 alias tf="terraform"
 alias tg="terragrunt"
@@ -145,7 +110,5 @@ alias kgi="kubectl get ingress"
 alias kgn="kubectl get nodes"
 alias kap="kubectl apply"
 alias krm="kubectl delete"
-alias kgx="kubectl config get-contexts -o name"
-alias kcx="kubectl config current-context"
 alias kux="kubectl config use-context"
 
