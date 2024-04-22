@@ -46,29 +46,29 @@ foreground = "0x93a4c3"
 TERM = "xterm-256color"
 
 [font]
-size = 9.5
+size = 9
 
 [font.normal]
-# family = "JetBrainsMono Nerd Font"
-# style = "Bold"
-family = "BlexMono Nerd Font"
-style = "SemiBold"
+family = "JetBrainsMono Nerd Font"
+style = "Bold"
+# family = "BlexMono Nerd Font"
+# style = "SemiBold"
 
 [font.bold]
-# family = "JetBrainsMono Nerd Font"
-# style = "Bold"
-family = "BlexMono Nerd Font"
-style = "SemiBold"
+family = "JetBrainsMono Nerd Font"
+style = "Bold"
+# family = "BlexMono Nerd Font"
+# style = "SemiBold"
 
 [font.bold_italic]
-# family = "JetBrainsMono Nerd Font"
+family = "JetBrainsMono Nerd Font"
 style = "Bold Italic"
-family = "BlexMono Nerd Font"
+# family = "BlexMono Nerd Font"
 
 [font.italic]
-# family = "JetBrainsMono Nerd Font"
+family = "JetBrainsMono Nerd Font"
 style = "Bold Italic"
-family = "BlexMono Nerd Font"
+# family = "BlexMono Nerd Font"
 
 [font.offset]
 x = -1
