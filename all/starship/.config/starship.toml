@@ -2,8 +2,8 @@
 # Get editor completions based on the config schema
 
 "$schema" = 'https://starship.rs/config-schema.json'
-format = """$os $directory$git_branch$git_status$character"""
-right_format = """$git_commit$kubernetes"""
+format = """$os $directory${custom.giturl}$git_branch$git_status$character"""
+right_format = """${custom.docker}${custom.py}$git_commit$kubernetes"""
 
 add_newline = true
 
@@ -25,6 +25,11 @@ read_only = "  "
 truncation_length = 4
 truncation_symbol = "~/…/"
 truncate_to_repo = false
+
+[directory.substitutions]
+"~/Projects/personal" = "/personal"
+"~/Projects/autobahn" = "/autobahn"
+"~/Projects/nebulae" = "/nebulae"
 
 [git_branch]
 symbol = ""
@@ -58,6 +63,41 @@ format = '[󱃾 $context ](bold blue)'
 [[kubernetes.contexts]]
 context_pattern = "arn:aws:eks:.*:.*:cluster/(?<cluster>[\\w-]+)"
 context_alias = "$cluster"
+
+[custom.giturl]
+disabled = false
+description = "Display symbol for remote Git server"
+command = """
+GIT_REMOTE=$(command git ls-remote --get-url 2> /dev/null)
+if [[ "$GIT_REMOTE" =~ "github" ]]; then
+    GIT_REMOTE_SYMBOL=" "
+elif [[ "$GIT_REMOTE" =~ "gitlab" ]]; then
+    GIT_REMOTE_SYMBOL=" "
+elif [[ "$GIT_REMOTE" =~ "bitbucket" ]]; then
+    GIT_REMOTE_SYMBOL=" "
+elif [[ "$GIT_REMOTE" =~ "git" ]]; then
+    GIT_REMOTE_SYMBOL=" "
+else
+    GIT_REMOTE_SYMBOL=" "
+fi
+echo "$GIT_REMOTE_SYMBOL "
+"""
+when = 'git rev-parse --is-inside-work-tree 2> /dev/null'
+format = "at $output  "
+
+[custom.docker]
+description = "Shows the docker symbol if the current directory has Dockerfile or docker-compose.yml files"
+command = "echo \\[ \\]"
+files = ["Dockerfile", "docker-compose.yml", "docker-compose.yaml"]
+when = """ command -v docker &> /dev/null; exit (echo $?); """
+prefix = "on "
+style = "bold cyan"
+
+[custom.py]
+command = """ pv=$(python --version | awk '{print $2}'); if [ -n "$VIRTUAL_ENV" ]; then echo " $pv"; fi """
+style = "yellow"
+when = """ [[ -n "$VIRTUAL_ENV" || $PATH =~ /venv/ ]] """
+shell = ["bash", "--noprofile", "--norc"]
 
 [docker_context]
 disabled = true
