@@ -38,15 +38,16 @@ format = "[$symbol $branch(:$remote_branch)]($style) "
 truncation_length = 20
 
 [git_status]
-format = '([\[$all_status$ahead_behind\]]($style) )'
-conflicted = '✘'
-up_to_date = ''
+format = '([$all_status$ahead_behind]($style) )'
+conflicted = '[✘ ][red]'
+up_to_date = '[󰸞 ](green)'
 untracked = '[?](purple)'
 stashed = '$'
 modified = '[!](yellow)'
 staged = '[++\($count\)](green)'
 renamed = '»'
 deleted = '-'
+ahead = '⇡ '
 
 [git_commit]
 commit_hash_length = 7
