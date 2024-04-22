@@ -90,7 +90,6 @@ description = "Shows the docker symbol if the current directory has Dockerfile o
 command = "echo \\[ \\]"
 files = ["Dockerfile", "docker-compose.yml", "docker-compose.yaml"]
 when = """ command -v docker &> /dev/null; exit (echo $?); """
-prefix = "on "
 style = "bold cyan"
 
 [custom.py]
