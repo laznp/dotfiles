@@ -16,6 +16,7 @@ alias v="nvim"
 # Shorthand for edit rc files
 alias zshrc="nvim ~/.zshrc"
 alias zsh_alias="nvim ~/.config/zsh/alias"
+
 alias slack_autobahn="google-chrome-stable --app=https://app.slack.com/client/T02GNBPNLH3/D05RMA27WHE"
 alias slack_nebulae="google-chrome-stable --app=https://app.slack.com/client/T5VAKUAMQ/C5ULDD4HW"
 
@@ -91,13 +92,15 @@ alias gcm="git commit -am"
 alias gps="git push origin"
 alias gpl="git pull origin"
 alias gst="git status"
-alias gdf="git diff"
+alias gfa="git fetch -a"
 
 # Alias for Arch Linux
 alias pacman="sudo pacman"
 alias reboot="sudo reboot"
 alias tf="terraform"
+alias tfa="terraform apply"
 alias tg="terragrunt"
+alias tga="terragrunt apply"
 alias stow="stow -t $HOME"
 alias mkdir="mkdir -p"
 
@@ -112,3 +115,15 @@ alias kap="kubectl apply"
 alias krm="kubectl delete"
 alias kux="kubectl config use-context"
 
+# Alias Directory
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias ~="cd ~"
+
+# Alias Project
+alias kuman="cd ~/Projects/autobahn/kubernetes-manifest"
+alias infra="cd ~/Projects/autobahn/infrastructure-2.0"
+alias foodbag="cd ~/Projects/nebulae/foodbag"
+alias belair="cd ~/Projects/nebulae/aq-mobile-be"
+alias dotfiles="cd ~/Projects/personal/dotfiles"

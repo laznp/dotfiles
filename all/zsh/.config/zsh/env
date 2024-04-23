@@ -18,6 +18,9 @@ _comp_options+=(globdots)
 ZSH_HIGHLIGHT_STYLES[path]=none
 ZSH_HIGHLIGHT_STYLES[path_prefix]=none
 
+# Auto Change Directory without command cd
+setopt auto_cd
+
 # History
 export HISTFILE=~/.zsh_history
 export HISTFILESIZE=1000000000
