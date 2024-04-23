@@ -136,10 +136,10 @@ key = "Key9"
 mods = "Control"
 chars = "\u001b[57;5u"
 
-[shell]
+# [shell]
 # args = ["--login"]
 # program = "/bin/zsh"
-program = "tmux"
+# program = "tmux"
 
 [window]
 dynamic_title = true
