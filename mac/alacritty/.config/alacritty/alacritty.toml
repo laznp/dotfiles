@@ -139,7 +139,7 @@ chars = "\u001b[57;5u"
 [shell]
 # args = ["--login"]
 # program = "/bin/zsh"
-program = "tmux"
+program = "/opt/homebrew/bin/tmux"
 
 [window]
 dynamic_title = true
