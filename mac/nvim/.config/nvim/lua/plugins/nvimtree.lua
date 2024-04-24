@@ -1,4 +1,10 @@
-require'nvim-tree'.setup { -- BEGIN_DEFAULT_OPTS
+return {
+	"nvim-tree/nvim-tree.lua",
+	dependencies = {
+		"nvim-tree/nvim-web-devicons"
+	},
+	config = function()
+		require'nvim-tree'.setup { -- BEGIN_DEFAULT_OPTS
   auto_reload_on_write = true,
   create_in_closed_folder = false,
   disable_netrw = true,
@@ -10,6 +16,9 @@ require'nvim-tree'.setup { -- BEGIN_DEFAULT_OPTS
   update_cwd = false,
   reload_on_bufenter = true,
   respect_buf_cwd = false,
+  -- filters = {
+    -- dotfiles = true,
+  -- },
   view = {
     adaptive_size = true,
     centralize_selection = false,
@@ -100,7 +109,7 @@ require'nvim-tree'.setup { -- BEGIN_DEFAULT_OPTS
   },
   filters = {
     dotfiles = true,
-    custom = { '__MACOSX' },
+    custom = {},
     exclude = {},
   },
   filesystem_watchers = {
@@ -160,7 +169,5 @@ require'nvim-tree'.setup { -- BEGIN_DEFAULT_OPTS
     },
   },
 }
-
--- require("nvim-tree.api").tree.toggle({
-    -- focus = false,
--- })
+	end
+}
