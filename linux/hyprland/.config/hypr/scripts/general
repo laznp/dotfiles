@@ -1,14 +1,14 @@
 input {
     kb_layout = us
 
-    follow_mouse = yes
+    follow_mouse = 2
 
     natural_scroll = true
 
     # sensitivity = 0
     # accel_profile = flat
     force_no_accel = true
-    kb_options = altwin:swap_lalt_lwin
+    # kb_options = altwin:swap_lalt_lwin
 }
 
 general {

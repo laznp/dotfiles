@@ -1,0 +1,121 @@
+# ~/.config/starship.toml
+# Get editor completions based on the config schema
+
+"$schema" = 'https://starship.rs/config-schema.json'
+format = """$os $directory${custom.giturl}$git_branch$git_status$character"""
+right_format = """${custom.docker}${custom.py}$git_commit$kubernetes"""
+
+add_newline = true
+
+[character]
+success_symbol = "[](bold green)"
+error_symbol = "[](bold red)"
+
+[os]
+disabled = false
+format = "$symbol"
+
+[os.symbols]
+Arch = "[ ](fg:bright-blue)"
+Macos = "[](fg:bright-white) "
+
+[directory]
+format = "[$path](bg:black fg:purple) "
+read_only = "  "
+truncation_length = 4
+truncation_symbol = "~/…/"
+truncate_to_repo = false
+
+[directory.substitutions]
+"~/Projects/personal/dotfiles" = "/dotfiles"
+"~/Projects/personal" = "/personal"
+"~/Projects/autobahn/kubernetes-manifest" = "/kuman"
+"~/Projects/autobahn/infrastructure-2.0" = "/infrastructure"
+"~/Projects/autobahn" = "/autobahn"
+"~/Projects/nebulae/foodbag" = "/foodbag"
+"~/Projects/nebulae" = "/nebulae"
+
+[git_branch]
+symbol = ""
+style = "bg:black fg:blue"
+format = "[$symbol $branch(:$remote_branch)]($style) "
+truncation_length = 20
+
+[git_status]
+format = '([$all_status$ahead_behind]($style) )'
+conflicted = '[✘ ][red]'
+up_to_date = ''
+untracked = '[?](purple)'
+stashed = '$'
+modified = '[!](yellow)'
+staged = '[++\($count\)](green)'
+renamed = '»'
+deleted = '-'
+ahead = '⇡ '
+behind = '⇣ '
+
+[git_commit]
+commit_hash_length = 7
+only_detached = false
+style = 'bold red'
+format = '[󰊢 $hash$tag]($style) '
+
+[kubernetes]
+disabled = false
+format = '[󱃾 $context ](bold blue)'
+
+[[kubernetes.contexts]]
+context_pattern = "arn:aws:eks:.*:.*:cluster/(?<cluster>[\\w-]+)"
+context_alias = "$cluster"
+
+[custom.giturl]
+disabled = false
+description = "Display symbol for remote Git server"
+command = """
+GIT_REMOTE=$(command git ls-remote --get-url 2> /dev/null)
+if [[ "$GIT_REMOTE" =~ "github" ]]; then
+    GIT_REMOTE_SYMBOL=" "
+elif [[ "$GIT_REMOTE" =~ "gitlab" ]]; then
+    GIT_REMOTE_SYMBOL=" "
+elif [[ "$GIT_REMOTE" =~ "bitbucket" ]]; then
+    GIT_REMOTE_SYMBOL=" "
+elif [[ "$GIT_REMOTE" =~ "git" ]]; then
+    GIT_REMOTE_SYMBOL=" "
+else
+    GIT_REMOTE_SYMBOL=" "
+fi
+echo "$GIT_REMOTE_SYMBOL "
+"""
+when = 'git rev-parse --is-inside-work-tree 2> /dev/null'
+format = "at $output  "
+
+[custom.docker]
+description = "Shows the docker symbol if the current directory has Dockerfile or docker-compose.yml files"
+command = "echo \\[ \\]"
+files = ["Dockerfile", "docker-compose.yml", "docker-compose.yaml"]
+when = """ command -v docker &> /dev/null; exit (echo $?); """
+style = "bold cyan"
+
+[custom.py]
+command = """ pv=$(python --version | awk '{print $2}'); if [ -n "$VIRTUAL_ENV" ]; then echo " $pv"; fi """
+style = "yellow"
+when = """ [[ -n "$VIRTUAL_ENV" || $PATH =~ /venv/ ]] """
+shell = ["bash", "--noprofile", "--norc"]
+
+[docker_context]
+disabled = true
+
+[python]
+disabled = true
+
+[nodejs]
+disabled = true
+
+[package]
+disabled = true
+
+[aws]
+disabled = true
+
+[gcloud]
+disabled = true

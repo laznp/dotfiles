@@ -17,6 +17,9 @@ alias v="nvim"
 alias zshrc="nvim ~/.zshrc"
 alias zsh_alias="nvim ~/.config/zsh/alias"
 
+alias slack_autobahn="google-chrome-stable --app=https://app.slack.com/client/T02GNBPNLH3/D05RMA27WHE"
+alias slack_nebulae="google-chrome-stable --app=https://app.slack.com/client/T5VAKUAMQ/C5ULDD4HW"
+
 # Alias source zshrc
 alias reload="source $HOME/.zshrc"
 
@@ -32,11 +35,6 @@ function nebulae-ssh() {
 # Alias for password generation
 function passgen() {
     tr -dc 'A-Za-z0-9' < /dev/urandom | head -c $1 ; echo
-}
-
-# Alias reverse proxy with port as arguments
-function publish() {
-    ssh -nN -R 11227:localhost:"$1" zoelabs
 }
 
 # Alias create new python virtualenv
@@ -56,35 +54,6 @@ function av() {
         source ./venv/bin/activate
     else
         source ./$1/bin/activate
-    fi
-}
-
-function willow_infra() {
-    cd $HOME/Projects/willow/infrastructure
-    if [ "$1" = "dev" ]; then
-        echo "Change project to lazuardi-dev"
-        source projects/lazuardi-dev/environment.sh
-        gcloud config configurations activate willow-dev
-        bash scripts/download-service-account-credentials.sh
-        cd projects/lazuardi-dev
-    elif [ "$1" = "unstable" ]; then
-        echo "Change project to hellocontento-unstable"
-        source projects/hellocontento-unstable/environment.sh
-        gcloud config configurations activate willow-unstable
-        bash scripts/download-service-account-credentials.sh
-        cd projects/hellocontento-unstable
-    elif [ "$1" = "staging" ]; then
-        echo "Change project to hellocontento-staging"
-        source projects/hellocontento-staging/environment.sh
-        gcloud config configurations activate willow-stag
-        bash scripts/download-service-account-credentials.sh
-        cd projects/hellocontento-staging
-    elif [ "$1" = "production" ]; then
-        echo "Change project to hellocontento-production"
-        source projects/hellocontento-prod/environment.sh
-        gcloud config configurations activate willow-prod
-        bash scripts/download-service-account-credentials.sh
-        cd projects/hellocontento-prod
     fi
 }
 
@@ -123,14 +92,15 @@ alias gcm="git commit -am"
 alias gps="git push origin"
 alias gpl="git pull origin"
 alias gst="git status"
-alias gdf="git diff"
+alias gfa="git fetch -a"
 
 # Alias for Arch Linux
 alias pacman="sudo pacman"
-alias apt="sudo apt"
 alias reboot="sudo reboot"
 alias tf="terraform"
+alias tfa="terraform apply"
 alias tg="terragrunt"
+alias tga="terragrunt apply"
 alias stow="stow -t $HOME"
 alias mkdir="mkdir -p"
 
@@ -143,7 +113,17 @@ alias kgi="kubectl get ingress"
 alias kgn="kubectl get nodes"
 alias kap="kubectl apply"
 alias krm="kubectl delete"
-alias kgx="kubectl config get-contexts -o name"
-alias kcx="kubectl config current-context"
 alias kux="kubectl config use-context"
 
+# Alias Directory
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias ~="cd ~"
+
+# Alias Project
+alias kuman="cd ~/Projects/autobahn/kubernetes-manifest"
+alias infra="cd ~/Projects/autobahn/infrastructure-2.0"
+alias foodbag="cd ~/Projects/nebulae/foodbag"
+alias belair="cd ~/Projects/nebulae/aq-mobile-be"
+alias dotfiles="cd ~/Projects/personal/dotfiles"

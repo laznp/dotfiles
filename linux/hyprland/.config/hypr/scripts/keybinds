@@ -45,8 +45,6 @@ bind = $mainMod SHIFT, 0, movetoworkspace, 10
 # NAVIGATE WORKSPACES
 bind = $mainMod, mouse_down, workspace, e+1
 bind = $mainMod, mouse_up, workspace, e-1
-bind = CTRL_L, right, workspace, e+1
-bind = CTRL_L, left, workspace, e-1
 
 # MOVE / RESIZE WINDOWS USING MOUSE
 bindm = $mainMod, mouse:272, movewindow
@@ -58,6 +56,9 @@ bind =,Print, exec, grimblast -s 2 copy area
 binde=, XF86AudioRaiseVolume, exec, $HOME/.local/bin/volume up
 binde=, XF86AudioLowerVolume, exec, $HOME/.local/bin/volume down
 binde=, XF86AudioMute, exec, $HOME/.local/bin/volume mute
+bind = $mainMod CTRL, Left, exec, playerctl -p spotify previous
+bind = $mainMod CTRL, Right, exec, playerctl -p spotify next
+bind = $mainMod CTRL, Space, exec, playerctl -p spotify play-pause
 
 bind = $mainMod, Return, exec, $terminal
 bind = $mainMod SHIFT, Q, killactive,

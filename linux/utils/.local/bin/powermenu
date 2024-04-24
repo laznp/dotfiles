@@ -28,7 +28,7 @@ case $chosen in
         betterlockscreen -l dimblur
         ;;
     $suspend)
-        sudo systemctl suspend
+        systemctl suspend
         ;;
     $logout)
         if [[ "$XDG_CURRENT_DESKTOP" == "Hyprland" ]]; then

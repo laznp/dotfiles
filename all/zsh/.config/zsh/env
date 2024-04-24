@@ -1,49 +1,42 @@
-LANG=en_US.UTF-8
+# LS_COLORS
+export LS_COLORS="$(vivid generate one-dark)"
 
-# Kube PS1
-function get_cluster_short() {
-    if [ $(echo "$1" | grep 'arn') ] ; then
-        echo "$1" | cut -d '/' -f2
-    elif [ $(echo "$1" | grep 'gke') ] ; then
-        PROJECT_NAME=$(echo "$1" | awk -F'_' '{ print $2}')
-        REGION_NAME=$(echo "$1" | awk -F'_' '{ print $3}')
-        CLUSTER_NAME=$(echo "$1" | awk -F'_' '{ print $4}')
-        echo "$PROJECT_NAME 󰧞 $CLUSTER_NAME"
-    else
-        echo "$1"
-    fi
-}
+# Color
+autoload -Uz colors && colors
 
-KUBE_PS1_CLUSTER_FUNCTION=get_cluster_short
-KUBE_PS1_SEPARATOR=" "
-KUBE_PS1_DIVIDER=" 󰧞 "
-KUBE_PS1_SUFFIX=""
-KUBE_PS1_PREFIX=""
-KUBE_PS1_NS_ENABLE=false
+# Autocompletion
+autoload -U compinit
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*' list-colors ''
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zmodload zsh/complist
+compinit
+_comp_options+=(globdots)
 
-# Exa Color with Vivid
-# export EXA_COLORS="$(vivid generate $HOME/.config/vivid/onedark.yml)"
-# export EZA_COLORS="$(vivid generate $HOME/.config/vivid/onedark.yml)"
-# export LS_COLORS="$(vivid generate $HOME/.config/vivid/onedark.yml)"
+(( ${+ZSH_HIGHLIGHT_STYLES} )) || typeset -A ZSH_HIGHLIGHT_STYLES
+ZSH_HIGHLIGHT_STYLES[path]=none
+ZSH_HIGHLIGHT_STYLES[path_prefix]=none
+
+# Auto Change Directory without command cd
+setopt auto_cd
+
+# History
+export HISTFILE=~/.zsh_history
+export HISTFILESIZE=1000000000
+export HISTSIZE=1000000000
+export HISTTIMEFORMAT="[%F %T] "
+setopt EXTENDED_HISTORY
+setopt HIST_FIND_NO_DUPS
 
 # Default Editor to Neovim
 export EDITOR=$(which nvim)
 
-# Go Path
-export GOMODCACHE="/home/laznp/learning/go/pkg/mod"
-export GOPATH="/home/laznp/learning/go"
-export PATH=$PATH:$GOROOT/bin:$GOPATH/bin:$HOME/Downloads/istio/bin
 # Add Path for Additional Utility
 export PATH=$PATH:~/.local/bin
 
-export FZF_DEFAULT_OPTS=" \
---color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
---color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
---color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
-
-# For desktop session
-
 export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 export LF_ICONS="\
 di=:\

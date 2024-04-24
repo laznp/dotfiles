@@ -5,7 +5,7 @@ device_manager = DeviceManager()
 
 mouse = None
 for device in device_manager.devices:
-    if "Razer Basilisk Ultimate (Receiver)" == device.name:
+    if "Razer Basilisk Ultimate (Receiver)" == device.name or "Razer Basilisk Ultimate (Wired)" == device.name:
         mouse = device
 
 if None == mouse:
@@ -14,7 +14,7 @@ if None == mouse:
 
 charging = ''
 if mouse.is_charging:
-    charging = ''
+    charging = 'Charging'
     print("{} {}%".format(charging, mouse.battery_level))
 else:
     print("{}%".format(mouse.battery_level))
