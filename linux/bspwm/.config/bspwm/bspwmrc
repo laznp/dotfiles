@@ -80,7 +80,7 @@ bspc rule -a *:*:'meet.google.com is sharing your screen.' hidden=true
 bspc rule -a ranger:ranger state="floating" follow="on" focus="on"
 
 # Launch Application
-pgrep -x corectrl || corectrl &
+#pgrep -x corectrl || corectrl &
 pgrep -x telegram-desktop || telegram-desktop &
 pgrep -x -f WhatsApp || whatsapp-nativefier &
 

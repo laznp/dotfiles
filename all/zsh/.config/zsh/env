@@ -1,3 +1,18 @@
+# Set Delete Key as Delete
+# https://unix.stackexchange.com/questions/81256/tilde-when-clicking-del-key
+typeset -g -A key
+key[Delete]="${terminfo[kdch1]}"
+[[ -n "${key[Delete]}"    ]] && bindkey -- "${key[Delete]}"     delete-char
+
+# History
+setopt APPEND_HISTORY
+setopt SHARE_HISTORY
+HISTFILE=$HOME/.zsh_history
+SAVEHIST=100000
+HISTSIZE=100000
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt EXTENDED_HISTORY
+
 # LS_COLORS
 export LS_COLORS="$(vivid generate one-dark)"
 
@@ -20,14 +35,6 @@ ZSH_HIGHLIGHT_STYLES[path_prefix]=none
 
 # Auto Change Directory without command cd
 setopt auto_cd
-
-# History
-export HISTFILE=~/.zsh_history
-export HISTFILESIZE=1000000000
-export HISTSIZE=1000000000
-export HISTTIMEFORMAT="[%F %T] "
-setopt EXTENDED_HISTORY
-setopt HIST_FIND_NO_DUPS
 
 # Default Editor to Neovim
 export EDITOR=$(which nvim)
