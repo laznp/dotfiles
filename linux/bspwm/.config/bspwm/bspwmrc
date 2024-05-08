@@ -70,7 +70,7 @@ bspc rule -a Lens:lens desktop='^5'
 bspc rule -a Bitwarden:bitwarden desktop='^6'
 bspc rule -a 1Password:1password desktop='^6'
 bspc rule -a TelegramDesktop:telegram-desktop desktop='^7'
-bspc rule -a whatsapp-nativefier-d40211:whatsapp-nativefier-d40211 desktop='^7'
+bspc rule -a Whatsapp-for-linux:whatsapp-for-linux desktop='^7'
 bspc rule -a "Google-chrome":"open.spotify.com" desktop='^8'
 bspc rule -a Spotify:spotify desktop='^8'
 bspc rule -a "Microsoft Teams - Preview":"microsoft teams - preview" desktop='^9'
@@ -80,16 +80,17 @@ bspc rule -a *:*:'meet.google.com is sharing your screen.' hidden=true
 bspc rule -a ranger:ranger state="floating" follow="on" focus="on"
 
 # Launch Application
-#pgrep -x corectrl || corectrl &
+pgrep -x corectrl || corectrl &
 pgrep -x telegram-desktop || telegram-desktop &
-pgrep -x -f WhatsApp || whatsapp-nativefier &
+pgrep -x -f Whatsapp-for-linux || whatsapp-for-linux &
+pgrep -x jamesdsp || jamesdsp &
 
 # Launch Compositor, Wallpaper, Polybar
 pgrep -x picom > /dev/null || picom --config $HOME/.config/picom/picom.conf &
-pgrep -x feh > /dev/null || feh --bg-scale $HOME/.wallpaper/fantasy-landscape.jpg --no-xinerama &
+# pgrep -x feh > /dev/null || feh --bg-scale $HOME/.wallpaper/fantasy-landscape.jpg --no-xinerama &
 # pgrep -x feh > /dev/null || feh --bg-fill $HOME/.wallpaper/arch-nord-dark.png --no-xinerama &
 # pgrep -x feh > /dev/null || feh --bg-scale $HOME/.wallpaper/arch-nord-dark.png --bg-fill $HOME/.wallpaper/arch-nord-dark.png &
-# pgrep -x feh > /dev/null || feh --bg-scale $HOME/.wallpaper.png $HOME/.wallpaper.png &
+pgrep -x feh > /dev/null || feh --bg-fill $HOME/Downloads/beach-stone.jpg &
 $HOME/.config/polybar/launch.sh
 
 # Notify Reload

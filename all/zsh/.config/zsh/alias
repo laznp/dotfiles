@@ -12,6 +12,7 @@ alias passbolt="/home/laznp/learning/go/bin/go-passbolt-cli"
 # Run python3 on every filename with .py extension
 alias -s py="python3"
 alias v="nvim"
+alias update-grub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 
 # Shorthand for edit rc files
 alias zshrc="nvim ~/.zshrc"
@@ -61,6 +62,11 @@ function nebulae_infra() {
     cd $HOME/Projects/nebulae/foodbag/terraform
     if [ "$1" = "dev" ]; then
         source projects/dev/environment.sh
+        gcloud config configurations activate nebulae-foodbag-dev
+        echo "Change project to Foodbag Dev"
+        cd projects/dev
+    elif [ "$1" = "staging" ]; then
+        source projects/dev/environment-staging.sh
         gcloud config configurations activate nebulae-foodbag-dev
         echo "Change project to Foodbag Dev"
         cd projects/dev
