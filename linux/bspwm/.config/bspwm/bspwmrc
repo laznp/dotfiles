@@ -4,7 +4,7 @@ export BSPWM_STATE="${XDG_DATA_HOME:-$HOME/.local/share}/bspwm-state.json"
 
 # SXHKD
 # pgrep -x sxhkd > /dev/null || killall sxhkd || sxhkd &
-systemctl --user start sxhkd.service
+#systemctl --user start sxhkd.service
 
 # Set Natural Scrolling
 xinput | grep -e "Razer Razer Basilisk Ultimate Dongle" | grep pointer | awk -F '=' '{ print $2 }' | awk '{ print $1 }' | while read line; do xinput set-prop $line "libinput Natural Scrolling Enabled" 1; done
@@ -21,9 +21,6 @@ openrgb -d 4 -z 1 -s 12 -m Direct -c "FFFFFF"
 # Set Cursor
 xsetroot -cursor_name left_ptr &
 
-# Swap Alt to Super
-#setxkbmap -option altwin:swap_lalt_lwin
-
 # Multiple Monitor Config
 # if [ "$(xrandr -q | grep 'DisplayPort-1' | awk '{ print $2}')" == 'connected' ]; then
 xrandr --output DisplayPort-0 --primary --rate 75 --set TearFree on \
@@ -31,15 +28,7 @@ xrandr --output DisplayPort-0 --primary --rate 75 --set TearFree on \
 bspc monitor DisplayPort-0 -d 1 2 3 4 5 6
 bspc monitor DisplayPort-1 -d 7 8 9 10
 bspc wm --reorder-monitors DisplayPort-0 DisplayPort-1
-# else
-# xrandr --output DisplayPort-0 --primary --mode 2560x1440 --rate 75 --pos 0x0 --rotate normal --set TearFree on
-# bspc monitor DisplayPort-0 -d 1 2 3 4 5 6 7 8 9 10
-# bspc wm --reorder-monitors DisplayPort-0
-# fi
-# TEMP
-# xrandr --output auto  --rotate n
-# bspc monitor HDMI-A-0 -d 1 2 3 4 5 6 7 8 9 10
-# bspc wm --reorder-monitors HDMI-A-0
+
 # BSPWM Config
 bspc config border_width			2
 bspc config window_gap				10
@@ -87,10 +76,9 @@ pgrep -x jamesdsp || jamesdsp &
 
 # Launch Compositor, Wallpaper, Polybar
 pgrep -x picom > /dev/null || picom --config $HOME/.config/picom/picom.conf &
-# pgrep -x feh > /dev/null || feh --bg-scale $HOME/.wallpaper/fantasy-landscape.jpg --no-xinerama &
+pgrep -x feh > /dev/null || feh --bg-scale $HOME/.wallpaper/fantasy-landscape.jpg --no-xinerama &
 # pgrep -x feh > /dev/null || feh --bg-fill $HOME/.wallpaper/arch-nord-dark.png --no-xinerama &
 # pgrep -x feh > /dev/null || feh --bg-scale $HOME/.wallpaper/arch-nord-dark.png --bg-fill $HOME/.wallpaper/arch-nord-dark.png &
-pgrep -x feh > /dev/null || feh --bg-fill $HOME/Downloads/beach-stone.jpg &
 $HOME/.config/polybar/launch.sh
 
 # Notify Reload
