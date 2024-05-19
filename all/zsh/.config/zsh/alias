@@ -39,18 +39,18 @@ function passgen() {
 }
 
 # Alias create new python virtualenv
-function pyenv() {
-    if [ -z "$1" ]; then
-        python3 -m venv venv
-        source ./venv/bin/activate
-    else
-        python3 -m venv "$1"
-        source ./$1/bin/activate
-    fi
-}
+# function pyenv() {
+    # if [ -z "$1" ]; then
+        # python3 -m venv venv
+        # source ./venv/bin/activate
+    # else
+        # python3 -m venv "$1"
+        # source ./$1/bin/activate
+    # fi
+# }
 
 # Alias activating python virtualenv on directory
-function av() {
+function activate() {
     if [ -z "$1" ]; then
         source ./venv/bin/activate
     else
