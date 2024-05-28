@@ -1,5 +1,5 @@
 configuration {
-    font:                       "JetBrainsMono Nerd Font Bold 25";
+    font:                       "JetBrainsMono Nerd Font Bold 24";
     terminal:                   "alacritty";
     fixed-num-lines:            false;
     show-icons:                 false;

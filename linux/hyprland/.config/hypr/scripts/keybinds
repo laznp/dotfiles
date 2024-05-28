@@ -1,7 +1,7 @@
 $mainMod = Super
 
 $terminal = alacritty
-$menu = rofi -no-lazy-grab -no-history -no-sort -show drun -modi ssh,drun,calc -theme /home/laznp/.config/rofi/config
+$menu = rofi -no-lazy-grab -no-history -no-sort -show drun -modi ssh,drun -theme /home/laznp/.config/rofi/config
 $fileManager = ranger
 
 # WINDOWS NAVIGATION WITHIN WORKSPACES
