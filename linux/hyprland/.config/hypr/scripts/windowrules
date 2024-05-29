@@ -1,6 +1,7 @@
 windowrulev2 = opacity 0.0,title:^(meet.google.com is sharing your screen.)$
 windowrulev2 = workspace 1,title:^(.*)(Google Chrome)$
 windowrulev2 = workspace 2,class:(Alacritty)
+windowrulev2 = opacity 0.9 0.5,class:(Alacritty)
 windowrulev2 = workspace 3,class:(NeoVim|VSCodium)
 windowrulev2 = workspace 4,class:(lutris|steam|com.usebottles.bottles|heroic)
 windowrulev2 = workspace 5,class:(Lens)

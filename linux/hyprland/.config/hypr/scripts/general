@@ -27,9 +27,9 @@ decoration {
     rounding = 5
     blur {
         enabled = true
-        size = 2
+        size = 8
         passes = 1
-        vibrancy = 0.1696
+        ignore_opacity = true
     }
 
     drop_shadow = true

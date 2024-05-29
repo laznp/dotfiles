@@ -1,23 +1,159 @@
-{
+[{
     "layer": "top",
     "position": "top",
-    "height": 25,
+    "output": "DP-1",
     "spacing": 4,
-    "modules-left": ["custom/archlinux", "hyprland/workspaces"],
-    "modules-center": ["clock"],
-    "modules-right": ["idle_inhibitor", "pulseaudio", "network", "cpu", "memory", "custom/cputemp", "custom/gputemp", "keyboard-state", "tray"],
-    "hyprland/window": {
-        "max-length": 200,
-        "separate-outputs": true
+    "modules-left": [
+        "custom/archlinux",
+        "hyprland/workspaces"
+    ],
+    "modules-center": [
+        "clock"
+    ],
+    "modules-right": [
+        "custom/mousebat",
+        "custom/headphone",
+        "pulseaudio",
+        "network",
+        "tray"
+    ],
+    "colors": {
+        "background": "#282c34",
+        "foreground": "#abb2bf",
+        "focused_background": "#383c4a",
+        "focused_foreground": "#ffffff",
+        "focused_separator": "#61afef",
+        "warning_background": "#e06c75",
+        "warning_foreground": "#ffffff",
+        "warning_separator": "#e06c75"
     },
     "hyprland/workspaces": {
+        "persistent-workspaces": {
+            "DP-1": [ 1, 2, 3, 4, 5, 6 ],
+            "DP-2": [ 7, 8, 9, 10 ],
+        },
         "disable-scroll": true,
         "all-outputs": false,
         "warp-on-scroll": false,
         "format": "{icon}",
         "format-icons": {
             "1": "",
-            "2": "",
+            "2": "",
+            "3": "",
+            "4": " ",
+            "5": "󰀘",
+            "6": "",
+            "7": "󰭹",
+            "8": "",
+            "9": "󰊻",
+            "10": "",
+            "urgent": "",
+            "focused": "",
+            "default": ""
+        }
+    },
+    "custom/archlinux": {
+        "format": "  {} ",
+        "max-length": 40,
+        "interval": 1, // Remove this if your script is endless and write in loop
+        "exec": "echo  ",
+        "return-type": "plain",
+        "on-click": "rofi -no-lazy-grab -no-history -no-sort -show drun -modi ssh,drun -theme /home/laznp/.config/rofi/config"
+    },
+    "network": {
+        "interface": "enp42s0",
+        "format": "{ifname}",
+        "format-ethernet": " 󰌘 ",
+        "format-disconnected": "󰌙 "
+    },
+    "clock": {
+        "interval": 60,
+        "format": "{:%A, %b %d %Y • %H:%M}",
+        "tooltip-format": "{tz_list}",
+        "timezones": [
+            "Asia/Jakarta",
+            "Europe/Berlin"
+        ]
+    },
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-bluetooth": "{icon} {volume}%",
+        "format-muted": " ",
+        "format-icons": {
+            "headphone": " ",
+            "default": [" ", " "]
+        },
+        "scroll-step": 5,
+        "on-click": "pavucontrol",
+        "ignored-sinks": ["Easy Effects Sink"]
+    },
+    "keyboard-state": {
+        "numlock": true,
+        "capslock": true,
+        "format": "{name} {icon}",
+        "format-icons": {
+            "locked": "",
+            "unlocked": ""
+        }
+    },
+    "tray": {
+        "icon-size": 16,
+        "spacing": 10
+    },
+    "custom/mousebat": {
+        "format": " 󰍽 {} ",
+        "max-length": 40,
+        "interval": 30,
+        "exec": "python3 $HOME/.local/bin/razer_battery",
+        "return-type": "plain",
+        "escape": true
+    },
+    "custom/headphone": {
+        "format": "  {} ",
+        "max-length": 40,
+        "interval": 30,
+        "exec": "upower -i /org/freedesktop/UPower/devices/headset_dev_F8_4E_17_C3_39_F0 | grep percentage | awk '{ print $2 }'",
+        "exec-if": "upower -i /org/freedesktop/UPower/devices/headset_dev_F8_4E_17_C3_39_F0 | grep percentage | awk '{ print $2 }'",
+        "return-type": "plain",
+        "escape": true
+    },
+},{
+    "layer": "top",
+    "position": "top",
+    "output": "DP-2",
+    "spacing": 4,
+    "modules-left": [],
+    "modules-center": [
+        "hyprland/workspaces"
+    ],
+    "modules-right": [
+        "custom/cputemp",
+        "custom/gputemp",
+        "clock",
+        "tray"
+    ],
+    "colors": {
+        "background": "#282c34",
+        "foreground": "#abb2bf",
+        "focused_background": "#383c4a",
+        "focused_foreground": "#ffffff",
+        "focused_separator": "#61afef",
+        "warning_background": "#e06c75",
+        "warning_foreground": "#ffffff",
+        "warning_separator": "#e06c75"
+    },
+    "hyprland/workspaces": {
+        "persistent-workspaces": {
+            "DP-1": [ 1, 2, 3, 4, 5, 6 ],
+            "DP-2": [ 7, 8, 9, 10 ],
+        },
+        "disable-scroll": true,
+        "all-outputs": false,
+        "warp-on-scroll": false,
+        "format": "{icon}",
+        "format-icons": {
+            "1": "",
+            "2": "",
             "3": "",
             "4": "",
             "5": "󰀘",
@@ -31,127 +167,31 @@
             "default": ""
         }
     },
-    "keyboard-state": {
-        "numlock": true,
-        "capslock": true,
-        "format": "{name} {icon}",
-        "format-icons": {
-            "locked": "",
-            "unlocked": ""
-        }
-    },
-    "sway/mode": {
-        "format": "<span style=\"italic\">{}</span>"
-    },
-    "sway/scratchpad": {
-        "format": "{icon} {count}",
-        "show-empty": false,
-        "format-icons": ["", ""],
-        "tooltip": true,
-        "tooltip-format": "{app}: {title}"
-    },
-    "idle_inhibitor": {
-        "format": "{icon}",
-        "format-icons": {
-            "activated": "",
-            "deactivated": ""
-        }
-    },
-    "tray": {
-        // "icon-size": 21,
-        "spacing": 10
-    },
-    "clock": {
-        "timezone": "Asia/Jakarta",
-        "format": "{:%d %b  %H:%M}",
-        "format-alt": "{:%a, %b %d • %H:%M}",
-        "tooltip-format": "{:%a, %b %d • %H:%M}"
-  }
-    },
-    "cpu": {
-        "format": "{usage}% ",
-        "tooltip": false
-    },
-    "memory": {
-        "format": "{}% "
-    },
     "custom/cputemp": {
-        "format": "󰍛 {}",
+        "format": "󰍛 {} ",
+        "max-length": 40,
         "interval": 1,
-        "exec": "echo $(sensors zenpower-pci-00c3 | grep Tdie | awk '{ print $2 }' | tr -d '+')"
-
+        "exec": "echo $(sensors zenpower-pci-00c3 | grep Tdie | awk '{ print $2 }' | tr -d '+')",
+        "return-type": "plain"
     },
     "custom/gputemp": {
-        "format": "󰢮  {}",
-        "interval": 1,
-        "exec": "echo $(sensors amdgpu-pci-2d00 | grep edge | awk '{ print $2 }' | tr -d '+')"
-    },
-    "custom/archlinux": {
-        "format": "{}",
-        "return-type": "json",
-        "exec": "echo ' '"
-    },
-    "backlight": {
-        // "device": "acpi_video1",
-        "format": "{percent}% {icon}",
-        "format-icons": ["", "", "", "", "", "", "", "", ""]
-    },
-    "battery": {
-        "states": {
-            // "good": 95,
-            "warning": 30,
-            "critical": 15
-        },
-        "format": "{capacity}% {icon}",
-        "format-charging": "{capacity}% ",
-        "format-plugged": "{capacity}% ",
-        "format-alt": "{time} {icon}",
-        // "format-good": "", // An empty format will hide the module
-        // "format-full": "",
-        "format-icons": ["", "", "", "", ""]
-    },
-    "battery#bat2": {
-        "bat": "BAT2"
-    },
-    "network": {
-        "interface": "enp42s0", // (Optional) To force the use of this interface
-        "format-wifi": "{essid} ({signalStrength}%) ",
-        "format-ethernet": "󰌘",
-        "tooltip-format": "{ifname} via {gwaddr}  󰌘",
-        "format-linked": "{ifname} (No IP)  󰌘",
-        "format-disconnected": "Disconnected ⚠",
-        "format-alt": "{ifname}: {ipaddr}/{cidr}"
-    },
-    "pulseaudio": {
-        // "scroll-step": 1, // %, can be a float
-        "format": "{volume}% {icon} {format_source}",
-        "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": " {icon} {format_source}",
-        "format-muted": " {format_source}",
-        "format-source": "{volume}% ",
-        "format-source-muted": "",
-        "format-icons": {
-            "headphone": "",
-            "hands-free": "",
-            "headset": "",
-            "phone": "",
-            "portable": "",
-            "car": "",
-            "default": ["", "", ""]
-        },
-        "on-click": "pavucontrol"
-    },
-    "custom/media": {
-        "format": "{icon} {}",
-        "return-type": "json",
+        "format": "󰢮 {} ",
         "max-length": 40,
-        "format-icons": {
-            "spotify": "",
-            "default": "🎜"
-        },
-        "escape": true,
-        "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null" // Script in resources folder
-        // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
-    }
-}
-
+        "interval": 1,
+        "exec": "echo $(sensors amdgpu-pci-2d00 | grep edge | awk '{ print $2 }' | tr -d '+')",
+        "return-type": "plain"
+    },
+    "clock": {
+        "interval": 60,
+        "format": "󰥔 {:%H:%M} ",
+        "tooltip-format": "{tz_list}",
+        "timezones": [
+            "Asia/Jakarta",
+            "Europe/Berlin"
+        ]
+    },
+    "tray": {
+        "icon-size": 16,
+        "spacing": 10
+    },
+}]

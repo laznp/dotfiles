@@ -7,10 +7,10 @@ exec-once = systemctl --user start xdg-desktop-portal-wlr.service
 exec-once = $HOME/.local/bin/import-gtk-settings
 
 # Waybar
-#exec-once = waybar -c ~/.config/waybar/config
+exec-once = waybar -c ~/.config/waybar/config
 
 # Background
-exec-once = swaybg -i $HOME/.wallpaper/arch-nord-dark.png
+exec-once = swaybg -i $HOME/Downloads/owl.jpg -m fill
 
 # RAM
 exec-once = openrgb -d 'Corsair Dominator Platinum' -m Direct -c 'ffffff'
