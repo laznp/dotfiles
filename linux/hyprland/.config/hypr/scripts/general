@@ -1,14 +1,8 @@
 input {
     kb_layout = us
-
     follow_mouse = 2
-
     natural_scroll = true
-
-    # sensitivity = 0
-    # accel_profile = flat
     force_no_accel = true
-    # kb_options = altwin:swap_lalt_lwin
 }
 
 general {
@@ -27,7 +21,7 @@ decoration {
     rounding = 5
     blur {
         enabled = true
-        size = 8
+        size = 15
         passes = 1
         ignore_opacity = true
     }

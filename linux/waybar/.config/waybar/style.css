@@ -4,6 +4,10 @@
     font-weight: bold;
 }
 
+window#waybar{
+    background-color: transparent
+}
+
 #workspaces button.active {
     color: #1e2127;
     background: #D8DEE9;
