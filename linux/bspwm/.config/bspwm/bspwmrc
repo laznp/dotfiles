@@ -4,7 +4,8 @@ export BSPWM_STATE="${XDG_DATA_HOME:-$HOME/.local/share}/bspwm-state.json"
 
 # SXHKD
 # pgrep -x sxhkd > /dev/null || killall sxhkd || sxhkd &
-systemctl --user start sxhkd.service
+pgrep -x /usr/lib/polkit-kde-authentication-agent-1 || /usr/lib/polkit-kde-authentication-agent-1 &
+systemctl --user start swhkd.service
 
 # Set Natural Scrolling
 xinput | grep -e "Razer Razer Basilisk Ultimate Dongle" | grep pointer | awk -F '=' '{ print $2 }' | awk '{ print $1 }' | while read line; do xinput set-prop $line "libinput Natural Scrolling Enabled" 1; done

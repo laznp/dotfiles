@@ -7,6 +7,11 @@ map('n', '<Leader>_', ':sp<CR>', { noremap = true, silent = true })
 -- toogle file explorer
 map('n', '<Leader>e', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
 
+-- toogle dadbod
+map('n', '<Leader>d', ':DBUIToggle<CR>', { noremap = true, silent = true })
+map('n', '<Leader><CR>', '<Plug>(DBUI_ExecuteQuery)', { noremap = true, silent = true })
+map('v', '<Leader><CR>', '<Plug>(DBUI_ExecuteQuery)', { noremap = true, silent = true })
+
 -- yank 1 line
 map('n', '<S-y>', 'yy', { noremap = true, silent = true })
 

@@ -81,15 +81,53 @@ function nebulae_infra() {
 function autobahn_db() {
     if [ "$1" = "pq" ]; then
         DB_NAME="${2:-postgres}"
-        psql -h localhost -U root "$DB_NAME"
+        PGPASSWORD=$(autobahn_db_secret "prod" "postgres") psql -h localhost -U root "$DB_NAME"
     elif [ "$1" = "dwh" ]; then
         DB_NAME="${2:-postgres}"
-        psql -h localhost -U root "$DB_NAME" -p 5433
+        PGPASSWORD=$(autobahn_db_secret "prod" "dwh") psql -h localhost -U root "$DB_NAME" -p 5433
     elif [ "$1" = "mysql" ]; then
-        mariadb -uroot -h127.0.0.1 -p
+        mariadb -uroot -h127.0.0.1 -p$(autobahn_db_secret "prod" "mysql") --ssl=false
     fi
 }
 
+function autobahn_vpn() {
+    if [ "$1" = "up" ]; then
+        wg-quick up wg0
+    elif [ "$1" = "down" ]; then
+        wg-quick down wg0
+    else
+        echo "Parameter Not Found!!"
+    fi
+}
+
+function autobahn_db_secret() {
+    if [[ "$1" = "dev" || "$1" = "test" ]]; then
+        SECRET_PREFIX="$1-hetzner/shared-item/shared-item"
+        PROFILE="sso-admin-$1"
+    else
+        SECRET_PREFIX="$1/shared-item/shared-item"
+        PROFILE="sso-admin-$1"
+    fi
+    if [[ "$2" = "mysql" || "$2" = "postgres" ]]; then
+        SECRET_ITEMS="$SECRET_PREFIX/backend-aurora-db-$2"
+    else
+        SECRET_ITEMS="$SECRET_PREFIX/backend-db-dwh"
+    fi
+    echo "$(aws secretsmanager get-secret-value --secret-id $SECRET_ITEMS --profile $PROFILE | jq -c '.SecretString | fromjson' | jq -r '.password')"
+}
+
+function autobahn() {
+    if [ "$1" = "db-secrets" ]; then
+        shift
+        autobahn_db_secret "$@"
+    elif [ "$1" = "db" ]; then
+        shift
+        autobahn_db "$@"
+    elif [ "$1" = "vpn" ]; then
+        shift
+        autobahn_db_vpn "$@"
+    fi
+}
 # Alias git command
 alias gad="git add"
 alias gco="git checkout"

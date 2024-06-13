@@ -86,6 +86,13 @@ return {
             })
         })
 
+        cmp.setup.filetype({ "sql" }, {
+            sources = {
+                { name = "vim-dadbod-completion" },
+                { name = "buffer" }
+            }
+        })
+
         local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
 
         for type, icon in pairs(signs) do

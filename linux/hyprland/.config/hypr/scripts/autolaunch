@@ -19,8 +19,9 @@ exec-once = openrgb -d 'Corsair Dominator Platinum' -m Direct -c 'ffffff'
 exec-once = openrgb -d 4 -z 1 -s 12 -m Direct -c "FFFFFF"
 
 # Apps
+exec-once = /usr/lib/polkit-kde-authentication-agent-1
 exec-once = whatsdesk
 exec-once = telegram-desktop
 exec-once = jamesdsp
-exec-once = /usr/lib/polkit-kde-authentication-agent-1
 exec-once = cliphist
+exec-once = corectrl

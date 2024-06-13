@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-XF86Audio{Play,Pause,Next,Prev}
-    dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.{Play,Pause,Next,Previous}
+# XF86Audio{Play,Pause,Next,Prev}
+    # dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.{Play,Pause,Next,Previous}
 
 # MEDIA KEYS TO SET VOLUME
-XF86Audio{LowerVolume,RaiseVolume,Mute}
-    $HOME/.local/bin/volume {down,up,mute}
+# XF86Audio{LowerVolume,RaiseVolume,Mute}
+    # $HOME/.local/bin/volume {down,up,mute}
 
 # MEDIA KEY TO PLAY / PAUSE, NEXT, PREVIOUS
 super + ctrl + {Left,Right,space}
@@ -40,8 +40,8 @@ super + {_,shift} + {1-9,0}
 # SWAP / FOCUS ANOTHER DESKTOP
 ctrl + {Left,Right}
 	bspc desktop -f {prev,next}
-super + button{8,9}
-	bspc desktop -f {prev,next}
+# super + button{8,9}
+	# bspc desktop -f {prev,next}
 
 # EXPAND WINDOWS
 super + alt + {h,j,k,l}

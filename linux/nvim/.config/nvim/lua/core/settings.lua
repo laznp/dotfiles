@@ -36,7 +36,7 @@ vim.cmd("set formatoptions-=cro")
 vim.cmd("set complete+=kspell")
 vim.cmd("set listchars=tab:•·")
 vim.api.nvim_exec([[
-    au BufWritePre,BufRead * :%s/\s\+$//e
+    au BufWritePre,BufRead .* :%s/\s\+$//e
     au BufNewFile,BufRead *.ino setf c
     au BufNewFile,BufRead *alias setf sh
     au BufNewFile,BufRead *Jenkinsfile* setf groovy

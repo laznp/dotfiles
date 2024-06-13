@@ -9,6 +9,7 @@ if not vim.loop.fs_stat(lazypath) then
     lazypath,
   })
 end
+
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup(
@@ -21,10 +22,10 @@ require("lazy").setup(
         },
         checker = {
             enabled = true,
-            notify = false,
+            notify = true,
         },
         change_detection = {
-            notify = false
+            notify = true
         }
     }
 )
