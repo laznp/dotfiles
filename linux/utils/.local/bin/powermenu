@@ -5,18 +5,20 @@ dir="$HOME/.config/rofi"
 uptime=$(uptime -p | sed -e 's/up //g')
 
 rofi_command="rofi -theme $HOME/.config/rofi/powermenu"
+# rofi_command="tofi --config $HOME/.config/tofi/powermenu.config"
 
 # Options
 shutdown=" ⏻ "
 reboot="  "
-lock="  "
-suspend="󰒲 "
+lock=" "
+suspend=" 󰒲 "
 logout=" 󰗽 "
 
 # Variable passed to rofi
 options="$shutdown\n$reboot\n$suspend\n$lock\n$logout"
 
 chosen="$(echo -e "$options" | $rofi_command -lines 1 -p"﫵 $uptime" -dmenu -selected-row 2 -layout horizontal)"
+# chosen="$(echo -e "$options" | $rofi_command $@)"
 case $chosen in
     $shutdown)
         sudo systemctl poweroff

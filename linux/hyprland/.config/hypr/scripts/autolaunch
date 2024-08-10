@@ -10,7 +10,8 @@ exec-once = $HOME/.local/bin/import-gtk-settings
 exec-once = waybar -c ~/.config/waybar/config
 
 # Background
-exec-once = swaybg -i $HOME/Downloads/owl.jpg -m fill
+#exec-once = swaybg -i $HOME/Downloads/owl.jpg -m fill
+exec-once = swaybg -i $HOME/Downloads/roronoa-zoro-one-5120x2926-10523.png -m fill
 
 # RAM
 exec-once = openrgb -d 'Corsair Dominator Platinum' -m Direct -c 'ffffff'

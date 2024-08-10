@@ -26,8 +26,8 @@ xsetroot -cursor_name left_ptr 24 &
 
 # Multiple Monitor Config
 # if [ "$(xrandr -q | grep 'DisplayPort-1' | awk '{ print $2}')" == 'connected' ]; then
-xrandr --output DisplayPort-0 --primary --rate 75 --set TearFree on \
-  --output DisplayPort-1 --rotate left --rate 75 --left-of DisplayPort-0
+xrandr --output DisplayPort-0 --primary --rate 60 --set TearFree on \
+  --output DisplayPort-1 --rotate left --rate 60 --left-of DisplayPort-0
 bspc monitor DisplayPort-0 -d 1 2 3 4 5 6
 bspc monitor DisplayPort-1 -d 7 8 9 10
 bspc wm --reorder-monitors DisplayPort-0 DisplayPort-1

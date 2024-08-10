@@ -83,8 +83,7 @@ function autobahn_db() {
         DB_NAME="${2:-postgres}"
         PGPASSWORD=$(autobahn_db_secret "prod" "postgres") psql -h localhost -U root "$DB_NAME"
     elif [ "$1" = "dwh" ]; then
-        DB_NAME="${2:-postgres}"
-        PGPASSWORD=$(autobahn_db_secret "prod" "dwh") psql -h localhost -U root "$DB_NAME" -p 5433
+        PGPASSWORD=$(autobahn_db_secret "prod" "dwh") psql -h localhost -U root datawarehouse -p 5434
     elif [ "$1" = "mysql" ]; then
         mariadb -uroot -h127.0.0.1 -p$(autobahn_db_secret "prod" "mysql") --ssl=false
     fi
@@ -125,7 +124,7 @@ function autobahn() {
         autobahn_db "$@"
     elif [ "$1" = "vpn" ]; then
         shift
-        autobahn_db_vpn "$@"
+        autobahn_vpn "$@"
     fi
 }
 # Alias git command
