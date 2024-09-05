@@ -51,7 +51,8 @@ bind = $mainMod, Left, workspace, e-1
 bindm = $mainMod, mouse:272, movewindow
 bindm = $mainMod, mouse:273, resizewindow
 
-bind =,Print, exec, grimblast -s 2 copy area
+bind =,Print, exec, grim -g "$(slurp)" - | swappy -f -
+#bind =,Print, exec, XDG_CURRENT_DESKTOP=sway flameshot gui
 
 # MEDIA KEYS TO SET VOLUME
 binde=, XF86AudioRaiseVolume, exec, $HOME/.local/bin/volume up

@@ -13,6 +13,7 @@ alias passbolt="/home/laznp/learning/go/bin/go-passbolt-cli"
 alias -s py="python3"
 alias v="nvim"
 alias update-grub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
+alias adhoc="nvim /home/laznp/Projects/autobahn/adhoc-task-$(date +'%F')"
 
 # Shorthand for edit rc files
 alias zshrc="nvim ~/.zshrc"

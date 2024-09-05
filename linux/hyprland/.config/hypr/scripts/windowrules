@@ -8,8 +8,15 @@ windowrulev2 = workspace 3,class:(NeoVim|VSCodium)
 windowrulev2 = workspace 4,class:(lutris|steam|com.usebottles.bottles|heroic)
 windowrulev2 = workspace 5,class:(Lens)
 windowrulev2 = workspace 6,class:(org.corectrl.CoreCtrl|jamesdsp|1Password)
-windowrulev2 = workspace 7,class:(whatsdesk|org.telegram.desktop)
+windowrulev2 = workspace 7,class:(chrome-web.whatsapp.com__-Default|org.telegram.desktop|whatsdesk)
 windowrulev2 = workspace 8,class:(chrome-open.spotify.com__-Default|Spotify)
-windowrulev2 = workspace 9,class:(chrome-teams.microsoft.com__-Default)
+windowrulev2 = workspace 9,class:(chrome-teams.microsoft.com__-Profile_2)
 windowrulev2 = workspace 10,class:(Slack)
 windowrulev2 = float,class:(ranger)
+
+windowrule=fullscreenstate 0,flameshot
+windowrule=float,flameshot
+windowrule=monitor 0,flameshot
+windowrule=move 0 0,flameshot
+
+

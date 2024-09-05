@@ -38,7 +38,7 @@ truncate_to_repo = false
 [git_branch]
 symbol = ""
 style = "bg:black fg:blue"
-format = "[$symbol $branch(:$remote_branch)]($style) "
+format = "[$symbol $branch]($style) "
 truncation_length = 20
 
 [git_status]
@@ -46,7 +46,7 @@ format = '([$all_status$ahead_behind]($style) )'
 conflicted = '[✘ ][red]'
 up_to_date = ''
 untracked = '[?](purple)'
-stashed = '$'
+stashed = ''
 modified = '[!](yellow)'
 staged = '[++\($count\)](green)'
 renamed = '»'
