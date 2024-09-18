@@ -14,6 +14,7 @@ alias -s py="python3"
 alias v="nvim"
 alias update-grub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 alias adhoc="nvim /home/laznp/Projects/autobahn/adhoc-task-$(date +'%F')"
+alias fzp="paru -Slq | fzf --multi --preview 'paru -Si {1}' | xargs -ro paru -S"
 
 # Shorthand for edit rc files
 alias zshrc="nvim ~/.zshrc"

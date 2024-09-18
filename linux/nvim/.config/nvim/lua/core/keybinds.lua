@@ -7,11 +7,6 @@ map('n', '<Leader>_', ':sp<CR>', { noremap = true, silent = true })
 -- toogle file explorer
 map('n', '<Leader>e', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
 
--- toogle dadbod
-map('n', '<Leader>d', ':DBUIToggle<CR>', { noremap = true, silent = true })
-map('n', '<Leader><CR>', '<Plug>(DBUI_ExecuteQuery)', { noremap = true, silent = true })
-map('v', '<Leader><CR>', '<Plug>(DBUI_ExecuteQuery)', { noremap = true, silent = true })
-
 -- yank 1 line
 map('n', '<S-y>', 'yy', { noremap = true, silent = true })
 
@@ -56,8 +51,6 @@ map('n', '<CR>', ':noh<CR><CR>', { noremap = true, silent = true })
 -- jump to beginnig/end of line or jump to beginning/end of buffer paragraph
 map('n', '<S-h>', '0', { noremap = true, silent = true})
 map('n', '<S-l>', '$', { noremap = true, silent = true})
-map('n', '<S-j>', 'L', { noremap = true, silent = true})
-map('n', '<S-K>', 'H', { noremap = true, silent = true})
 
 -- selection to beginning/end of line with shift
 map('v', '<S-l>', '$<Left>', { noremap = true, silent = true})
@@ -75,5 +68,12 @@ map('v', "{", "qqc{}<ESC>Pq", { noremap = true, silent = true })
 map('v', "[", "qqc[]<ESC>Pq", { noremap = true, silent = true })
 
 -- fine cmdline
--- map('n', ':', '<cmd>FineCmdline<CR>', { noremap = true })
+map('n', '<S-k>', ':m .-2<CR>==', { noremap = true, silent = true})
+map('n', '<S-j>', ':m .+1<CR>==', { noremap = true, silent = true})
+map('v', '<S-k>', ":m '<-2<CR>gv=gv", { noremap = true, silent = true})
+map('v', '<S-j>', ":m '>+1<CR>gv=gv", { noremap = true, silent = true})
+
+-- sniprun
+map('n', '<Leader>r', ':SnipRun<CR>', { noremap = true, silent = true})
+map('v', '<Leader>r', ":'<,'>SnipRun<CR>", { noremap = true, silent = true})
 

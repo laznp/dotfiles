@@ -29,7 +29,7 @@ return {
             ['S']   = 'INSERT',
             ['v']   = 'VISUAL',
             ['v']  = 'VISUAL',
-            ['V']   = ' ',
+            ['V']   = 'VISUAL ',
             ['r']   = '﯒ ',
             ['r?']  = ' ',
             ['c']   = 'COMMAND',

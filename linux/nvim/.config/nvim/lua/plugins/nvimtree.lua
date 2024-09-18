@@ -21,7 +21,7 @@ return {
           -- },
           view = {
             adaptive_size = true,
-            centralize_selection = false,
+            centralize_selection = true,
             width = 30,
             side = "left",
             preserve_window_proportions = false,
@@ -88,7 +88,7 @@ return {
             auto_open = true,
           },
           update_focused_file = {
-            enable = false,
+            enable = true,
             update_cwd = false,
             ignore_list = {},
           },

@@ -31,6 +31,7 @@ vim.o.shortmess = vim.o.shortmess .. 'c'
 vim.o.pumheight = 10
 vim.g.syntax = "enable"
 vim.g.completeopt = "menu,menuone,noselect,noinsert"
+vim.g.loaded_perl_provider = 0
 vim.cmd("filetype plugin indent on")
 vim.cmd("set formatoptions-=cro")
 vim.cmd("set complete+=kspell")
