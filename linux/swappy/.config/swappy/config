@@ -6,5 +6,5 @@ line_size=2
 text_size=14
 text_font=sans-serif
 paint_mode=rectangle
-early_exit=false
+early_exit=true
 fill_shape=false

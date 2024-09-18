@@ -1,0 +1,6 @@
+input * {
+    xkb_layout "us"
+    natural_scroll enabled
+    pointer_accel 0.0
+    accel_profile "adaptive"
+}
