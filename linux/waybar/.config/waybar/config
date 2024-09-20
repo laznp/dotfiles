@@ -11,8 +11,6 @@
         "clock"
     ],
     "modules-right": [
-        "custom/mousebat",
-        "custom/headphone",
         "pulseaudio",
         "network",
         "tray"
@@ -30,7 +28,7 @@
     "hyprland/workspaces": {
         "persistent-workspaces": {
             "DP-1": [ 1, 2, 3, 4, 5, 6 ],
-            "DP-2": [ 7, 8, 9, 10 ],
+            "DP-2": [ 7, 8, 9, 10 ]
         },
         "disable-scroll": true,
         "all-outputs": false,
@@ -42,7 +40,7 @@
             "3": "",
             "4": " ",
             "5": "󰀘",
-            "6": "",
+            "6": "",
             "7": "󰭹",
             "8": "",
             "9": "󰊻",
@@ -55,7 +53,7 @@
     "custom/archlinux": {
         "format": "  {} ",
         "max-length": 40,
-        "interval": 1, // Remove this if your script is endless and write in loop
+        "interval": 1, 
         "exec": "echo  ",
         "return-type": "plain",
         "on-click": "rofi -no-lazy-grab -no-history -no-sort -show drun -modi ssh,drun -theme /home/laznp/.config/rofi/config"
@@ -109,12 +107,11 @@
         "return-type": "plain",
         "escape": true
     },
-    "custom/headphone": {
+    "custom/headphonebat": {
         "format": "  {} ",
         "max-length": 40,
         "interval": 30,
-        "exec": "upower -i /org/freedesktop/UPower/devices/headset_dev_F8_4E_17_C3_39_F0 | grep percentage | awk '{ print $2 }'",
-        "exec-if": "upower -i /org/freedesktop/UPower/devices/headset_dev_F8_4E_17_C3_39_F0 | grep percentage | awk '{ print $2 }'",
+        "exec": "bash $HOME/.local/bin/xm4_battery",
         "return-type": "plain",
         "escape": true
     },

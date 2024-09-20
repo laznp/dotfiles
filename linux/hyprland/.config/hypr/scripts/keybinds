@@ -67,8 +67,8 @@ bind = $mainMod SHIFT, E, exec, bash ~/.local/bin/powermenu
 bind = $mainMod, F, togglefloating,
 bind = $mainMod SHIFT, A, exec, bash ~/.local/bin/audio-output
 bind = $mainMod SHIFT, S, exec, bash ~/.local/bin/statusmenu
-bind = $mainMod, Tab, exec, rofi -modi window -show window -theme ~/.config/rofi/card_square.rasi
+# bind = $mainMod, Tab, exec, rofi -modi window -show window -theme ~/.config/rofi/card_square.rasi
 bind = $mainMod, Space, exec, $menu
 bind = $mainMod, E, exec, $fileManager
-bind = CTRL_SHIFT, l, exec, swaylock -C ~/.config/swaylock/config --clock --indicator --indicator-radius 250 --indicator-thickness 20
+# bind = CTRL_SHIFT, l, exec, swaylock -C ~/.config/swaylock/config --clock --indicator --indicator-radius 250 --indicator-thickness 20
 

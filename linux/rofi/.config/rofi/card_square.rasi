@@ -1,5 +1,5 @@
 configuration {
-    font:                       "JetBrainsMono Nerd Font Bold 10";
+    font:                       "D2CodingLigature Nerd Font Bold 11";
     terminal:                   "alacritty";
     fixed-num-lines:            false;
     show-icons:                 false;
@@ -33,7 +33,7 @@ configuration {
 window {
     border: 						2px;
     border-color: 					@ac;
-    border-radius: 					10px;
+    border-radius: 					2px;
     padding: 						15;
     width: 							400px;
 }
@@ -63,7 +63,7 @@ element-text, element-icon {
 
 element {
     border: 						0px;
-    border-radius: 					3px;
+    border-radius: 					2px;
     padding: 						5px;
 }
 element normal.normal {

@@ -1,7 +1,9 @@
 * {
-    font-family: 'JetBrainsMono Nerd Font';
-    font-size: 12px;
+    /* font-family: 'JetBrainsMono Nerd Font'; */
+    font-family: 'D2CodingLigature Nerd Font';
+    font-size: 14px;
     font-weight: bold;
+    border-radius: 2;
 }
 
 window#waybar{
@@ -24,3 +26,4 @@ window#waybar{
 #custom-archlinux {
     color: #61AFEF;
 }
+

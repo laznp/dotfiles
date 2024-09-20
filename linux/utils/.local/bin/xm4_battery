@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+battery_percentage=$(upower -i /org/freedesktop/UPower/devices/headset_dev_F8_4E_17_C3_39_F0 | grep -E "percentage" | awk '{ print $2 }')
+
+if [[ -n "$battery_percentage" ]]; then
+    echo "$battery_percentage"
+else
+    echo ""
+fi
+

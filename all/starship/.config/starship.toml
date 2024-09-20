@@ -32,7 +32,6 @@ truncate_to_repo = false
 "~/Projects/autobahn/kubernetes-manifest" = "/kuman"
 "~/Projects/autobahn/infrastructure-2.0" = "/infrastructure"
 "~/Projects/autobahn" = "/autobahn"
-"~/Projects/nebulae/foodbag" = "/foodbag"
 "~/Projects/nebulae" = "/nebulae"
 
 [git_branch]
