@@ -125,6 +125,7 @@
         "hyprland/workspaces"
     ],
     "modules-right": [
+        "custom/powerpackage",
         "custom/cputemp",
         "custom/gputemp",
         "clock",
@@ -177,6 +178,13 @@
         "max-length": 40,
         "interval": 1,
         "exec": "echo $(sensors amdgpu-pci-2d00 | grep edge | awk '{ print $2 }' | tr -d '+')",
+        "return-type": "plain"
+    },
+    "custom/powerpackage": {
+        "format": " {} ",
+        "max-length": 40,
+        "interval": 1,
+        "exec": "echo $(bash /home/laznp/.local/bin/power-package | tail -n 1 | awk '{print $4}')",
         "return-type": "plain"
     },
     "clock": {

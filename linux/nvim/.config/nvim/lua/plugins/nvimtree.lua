@@ -21,7 +21,7 @@ return {
           -- },
           view = {
             adaptive_size = true,
-            centralize_selection = true,
+            centralize_selection = false,
             width = 30,
             side = "left",
             preserve_window_proportions = false,

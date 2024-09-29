@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Get CPU and GPU wattage
+cpu_wattage=$(sudo turbostat --quiet --show PkgWatt --num_iterations 1 --interval 1 | tail -n 1)
+gpu_wattage=$(sensors | grep "PPT" | awk '{print $2}')
+
+# Calculate the total power consumption
+total_wattage=$(echo "$cpu_wattage + $gpu_wattage" | bc)
+
+# Display the results
+echo "CPU Power: $cpu_wattage Watts"
+echo "GPU Power: $gpu_wattage Watts"
+echo "Total Power Consumption: $total_wattage Watts"
