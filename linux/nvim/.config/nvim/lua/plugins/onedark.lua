@@ -25,7 +25,12 @@ return {
             },
 
             colors = {},
-            highlights = {},
+            highlights = {
+                ["PmenuSel"] = { bg = "$bg3", fg = "NONE" },
+                ["Pmenu"] = { fg = "$fg", bg = "$bg0" },
+                ["CmpDocs"] = { fg = "$fg", bg = "$bg0" },
+                ["FloatBorder"] = { fg = "$fg", bg = "$bg0" },
+            },
 
             diagnostics = {
                 darker = true,

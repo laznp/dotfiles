@@ -5,29 +5,22 @@ return {
         "hrsh7th/cmp-path",
         "hrsh7th/cmp-buffer",
         "hrsh7th/cmp-nvim-lsp",
-        "hrsh7th/cmp-vsnip",
-        "hrsh7th/vim-vsnip",
-        "onsails/lspkind-nvim",
-        "neovim/nvim-lspconfig"
+        "neovim/nvim-lspconfig",
+        "L3MON4D3/LuaSnip",
+        "saadparwaiz1/cmp_luasnip",
+        "rafamadriz/friendly-snippets",
+        "onsails/lspkind.nvim"
     },
     config = function()
-        local has_words_before = function()
-            local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-            return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-        end
-
-        local feedkey = function(key, mode)
-            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
-        end
-
         -- Setup nvim-cmp.
         local cmp = require'cmp'
         local lspkind = require('lspkind')
+        require("luasnip.loaders.from_vscode").lazy_load()
 
         cmp.setup({
             snippet = {
                 expand = function(args)
-                    vim.fn["vsnip#anonymous"](args.body)
+                    require("luasnip").lsp_expand(args.body)
                 end,
             },
             mapping = {
@@ -40,33 +33,48 @@ return {
                         c = cmp.mapping.close(),
                 }),
                 ['<CR>'] = cmp.mapping.confirm({ select = true }),
-                ["<Tab>"] = cmp.mapping(function(fallback)
-                    if cmp.visible() then
-                            cmp.select_next_item()
-                    elseif vim.fn["vsnip#available"](1) == 1 then
-                            feedkey("<Plug>(vsnip-expand-or-jump)", "")
-                    elseif has_words_before() then
-                            cmp.complete()
-                    else
-                            fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
-                    end
-                end, { "i", "s" }),
-
-                ["<S-Tab>"] = cmp.mapping(function()
-                    if cmp.visible() then
-                            cmp.select_prev_item()
-                    elseif vim.fn["vsnip#jumpable"](-1) == 1 then
-                            feedkey("<Plug>(vsnip-jump-prev)", "")
-                    end
-                end, { "i", "s" }),
+                ['<Tab>'] = cmp.mapping.select_next_item(),
+                ['<S-Tab>'] = cmp.mapping.select_prev_item(),
+            },
+            window = {
+                completion = {
+                    border = "rounded",
+                    winhighlight = "Normal:Pmenu,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None",
+                    col_offset = -3,
+                    side_padding = 0,
+                },
+                documentation = {
+                    border = "rounded",
+                    winhighlight = "Normal:CmpDocs,FloatBorder:FloatBorder,CursorLine:CmpDocs,Search:None", -- BorderBG|FloatBorder
+                    col_offset = -3,
+                    side_padding = 0,
+                },
             },
             formatting = {
-                format = lspkind.cmp_format({with_text = false, maxwidth = 50})
+                fields = { "kind", "abbr", "menu" },
+                format = function(entry, vim_item)
+                  local kind = require("lspkind").cmp_format({ 
+                        mode = "symbol_text", 
+                        maxwidth = 50,
+                        menu = ({
+                            buffer = "[Buffer]",
+                            nvim_lsp = "[LSP]",
+                            luasnip = "[LuaSnip]",
+                            nvim_lua = "[Lua]",
+                            latex_symbols = "[Latex]",
+                        })
+                    })(entry, vim_item)
+                  local strings = vim.split(kind.kind, "%s", { trimempty = true })
+                  kind.kind = " " .. (strings[1] or "") .. " "
+                  kind.menu = "    (" .. (strings[2] or "") .. ")"
+                  return kind
+                end,
             },
             sources = cmp.config.sources({
-                { name = 'nvim_lsp' },
-                { name = 'vsnip' },
+                { name = 'luasnip' },
                 { name = 'buffer' },
+                { name = 'nvim_lsp' },
+                { name = 'path' },
             })
         })
 
@@ -99,14 +107,11 @@ return {
             local hl = "DiagnosticSign" .. type
             vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
         end
+
         local capabilities = require('cmp_nvim_lsp').default_capabilities()
-        -- require'lspconfig'.ansiblels.setup{}
-        -- require'lspconfig'.dockerls.setup{}
-        -- require'lspconfig'.bashls.setup{}
-        -- require'lspconfig'.jsonls.setup { capabilities = capabilities }
-        require'lspconfig'.pyright.setup{ capabilities = capabilities }
-        require'lspconfig'.rust_analyzer.setup{ capabilities = capabilities }
-        require'lspconfig'.terraformls.setup{ cmd = {'terraform-ls', 'serve'}, capabilities = capabilities }
-        -- require'lspconfig'.yamlls.setup{ capabilities = capabilities }
+        local lspconfig = require('lspconfig')
+        lspconfig.ruff_lsp.setup{ capabilities = capabilities, on_attach = on_attach }
+        lspconfig.rust_analyzer.setup{ capabilities = capabilities, on_attach = on_attach }
+        lspconfig.terraformls.setup{ cmd = {'terraform-ls', 'serve'}, capabilities = capabilities, on_attach = on_attach }
     end
 }
