@@ -95,7 +95,6 @@ return {
 
         cmp.setup.filetype({ "sql" }, {
             sources = {
-                { name = "vim-dadbod-completion" },
                 { name = "buffer" }
             }
         })
@@ -111,6 +110,15 @@ return {
         local lspconfig = require('lspconfig')
         lspconfig.ruff_lsp.setup{ capabilities = capabilities, on_attach = on_attach }
         lspconfig.rust_analyzer.setup{ capabilities = capabilities, on_attach = on_attach }
-        lspconfig.terraformls.setup{ cmd = {'terraform-ls', 'serve'}, capabilities = capabilities, on_attach = on_attach }
+        lspconfig.bashls.setup{ capabilities = capabilities, on_attach = on_attach }
+        lspconfig.terraformls.setup{ 
+            capabilities = capabilities, 
+            on_attach = on_attach, 
+            filetypes = {
+                'terraform',
+                'hcl',
+                'terraform-vars'
+            }
+        }
     end
 }

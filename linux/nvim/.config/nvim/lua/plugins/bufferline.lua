@@ -32,16 +32,12 @@ return {
                 offsets = {
                     {
                         filetype = "NvimTree",
-                        text = function() return "  " .. vim.fn.getcwd() end,
-                        text_align = "left",
+                        -- text = function() return "  " .. vim.fn.getcwd() end,
+                        text = "File Explorer",
+                        text_align = "center",
                         separator = true,
+                        -- highlight = "Directory",
                     },
-                    {
-                        filetype = "dbui",
-                        text = function() return "  DadBod" end,
-                        text_align = "left",
-                        separator = true,
-                    }
                 },
                 color_icons = true,
                 show_buffer_icons = true,

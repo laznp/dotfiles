@@ -3,7 +3,6 @@ return {
     config = function()
         require('onedark').setup {
             style = 'darker',
-            -- style = 'deep',
             transparent = true,
             term_colors = true,
             ending_tildes = false,
@@ -14,7 +13,7 @@ return {
 
             code_style = {
                 comments = 'italic',
-                keywords = 'none',
+                keywords = 'italic',
                 functions = 'italic',
                 strings = 'none',
                 variables = 'none'
@@ -39,6 +38,5 @@ return {
             },
         }
         require('onedark').load()
-        -- vim.cmd([[ colorscheme onedark]])
     end
 }
