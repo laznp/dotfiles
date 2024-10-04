@@ -9,7 +9,8 @@ return {
             "ruff-lsp",
             "rust-analyzer",
             "bash-language-server",
-            "terraform-ls"
+            "terraform-ls",
+            "clangd"
         },
     },
   ---@param opts MasonSettings | {ensure_installed: string[]}

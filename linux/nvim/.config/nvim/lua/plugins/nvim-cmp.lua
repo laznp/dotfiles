@@ -32,8 +32,8 @@ return {
                         c = cmp.mapping.close(),
                 }),
                 ['<CR>'] = cmp.mapping.confirm({ select = true }),
-                ['<Tab>'] = cmp.mapping.select_next_item(),
-                ['<S-Tab>'] = cmp.mapping.select_prev_item(),
+                ['<Down>'] = cmp.mapping.select_next_item(),
+                ['<Up>'] = cmp.mapping.select_prev_item(),
             },
             window = {
                 completion = {
@@ -111,6 +111,7 @@ return {
         lspconfig.ruff_lsp.setup{ capabilities = capabilities, on_attach = on_attach }
         lspconfig.rust_analyzer.setup{ capabilities = capabilities, on_attach = on_attach }
         lspconfig.bashls.setup{ capabilities = capabilities, on_attach = on_attach }
+        lspconfig.clangd.setup{ capabilities = capabilities, on_attach = on_attach }
         lspconfig.terraformls.setup{ 
             capabilities = capabilities, 
             on_attach = on_attach, 

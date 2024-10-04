@@ -46,7 +46,7 @@ foreground = "0x93a4c3"
 TERM = "xterm-256color"
 
 [font]
-size = 9
+size = 8.75
 
 [font.normal]
 family = "JetBrainsMono Nerd Font"

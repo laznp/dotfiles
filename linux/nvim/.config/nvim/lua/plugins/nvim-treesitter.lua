@@ -11,6 +11,7 @@ return {
                 'dockerfile',
                 'terraform',
                 'cpp',
+                'c',
                 'javascript',
                 'yaml'
             },
