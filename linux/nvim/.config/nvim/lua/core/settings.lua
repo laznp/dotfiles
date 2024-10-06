@@ -29,6 +29,7 @@ vim.o.laststatus = 3
 vim.o.clipboard = vim.o.clipboard .. 'unnamedplus'
 vim.o.shortmess = vim.o.shortmess .. 'c'
 vim.o.pumheight = 10
+vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 vim.g.syntax = "enable"
 vim.g.completeopt = "menu,menuone,noselect,noinsert"
 vim.g.loaded_perl_provider = 0

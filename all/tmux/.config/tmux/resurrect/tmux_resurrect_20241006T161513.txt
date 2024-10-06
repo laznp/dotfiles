@@ -1,0 +1,9 @@
+pane	0	1	1	:*	1	LazPC	:/home/laznp/.local/share/tmux/resurrect	0	zsh	:
+pane	0	1	1	:*	2	LazPC	:/home/laznp	1	nvim	:nvim /home/laznp/.config/tmux/tmux.conf
+pane	0	2	0	:-	1	LazPC	:/home/laznp/Projects/autobahn	1	nvim	:nvim
+pane	0	2	0	:-	2	LazPC	:/home/laznp/Projects/autobahn	0	zsh	:
+pane	2	1	1	:*	1	LazPC	:/home/laznp	1	zsh	:
+window	0	1	:main	1	:*	ed73,414x82,0,0{207x82,0,0,1,206x82,208,0,3}	off
+window	0	2	:editor	0	:-	ed77,414x82,0,0{207x82,0,0,4,206x82,208,0,5}	off
+window	2	1	:zsh	1	:*	bd23,414x82,0,0,6	:
+state	0	2

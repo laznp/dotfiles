@@ -80,3 +80,7 @@ lines = 50
 [window.padding]
 x = 25
 y = 25
+
+[shell]
+program = "tmux"
+# args = ["attach"]
