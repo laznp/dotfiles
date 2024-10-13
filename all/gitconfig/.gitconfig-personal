@@ -1,0 +1,6 @@
+[user]
+    name = "Lazuardi N Putra"
+    email = me@laznp.id
+[core]
+    sshCommand = "ssh -i ~/.ssh/laznp -o IdentitiesOnly=yes"
+

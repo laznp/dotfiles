@@ -168,9 +168,7 @@ alias ~="cd ~"
 # Alias Project
 alias kuman="cd ~/Projects/autobahn/kubernetes-manifest"
 alias infra="cd ~/Projects/autobahn/infrastructure-2.0"
-alias foodbag="cd ~/Projects/nebulae/foodbag"
-alias belair="cd ~/Projects/nebulae/aq-mobile-be"
-alias dotfiles="cd ~/Projects/personal/dotfiles"
+alias personal="cd ~/Projects/personal"
 alias atbhn="cd ~/Projects/autobahn"
 alias nebulae="cd ~/Projects/nebulae"
 

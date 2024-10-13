@@ -1,0 +1,6 @@
+[user]
+    name = "Lazuardi N Putra"
+    email = me@laznp.id
+[core]
+    sshCommand = "ssh -i ~/.ssh/nebulae -o IdentitiesOnly=yes"
+

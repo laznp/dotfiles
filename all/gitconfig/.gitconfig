@@ -1,0 +1,24 @@
+[user]
+        email = me@laznp.id
+        name = Lazuardi N Putra
+[pull]
+        rebase = false
+[http]
+        postBuffer = 524288000
+[push]
+        autoSetupRemote = true
+[credential "https://github.com"]
+        helper =
+        helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+        helper =
+        helper = !/usr/bin/gh auth git-credential
+
+[includeIf "gitdir:~/Projects/personal/"]
+    path = ~/.gitconfig-personal
+
+[includeIf "gitdir:~/Projects/autobahn/"]
+    path = ~/.gitconfig-autobahn
+
+[includeIf "gitdir:~/Projects/nebulae/"]
+    path = ~/.gitconfig-nebulae

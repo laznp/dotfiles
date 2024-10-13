@@ -1,0 +1,6 @@
+[user]
+    name = "Lazuardi N Putra"
+    email = lazuardi.putra@autobahn-security.com
+[core]
+    sshCommand = "ssh -i ~/.ssh/autobahn -o IdentitiesOnly=yes"
+
