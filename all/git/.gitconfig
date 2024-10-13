@@ -1,6 +1,9 @@
 [user]
         email = me@laznp.id
         name = Lazuardi N Putra
+[core]
+    hooksPath = ~/.git-hooks
+
 [pull]
         rebase = false
 [http]
