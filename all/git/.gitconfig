@@ -1,6 +1,6 @@
 [user]
-    email = me@laznp.id
-    name = Lazuardi N Putra
+	email = devops@autobahn-security.com
+	name = DevOps
 [core]
     hooksPath = ~/.git-hooks
 
@@ -26,3 +26,8 @@
 
 [includeIf "gitdir:~/Projects/nebulae/"]
     path = ~/.gitconfig-nebulae
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

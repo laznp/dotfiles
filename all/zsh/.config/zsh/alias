@@ -21,6 +21,7 @@ alias zsh_alias="nvim ~/.config/zsh/alias"
 
 alias slack_autobahn="google-chrome-stable --app=https://app.slack.com/client/T02GNBPNLH3/D05RMA27WHE"
 alias slack_nebulae="google-chrome-stable --app=https://app.slack.com/client/T5VAKUAMQ/C5ULDD4HW"
+alias whatsapp="google-chrome-stable --app=https://web.whatsapp.com"
 
 # Alias source zshrc
 alias reload="source $HOME/.zshrc"
@@ -167,7 +168,7 @@ alias ~="cd ~"
 
 # Alias Project
 alias kuman="cd ~/Projects/autobahn/kubernetes-manifest"
-alias infra="cd ~/Projects/autobahn/infrastructure-2.0"
+alias infra="cd ~/Projects/autobahn/infrastructure"
 alias personal="cd ~/Projects/personal"
 alias atbhn="cd ~/Projects/autobahn"
 alias nebulae="cd ~/Projects/nebulae"

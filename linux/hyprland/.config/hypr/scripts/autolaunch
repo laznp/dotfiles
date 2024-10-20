@@ -17,11 +17,12 @@ exec-once = swaybg -i $HOME/Downloads/roronoa-zoro-one-5120x2926-10523.png -m fi
 exec-once = openrgb -d 'Corsair Dominator Platinum' -m Direct -c 'ffffff'
 
 # GPU
-exec-once = openrgb -d 4 -z 1 -s 12 -m Direct -c "FFFFFF"
+# exec-once = openrgb -d 4 -z 1 -s 12 -m Direct -c "FFFFFF"
 
 # Apps
 exec-once = /usr/lib/polkit-kde-authentication-agent-1
-exec-once = whatsdesk
+# exec-once = whatsdesk
+exec-once = google-chrome-stable --app=https://web.whatsapp.com
 exec-once = telegram-desktop
 exec-once = cliphist
 exec-once = corectrl
