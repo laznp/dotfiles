@@ -20,14 +20,14 @@ return {
             -- dotfiles = true,
           -- },
           view = {
-            adaptive_size = true,
+            adaptive_size = false,
             centralize_selection = false,
-            width = 30,
+            -- width = 40,
             side = "left",
             preserve_window_proportions = false,
             number = false,
             relativenumber = false,
-            signcolumn = "yes",
+            signcolumn = "no",
           },
           renderer = {
             add_trailing = false,
