@@ -1,3 +1,4 @@
+[general]
 live_config_reload = true
 
 # import = [
@@ -85,6 +86,6 @@ lines = 50
 x = 25
 y = 25
 
-[shell]
+[terminal.shell]
 program = "tmux"
 # args = ["attach"]

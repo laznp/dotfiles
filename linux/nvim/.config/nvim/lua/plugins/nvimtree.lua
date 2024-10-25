@@ -20,9 +20,9 @@ return {
             -- dotfiles = true,
           -- },
           view = {
-            adaptive_size = false,
+            adaptive_size = true,
             centralize_selection = false,
-            -- width = 40,
+            width = 40,
             side = "left",
             preserve_window_proportions = false,
             number = false,
