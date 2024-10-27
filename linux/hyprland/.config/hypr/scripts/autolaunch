@@ -11,13 +11,13 @@ exec-once = waybar -c ~/.config/waybar/config
 
 # Background
 #exec-once = swaybg -i $HOME/Downloads/owl.jpg -m fill
-exec-once = swaybg -i $HOME/Downloads/roronoa-zoro-one-5120x2926-10523.png -m fill
+exec-once = swaybg -i $HOME/Downloads/flame-devil.png -m fill
 
 # RAM
 exec-once = openrgb -d 'Corsair Dominator Platinum' -m Direct -c 'ffffff'
 
 # GPU
-# exec-once = openrgb -d 4 -z 1 -s 12 -m Direct -c "FFFFFF"
+exec-once = openrgb -d 4 -z 1 -s 12 -m Direct -c "6478d2"
 
 # Apps
 exec-once = /usr/lib/polkit-kde-authentication-agent-1
