@@ -11,6 +11,8 @@
         "clock"
     ],
     "modules-right": [
+        "custom/mousebat",
+        "custom/headphonebat",
         "pulseaudio",
         "network",
         "tray"
@@ -125,9 +127,6 @@
         "hyprland/workspaces"
     ],
     "modules-right": [
-        "custom/powerpackage",
-        "custom/cputemp",
-        "custom/gputemp",
         "clock",
         "tray"
     ],

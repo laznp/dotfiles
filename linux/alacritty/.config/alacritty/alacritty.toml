@@ -88,4 +88,3 @@ y = 25
 
 [terminal.shell]
 program = "tmux"
-# args = ["attach"]
