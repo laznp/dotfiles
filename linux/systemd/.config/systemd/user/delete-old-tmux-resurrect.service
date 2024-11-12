@@ -1,0 +1,7 @@
+[Unit]
+Description=Check and delete tmux resurrect file
+
+[Service]
+Type=oneshot
+ExecStart=find /home/laznp/.config/tmux/resurrect -mmin +15 -name "*.txt" -print -delete
+
