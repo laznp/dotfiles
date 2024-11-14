@@ -3,7 +3,7 @@ $mainMod = Super
 $terminal = alacritty
 #$menu = rofi -no-lazy-grab -no-history -no-sort -show drun -modi ssh,drun -theme /home/laznp/.config/rofi/config
 $menu = tofi-drun --config ~/.config/tofi/launcher.config 
-$fileManager = ranger
+$fileManager = alacritty -e ranger
 
 # WINDOWS NAVIGATION WITHIN WORKSPACES
 bind = $mainMod, h, movefocus, l
@@ -67,6 +67,7 @@ bind = $mainMod SHIFT, E, exec, bash ~/.local/bin/powermenu
 bind = $mainMod, F, togglefloating,
 bind = $mainMod SHIFT, A, exec, bash ~/.local/bin/audio-output
 bind = $mainMod SHIFT, S, exec, bash ~/.local/bin/statusmenu
+# bind = $mainMod P, exec, bash ~/.local/bin/passwordmenu
 # bind = $mainMod, Tab, exec, rofi -modi window -show window -theme ~/.config/rofi/card_square.rasi
 bind = $mainMod, Space, exec, $menu
 bind = $mainMod, E, exec, $fileManager
