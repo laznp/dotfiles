@@ -27,7 +27,7 @@ alias whatsapp="google-chrome-stable --app=https://web.whatsapp.com"
 alias reload="source $HOME/.zshrc"
 
 function vim {
-  (alacritty --class NeoVim -e nvim $@ >/dev/null 2>&1 &)
+  (alacritty --class NeoVim --title NeoVim -e nvim $@ >/dev/null 2>&1 &)
 }
 
 function nebulae-ssh() {

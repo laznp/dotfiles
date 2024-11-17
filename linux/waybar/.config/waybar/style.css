@@ -1,13 +1,14 @@
 * {
-    /* font-family: 'JetBrainsMono Nerd Font'; */
-    font-family: 'D2CodingLigature Nerd Font';
-    font-size: 14px;
+    font-family: 'JetBrainsMono Nerd Font';
+    /* font-family: 'D2CodingLigature Nerd Font'; */
+    font-size: 12px;
     font-weight: bold;
     border-radius: 2;
 }
 
 window#waybar{
-    background-color: transparent
+    background-color: transparent;
+    /* background-color: #1e2127; */
 }
 
 #workspaces button.active {
@@ -27,3 +28,22 @@ window#waybar{
     color: #61AFEF;
 }
 
+#pulseaudio-slider slider {
+    min-height: 0px;
+    min-width: 0px;
+    opacity: 0;
+    background-image: none;
+    border: none;
+    box-shadow: none;
+}
+#pulseaudio-slider trough {
+    min-height: 10px;
+    min-width: 80px;
+    border-radius: 5px;
+    background-color: black;
+}
+#pulseaudio-slider highlight {
+    min-width: 10px;
+    border-radius: 5px;
+    background-color: white;
+}
