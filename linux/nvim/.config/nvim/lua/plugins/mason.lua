@@ -6,7 +6,7 @@ return {
     opts_extend = { "ensure_installed" },
     opts = {
         ensure_installed = {
-            "ruff-lsp",
+            "ruff",
             "rust-analyzer",
             "bash-language-server",
             "terraform-ls",

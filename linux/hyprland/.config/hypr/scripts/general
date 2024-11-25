@@ -62,3 +62,7 @@ misc {
     vrr = 1
 }
 
+debug {
+    disable_logs = true
+    enable_stdout_logs = false
+}

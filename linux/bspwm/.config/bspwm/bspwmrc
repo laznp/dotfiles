@@ -5,7 +5,7 @@ export BSPWM_STATE="${XDG_DATA_HOME:-$HOME/.local/share}/bspwm-state.json"
 # SXHKD
 # pgrep -x sxhkd > /dev/null || killall sxhkd || sxhkd &
 pgrep -x /usr/lib/polkit-kde-authentication-agent-1 || /usr/lib/polkit-kde-authentication-agent-1 &
-systemctl --user start swhkd.service
+systemctl --user start sxhkd.service
 
 # Set Natural Scrolling
 xinput | grep -e "Razer Razer Basilisk Ultimate Dongle" | grep pointer | awk -F '=' '{ print $2 }' | awk '{ print $1 }' | while read line; do xinput set-prop $line "libinput Natural Scrolling Enabled" 1; done
@@ -56,8 +56,8 @@ bspc rule -a VSCodium:vscodium desktop='^3'
 bspc rule -a Lutris:lutris desktop='^4'
 bspc rule -a bottles:bottles desktop='^4'
 bspc rule -a heroic:heroic desktop='^4'
-bspc rule -a steam:steamwebhelper desktop='^4'
 bspc rule -a OpenLens:openlens desktop='^5'
+bspc rule -a steam:steamwebhelper desktop='^4'
 bspc rule -a Lens:lens desktop='^5'
 bspc rule -a Bitwarden:bitwarden desktop='^6'
 bspc rule -a 1Password:1password desktop='^6'
@@ -72,15 +72,16 @@ bspc rule -a *:*:'meet.google.com is sharing your screen.' hidden=true
 bspc rule -a ranger:ranger state="floating" follow="on" focus="on"
 
 # Launch Application
-pgrep -x corectrl || corectrl &
+# pgrep -x corectrl || corectrl &
 pgrep -x telegram-desktop || telegram-desktop &
-pgrep -x -f whatsdesk || whatsdesk &
-pgrep -x jamesdsp || jamesdsp &
+# pgrep -x -f whatsdesk || whatsdesk &
+# pgrep -x jamesdsp || jamesdsp &
 
 # Launch Compositor, Wallpaper, Polybar
 pgrep -x picom > /dev/null || picom --config $HOME/.config/picom/picom.conf &
 # pgrep -x feh > /dev/null || feh --bg-scale $HOME/.wallpaper/fantasy-landscape.jpg --no-xinerama &
-pgrep -x feh > /dev/null || feh --bg-fill $HOME/Downloads/owl.jpg --no-xinerama &
+# pgrep -x feh > /dev/null || feh --bg-fill $HOME/Downloads/owl.jpg --no-xinerama &
+pgrep -x feh > /dev/null || feh --bg-fill $HOME/Downloads/Wallpaper/haunted-library.png &
 # pgrep -x feh > /dev/null || feh --bg-fill $HOME/.wallpaper/arch-nord-dark.png --no-xinerama &
 # pgrep -x feh > /dev/null || feh --bg-scale $HOME/.wallpaper/arch-nord-dark.png --bg-fill $HOME/.wallpaper/arch-nord-dark.png &
 $HOME/.config/polybar/launch.sh

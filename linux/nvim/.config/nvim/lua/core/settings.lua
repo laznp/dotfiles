@@ -43,3 +43,9 @@ vim.api.nvim_exec([[
     au BufNewFile,BufRead *alias setf sh
     au BufNewFile,BufRead *Jenkinsfile* setf groovy
 ]],false)
+-- vim.opt.fillchars = {
+    -- stl = "─",
+    -- stlnc = "─",
+-- }
+--
+    -- au BufWritePost ~/Projects/personal/dotfiles/linux/i3/.config/i3/config :silent !i3-msg restart

@@ -12,29 +12,25 @@ return {
           end
         end
 
-        local function set_mode()
-            local map_mode = {
-                ['n']    = ' ',
-                ['v']    = '󰈈 ',
-                ['V']    = '󰈈 ',
-                ['\22']  = '󰈈 ',
-                ['s']    = 'SELECT',
-                -- ['CTRL-S']   = 'S-BLOCK',
-                ['i']    = ' ',
-                ['r']    = 'REPLACE',
-                ['R']    = 'REPLACE',
-                ['c']    = ' ',
-                ['rm']   = 'MORE',
-                ['r?']   = 'CONFIRM',
-                ['!']    = 'SHELL',
-                ['t']    = ' ',
-            }
-            local mode_code = vim.fn.mode()
-            return map_mode[mode_code]
-        end
+        local map_mode = {
+            ['NORMAL']    = ' ',
+            ['VISUAL']    = '󰈈 ',
+            ['V-BLOCK']    = '󰈈 ',
+            ['V-LINE']  = '󰈈 ',
+            ['s']    = 'SELECT',
+            -- ['CTRL-S']   = 'S-BLOCK',
+            ['INSERT']    = ' ',
+            ['r']    = 'REPLACE',
+            ['R']    = 'REPLACE',
+            ['COMMAND']    = ' ',
+            ['rm']   = 'MORE',
+            ['r?']   = 'CONFIRM',
+            ['!']    = 'SHELL',
+            ['TERM']    = ' ',
+        }
 
         local function set_filename()
-            return vim.fn.expand('%:p')
+            return vim.fn.expand('%:p') .. " %m"
         end
 
         local colors = {
@@ -46,10 +42,47 @@ return {
           violet = '#a9a1e1',
           magenta = '#c678dd',
           blue = '#51afef',
-          red = '#ec5f67'
+          red = '#ec5f67',
+          bg = "#2c323c",
+          fg = "#abb2bf"
         }
 
         local lualine = require 'lualine'
+
+        local function color_mode()
+
+            vim.opt.fillchars = {
+                stl = "─",
+                stlnc = "─",
+            }
+
+            local mode_color = {
+                n = colors.orange,
+                i = colors.blue,
+                v = colors.magenta,
+                [""] = colors.magenta,
+                V = colors.magenta,
+                c = colors.red,
+                no = colors.red,
+                s = colors.orange,
+                S = colors.orange,
+                [""] = colors.orange,
+                ic = colors.yellow,
+                R = colors.purple,
+                Rv = colors.purple,
+                cv = colors.red,
+                ce = colors.red,
+                r = colors.blue,
+                rm = colors.blue,
+                ["r?"] = colors.blue,
+                ["!"] = colors.red,
+                t = colors.red,
+
+            }
+
+            -- return { fg = mode_color[vim.fn.mode()], bg = colors.bg, }
+            return { fg = mode_color[vim.fn.mode()], bg = "None", }
+        end
 
         local config = {
           options = {
@@ -62,16 +95,49 @@ return {
             globalstatus = true,
           },
           sections = {
-            lualine_a = { set_mode },
-            lualine_b = { set_filename },
-            -- lualine_b = {},
-            lualine_c = {'filetype'},
-            lualine_x = {
-            {'diff', source=diff_source }, 'branch',
-            {'diagnostics', sources={'nvim_lsp', 'coc'}}
+            lualine_a = { 
+                {
+                    'mode', 
+                    fmt = function(s) return map_mode[s] or s end,
+                    color = color_mode 
+                } 
             },
-            lualine_y = {'progress'},
-            lualine_z = {'location'}
+            lualine_b = {},
+            lualine_c = { 
+                "%=",
+                {
+                    "filetype",
+                    color = color_mode,
+                    icon_only = true,
+                    icon = { align = 'right' },
+                },
+                {
+                    "filename",
+                    color = color_mode,
+                    file_status = true,
+                    path = 2,
+                    symbols = {
+                        modified = '󰧞',      -- Text to show when the file is modified.
+                    }
+                },
+            },
+            lualine_x = {
+                {'diff', source=diff_source }, 
+                {'branch', color = color_mode},
+                {'diagnostics', sources={'nvim_lsp', 'coc'}}
+            },
+            lualine_y = { 
+                {
+                    "progress",
+                    color = color_mode 
+                }
+            },
+            lualine_z = {
+                {
+                    'location',
+                    color = color_mode
+                }
+            }
           },
           inactive_sections = {
             lualine_a = {},

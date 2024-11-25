@@ -57,6 +57,7 @@
             "(.*) — Mozilla Firefox": "Firefox",
             "(.*) - Google Chrome": "Google Chrome",
             "(.*) - Slack": "Slack",
+            "(.*) Microsoft Teams": "Microsoft Teams",
             "(.*) - Thunar": "File Explorer"
         },
         "icon": false,
