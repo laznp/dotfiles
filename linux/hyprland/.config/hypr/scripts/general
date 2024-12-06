@@ -59,7 +59,7 @@ misc {
     force_default_wallpaper = -1 
     focus_on_activate = true
     disable_hyprland_logo = 1
-    vrr = 1
+    vrr = 2
 }
 
 debug {

@@ -28,5 +28,5 @@ exec-once = /usr/lib/polkit-kde-authentication-agent-1
 exec-once = google-chrome-stable --app=https://web.whatsapp.com
 exec-once = telegram-desktop
 exec-once = cliphist
-# exec-once = corectrl
+exec-once = corectrl
 # exec-once = jamesdsp

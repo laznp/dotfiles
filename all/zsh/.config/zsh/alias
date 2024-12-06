@@ -35,6 +35,11 @@ function nebulae-ssh() {
     ssh-add ~/.ssh/nebulae
 }
 
+function atbhn-ssh() {
+    eval $(ssh-agent)
+    ssh-add ~/.ssh/autobahn
+}
+
 # Alias for password generation
 function passgen() {
     tr -dc 'A-Za-z0-9' < /dev/urandom | head -c $1 ; echo

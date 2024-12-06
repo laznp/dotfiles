@@ -42,10 +42,8 @@ vim.api.nvim_exec([[
     au BufNewFile,BufRead *.ino setf c
     au BufNewFile,BufRead *alias setf sh
     au BufNewFile,BufRead *Jenkinsfile* setf groovy
+    au BufWritePost ~/Projects/personal/dotfiles/linux/waybar/.config/waybar/config :silent !killall -SIGUSR2 waybar
+    au BufWritePost ~/Projects/personal/dotfiles/linux/waybar/.config/waybar/style.css :silent !killall -SIGUSR2 waybar
 ]],false)
--- vim.opt.fillchars = {
-    -- stl = "─",
-    -- stlnc = "─",
--- }
---
+
     -- au BufWritePost ~/Projects/personal/dotfiles/linux/i3/.config/i3/config :silent !i3-msg restart

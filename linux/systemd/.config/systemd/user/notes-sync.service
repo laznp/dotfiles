@@ -1,0 +1,7 @@
+[Unit]
+Description=Run git sync on notes
+
+[Service]
+Type=oneshot
+ExecStart=/home/laznp/.local/bin/notes-sync
+
