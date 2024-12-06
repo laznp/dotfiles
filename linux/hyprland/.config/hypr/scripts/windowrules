@@ -13,7 +13,6 @@ windowrulev2 = workspace 7,class:(chrome-web.whatsapp.com__-Default|org.telegram
 windowrulev2 = workspace 8,class:(chrome-open.spotify.com__-Default|Spotify)
 windowrulev2 = workspace 9,class:(chrome-teams.microsoft.com__-Default)
 windowrulev2 = workspace 9,class:(chrome-teams.microsoft.com__-Profile_2)
-windowrulev2 = workspace 9,class:(chrome-app.capacities.io__a5a6b176-7c05-4678-82d4-cd38f859f82f-Default)
 windowrulev2 = workspace 9,class:(NeoNotes)
 windowrulev2 = workspace 10,class:(Slack)
 windowrulev2 = float,class:(ranger)
