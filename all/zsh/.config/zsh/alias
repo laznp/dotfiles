@@ -30,6 +30,11 @@ function vim {
   (alacritty --class NeoVim --title NeoVim -e nvim $@ >/dev/null 2>&1 &)
 }
 
+function notes {
+    cd ~/Projects/personal/notes
+    (alacritty --class NeoNotes --title Notes -e nvim $@ >/dev/null 2>&1 &)
+}
+
 function nebulae-ssh() {
     eval $(ssh-agent)
     ssh-add ~/.ssh/nebulae

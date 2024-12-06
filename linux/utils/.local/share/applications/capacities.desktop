@@ -1,9 +1,0 @@
-#!/usr/bin/env xdg-open
-[Desktop Entry]
-Encoding=UTF-8
-Version=1.0
-Type=Application
-Terminal=false
-Exec=/usr/bin/google-chrome-stable --app=https://app.capacities.io/a5a6b176-7c05-4678-82d4-cd38f859f82f
-Name=Capacities
-Icon=/path/to/icon
