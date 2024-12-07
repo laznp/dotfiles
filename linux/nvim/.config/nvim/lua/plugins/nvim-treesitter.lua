@@ -15,7 +15,8 @@ return {
                 'javascript',
                 'yaml',
                 'markdown',
-                'markdown_inline'
+                'markdown_inline',
+                'html',
             },
             indent = {
                 enable = true,
@@ -24,11 +25,11 @@ return {
             highlight = {
                 enable = true,
                 disable = {'gitignore'},
-                additional_vim_regex_highlighting = { 'markdown' },
             },
             autopairs = {
                 enable = true
-            }
+            },
+            additional_vim_regex_highlighting = false,
         }
     end
 }

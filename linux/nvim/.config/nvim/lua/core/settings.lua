@@ -15,6 +15,7 @@ vim.o.mouse = 'a'
 vim.o.foldmethod = "indent"
 vim.o.foldlevelstart = 99
 vim.o.cursorline = true
+vim.o.textwidth = 120
 vim.o.cursorcolumn = true
 vim.o.list = true
 vim.o.background = "dark"
