@@ -30,6 +30,11 @@ function vim {
   (alacritty --class NeoVim --title NeoVim -e nvim $@ >/dev/null 2>&1 &)
 }
 
+function natsbox {
+    NATS_BOX=$(kubectl get pod -n nats | grep nats-box | cut -d ' ' -f1) 
+    kubectl exec -i -t -n nats $NATS_BOX -c nats-box -- sh
+}
+
 function notes {
     cd ~/Projects/personal/notes
     (alacritty --class NeoNotes --title Notes -e nvim $@ >/dev/null 2>&1 &)

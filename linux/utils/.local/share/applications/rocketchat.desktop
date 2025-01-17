@@ -1,0 +1,8 @@
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.0
+Type=Application
+Terminal=false
+Exec=/usr/bin/google-chrome-stable --app=https://chat.gloow.io/direct/TsR94wAeF4y45MCrLzYcSLDKJ8Bp338AAc --profile-directory="Default"
+Name=RocketChat
+Icon=/path/to/icon

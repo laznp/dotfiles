@@ -66,3 +66,7 @@ debug {
     disable_logs = true
     enable_stdout_logs = false
 }
+
+ecosystem {
+    no_update_news = true
+}
