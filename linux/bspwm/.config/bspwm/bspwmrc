@@ -3,9 +3,9 @@ export BSPWM_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/bspwm"
 export BSPWM_STATE="${XDG_DATA_HOME:-$HOME/.local/share}/bspwm-state.json"
 
 # SXHKD
-# pgrep -x sxhkd > /dev/null || killall sxhkd || sxhkd &
+pgrep -x sxhkd > /dev/null || killall sxhkd || sxhkd &
 pgrep -x /usr/lib/polkit-kde-authentication-agent-1 || /usr/lib/polkit-kde-authentication-agent-1 &
-systemctl --user start sxhkd.service
+# systemctl --user start sxhkd.service
 
 # Set Natural Scrolling
 xinput | grep -e "Razer Razer Basilisk Ultimate Dongle" | grep pointer | awk -F '=' '{ print $2 }' | awk '{ print $1 }' | while read line; do xinput set-prop $line "libinput Natural Scrolling Enabled" 1; done
@@ -25,9 +25,10 @@ openrgb -d 4 -z 1 -s 12 -m Direct -c "FFFFFF"
 xsetroot -cursor_name left_ptr 24 &
 
 # Multiple Monitor Config
-# if [ "$(xrandr -q | grep 'DisplayPort-1' | awk '{ print $2}')" == 'connected' ]; then
-xrandr --output DisplayPort-0 --primary --rate 60 --set TearFree on \
-  --output DisplayPort-1 --rotate left --rate 60 --left-of DisplayPort-0
+if [ "$(xrandr -q | grep 'DisplayPort-1' | awk '{ print $2}')" == 'connected' ]; then
+xrandr --output DisplayPort-0 --primary --rate 75 --set TearFree on \
+  --output DisplayPort-1 --rotate left --rate 75 --left-of DisplayPort-0
+fi
 bspc monitor DisplayPort-0 -d 1 2 3 4 5 6
 bspc monitor DisplayPort-1 -d 7 8 9 10
 bspc wm --reorder-monitors DisplayPort-0 DisplayPort-1
@@ -62,6 +63,7 @@ bspc rule -a Lens:lens desktop='^5'
 bspc rule -a Bitwarden:bitwarden desktop='^6'
 bspc rule -a 1Password:1password desktop='^6'
 bspc rule -a TelegramDesktop:telegram-desktop desktop='^7'
+bspc rule -a "Google-chrome":"web.whatsapp.com" desktop='^7'
 bspc rule -a whatsdesk:whatsdesk desktop='^7'
 bspc rule -a "Google-chrome":"open.spotify.com" desktop='^8'
 bspc rule -a Spotify:spotify desktop='^8'
@@ -72,8 +74,9 @@ bspc rule -a *:*:'meet.google.com is sharing your screen.' hidden=true
 bspc rule -a ranger:ranger state="floating" follow="on" focus="on"
 
 # Launch Application
-# pgrep -x corectrl || corectrl &
-pgrep -x telegram-desktop || telegram-desktop &
+pgrep -x corectrl || corectrl &
+google-chrome-stable --app=https://web.whatsapp.com
+# pgrep -x telegram-desktop || telegram-desktop &
 # pgrep -x -f whatsdesk || whatsdesk &
 # pgrep -x jamesdsp || jamesdsp &
 
