@@ -9,6 +9,7 @@
     ],
     "modules-center": [],
     "modules-right": [
+        "custom/mousebat",
         "pulseaudio",
         "network",
         "clock"
@@ -68,6 +69,13 @@
         "exec": "echo  ",
         "return-type": "plain",
         "on-click": "rofi -no-lazy-grab -no-history -no-sort -show drun -modi ssh,drun -theme /home/laznp/.config/rofi/config"
+    },
+    "custom/mousebat": {
+        "format": "󰍽  {} ",
+        "max-length": 40,
+        "interval": 1, 
+        "exec": "python3 $HOME/.local/bin/razer_battery",
+        "return-type": "plain",
     },
     "network": {
         "interface": "br0",
@@ -140,6 +148,7 @@
         "hyprland/workspaces"
     ],
     "modules-right": [
+        "custom/powerpackage",
         "clock",
         "tray"
     ],

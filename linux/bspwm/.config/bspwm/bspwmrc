@@ -22,16 +22,19 @@ openrgb -d 'Corsair Dominator Platinum' -m Direct -c 'ffffff'
 openrgb -d 4 -z 1 -s 12 -m Direct -c "FFFFFF"
 
 # Set Cursor
-xsetroot -cursor_name left_ptr 24 &
+xsetroot -cursor_name left_ptr &
 
-# Multiple Monitor Config
-if [ "$(xrandr -q | grep 'DisplayPort-1' | awk '{ print $2}')" == 'connected' ]; then
-xrandr --output DisplayPort-0 --primary --rate 75 --set TearFree on \
-  --output DisplayPort-1 --rotate left --rate 75 --left-of DisplayPort-0
-fi
+# Disable Display Suddenly Off
+xset -dpms
+
+Multiple Monitor Config
+xrandr --output DisplayPort-0 --primary --mode 2560x1440 --rate 75 --set TearFree on --output DisplayPort-1 --rotate left --rate 75 --left-of DisplayPort-0
 bspc monitor DisplayPort-0 -d 1 2 3 4 5 6
 bspc monitor DisplayPort-1 -d 7 8 9 10
 bspc wm --reorder-monitors DisplayPort-0 DisplayPort-1
+
+# xrandr --output HDMI-A-0 --primary --mode 1920x1080 --rate 75 --set TearFree on
+# bspc monitor HDMI-A-0 -d 1 2 3 4 5 6 7 8 9 0
 
 # BSPWM Config
 bspc config border_width			2
@@ -64,7 +67,7 @@ bspc rule -a Bitwarden:bitwarden desktop='^6'
 bspc rule -a 1Password:1password desktop='^6'
 bspc rule -a TelegramDesktop:telegram-desktop desktop='^7'
 bspc rule -a "Google-chrome":"web.whatsapp.com" desktop='^7'
-bspc rule -a whatsdesk:whatsdesk desktop='^7'
+bspc rule -a WhatSie:whatsie desktop='^7'
 bspc rule -a "Google-chrome":"open.spotify.com" desktop='^8'
 bspc rule -a Spotify:spotify desktop='^8'
 bspc rule -a "Microsoft Teams - Preview":"microsoft teams - preview" desktop='^9'
@@ -77,7 +80,7 @@ bspc rule -a ranger:ranger state="floating" follow="on" focus="on"
 pgrep -x corectrl || corectrl &
 google-chrome-stable --app=https://web.whatsapp.com
 # pgrep -x telegram-desktop || telegram-desktop &
-# pgrep -x -f whatsdesk || whatsdesk &
+# pgrep -x -f whatsie || whatsie &
 # pgrep -x jamesdsp || jamesdsp &
 
 # Launch Compositor, Wallpaper, Polybar

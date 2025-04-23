@@ -57,9 +57,9 @@ gestures {
 
 misc {
     force_default_wallpaper = -1 
-    focus_on_activate = true
+    focus_on_activate = false
     disable_hyprland_logo = 1
-    vrr = 2
+    vrr = 1
 }
 
 debug {

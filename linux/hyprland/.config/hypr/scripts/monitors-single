@@ -1,4 +1,4 @@
-monitor=HDMI-A-1,1920x1080@75,auto,1,transform,0,bitdepth,10
+monitor=HDMI-A-1,1920x1080@75,auto,1,transform,0,bitdepth,8
 
 workspace = 1, monitor:HDMI-A-1
 workspace = 2, monitor:HDMI-A-1

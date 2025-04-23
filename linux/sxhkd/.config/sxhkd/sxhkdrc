@@ -38,8 +38,8 @@ super + {_,shift} + {1-9,0}
     bspc {desktop -f,node -d} '^{1-9,10}'
 
 # SWAP / FOCUS ANOTHER DESKTOP
-ctrl + {Left,Right}
-	bspc desktop -f {prev,next}
+# ctrl + {Left,Right}
+	# bspc desktop -f {prev,next}
 super + button{8,9}
 	bspc desktop -f {prev,next}
 

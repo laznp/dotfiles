@@ -4,6 +4,7 @@ exec-once = dbus-update-activation-environment --systemd --all
 exec-once = systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP QT_QPA_PLATFORMTHEME
 exec-once = systemctl --user start xdg-desktop-portal-wlr.service
 exec-once = systemctl --user start xdg-desktop-portal-hyprland.service
+exec-once = systemctl --user start hyprpolkitagent.service
 
 exec-once = $HOME/.local/bin/import-gtk-settings
 
@@ -23,9 +24,9 @@ exec-once = openrgb -d 'Corsair Dominator Platinum' -m Direct -c 'ffffff'
 exec-once = openrgb -d 4 -z 1 -s 12 -m Direct -c "ffffff"
 
 # Apps
-exec-once = /usr/lib/polkit-kde-authentication-agent-1
-# exec-once = whatsdesk
+# exec-once = /usr/lib/polkit-kde-authentication-agent-1
 exec-once = google-chrome-stable --app=https://web.whatsapp.com
+# exec-once = whatsie
 # exec-once = telegram-desktop
 exec-once = cliphist
 exec-once = corectrl

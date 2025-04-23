@@ -144,6 +144,17 @@ function autobahn() {
         autobahn_vpn "$@"
     fi
 }
+
+function clear-branch() {
+    git for-each-ref --format='%(committerdate:short) %(refname:short)' refs/heads/ | \
+    while read -r date branch; do
+      if [[ $(date -d "$date" +%s) -lt $(date -d '1 month ago' +%s) ]]; then
+        echo "Deleting $branch"
+        git branch -D "$branch"
+      fi
+    done
+}
+
 # Alias git command
 alias gad="git add"
 alias gco="git checkout"

@@ -29,6 +29,7 @@ return {
                 ["Pmenu"] = { fg = "$fg", bg = "$bg0" },
                 ["CmpDocs"] = { fg = "$fg", bg = "$bg0" },
                 ["FloatBorder"] = { fg = "$fg", bg = "$bg0" },
+                ["StatusLine"] = { bg = "NONE" },
             },
 
             diagnostics = {
