@@ -14,7 +14,7 @@ if [ $? -eq 0 ]; then
 			git pull origin main
 			git add .
 			git commit -m "${REPLY}"
-			git push origin master
+			git push origin main
 		else
 			echo "Can't Proceed on Main Branch!"
 		fi
