@@ -2,7 +2,7 @@
 live_config_reload = true
 
 # import = [
-  # "~/.config/alacritty/catppuccin-mocha.toml"
+  # "~/.config/alacritty/aphelion.toml"
 # ]
 
 [colors]

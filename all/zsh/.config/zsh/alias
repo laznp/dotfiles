@@ -14,6 +14,7 @@ alias update-grub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 alias adhoc="nvim /home/laznp/Projects/autobahn/adhoc-task-$(date +'%F')"
 alias fzp="paru -Slq | fzf --multi --preview 'paru -Si {1}' | xargs -ro paru -S"
 alias man="tldr"
+alias dig="dog @8.8.8.8"
 
 # Shorthand for edit rc files
 alias zshrc="nvim ~/.zshrc"
@@ -75,23 +76,33 @@ function activate() {
     fi
 }
 
-function nebulae_infra() {
-    cd $HOME/Projects/nebulae/foodbag/terraform
+function foodbag_infra() {
+    cd $HOME/Projects/nebulae/foodbag-infra/terraform
     if [ "$1" = "dev" ]; then
-        source projects/dev/environment.sh
+        source foodbag/dev/environment.sh
         gcloud config set project foodbag-86a44
         echo "Change project to Foodbag Dev"
-        cd projects/dev
+        cd foodbag/dev
     elif [ "$1" = "staging" ]; then
-        source projects/dev/environment-staging.sh
+        source foodbag/dev/environment-staging.sh
         gcloud config set project foodbag-86a44
         echo "Change project to Foodbag Dev"
-        cd projects/dev
+        cd foodbag/dev
     elif [ "$1" = "prod" ]; then
-        source projects/production/environment.sh
+        source foodbag/production/environment.sh
         gcloud config set project foodbag-prod
         echo "Change project to Foodbag Prod"
-        cd projects/production
+        cd foodbag/production
+    fi
+}
+
+function foodprepper_infra() {
+    cd $HOME/Projects/nebulae/foodbag-infra/terraform
+    if [ "$1" = "dev" ]; then
+        source foodprepper/dev/environment.sh
+        gcloud config set project foodprepper-dev
+        echo "Change project to Foodprepper Dev"
+        cd foodprepper/dev
     fi
 }
 

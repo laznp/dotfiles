@@ -30,6 +30,9 @@
 [includeIf "gitdir:~/Projects/nebulae/foodbag/"]
     path = ~/.gitconfig-foodbag
 
+[includeIf "gitdir:~/Projects/nebulae/foodbag-infra/"]
+    path = ~/.gitconfig-foodbag
+
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
