@@ -243,3 +243,4 @@ ex=:\
 *.nix=:\
 "
 
+export PATH="$PATH:$HOME/.local/custom-bin"

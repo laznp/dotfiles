@@ -15,7 +15,7 @@ options="$mousebat\n$headphonebat\n$datetime\n$cputemp\n$gputemp"
 chosen="$(echo -e "$options" | $rofi_command -lines 5 -dmenu -selected-row 2)"
 case $chosen in
     $mousebat)
-        notify-send "Razer Basilisk Ultimate" $($HOME/.local/bin/razer_battery) -t 1500
+        notify-send "Razer Basilisk Ultimate" $($HOME/.local/custom-bin/razer_battery) -t 1500
         ;;
     $headphonebat)
         notify-send "Sony WH-1000XM4" "$(bluetoothctl info | grep "WH-1000XM4" -A30 | grep Battery | grep -oP '(?<=\().*(?=\))')%" -t 1500

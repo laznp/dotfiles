@@ -54,20 +54,20 @@ bindm = $mainMod, mouse:273, resizewindow
 bind =,Print, exec, grim -g "$(slurp)" - | swappy -f -
 
 # MEDIA KEYS TO SET VOLUME
-binde=, XF86AudioRaiseVolume, exec, $HOME/.local/bin/volume up
-binde=, XF86AudioLowerVolume, exec, $HOME/.local/bin/volume down
-binde=, XF86AudioMute, exec, $HOME/.local/bin/volume mute
+binde=, XF86AudioRaiseVolume, exec, $HOME/.local/custom-bin/volume up
+binde=, XF86AudioLowerVolume, exec, $HOME/.local/custom-bin/volume down
+binde=, XF86AudioMute, exec, $HOME/.local/custom-bin/volume mute
 bind = $mainMod CTRL, Left, exec, playerctl -p spotify previous
 bind = $mainMod CTRL, Right, exec, playerctl -p spotify next
 bind = $mainMod CTRL, Space, exec, playerctl -p spotify play-pause
 
 bind = $mainMod, Return, exec, $terminal
 bind = $mainMod SHIFT, Q, killactive,
-bind = $mainMod SHIFT, E, exec, bash ~/.local/bin/powermenu
+bind = $mainMod SHIFT, E, exec, bash ~/.local/custom-bin/powermenu
 bind = $mainMod, F, togglefloating,
-bind = $mainMod SHIFT, A, exec, bash ~/.local/bin/audio-output
-bind = $mainMod SHIFT, S, exec, bash ~/.local/bin/statusmenu
-bind = $mainMod SHIFT, P, exec, bash ~/.local/bin/passwordmenu
+bind = $mainMod SHIFT, A, exec, bash ~/.local/custom-bin/audio-output
+bind = $mainMod SHIFT, S, exec, bash ~/.local/custom-bin/statusmenu
+bind = $mainMod SHIFT, P, exec, bash ~/.local/custom-bin/passwordmenu
 bind = $mainMod, F7, exec, bash -c "rbw get 'Master Personal' --clipboard"
 bind = $mainMod, F8, exec, bash -c "echo AS-$(rbw get 'Master Personal') | wl-copy"
 bind = $mainMod, F9, exec, bash -c "echo NBL-$(rbw get 'Master Personal') | wl-copy"
