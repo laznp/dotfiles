@@ -211,6 +211,6 @@ alias atbhn="cd ~/Projects/autobahn"
 alias nebulae="cd ~/Projects/nebulae"
 
 function ce() {
-    protonhax run "$(protonhax ls)" ~/.local/share/bottles/bottles/Gaming__157/drive_c/Program\ Files/Cheat\ Engine\ 7.5/Cheat\ Engine.exe
+    protonhax run "$(protonhax ls)" ~/.local/share/bottles/bottles/Gaming/drive_c/Program\ Files/Cheat\ Engine\ 7.5/Cheat\ Engine.exe
 }
 
