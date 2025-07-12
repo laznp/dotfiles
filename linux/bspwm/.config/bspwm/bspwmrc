@@ -3,17 +3,10 @@ export BSPWM_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/bspwm"
 export BSPWM_STATE="${XDG_DATA_HOME:-$HOME/.local/share}/bspwm-state.json"
 
 # SXHKD
-pgrep -x sxhkd > /dev/null || killall sxhkd || sxhkd &
-pgrep -x /usr/lib/polkit-kde-authentication-agent-1 || /usr/lib/polkit-kde-authentication-agent-1 &
-# systemctl --user start sxhkd.service
-
-# Set Natural Scrolling
-xinput | grep -e "Razer Razer Basilisk Ultimate Dongle" | grep pointer | awk -F '=' '{ print $2 }' | awk '{ print $1 }' | while read line; do xinput set-prop $line "libinput Natural Scrolling Enabled" 1; done
-xinput | grep -e "Razer Razer Basilisk Ultimate Dongle" | grep pointer | awk -F '=' '{ print $2 }' | awk '{ print $1 }' | while read line; do xinput set-prop $line "libinput Accel Profile Enabled" 0, 1; done
-xinput | grep -e "Razer Basilisk Ultimate" | grep pointer | awk -F '=' '{ print $2 }' | awk '{ print $1 }' | while read line; do xinput set-prop $line "libinput Natural Scrolling Enabled" 1; done
-xinput | grep -e "Razer Basilisk Ultimate" | grep pointer | awk -F '=' '{ print $2 }' | awk '{ print $1 }' | while read line; do xinput set-prop $line "libinput Accel Profile Enabled" 0, 1; done
-xinput | grep -e "Logitech G603" | grep pointer | awk -F '=' '{ print $2 }' | awk '{ print $1 }' | while read line; do xinput set-prop $line "libinput Natural Scrolling Enabled" 1; done
-xinput | grep -e "Logitech G603" | grep pointer | awk -F '=' '{ print $2 }' | awk '{ print $1 }' | while read line; do xinput set-prop $line "libinput Accel Profile Enabled" 0, 1; done
+# pgrep -x sxhkd > /dev/null || sxhkd &
+# pgrep -xf /usr/lib/polkit-kde-authentication-agent-1 || /usr/lib/polkit-kde-authentication-agent-1 &
+systemctl --user start sxhkd.service
+systemctl --user start polkit-kde-authentication-agent.service
 
 # RAM
 openrgb -d 'Corsair Dominator Platinum' -m Direct -c 'ffffff'
@@ -27,7 +20,7 @@ xsetroot -cursor_name left_ptr &
 # Disable Display Suddenly Off
 xset -dpms
 
-Multiple Monitor Config
+# Multiple Monitor Config
 xrandr --output DisplayPort-0 --primary --mode 2560x1440 --rate 75 --set TearFree on --output DisplayPort-1 --rotate left --rate 75 --left-of DisplayPort-0
 bspc monitor DisplayPort-0 -d 1 2 3 4 5 6
 bspc monitor DisplayPort-1 -d 7 8 9 10
@@ -45,7 +38,6 @@ bspc config gapless_monocle			true
 bspc config focused_border_color	"#eeeeee"
 bspc config normal_border_color		"#6e6e6e"
 bspc config focus_follows_pointer	false
-bspc config remove_disabled_monitor true
 bspc config pointer_motion_interval 7ms
 
 # Workspace Rule Config
@@ -77,8 +69,8 @@ bspc rule -a *:*:'meet.google.com is sharing your screen.' hidden=true
 bspc rule -a ranger:ranger state="floating" follow="on" focus="on"
 
 # Launch Application
-pgrep -x corectrl || corectrl &
-google-chrome-stable --app=https://web.whatsapp.com
+pgrep -x corectrl || corectrl & disown
+(pgrep -f "web.whatsapp.com" > /dev/null) || google-chrome-stable --app=https://web.whatsapp.com & disown
 # pgrep -x telegram-desktop || telegram-desktop &
 # pgrep -x -f whatsie || whatsie &
 # pgrep -x jamesdsp || jamesdsp &

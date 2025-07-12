@@ -5,7 +5,7 @@ XF86Audio{Play,Pause,Next,Prev}
 
 # MEDIA KEYS TO SET VOLUME
 XF86Audio{LowerVolume,RaiseVolume,Mute}
-    $HOME/.local/bin/volume {down,up,mute}
+    $HOME/.local/custom-bin/volume {down,up,mute}
 
 # MEDIA KEY TO PLAY / PAUSE, NEXT, PREVIOUS
 super + ctrl + {Left,Right,space}
@@ -65,22 +65,22 @@ super + space
     rofi -x11 -no-lazy-grab -no-history -no-sort -show drun -modi ssh,drun -theme /home/laznp/.config/rofi/config
 
 Print
-    bash ~/.local/bin/screenshot
+    bash ~/.local/custom-bin/screenshot
 
 # AUDIO OUTPUT MENU
 super + shift + a
-    bash ~/.local/bin/audio-output
+    bash ~/.local/custom-bin/audio-output
 
 # STATUS MENU
 super + shift + s
-    bash ~/.local/bin/statusmenu
+    bash ~/.local/custom-bin/statusmenu
 
 super + e
-   ~/.local/bin/scratchpad nemo nemo
+   ~/.local/custom-bin/scratchpad nemo nemo
 
 # POWER MENU
 super + shift + e
-    bash ~/.local/bin/powermenu
+    bash ~/.local/custom-bin/powermenu
 
 # WINDOW SWITCHER
 super + Tab

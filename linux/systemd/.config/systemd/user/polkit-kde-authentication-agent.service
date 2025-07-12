@@ -1,14 +1,11 @@
 [Unit]
-Description=sxhkd init service
-Documentation=man:sxhkd(1)
+Description=Polkit KDE Authentication Agent
 After=graphical.target
 Wants=graphical.target
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/sxhkd
-ExecReload=/usr/bin/kill -SIGUSR1 $MAINPID
-ExecStartPost=/usr/bin/notify-send "SXHKD" "Config Reloaded"
+ExecStart=/usr/lib/polkit-kde-authentication-agent-1
 Restart=on-failure
 RestartSec=2
 Environment=DISPLAY=:0
