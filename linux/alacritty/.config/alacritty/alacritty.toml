@@ -17,26 +17,18 @@ size = 9
 [font.normal]
 family = "JetBrainsMono Nerd Font"
 style = "Bold"
-# family = "RobotoMono Nerd Font"
-# style = "SemiBold"
 
 [font.bold]
 family = "JetBrainsMono Nerd Font"
 style = "Bold"
-# family = "RobotoMono Nerd Font"
-# style = "SemiBold"
 
 [font.bold_italic]
 family = "JetBrainsMono Nerd Font"
 style = "Bold Italic"
-# family = "RobotoMono Nerd Font"
-# style = "Bold Italic"
 
 [font.italic]
 family = "JetBrainsMono Nerd Font"
 style = "Bold Italic"
-# family = "RobotoMono Nerd Font"
-# style = "Bold Italic"
 
 [font.offset]
 x = -1

@@ -28,7 +28,7 @@ alias whatsapp="google-chrome-stable --app=https://web.whatsapp.com"
 alias reload="source $HOME/.zshrc"
 
 function vim {
-  (alacritty --class NeoVim --title NeoVim -e nvim $@ >/dev/null 2>&1 &)
+  (alacritty --title NeoVim -e nvim $@ >/dev/null 2>&1 &)
 }
 
 function natsbox {
