@@ -1,0 +1,19 @@
+[Desktop Entry]
+Version=1.0
+Name=Microsoft Teams
+Comment=Web App
+Exec=sh -c 'XAPP_FORCE_GTKWINDOW_ICON="solstice-microsoft-365-teams" firefox --class WebApp-MicrosoftTeams4073 --name WebApp-MicrosoftTeams4073 --profile /home/laznp/.local/share/ice/firefox/MicrosoftTeams4073 --no-remote "https://teams.microsoft.com"'
+Terminal=false
+X-MultipleArgs=false
+Type=Application
+Icon=solstice-microsoft-365-teams
+Categories=GTK;WebApps;
+MimeType=text/html;text/xml;application/xhtml_xml;
+StartupWMClass=WebApp-MicrosoftTeams4073
+StartupNotify=true
+X-WebApp-Browser=Firefox
+X-WebApp-URL=https://teams.microsoft.com
+X-WebApp-CustomParameters=
+X-WebApp-Navbar=false
+X-WebApp-PrivateWindow=false
+X-WebApp-Isolated=true

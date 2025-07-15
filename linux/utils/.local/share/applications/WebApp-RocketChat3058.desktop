@@ -1,0 +1,19 @@
+[Desktop Entry]
+Version=1.0
+Name=RocketChat
+Comment=Web App
+Exec=sh -c 'XAPP_FORCE_GTKWINDOW_ICON="rocketchat" firefox --class WebApp-RocketChat3058 --name WebApp-RocketChat3058 --profile /home/laznp/.local/share/ice/firefox/RocketChat3058 --no-remote "https://chat.gloow.io/direct/TsR94wAeF4y45MCrLzYcSLDKJ8Bp338AAc"'
+Terminal=false
+X-MultipleArgs=false
+Type=Application
+Icon=rocketchat
+Categories=GTK;WebApps;
+MimeType=text/html;text/xml;application/xhtml_xml;
+StartupWMClass=WebApp-RocketChat3058
+StartupNotify=true
+X-WebApp-Browser=Firefox
+X-WebApp-URL=https://chat.gloow.io/direct/TsR94wAeF4y45MCrLzYcSLDKJ8Bp338AAc
+X-WebApp-CustomParameters=
+X-WebApp-Navbar=false
+X-WebApp-PrivateWindow=false
+X-WebApp-Isolated=true
