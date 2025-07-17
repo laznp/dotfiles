@@ -71,7 +71,7 @@ bspc rule -a ranger:ranger state="floating" follow="on" focus="on"
 
 # Launch Application
 pgrep -x corectrl || corectrl & disown
-(pgrep -f "web.whatsapp.com" > /dev/null) || google-chrome-stable --app=https://web.whatsapp.com & disown
+# (pgrep -f "web.whatsapp.com" > /dev/null) || google-chrome-stable --app=https://web.whatsapp.com & disown
 # pgrep -x telegram-desktop || telegram-desktop &
 # pgrep -x -f whatsie || whatsie &
 # pgrep -x jamesdsp || jamesdsp &

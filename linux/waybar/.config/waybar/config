@@ -68,7 +68,7 @@
         "interval": 1, 
         "exec": "echo  ",
         "return-type": "plain",
-        "on-click": "rofi -no-lazy-grab -no-history -no-sort -show drun -modi ssh,drun -theme /home/laznp/.config/rofi/config"
+        "on-click": "tofi-drun --config ~/.config/tofi/launcher.config"
     },
     "custom/mousebat": {
         "format": "󰍽  {} ",
