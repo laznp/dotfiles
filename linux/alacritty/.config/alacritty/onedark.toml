@@ -19,7 +19,6 @@ white = "0x828791"
 yellow = "0xd19a66"
 
 [colors.normal]
-# black = "0x1e2127"
 black = "0x101010"
 blue = "0x41a7fc"
 cyan = "0x34bfd0"
@@ -30,7 +29,7 @@ white = "0x828791"
 yellow = "0xefbd5d"
 
 [colors.primary]
-# background = "0x1e2127"
 background = "0x101010"
 bright_foreground = "0x455574"
 foreground = "0x93a4c3"
+

@@ -1,5 +1,5 @@
 aliases:
-  dp: deployments
+  deploy: deployments
   sec: v1/secrets
   jo: jobs
   cr: clusterroles
@@ -7,4 +7,9 @@ aliases:
   ro: roles
   rb: rolebindings
   np: networkpolicies
+  ns: namespace
+  po: pod
+  svc: service
+  ing: ingress
+  sa: serviceaccounts
 

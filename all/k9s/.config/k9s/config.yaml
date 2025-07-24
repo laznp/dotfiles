@@ -11,22 +11,7 @@ k9s:
     enableMouse: true
     headless: false
     logoless: true
-    crumbsless: false
-    splashless: false
     noIcons: true
-    reactive: false
-    skin: one-dark # => assumes the file skins/dracula.yaml is present in the  $XDG_DATA_HOME/k9s/skins directory
-    defaultsToFullScreen: false
-    useFullGVRTitle: false
-  skipLatestRevCheck: false
-  keepMissingClusters: false
-  logger:
-    tail: 100
-    buffer: 5000
-    sinceSeconds: -1
-    textWrap: false
-    disableAutoscroll: true
-    showTime: true
   shellPod:
     image: busybox:1.35.0
     namespace: default
@@ -39,11 +24,6 @@ k9s:
       mountPath: /var/run/docker.sock
       hostPath: /var/run/docker.sock
       readOnly: true
-  imageScans:
-    enable: false
-    exclusions:
-      namespaces: []
-      labels: {}
   thresholds:
     cpu:
       critical: 90
