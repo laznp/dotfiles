@@ -13,7 +13,8 @@ exec-once = waybar -c ~/.config/waybar/config
 
 # Background
 #exec-once = swaybg -i $HOME/Downloads/owl.jpg -m fill
-exec-once = swaybg -i $HOME/Downloads/Wallpaper/haunted-library.png -m fill
+# exec-once = swaybg -i $HOME/Downloads/Wallpaper/haunted-library.png -m fill
+exec-once = swaybg -c '#000000'
 
 # RAM
 # exec-once = openrgb -d 'Corsair Dominator Platinum' -m Direct -c '6478d2'

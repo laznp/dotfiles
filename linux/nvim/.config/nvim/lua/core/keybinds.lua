@@ -1,5 +1,11 @@
 local map = vim.keymap.set
 vim.g.mapleader = ' '
+
+-- remap esc key to kj
+map('i', ';;', '<Esc>', { noremap = true, silent = true })
+map('v', ';;', '<Esc>', { noremap = true, silent = true })
+map('c', ';;', '<Esc>', { noremap = true, silent = true })
+
 -- split window
 map('n', '<Leader>|', ':vsp<CR>', { noremap = true, silent = true })
 map('n', '<Leader>_', ':sp<CR>', { noremap = true, silent = true })

@@ -62,7 +62,7 @@ super + Return
 
 # ROFI PROGRAM LAUNCHER
 super + space
-    rofi -x11 -no-lazy-grab -no-history -no-sort -show drun -modi ssh,drun -theme /home/laznp/.config/rofi/config
+    rofi -no-lazy-grab -no-history -no-sort -show drun -modi ssh,drun,calc -theme /home/laznp/.config/rofi/config
 
 Print
     bash ~/.local/custom-bin/screenshot
@@ -82,9 +82,13 @@ super + e
 super + shift + e
     bash ~/.local/custom-bin/powermenu
 
+# PASSWORD MENU
+super + shift + p
+    bash ~/.local/custom-bin/passwordmenu
+
 # WINDOW SWITCHER
 super + Tab
-    rofi -x11 -modi window -show window -theme ~/.config/rofi/card_square.rasi
+    rofi -modi window -show window -theme ~/.config/rofi/card_square.rasi
 
 # LOCKSCREEN
 ctrl + super + l

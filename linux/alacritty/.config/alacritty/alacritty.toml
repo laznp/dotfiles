@@ -32,7 +32,7 @@ style = "Bold Italic"
 
 [font.offset]
 x = -1
-y = -1
+y = 0
 
 [window]
 dynamic_title = true
@@ -49,3 +49,8 @@ y = 25
 
 # [terminal.shell]
 # program = "tmux"
+
+[keyboard]
+bindings = [
+    { key = "Escape", mods = "Control", action = "ToggleViMode" },
+]

@@ -148,6 +148,7 @@
         "hyprland/workspaces"
     ],
     "modules-right": [
+        "custom/ippub",
         "custom/powerpackage",
         "clock",
         "tray"
@@ -206,6 +207,13 @@
         "max-length": 40,
         "interval": 1,
         "exec": "echo $(bash /home/laznp/.local/custom-bin/power-package | tail -n 1 | awk '{print $4}')",
+        "return-type": "plain"
+    },
+    "custom/ippub": {
+        "format": "󰩟 {} ",
+        "max-length": 40,
+        "interval": 60,
+        "exec": "curl -s checkip.amazonaws.com",
         "return-type": "plain"
     },
     "clock": {

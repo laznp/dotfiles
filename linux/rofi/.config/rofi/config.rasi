@@ -25,7 +25,7 @@ configuration {
     display-ssh:                "󰒍 ";
     display-drun:               "󰀘 ";
     display-combi:              " ";
-    display-calc:               "";
+    display-calc:               " ";
 }
 
 * {

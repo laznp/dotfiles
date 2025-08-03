@@ -7,8 +7,9 @@
 }
 
 window#waybar{
-    background-color: transparent;
+    /* background-color: transparent; */
     /* background-color: #1e2127; */
+    background-color: #101010;
 }
 
 #workspaces button.active {
