@@ -10,8 +10,8 @@ pgrep -x sxhkd > /dev/null || sxhkd &
 pgrep -xf /usr/lib/polkit-kde-authentication-agent-1 || /usr/lib/polkit-kde-authentication-agent-1 &
 
 # OpenRGB
-openrgb -d 'Corsair Dominator Platinum' -m Direct -c 'ffffff'
-openrgb -d 4 -z 1 -s 12 -m Direct -c "FFFFFF"
+# openrgb -d 'Corsair Dominator Platinum' -m Direct -c 'ffffff'
+# openrgb -d 4 -z 1 -s 12 -m Direct -c "FFFFFF"
 
 # Multiple Monitor Config
 xrandr --output DisplayPort-0 --primary --mode 2560x1440 --rate 75 --set TearFree on --output DisplayPort-1 --rotate left --rate 75 --left-of DisplayPort-0
@@ -24,7 +24,7 @@ bspc wm --reorder-monitors DisplayPort-0 DisplayPort-1
 # Global X11 Initial Run
 xsetroot -cursor_name left_ptr
 # xsetroot -solid "#000000"
-# xset -dpms
+xset -dpms
 
 # BSPWM Config
 bspc config border_width			2
@@ -54,7 +54,7 @@ bspc rule -a OpenLens:openlens desktop='^5'
 bspc rule -a Bitwarden:bitwarden desktop='^6'
 bspc rule -a 1Password:1password desktop='^6'
 bspc rule -a "OrcaSlicer":"orca-slicer" desktop='^6'
-bspc rule -a TelegramDesktop:telegram-desktop desktop='^7'
+bspc rule -a TelegramDesktop:Telegram desktop='^7'
 # bspc rule -a "Google-chrome":"web.whatsapp.com" desktop='^7'
 bspc rule -a "WebApp-WhatsApp6135":"Navigator" desktop='^7'
 bspc rule -a "Google-chrome":"open.spotify.com" desktop='^8'
@@ -67,6 +67,7 @@ bspc rule -a Onboard:onboard state="floating" follow="on" focus="on"
 
 # Launch Application
 pgrep -x corectrl || corectrl & disown
+pgrep -x slack || slack & disown
 # (pgrep -f "web.whatsapp.com" > /dev/null) || google-chrome-stable --app=https://web.whatsapp.com & disown
 # pgrep -x telegram-desktop || telegram-desktop &
 # pgrep -x -f whatsie || whatsie &

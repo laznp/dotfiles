@@ -15,22 +15,22 @@ chosen="$(echo -e "$options" | $rofi_command -lines 3 -dmenu -selected-row 2)"
 case $chosen in
     $area_save_cl)
         sleep 0.25
-        flameshot gui -c -p "$HOME/Pictures"
+        maim --hidecursor --select  "$HOME/Pictures/$(date +'%Y-%m-%d_%H-%M').png"
         notify-send --app-name="screenshot" "Screenshot" "Area saved and copied to clipboard"
         ;;
     $area_cl)
         sleep 0.25
-        flameshot gui -c
+        maim --hidecursor --select | xclip -selection clipboard -t image/png
         notify-send --app-name="screenshot" "Screenshot" "Area copied to clipboard"
         ;;
     $full_save_cl)
         sleep 0.25
-        flameshot screen -n 1 -c -p "$HOME/Pictures"
+        maim --hidecursor --select  "$HOME/Pictures/$(date +'%Y-%m-%d_%H-%M').png"
         notify-send --app-name="screenshot" "Screenshot" "Screen saved and copied to clipboard"
         ;;
     $full_cl)
         sleep 0.25
-        flameshot screen -c -n 1
+        maim --hidecursor | xclip -selection clipboard -t image/png
         notify-send --app-name="screenshot" "Screenshot" "Screen copied to clipboard"
         ;;
 esac

@@ -9,61 +9,39 @@ XF86Audio{LowerVolume,RaiseVolume,Mute}
 
 # MEDIA KEY TO PLAY / PAUSE, NEXT, PREVIOUS
 super + ctrl + {Left,Right,space}
-	playerctl {previous,next,play-pause} -p spotify
+    playerctl {previous,next,play-pause} -p spotify
 
-# RELOAD SXHKD
-# super + ctrl + Escape
-	# pkill -USR1 -x sxhkd ; notify-send 'SXHKD' 'Config Reloaded.'
 
 # RELOAD BSPWM
 super + shift + r
-	bspc wm -r
+    bspc wm -r
 
 # CLOSE AND KILL PROGRAM
 super + shift + q
-	bspc node -c
+    bspc node -c
 
 # SET WINDOWS FLOATING
-super + f
-	bspc node focused -t \~floating
+# super + f
+	# bspc node focused -t \~floating
 
 # SWAP / FOCUS NODE POSITION
 super + {_,shift} + {h,j,k,l}
-	bspc node -{f,s} {west,south,north,east}
-super + {_,shift} + {Left,Down,Up,Right}
-	bspc node -{f,s} {west,south,north,east}
+    bspc node -{f,s} {west,south,north,east}
 
 # FOCUS / APPS TO ANOTHER DESKTOP
-super + {_,shift} + {1-9,0}
-    bspc {desktop -f,node -d} '^{1-9,10}'
-
-# SWAP / FOCUS ANOTHER DESKTOP
-# ctrl + {Left,Right}
-	# bspc desktop -f {prev,next}
-super + button{8,9}
-	bspc desktop -f {prev,next}
-
-# EXPAND WINDOWS
-super + alt + {h,j,k,l}
-	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
-
-# SHRINK WINDOWS
-super + alt + shift + {h,j,k,l}
-	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
-
-# MOVE FLOATING WINDOWS
-super + {Left,Down,Up,Right}
-	bspc node -v {-20 0,0 20,0 -20,20 0}
-
+super + {_,shift} + {x,c,v,s,d,f,w,e,r,t}
+    bspc {desktop -f,node -d} '^{1,2,3,4,5,6,7,8,9,10}'
+    
 # APPLICATION LAUNCHER KEYBIND
 # TERMINAL EMULATOR
 super + Return
-	alacritty -t "Alacritty"
+    alacritty -t "Alacritty"
 
 # ROFI PROGRAM LAUNCHER
 super + space
     rofi -no-lazy-grab -no-history -no-sort -show drun -modi ssh,drun,calc -theme /home/laznp/.config/rofi/config
 
+# Print
 Print
     bash ~/.local/custom-bin/screenshot
 
@@ -72,14 +50,11 @@ super + shift + a
     bash ~/.local/custom-bin/audio-output
 
 # STATUS MENU
-super + shift + s
-    bash ~/.local/custom-bin/statusmenu
-
-super + e
-   ~/.local/custom-bin/scratchpad nemo nemo
+# super + shift + s
+    # bash ~/.local/custom-bin/statusmenu
 
 # POWER MENU
-super + shift + e
+super + shift + z
     bash ~/.local/custom-bin/powermenu
 
 # PASSWORD MENU

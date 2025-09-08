@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# MAC_ADDR=CD_45_C6_D9_42_70 # Left Central
+# L_KB_PATH=service0010/char0011
+# R_KB_PATH=service0015/char0016
+MAC_ADDR=DE_B4_92_AA_8E_1B # Seeed Xiao
+R_KB_PATH=service0015/char0016
+L_KB_PATH=service0015/char001b
+
+L_KB_HEX=$(gdbus call --system --dest org.bluez --object-path /org/bluez/hci0/dev_$MAC_ADDR/$L_KB_PATH --method org.bluez.GattCharacteristic1.ReadValue "{}"  | sed -E 's/.*0x([0-9a-fA-F]+).*/\1/');
+R_KB_HEX=$(gdbus call --system --dest org.bluez --object-path /org/bluez/hci0/dev_$MAC_ADDR/$R_KB_PATH --method org.bluez.GattCharacteristic1.ReadValue "{}"  | sed -E 's/.*0x([0-9a-fA-F]+).*/\1/');
+
+# echo "󰌌  $((16#$L_KB_HEX))% | $((16#$R_KB_HEX))%"
+hex_to_dec_or_sleep() {
+  local hexval=$1
+  if [[ -z "$hexval" || ! "$hexval" =~ ^[0-9A-Fa-f]+$ ]]; then
+    echo "0"
+  else
+    echo $((16#$hexval))
+  fi
+}
+
+L_DEC=$(hex_to_dec_or_sleep "$L_KB_HEX")
+R_DEC=$(hex_to_dec_or_sleep "$R_KB_HEX")
+
+echo "󰌌  $L_DEC% | $R_DEC%"

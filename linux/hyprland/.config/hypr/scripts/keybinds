@@ -16,28 +16,28 @@ bind = $mainMod SHIFT, l, movewindow, r
 bind = $mainMod SHIFT, h, movewindow, l
 
 # FOCUS ANOTHER DESKTOP
-bind = $mainMod, 1, workspace, 1
-bind = $mainMod, 2, workspace, 2
-bind = $mainMod, 3, workspace, 3
-bind = $mainMod, 4, workspace, 4
-bind = $mainMod, 5, workspace, 5
-bind = $mainMod, 6, workspace, 6
-bind = $mainMod, 7, workspace, 7
-bind = $mainMod, 8, workspace, 8
-bind = $mainMod, 9, workspace, 9
-bind = $mainMod, 0, workspace, 10
+bind = $mainMod, x, workspace, 1
+bind = $mainMod, c, workspace, 2
+bind = $mainMod, v, workspace, 3
+bind = $mainMod, s, workspace, 4
+bind = $mainMod, d, workspace, 5
+bind = $mainMod, f, workspace, 6
+bind = $mainMod, w, workspace, 7
+bind = $mainMod, e, workspace, 8
+bind = $mainMod, r, workspace, 9
+bind = $mainMod, t, workspace, 10
 
 # MOVE APPS TO ANOTHER WORKSPACES
-bind = $mainMod SHIFT, 1, movetoworkspace, 1
-bind = $mainMod SHIFT, 2, movetoworkspace, 2
-bind = $mainMod SHIFT, 3, movetoworkspace, 3
-bind = $mainMod SHIFT, 4, movetoworkspace, 4
-bind = $mainMod SHIFT, 5, movetoworkspace, 5
-bind = $mainMod SHIFT, 6, movetoworkspace, 6
-bind = $mainMod SHIFT, 7, movetoworkspace, 7
-bind = $mainMod SHIFT, 8, movetoworkspace, 8
-bind = $mainMod SHIFT, 9, movetoworkspace, 9
-bind = $mainMod SHIFT, 0, movetoworkspace, 10
+bind = $mainMod SHIFT, x, movetoworkspace, 1
+bind = $mainMod SHIFT, c, movetoworkspace, 2
+bind = $mainMod SHIFT, v, movetoworkspace, 3
+bind = $mainMod SHIFT, s, movetoworkspace, 4
+bind = $mainMod SHIFT, d, movetoworkspace, 5
+bind = $mainMod SHIFT, f, movetoworkspace, 6
+bind = $mainMod SHIFT, w, movetoworkspace, 7
+bind = $mainMod SHIFT, e, movetoworkspace, 8
+bind = $mainMod SHIFT, r, movetoworkspace, 9
+bind = $mainMod SHIFT, t, movetoworkspace, 10
 
 # Example special workspace (scratchpad)
 # bind = $mainMod, S, togglespecialworkspace, magic
@@ -64,13 +64,13 @@ bind = $mainMod CTRL, Space, exec, playerctl -p spotify play-pause
 bind = $mainMod, Return, exec, $terminal
 bind = $mainMod SHIFT, Q, killactive,
 bind = $mainMod SHIFT, E, exec, bash ~/.local/custom-bin/powermenu
-bind = $mainMod, F, togglefloating,
+# bind = $mainMod, F, togglefloating,
 bind = $mainMod SHIFT, A, exec, bash ~/.local/custom-bin/audio-output
-bind = $mainMod SHIFT, S, exec, bash ~/.local/custom-bin/statusmenu
+# bind = $mainMod SHIFT, S, exec, bash ~/.local/custom-bin/statusmenu
 bind = $mainMod SHIFT, P, exec, bash ~/.local/custom-bin/passwordmenu
-bind = $mainMod, F7, exec, bash -c "rbw get 'Master Personal' --clipboard"
-bind = $mainMod, F8, exec, bash -c "echo AS-$(rbw get 'Master Personal') | wl-copy"
-bind = $mainMod, F9, exec, bash -c "echo NBL-$(rbw get 'Master Personal') | wl-copy"
+# bind = $mainMod, F7, exec, bash -c "rbw get 'Master Personal' --clipboard"
+# bind = $mainMod, F8, exec, bash -c "echo AS-$(rbw get 'Master Personal') | wl-copy"
+# bind = $mainMod, F9, exec, bash -c "echo NBL-$(rbw get 'Master Personal') | wl-copy"
 # bind = $mainMod, Tab, exec, rofi -modi window -show window -theme ~/.config/rofi/card_square.rasi
 bind = $mainMod, Space, exec, $menu
 # bind = $mainMod, E, exec, $fileManager
