@@ -1,0 +1,150 @@
+# xremap configuration converted from sxhkd
+# Save this as ~/.config/xremap/config.yml or similar
+
+keymap:
+  # MEDIA CONTROL WITH SUPER+CTRL
+  - name: "PlayerCtl controls"
+    remap:
+      Super-Ctrl-Left:
+        launch: ["playerctl", "previous", "-p", "spotify"]
+      Super-Ctrl-Right:
+        launch: ["playerctl", "next", "-p", "spotify"]
+      Super-Ctrl-space:
+        launch: ["playerctl", "play-pause", "-p", "spotify"]
+
+# VOLUME CONTROLS
+  - name: "Volume controls"
+    remap:
+      VOLUMEDOWN:
+        launch: ["/home/laznp/.local/custom-bin/volume", "down"]
+      VOLUMEUP:
+        launch: ["/home/laznp/.local/custom-bin/volume", "up"]
+      MUTE:
+        launch: ["/home/laznp/.local/custom-bin/volume", "mute"]
+
+  # BSPWM CONTROLS
+  - name: "BSPWM window manager controls"
+    remap:
+      super-i:
+        remap:
+          # Focus directions
+          h:
+            launch: ["bspc", "node", "-f", "west"]
+          j:
+            launch: ["bspc", "node", "-f", "south"]
+          k:
+            launch: ["bspc", "node", "-f", "north"]
+          l:
+            launch: ["bspc", "node", "-f", "east"]
+
+          # Reload BSPWM
+          g:
+            launch: ["bspc", "wm", "-r"]
+
+          # Close window
+          q:
+            launch: ["bspc", "node", "-c"]
+
+          # Swap directions
+          Shift-h:
+            launch: ["bspc", "node", "-s", "west"]
+          Shift-j:
+            launch: ["bspc", "node", "-s", "south"]
+          Shift-k:
+            launch: ["bspc", "node", "-s", "north"]
+          Shift-l:
+            launch: ["bspc", "node", "-s", "east"]
+
+          # Focus desktops
+          x:
+            launch: ["bspc", "desktop", "-f", "^1"]
+          c:
+            launch: ["bspc", "desktop", "-f", "^2"]
+          v:
+            launch: ["bspc", "desktop", "-f", "^3"]
+          s:
+            launch: ["bspc", "desktop", "-f", "^4"]
+          d:
+            launch: ["bspc", "desktop", "-f", "^5"]
+          f:
+            launch: ["bspc", "desktop", "-f", "^6"]
+          w:
+            launch: ["bspc", "desktop", "-f", "^7"]
+          e:
+            launch: ["bspc", "desktop", "-f", "^8"]
+          r:
+            launch: ["bspc", "desktop", "-f", "^9"]
+          t:
+            launch: ["bspc", "desktop", "-f", "^10"]
+      
+          # Move windows to desktops
+          Shift-x:
+            launch: ["bspc", "node", "-d", "^1"]
+          Shift-c:
+            launch: ["bspc", "node", "-d", "^2"]
+          Shift-v:
+            launch: ["bspc", "node", "-d", "^3"]
+          Shift-s:
+            launch: ["bspc", "node", "-d", "^4"]
+          Shift-d:
+            launch: ["bspc", "node", "-d", "^5"]
+          Shift-f:
+            launch: ["bspc", "node", "-d", "^6"]
+          Shift-w:
+            launch: ["bspc", "node", "-d", "^7"]
+          Shift-e:
+            launch: ["bspc", "node", "-d", "^8"]
+          Shift-r:
+            launch: ["bspc", "node", "-d", "^9"]
+          Shift-t:
+            launch: ["bspc", "node", "-d", "^10"]
+
+          # APPLICATION LAUNCHERS
+          # Terminal
+          Enter:
+            launch: ["alacritty", "-t", "Alacritty"]
+          # Rofi launcher
+          space:
+            launch: ["rofi", "-no-lazy-grab", "-no-history", "-no-sort", "-show", "drun", "-modi", "ssh,drun,calc", "-theme", "/home/laznp/.config/rofi/config"]
+          # Screenshot
+          y:
+            launch: ["bash", "/home/laznp/.local/custom-bin/screenshot"]
+          # Audio output menu
+          a:
+            launch: ["bash", "/home/laznp/.local/custom-bin/audio-output"]
+          # Power menu
+          z:
+            launch: ["bash", "/home/laznp/.local/custom-bin/powermenu"]
+          # Password menu
+          p:
+            launch: ["bash", "/home/laznp/.local/custom-bin/passwordmenu"]
+      
+  - name: "Terminal Mac-like bindings"
+    application:
+      only: Alacritty
+    remap:
+      Super-C: C-Shift-c   # Copy
+      Super-V: C-Shift-v   # Paste
+  - name: "Mac-like common bindings"
+    remap:
+      Super-C: C-c       # Copy
+      Super-V: C-v       # Paste
+      Super-X: C-x       # Cut
+      Super-A: C-a       # Select All
+      Super-Z: C-z       # Undo
+      Super-Shift-Z: C-Shift-z   # Redo
+      Super-S: C-s       # Save
+      Super-O: C-o       # Open
+      Super-N: C-n       # New
+      Super-T: C-t       # New Tab
+      Super-W: C-w       # Close
+      Super-Q: C-q       # Quit
+      Super-P: C-p       # Print
+      Super-F: C-f       # Find
+      Super-G: C-g       # Find Next
+      Super-Shift-G: C-Shift-g   # Find Previous
+      Super-L: C-l       # Location bar (browser)
+      Super-M: C-m       # Minimize
+      Super-Comma: C-comma  # Preferences
+      Super-Tab: Alt-Tab   # App switcher
+      Super-Backspace: C-Backspace

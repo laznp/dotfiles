@@ -3,8 +3,9 @@ export BSPWM_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/bspwm"
 export BSPWM_STATE="${XDG_DATA_HOME:-$HOME/.local/share}/bspwm-state.json"
 export WINIT_UNIX_BACKEND=x11
 
-# SXHKD
-pgrep -x sxhkd > /dev/null || sxhkd &
+# KeyMapper
+# pgrep -x sxhkd > /dev/null || sxhkd &
+pgrep -x xremap > /dev/null || xremap $HOME/.config/xremap/config.yaml &
 
 # Polkit Agent
 pgrep -xf /usr/lib/polkit-kde-authentication-agent-1 || /usr/lib/polkit-kde-authentication-agent-1 &
