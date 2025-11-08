@@ -16,11 +16,13 @@ case $chosen in
     $area_save_cl)
         sleep 0.25
         maim --hidecursor --select  "$HOME/Pictures/$(date +'%Y-%m-%d_%H-%M').png"
+        flameshot gui
         notify-send --app-name="screenshot" "Screenshot" "Area saved and copied to clipboard"
         ;;
     $area_cl)
         sleep 0.25
-        maim --hidecursor --select | xclip -selection clipboard -t image/png
+        #maim --hidecursor --select | xclip -selection clipboard -t image/png
+        flameshot gui --clipboard
         notify-send --app-name="screenshot" "Screenshot" "Area copied to clipboard"
         ;;
     $full_save_cl)

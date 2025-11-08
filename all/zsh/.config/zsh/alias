@@ -28,6 +28,11 @@ alias slack_nebulae="google-chrome-stable --app=https://app.slack.com/client/T5V
 # Alias source zshrc
 alias reload="source $HOME/.zshrc"
 
+function opencode-auth-update {
+    jq --arg token "$( jq -r '.access_token' ~/.qwen/oauth_creds.json )" '.qwen.key = $token' ~/.local/share/opencode/auth.json > /tmp/qwen.json 
+    mv /tmp/qwen.json ~/.local/share/opencode/auth.json
+}
+
 function vim {
   (alacritty --title NeoVim -e nvim $@ >/dev/null 2>&1 &)
 }
@@ -104,6 +109,11 @@ function foodprepper_infra() {
         gcloud config set project foodprepper-dev
         echo "Change project to Foodprepper Dev"
         cd foodprepper/dev
+    elif [ "$1" = "prod" ]; then
+        source foodprepper/production/environment.sh
+        gcloud config set project foodprepper-production
+        echo "Change project to Foodprepper Production"
+        cd foodprepper/production
     fi
 }
 

@@ -5,7 +5,8 @@ export WINIT_UNIX_BACKEND=x11
 
 # KeyMapper
 # pgrep -x sxhkd > /dev/null || sxhkd &
-pgrep -x xremap > /dev/null || xremap $HOME/.config/xremap/config.yaml &
+# pgrep -x xremap > /dev/null || xremap $HOME/.config/xremap/config.yaml &
+systemctl --user start xremap
 
 # Polkit Agent
 pgrep -xf /usr/lib/polkit-kde-authentication-agent-1 || /usr/lib/polkit-kde-authentication-agent-1 &
@@ -15,17 +16,18 @@ pgrep -xf /usr/lib/polkit-kde-authentication-agent-1 || /usr/lib/polkit-kde-auth
 # openrgb -d 4 -z 1 -s 12 -m Direct -c "FFFFFF"
 
 # Multiple Monitor Config
-xrandr --output DisplayPort-0 --primary --mode 2560x1440 --rate 75 --set TearFree on --output DisplayPort-1 --rotate left --rate 75 --left-of DisplayPort-0
-bspc monitor DisplayPort-0 -d 1 2 3 4 5 6
-bspc monitor DisplayPort-1 -d 7 8 9 10
-bspc wm --reorder-monitors DisplayPort-0 DisplayPort-1
+xrandr --output DisplayPort-1 --primary --mode 2560x1440 --rate 75 --set TearFree on --output DisplayPort-2 --rotate right --rate 75 --right-of DisplayPort-1
+bspc monitor DisplayPort-1 -d 1 2 3 4 5 6
+bspc monitor DisplayPort-2 -d 7 8 9 10
+bspc wm --reorder-monitors DisplayPort-1 DisplayPort-2
 # xrandr --output HDMI-A-0 --primary --mode 1920x1080 --rate 75 --set TearFree on
 # bspc monitor HDMI-A-0 -d 1 2 3 4 5 6 7 8 9 0
 
 # Global X11 Initial Run
 xsetroot -cursor_name left_ptr
+xsetroot -xcf /usr/share/icons/Bibata-Modern-Ice/cursors/left_ptr 24
 # xsetroot -solid "#000000"
-xset -dpms
+xset s off -dpms
 
 # BSPWM Config
 bspc config border_width			2

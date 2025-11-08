@@ -108,7 +108,8 @@ keymap:
             launch: ["rofi", "-no-lazy-grab", "-no-history", "-no-sort", "-show", "drun", "-modi", "ssh,drun,calc", "-theme", "/home/laznp/.config/rofi/config"]
           # Screenshot
           y:
-            launch: ["bash", "/home/laznp/.local/custom-bin/screenshot"]
+            # launch: ["bash", "/home/laznp/.local/custom-bin/screenshot"]
+            launch: ["flameshot", "gui", "--clipboard"]
           # Audio output menu
           a:
             launch: ["bash", "/home/laznp/.local/custom-bin/audio-output"]

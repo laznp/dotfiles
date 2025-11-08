@@ -34,8 +34,10 @@ case $chosen in
         ;;
     $logout)
         if [[ "$XDG_CURRENT_DESKTOP" == "Hyprland" ]]; then
+            systemctl --user stop xremap
             hyprctl dispatch exit
         else
+            systemctl --user stop xremap
             bspc quit
         fi
         ;;
