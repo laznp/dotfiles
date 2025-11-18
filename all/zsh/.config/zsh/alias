@@ -225,3 +225,11 @@ function ce() {
     protonhax run "$(protonhax ls)" ~/.local/share/bottles/bottles/Gaming/drive_c/Program\ Files/Cheat\ Engine\ 7.5/Cheat\ Engine.exe
 }
 
+pg() {
+    local context="${1:-dev}"
+    local pod_name="${context}-hetzner-postgresql-primary-0"
+    local namespace="postgresql"
+    
+    echo "Connecting to PostgreSQL in $context cluster as root..."
+    kubectl exec -it -n $namespace $pod_name -- bash -c "export PGPASSWORD=\$POSTGRES_PASSWORD && psql -U root -d postgres"
+}

@@ -1,6 +1,6 @@
 [Unit]
-Description=Xremap
-After=default.target
+After=input-ready.target
+Wants=input-ready.target
 
 [Service]
 ExecStart=/usr/bin/xremap --watch=device %h/.config/xremap/config.yaml
