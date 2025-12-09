@@ -27,6 +27,9 @@
 [includeIf "gitdir:~/Projects/nebulae/"]
     path = ~/.gitconfig-nebulae
 
+[includeIf "gitdir:~/Projects/2hippo/"]
+    path = ~/.gitconfig-nebulae
+
 [includeIf "gitdir:~/Projects/nebulae/foodbag/"]
     path = ~/.gitconfig-foodbag
 

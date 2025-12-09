@@ -1,10 +1,9 @@
 [Unit]
-After=input-ready.target
-Wants=input-ready.target
+Description=XRemap input remapping service
 
 [Service]
 ExecStart=/usr/bin/xremap --watch=device %h/.config/xremap/config.yaml
-Restart=always
+Restart=on-failure
 StandardOutput=journal
 StandardError=journal
 
