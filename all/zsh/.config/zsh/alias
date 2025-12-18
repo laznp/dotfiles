@@ -220,6 +220,7 @@ alias infra="cd ~/Projects/autobahn/infrastructure"
 alias personal="cd ~/Projects/personal"
 alias atbhn="cd ~/Projects/autobahn"
 alias nebulae="cd ~/Projects/nebulae"
+alias "2hippo"="cd ~/Projects/2hippo"
 
 function ce() {
     protonhax run "$(protonhax ls)" ~/.local/share/bottles/bottles/Gaming/drive_c/Program\ Files/Cheat\ Engine\ 7.5/Cheat\ Engine.exe

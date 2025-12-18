@@ -12,6 +12,12 @@ hex_to_dec_or_sleep() {
   fi
 }
 
+# Check if device is connected first
+if ! bluetoothctl info "${MAC_ADDR//_/:}" | grep -q "Connected: yes"; then
+  echo "󰌌  --% | --% (not connected)"
+  exit 1
+fi
+
 # Find the correct interface path by checking which hci adapter has the device
 INTERFACE_PATH=""
 for hci in /sys/class/bluetooth/hci*; do
@@ -24,19 +30,19 @@ for hci in /sys/class/bluetooth/hci*; do
 done
 
 if [[ -z "$INTERFACE_PATH" ]]; then
-  echo "󰌌  --% | --% (not connected)"
+  echo "󰌌  --% | --% (device not found)"
   exit 1
 fi
 
 L_KB_HEX=$(gdbus call --system --dest org.bluez \
   --object-path /org/bluez/$INTERFACE_PATH/dev_$MAC_ADDR/$L_KB_PATH \
   --method org.bluez.GattCharacteristic1.ReadValue "{}" 2>/dev/null \
-  | sed -E 's/.*0x([0-9a-fA-F]+).*/\1/')
+  | sed -E 's/.*\[byte ([0-9a-fA-F]+)\].*/\1/')
 
 R_KB_HEX=$(gdbus call --system --dest org.bluez \
   --object-path /org/bluez/$INTERFACE_PATH/dev_$MAC_ADDR/$R_KB_PATH \
   --method org.bluez.GattCharacteristic1.ReadValue "{}" 2>/dev/null \
-  | sed -E 's/.*0x([0-9a-fA-F]+).*/\1/')
+  | sed -E 's/.*\[byte ([0-9a-fA-F]+)\].*/\1/')
 
 L_DEC=$(hex_to_dec_or_sleep "$L_KB_HEX")
 R_DEC=$(hex_to_dec_or_sleep "$R_KB_HEX")

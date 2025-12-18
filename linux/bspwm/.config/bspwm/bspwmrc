@@ -11,9 +11,18 @@ systemctl --user start xremap
 # Polkit Agent
 pgrep -xf /usr/lib/polkit-kde-authentication-agent-1 || /usr/lib/polkit-kde-authentication-agent-1 &
 
-# OpenRGB
-# openrgb -d 'Corsair Dominator Platinum' -m Direct -c 'ffffff'
-# openrgb -d 4 -z 1 -s 12 -m Direct -c "FFFFFF"
+
+for id in $(xinput list --id-only); do
+  prop=$(xinput list-props "$id" 2>/dev/null | \grep -i "libinput Accel Speed (" | sed -n 's/.*(\([0-9]*\)).*/\1/p')
+  [ -n "$prop" ] && xinput set-prop "$id" "$prop" 0
+done
+
+xinput --list --short | \grep -i 'pointer' | cut -f2 | cut -d= -f2 | while read id; do
+  prop_id=$(xinput list-props "$id" | \grep "Natural Scrolling Enabled (" | sed -n 's/.*(\([0-9]*\)).*/\1/p')
+  if [ -n "$prop_id" ]; then
+    xinput set-prop "$id" "$prop_id" 1
+  fi
+done
 
 # Multiple Monitor Config
 xrandr --output DisplayPort-1 --primary --mode 2560x1440 --rate 75 --set TearFree on --output DisplayPort-2 --rotate right --rate 75 --right-of DisplayPort-1
@@ -89,3 +98,7 @@ $HOME/.config/polybar/launch.sh
 
 # Notify Reload
 notify-send "BSPWM" "Config Reloaded!"
+
+# OpenRGB
+openrgb -d 'Corsair Dominator Platinum' -m Direct -c 'ffffff'
+openrgb -d 4 -z 1 -s 12 -m Direct -c "FFFFFF"
