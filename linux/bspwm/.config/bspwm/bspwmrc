@@ -12,17 +12,17 @@ systemctl --user start xremap
 pgrep -xf /usr/lib/polkit-kde-authentication-agent-1 || /usr/lib/polkit-kde-authentication-agent-1 &
 
 
-for id in $(xinput list --id-only); do
-  prop=$(xinput list-props "$id" 2>/dev/null | \grep -i "libinput Accel Speed (" | sed -n 's/.*(\([0-9]*\)).*/\1/p')
-  [ -n "$prop" ] && xinput set-prop "$id" "$prop" 0
-done
+# for id in $(xinput list --id-only); do
+  # prop=$(xinput list-props "$id" 2>/dev/null | \grep -i "libinput Accel Speed (" | sed -n 's/.*(\([0-9]*\)).*/\1/p')
+  # [ -n "$prop" ] && xinput set-prop "$id" "$prop" 0
+# done
 
-xinput --list --short | \grep -i 'pointer' | cut -f2 | cut -d= -f2 | while read id; do
-  prop_id=$(xinput list-props "$id" | \grep "Natural Scrolling Enabled (" | sed -n 's/.*(\([0-9]*\)).*/\1/p')
-  if [ -n "$prop_id" ]; then
-    xinput set-prop "$id" "$prop_id" 1
-  fi
-done
+# xinput --list --short | \grep -i 'pointer' | cut -f2 | cut -d= -f2 | while read id; do
+  # prop_id=$(xinput list-props "$id" | \grep "Natural Scrolling Enabled (" | sed -n 's/.*(\([0-9]*\)).*/\1/p')
+  # if [ -n "$prop_id" ]; then
+    # xinput set-prop "$id" "$prop_id" 1
+  # fi
+# done
 
 # Multiple Monitor Config
 xrandr --output DisplayPort-1 --primary --mode 2560x1440 --rate 75 --set TearFree on --output DisplayPort-2 --rotate right --rate 75 --right-of DisplayPort-1
@@ -34,7 +34,7 @@ bspc wm --reorder-monitors DisplayPort-1 DisplayPort-2
 
 # Global X11 Initial Run
 xsetroot -cursor_name left_ptr
-xsetroot -xcf /usr/share/icons/Bibata-Modern-Ice/cursors/left_ptr 24
+# xsetroot -xcf /usr/share/icons/Bibata-Modern-Ice/cursors/left_ptr 16
 # xsetroot -solid "#000000"
 xset s off -dpms
 
