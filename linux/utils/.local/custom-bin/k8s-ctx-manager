@@ -1,0 +1,434 @@
+#!/bin/bash
+
+# Unified script to create, update, or delete Kubernetes context with limited permissions
+# Permissions: exec pods, view logs, list pods (namespace-scoped)
+#
+# Usage: ./k8s-ctx-manager <create|update|delete> -n <namespace1,namespace2,...> [options]
+#
+# Create: ./k8s-ctx-manager create -n "dev,staging" -s "devops-sa"
+# Update: ./k8s-ctx-manager update -n "dev,staging,prod" -s "devops-sa"
+# Delete: ./k8s-ctx-manager delete -n "dev,staging" -s "devops-sa" -k
+
+set -e
+
+# Default values
+SERVICE_ACCOUNT_NAME="limited-pod-access"
+CONTEXT_NAME=""
+NAMESPACES=()
+DELETE_KUBECONFIG=false
+OPERATION=""
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+
+# Function to print colored output
+print_info() {
+    echo -e "${GREEN}[INFO]${NC} $1"
+}
+
+print_warn() {
+    echo -e "${YELLOW}[WARN]${NC} $1"
+}
+
+print_error() {
+    echo -e "${RED}[ERROR]${NC} $1"
+}
+
+# Help message
+show_help() {
+    echo "Kubernetes Context Manager - Create, update, or delete limited access contexts"
+    echo ""
+    echo "Usage: $0 <create|update|delete> -n <namespaces> [options]"
+    echo ""
+    echo "Commands:"
+    echo "  create               Create ServiceAccount, roles, and kubeconfig"
+    echo "  update               Update existing context to add new namespace access"
+    echo "  delete               Delete ServiceAccount, roles, and optionally kubeconfig"
+    echo ""
+    echo "Options:"
+    echo "  -n, --namespace      Comma-separated list of namespaces (required)"
+    echo "  -s, --service-account ServiceAccount name (default: limited-pod-access)"
+    echo "  -c, --context-name   Context name for kubeconfig (default: same as service-account)"
+    echo "  -k, --delete-kubeconfig Also delete the kubeconfig file (delete only)"
+    echo "  -h, --help           Show this help message"
+    echo ""
+    echo "Examples:"
+    echo "  # Create context for single namespace"
+    echo "  $0 create -n \"production\" -s \"prod-readonly\""
+    echo ""
+    echo "  # Create context for multiple namespaces"
+    echo "  $0 create -n \"dev,staging\" -s \"developer-sa\""
+    echo ""
+    echo "  # Update existing context to add prod namespace"
+    echo "  $0 update -n \"dev,staging,prod\" -s \"developer-sa\""
+    echo ""
+    echo "  # Delete resources (keep kubeconfig)"
+    echo "  $0 delete -n \"dev,staging\" -s \"developer-sa\""
+    echo ""
+    echo "  # Delete resources and kubeconfig file"
+    echo "  $0 delete -n \"dev,staging\" -s \"developer-sa\" -k"
+    exit 0
+}
+
+# Check if kubectl is available
+check_kubectl() {
+    if ! command -v kubectl &> /dev/null; then
+        print_error "kubectl could not be found. Please install kubectl first."
+        exit 1
+    fi
+
+    if ! kubectl cluster-info &> /dev/null; then
+        print_error "Cannot connect to Kubernetes cluster. Please check your connection."
+        exit 1
+    fi
+}
+
+# Create operation
+create_context() {
+    check_kubectl
+    
+    # Set default context name if not provided
+    if [ -z "$CONTEXT_NAME" ]; then
+        CONTEXT_NAME="$SERVICE_ACCOUNT_NAME"
+    fi
+    
+    KUBECONFIG_FILENAME="${SERVICE_ACCOUNT_NAME}.kubeconfig.yaml"
+    SA_NAMESPACE="${NAMESPACES[0]}"
+    
+    print_info "Creating ServiceAccount: $SERVICE_ACCOUNT_NAME in namespace: $SA_NAMESPACE"
+    kubectl create serviceaccount "$SERVICE_ACCOUNT_NAME" -n "$SA_NAMESPACE" --dry-run=client -o yaml | kubectl apply -f -
+
+    # Create Role for each namespace
+    for namespace in "${NAMESPACES[@]}"; do
+        create_role_and_binding "$namespace" "$SA_NAMESPACE"
+    done
+
+    # Generate kubeconfig
+    generate_kubeconfig "$KUBECONFIG_FILENAME" "$SERVICE_ACCOUNT_NAME" "$CONTEXT_NAME" "$SA_NAMESPACE"
+
+    print_info "Kubeconfig created: ${KUBECONFIG_FILENAME}"
+    print_info ""
+    print_info "Usage:"
+    print_info "  export KUBECONFIG=\$(pwd)/${KUBECONFIG_FILENAME}"
+    print_info "  kubectl get pods -n <namespace>"
+    print_info "  kubectl logs <pod-name> -n <namespace>"
+    print_info "  kubectl exec -it <pod-name> -n <namespace> -- /bin/sh"
+    print_info ""
+    print_warn "Note: This context is limited to the following namespaces:"
+    for ns in "${NAMESPACES[@]}"; do
+        print_warn "  - $ns"
+    done
+    print_info ""
+    print_info "The kubeconfig file is standalone and will not be merged with your existing config."
+}
+
+# Update operation - adds new namespaces to existing context
+update_context() {
+    check_kubectl
+    
+    # Set default context name if not provided
+    if [ -z "$CONTEXT_NAME" ]; then
+        CONTEXT_NAME="$SERVICE_ACCOUNT_NAME"
+    fi
+    
+    KUBECONFIG_FILENAME="${SERVICE_ACCOUNT_NAME}.kubeconfig.yaml"
+    
+    # Detect existing SA namespace
+    SA_NAMESPACE=""
+    for ns in "${NAMESPACES[@]}"; do
+        if kubectl get serviceaccount "$SERVICE_ACCOUNT_NAME" -n "$ns" &> /dev/null; then
+            SA_NAMESPACE="$ns"
+            print_info "Found existing ServiceAccount in namespace: $SA_NAMESPACE"
+            break
+        fi
+    done
+    
+    if [ -z "$SA_NAMESPACE" ]; then
+        print_error "ServiceAccount '$SERVICE_ACCOUNT_NAME' not found in any of the specified namespaces."
+        print_error "Did you mean to use 'create' instead of 'update'?"
+        exit 1
+    fi
+    
+    print_info "Updating context for ServiceAccount: $SERVICE_ACCOUNT_NAME"
+    
+    # Create Role for each namespace
+    for namespace in "${NAMESPACES[@]}"; do
+        create_role_and_binding "$namespace" "$SA_NAMESPACE"
+    done
+
+    # Regenerate kubeconfig with all namespaces
+    generate_kubeconfig "$KUBECONFIG_FILENAME" "$SERVICE_ACCOUNT_NAME" "$CONTEXT_NAME" "$SA_NAMESPACE"
+
+    print_info "Kubeconfig updated: ${KUBECONFIG_FILENAME}"
+    print_info ""
+    print_info "Usage:"
+    print_info "  export KUBECONFIG=\$(pwd)/${KUBECONFIG_FILENAME}"
+    print_info "  kubectl get pods -n <namespace>"
+    print_info "  kubectl logs <pod-name> -n <namespace>"
+    print_info "  kubectl exec -it <pod-name> -n <namespace> -- /bin/sh"
+    print_info ""
+    print_warn "Note: This context now has access to the following namespaces:"
+    for ns in "${NAMESPACES[@]}"; do
+        print_warn "  - $ns"
+    done
+    print_info ""
+    print_info "The kubeconfig file is standalone and will not be merged with your existing config."
+}
+
+# Helper function to create Role and RoleBinding
+create_role_and_binding() {
+    local namespace="$1"
+    local sa_namespace="$2"
+    
+    print_info "Creating Role and RoleBinding in namespace: $namespace"
+    
+    # Check if namespace exists
+    if ! kubectl get namespace "$namespace" &> /dev/null; then
+        print_warn "Namespace $namespace does not exist. Skipping..."
+        return
+    fi
+    
+    # Create Role with limited permissions
+    cat <<EOF | kubectl apply -f -
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: ${SERVICE_ACCOUNT_NAME}-role
+  namespace: ${namespace}
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: [""]
+  resources: ["pods/exec"]
+  verbs: ["create"]
+- apiGroups: [""]
+  resources: ["pods/log"]
+  verbs: ["get", "list"]
+EOF
+
+    # Create RoleBinding
+    cat <<EOF | kubectl apply -f -
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: ${SERVICE_ACCOUNT_NAME}-binding
+  namespace: ${namespace}
+subjects:
+- kind: ServiceAccount
+  name: ${SERVICE_ACCOUNT_NAME}
+  namespace: ${sa_namespace}
+roleRef:
+  kind: Role
+  name: ${SERVICE_ACCOUNT_NAME}-role
+  apiGroup: rbac.authorization.k8s.io
+EOF
+}
+
+# Helper function to generate kubeconfig
+generate_kubeconfig() {
+    local filename="$1"
+    local sa_name="$2"
+    local ctx_name="$3"
+    local sa_namespace="$4"
+    
+    # Get the ServiceAccount token
+    print_info "Creating token for ServiceAccount..."
+    SECRET_NAME=$(kubectl get serviceaccount "$sa_name" -n "$sa_namespace" -o jsonpath='{.secrets[0].name}' 2>/dev/null || echo "")
+
+    if [ -z "$SECRET_NAME" ]; then
+        # For Kubernetes 1.24+, we need to create a token manually
+        TOKEN=$(kubectl create token "$sa_name" -n "$sa_namespace" 2>/dev/null || echo "")
+        if [ -z "$TOKEN" ]; then
+            print_error "Failed to create token for ServiceAccount"
+            exit 1
+        fi
+    else
+        # For older Kubernetes versions
+        TOKEN=$(kubectl get secret "$SECRET_NAME" -n "$sa_namespace" -o jsonpath='{.data.token}' | base64 -d)
+    fi
+
+    # Get cluster information
+    CURRENT_CONTEXT=$(kubectl config current-context)
+    CLUSTER_NAME=$(kubectl config view -o jsonpath="{.contexts[?(@.name=='${CURRENT_CONTEXT}')].context.cluster}")
+    SERVER=$(kubectl config view -o jsonpath="{.clusters[?(@.name=='${CLUSTER_NAME}')].cluster.server}")
+    CA_DATA=$(kubectl config view --raw -o jsonpath="{.clusters[?(@.name=='${CLUSTER_NAME}')].cluster.certificate-authority-data}")
+
+    # Create contexts array for all namespaces
+    local contexts_yaml=""
+    for i in "${!NAMESPACES[@]}"; do
+        local ns="${NAMESPACES[$i]}"
+        local ctx_entry="${ctx_name}-${ns}"
+        if [ $i -eq 0 ]; then
+            contexts_yaml="- context:
+    cluster: ${CLUSTER_NAME}
+    namespace: ${ns}
+    user: ${sa_name}
+  name: ${ctx_entry}"
+        else
+            contexts_yaml="${contexts_yaml}
+- context:
+    cluster: ${CLUSTER_NAME}
+    namespace: ${ns}
+    user: ${sa_name}
+  name: ${ctx_entry}"
+        fi
+    done
+
+    # Create kubeconfig file
+    print_info "Generating kubeconfig file: ${filename}"
+
+    cat <<EOF > "${filename}"
+apiVersion: v1
+kind: Config
+clusters:
+- cluster:
+    certificate-authority-data: ${CA_DATA}
+    server: ${SERVER}
+  name: ${CLUSTER_NAME}
+contexts:
+${contexts_yaml}
+current-context: ${ctx_name}-${NAMESPACES[0]}
+users:
+- name: ${sa_name}
+  user:
+    token: ${TOKEN}
+EOF
+}
+
+# Delete operation
+delete_context() {
+    check_kubectl
+    
+    KUBECONFIG_FILENAME="${SERVICE_ACCOUNT_NAME}.kubeconfig.yaml"
+    
+    # Detect existing SA namespace
+    SA_NAMESPACE=""
+    for ns in "${NAMESPACES[@]}"; do
+        if kubectl get serviceaccount "$SERVICE_ACCOUNT_NAME" -n "$ns" &> /dev/null; then
+            SA_NAMESPACE="$ns"
+            print_info "Found ServiceAccount in namespace: $SA_NAMESPACE"
+            break
+        fi
+    done
+    
+    if [ -z "$SA_NAMESPACE" ]; then
+        print_warn "ServiceAccount '$SERVICE_ACCOUNT_NAME' not found in any namespace"
+    fi
+
+    # Delete RoleBindings and Roles for each namespace
+    for namespace in "${NAMESPACES[@]}"; do
+        print_info "Deleting resources in namespace: $namespace"
+        
+        # Delete RoleBinding
+        if kubectl get rolebinding "${SERVICE_ACCOUNT_NAME}-binding" -n "$namespace" &> /dev/null; then
+            kubectl delete rolebinding "${SERVICE_ACCOUNT_NAME}-binding" -n "$namespace"
+            print_info "  Deleted RoleBinding: ${SERVICE_ACCOUNT_NAME}-binding"
+        else
+            print_warn "  RoleBinding not found: ${SERVICE_ACCOUNT_NAME}-binding"
+        fi
+        
+        # Delete Role
+        if kubectl get role "${SERVICE_ACCOUNT_NAME}-role" -n "$namespace" &> /dev/null; then
+            kubectl delete role "${SERVICE_ACCOUNT_NAME}-role" -n "$namespace"
+            print_info "  Deleted Role: ${SERVICE_ACCOUNT_NAME}-role"
+        else
+            print_warn "  Role not found: ${SERVICE_ACCOUNT_NAME}-role"
+        fi
+    done
+
+    # Delete ServiceAccount if found
+    if [ -n "$SA_NAMESPACE" ]; then
+        if kubectl get serviceaccount "$SERVICE_ACCOUNT_NAME" -n "$SA_NAMESPACE" &> /dev/null; then
+            kubectl delete serviceaccount "$SERVICE_ACCOUNT_NAME" -n "$SA_NAMESPACE"
+            print_info "Deleted ServiceAccount: $SERVICE_ACCOUNT_NAME from namespace: $SA_NAMESPACE"
+        fi
+    fi
+
+    # Delete kubeconfig file if requested
+    if [ "$DELETE_KUBECONFIG" = true ]; then
+        if [ -f "$KUBECONFIG_FILENAME" ]; then
+            rm -f "$KUBECONFIG_FILENAME"
+            print_info "Deleted kubeconfig file: $KUBECONFIG_FILENAME"
+        else
+            print_warn "Kubeconfig file not found: $KUBECONFIG_FILENAME"
+        fi
+    fi
+
+    print_info ""
+    print_info "Cleanup completed successfully!"
+    print_info ""
+    print_warn "Note: If you had exported KUBECONFIG to use this context, you may want to unset it:"
+    print_warn "  unset KUBECONFIG"
+    print_warn "Or reset to your default kubeconfig:"
+    print_warn "  export KUBECONFIG=~/.kube/config"
+}
+
+# Main
+if [ $# -eq 0 ]; then
+    show_help
+fi
+
+# Get operation (first argument)
+OPERATION=$1
+shift
+
+# Validate operation
+if [[ "$OPERATION" != "create" && "$OPERATION" != "update" && "$OPERATION" != "delete" ]]; then
+    print_error "Invalid operation: $OPERATION"
+    print_error "Valid operations are: create, update, delete"
+    echo ""
+    show_help
+fi
+
+# Parse remaining arguments
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        -n|--namespace)
+            IFS=',' read -ra NAMESPACES <<< "$2"
+            shift 2
+            ;;
+        -s|--service-account)
+            SERVICE_ACCOUNT_NAME="$2"
+            shift 2
+            ;;
+        -c|--context-name)
+            CONTEXT_NAME="$2"
+            shift 2
+            ;;
+        -k|--delete-kubeconfig)
+            DELETE_KUBECONFIG=true
+            shift
+            ;;
+        -h|--help)
+            show_help
+            ;;
+        *)
+            print_error "Unknown option: $1"
+            show_help
+            ;;
+    esac
+done
+
+# Validate required arguments
+if [ ${#NAMESPACES[@]} -eq 0 ]; then
+    print_error "Namespace is required. Use -n or --namespace flag."
+    echo ""
+    show_help
+fi
+
+# Execute operation
+case "$OPERATION" in
+    create)
+        create_context
+        ;;
+    update)
+        update_context
+        ;;
+    delete)
+        delete_context
+        ;;
+esac

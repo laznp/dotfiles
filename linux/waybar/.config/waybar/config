@@ -1,7 +1,7 @@
 [{
     "layer": "top",
     "position": "top",
-    "output": "DP-1",
+    "output": "DP-2",
     "spacing": 4,
     "modules-left": [
         "custom/archlinux",
@@ -26,8 +26,8 @@
     },
     "hyprland/workspaces": {
         "persistent-workspaces": {
-            "DP-1": [ 1, 2, 3, 4, 5, 6 ],
-            "DP-2": [ 7, 8, 9, 10 ]
+            "DP-2": [ 1, 2, 3, 4, 5, 6 ],
+            "DP-3": [ 7, 8, 9, 10 ]
         },
         "disable-scroll": true,
         "all-outputs": false,
@@ -78,7 +78,7 @@
         "return-type": "plain",
     },
     "network": {
-        "interface": "br0",
+        "interface": "enp42s0",
         "format": "{ifname}",
         "format-ethernet": " 󰛳  ",
         "format-disconnected": " 󰅛  "
@@ -141,14 +141,15 @@
 },{
     "layer": "top",
     "position": "top",
-    "output": "DP-2",
+    "output": "DP-3",
     "spacing": 4,
-    "modules-left": [],
-    "modules-center": [
+    "modules-left": [
+        "custom/archlinux",
         "hyprland/workspaces"
     ],
+    "modules-center": [
+    ],
     "modules-right": [
-        "custom/ippub",
         "custom/powerpackage",
         "clock",
         "tray"
@@ -165,8 +166,8 @@
     },
     "hyprland/workspaces": {
         "persistent-workspaces": {
-            "DP-1": [ 1, 2, 3, 4, 5, 6 ],
-            "DP-2": [ 7, 8, 9, 10 ],
+            "DP-2": [ 1, 2, 3, 4, 5, 6 ],
+            "DP-3": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ],
         },
         "disable-scroll": true,
         "all-outputs": false,
@@ -218,12 +219,20 @@
     },
     "clock": {
         "interval": 60,
-        "format": "󰥔 {:%H:%M} ",
-        "tooltip-format": "{tz_list}",
+        "format": "󰔠 {:%d %b 󰇙 %H:%M}  ",
+        "tooltip-format": "{:%A, %b %d %Y • %H:%M}",
         "timezones": [
             "Asia/Jakarta",
             "Europe/Berlin"
         ]
+    },
+    "custom/archlinux": {
+        "format": "  {} ",
+        "max-length": 40,
+        "interval": 1, 
+        "exec": "echo  ",
+        "return-type": "plain",
+        "on-click": "tofi-drun --config ~/.config/tofi/launcher.config"
     },
     "tray": {
         "icon-size": 16,

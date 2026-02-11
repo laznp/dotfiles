@@ -11,7 +11,6 @@ return {
           hijack_cursor = true,
           hijack_netrw = true,
           hijack_unnamed_buffer_when_opening = false,
-          -- ignore_buffer_on_setup = false,
           sort_by = "name",
           update_cwd = false,
           reload_on_bufenter = true,
@@ -89,7 +88,7 @@ return {
           },
           update_focused_file = {
             enable = false,
-            update_cwd = false,
+            update_root = true,
             ignore_list = {},
           },
           -- ignore_ft_on_setup = {},

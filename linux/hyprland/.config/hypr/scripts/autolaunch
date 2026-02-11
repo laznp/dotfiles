@@ -7,7 +7,6 @@ exec-once = systemctl --user start xdg-desktop-portal-wlr.service
 exec-once = systemctl --user start xdg-desktop-portal-hyprland.service
 exec-once = systemctl --user start hyprpolkitagent.service
 
-
 # Waybar
 exec-once = waybar -c ~/.config/waybar/config
 
@@ -18,17 +17,18 @@ exec-once = swaybg -c '#000000'
 
 # RAM
 # exec-once = openrgb -d 'Corsair Dominator Platinum' -m Direct -c '6478d2'
-exec-once = openrgb -d 'Corsair Dominator Platinum' -m Direct -c 'ffffff'
+# exec-once = openrgb -d 'Corsair Dominator Platinum' -m Direct -c 'ffffff'
 
 # GPU
 # exec-once = openrgb -d 4 -z 1 -s 12 -m Direct -c "6478d2"
-exec-once = openrgb -d 4 -z 1 -s 12 -m Direct -c "ffffff"
+# exec-once = openrgb -d 4 -z 1 -s 12 -m Direct -c "ffffff"
 
 # Apps
 # exec-once = /usr/lib/polkit-kde-authentication-agent-1
 # exec-once = whatsie
 # exec-once = telegram-desktop
-exec-once = whatsapp
+# exec-once = whatsapp
 exec-once = cliphist
 exec-once = corectrl
+exec-once = $HOME/.local/custom-bin/macos-workspace-switch
 # exec-once = jamesdsp
