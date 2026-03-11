@@ -13,6 +13,7 @@ windowrule = workspace 5,match:class (Lens|OpenLens)
 windowrule = workspace 6,match:class (corectrl|jamesdsp|1Password|BambuStudio|OrcaSlicer)
 windowrule = workspace 7,match:class (chrome-web.whatsapp.com__-Default|org.telegram.desktop|whatsdesk|com.ktechpit.whatsie|WebApp-WhatsApp6135|WebApp-WhatsApp6135)
 windowrule = workspace 8,match:class (chrome-open.spotify.com__-Default|Spotify|WebApp-Spotify3393)
+windowrule = workspace 8,match:title ^OpenCode$
 windowrule = workspace 9,match:class (chrome-teams.microsoft.com__-Default|WebApp-MicrosoftTeams4073)
 windowrule = workspace 9,match:class (chrome-teams.microsoft.com__-Profile_2|teams-for-linux)
 windowrule = workspace 9,match:class (NeoNotes)
