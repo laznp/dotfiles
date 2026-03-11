@@ -144,10 +144,9 @@
     "output": "DP-3",
     "spacing": 4,
     "modules-left": [
-        "custom/archlinux",
-        "hyprland/workspaces"
     ],
     "modules-center": [
+        "hyprland/workspaces"
     ],
     "modules-right": [
         "custom/powerpackage",
@@ -167,7 +166,7 @@
     "hyprland/workspaces": {
         "persistent-workspaces": {
             "DP-2": [ 1, 2, 3, 4, 5, 6 ],
-            "DP-3": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ],
+            "DP-3": [ 7, 8, 9, 10 ],
         },
         "disable-scroll": true,
         "all-outputs": false,
@@ -207,7 +206,7 @@
         "format": " {} ",
         "max-length": 40,
         "interval": 1,
-        "exec": "echo $(bash /home/laznp/.local/custom-bin/power-package | tail -n 1 | awk '{print $4}')",
+        "exec": "echo $(bash /home/laznp/.local/custom-bin/power-package | tail -n 1 | awk '{print $2}')",
         "return-type": "plain"
     },
     "custom/ippub": {

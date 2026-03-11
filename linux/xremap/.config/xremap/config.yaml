@@ -107,7 +107,7 @@ keymap:
             launch: ["tofi-drun", "--config", "/home/laznp/.config/tofi/launcher.config"]
           # Screenshot
           y:
-            launch: ["sh", "-c", "grim -g \"$(slurp)\" - | swappy -f -"]
+            launch: ["sh", "-c", "grim -l 4 -g \"$(slurp)\" - | swappy -f -"]
           # Audio output menu
           a:
             launch: ["bash", "/home/laznp/.local/custom-bin/audio-output"]

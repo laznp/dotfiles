@@ -1,13 +1,21 @@
 #!/bin/bash
+echo "=== Power Consumption ==="
+cpu_power=$(sensors 2>/dev/null | grep "SVI2_P_Core" | awk '{print $2}')
+cpu_soc=$(sensors 2>/dev/null | grep "SVI2_P_SoC" | awk '{print $2}')
+gpu_power=$(sensors 2>/dev/null | grep "amdgpu" -A 20 | grep "PPT" | awk '{print $2}')
 
-# Get CPU and GPU wattage
-cpu_wattage=$(sudo turbostat --quiet --show PkgWatt --num_iterations 1 --interval 1 | tail -n 1)
-gpu_wattage=$(sensors | grep "PPT" | awk '{print $2}')
+cpu_watts=$(echo "$cpu_power" | sed 's/W//')
+cpu_soc_watts=$(echo "$cpu_soc" | sed 's/W//')
+gpu_watts=$(echo "$gpu_power" | sed 's/W//')
 
-# Calculate the total power consumption
-total_wattage=$(echo "$cpu_wattage + $gpu_wattage" | bc)
+if [ -z "$cpu_watts" ]; then cpu_watts=0; fi
+if [ -z "$cpu_soc_watts" ]; then cpu_soc_watts=0; fi
+if [ -z "$gpu_watts" ]; then gpu_watts=0; fi
 
-# Display the results
-echo "CPU Power: $cpu_wattage Watts"
-echo "GPU Power: $gpu_wattage Watts"
-echo "Total Power Consumption: $total_wattage Watts"
+total=$(echo "$cpu_watts + $cpu_soc_watts + $gpu_watts" | bc)
+
+echo "CPU (Core): $cpu_power"
+echo "CPU (SoC):  $cpu_soc"
+echo "GPU:        $gpu_power"
+echo "─────────────────"
+echo "Total:      ${total} W"
