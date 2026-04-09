@@ -1,6 +1,8 @@
 # ~/.config/starship.toml
 # Get editor completions based on the config schema
 
+scan_timeout = 10000
+
 "$schema" = 'https://starship.rs/config-schema.json'
 format = """$os $directory${custom.giturl}$git_branch$git_status$character"""
 right_format = """${custom.docker}${custom.py}$git_commit$kubernetes"""
