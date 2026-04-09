@@ -60,10 +60,9 @@ bind = $mainMod, t, exec, $terminal
 binds {
     drag_threshold = 10  # Fire a drag event only after dragging for more than 10px
 }
-bindm = ALT_R, mouse:272, movewindow      # ALT + LMB: Move a window by dragging more than 10px.
-bindc = ALT_R, mouse:272, togglefloating  # ALT + LMB: Floats a window by clicking
-bindm = ALT_R, mouse:273, resizewindow
+bindm = CTRL_SHIFT, mouse:272, movewindow      # ALT + LMB: Move a window by dragging more than 10px.
+bindm = CTRL_SHIFT, mouse:273, resizewindow
 
 # NAVIGATE WORKSPACES
-bind = ALT_R, Right, workspace, e+1
-bind = ALT_R, Left, workspace, e-1
+# bind = CTRL, Right, workspace, e+1
+# bind = CTRL, Left, workspace, e-1

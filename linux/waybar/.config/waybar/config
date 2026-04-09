@@ -78,7 +78,7 @@
         "return-type": "plain",
     },
     "network": {
-        "interface": "enp42s0",
+        "interface": "br0",
         "format": "{ifname}",
         "format-ethernet": " 󰛳  ",
         "format-disconnected": " 󰅛  "

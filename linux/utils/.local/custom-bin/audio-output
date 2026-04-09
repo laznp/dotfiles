@@ -1,7 +1,61 @@
 #!/usr/bin/env bash
 
-all_sinks=$(pactl list short sinks | grep -v "pci-0000_2f" | cut -f 2)
-default_sink=$(pactl info | grep 'Default Sink' | cut -d : -f 2)
-active_sink=$(echo "$all_sinks" | grep -n $default_sink | cut -d : -f 1)
-selected_sink=$(echo "$all_sinks" | rofi -theme $HOME/.config/rofi/card_square -dmenu -p '󰋋 ' -selected-row 2)
-pactl set-default-sink $selected_sink
+# Get all sinks
+all_sinks=$(pactl list short sinks | cut -f2)
+
+# Map readable names - get proper bluetooth names too
+get_name() {
+    local s="$1"
+    # DX1 headphone
+    echo "$s" | grep -q "usb-Topping_DX1-00" && { echo "DX1"; return; }
+    # HDMI
+    echo "$s" | grep -q "hdmi-stereo-extra2" && { echo "HDMI"; return; }
+    # SPDIF
+    echo "$s" | grep -q "iec958-stereo" && { echo "SPDIF"; return; }
+    # Bluetooth - get actual device name
+    if echo "$s" | grep -q "bluez_output"; then
+        addr=$(echo "$s" | sed 's/bluez_output.//' | sed 's/\..*//' | tr '_' ':')
+        name=$(bluetoothctl devices | grep "$addr" | cut -d' ' -f3-) || name="Bluetooth"
+        echo "$name"
+        return
+    fi
+    # Default fallback
+    echo "$s"
+}
+
+# Get default
+default=$(pactl info | grep 'Default Sink' | cut -d: -f2)
+default_name=$(get_name "$default")
+
+# Build list - filter out HDMI, SPDIF, empty
+list=""
+while read -r sink; do
+    name=$(get_name "$sink")
+    [[ -z "$name" ]] && continue
+    [[ "$name" == "HDMI" ]] && continue
+    [[ "$name" == "SPDIF" ]] && continue
+    list="$list$name\n"
+done <<< "$all_sinks"
+
+list=$(echo -e "$list" | grep -v '^$')
+
+# Find index of default 
+idx=0
+def_found=0
+while read -r line; do
+    [[ "$line" == "$default_name" ]] && { def_found=1; break; }
+    ((idx++))
+done <<< "$list"
+
+[[ $def_found -eq 0 ]] && idx=0
+
+# Select
+selected_name=$(echo -e "$list" | rofi -theme $HOME/.config/rofi/card_square -dmenu -p '󰋋 ' -selected-row $idx)
+
+# Get original name and set
+original=$(echo "$all_sinks" | while read -r s; do
+    n=$(get_name "$s")
+    [[ "$n" == "$selected_name" ]] && echo "$s" && break
+done)
+
+pactl set-default-sink "$original" && notify-send "Audio: $selected_name"
