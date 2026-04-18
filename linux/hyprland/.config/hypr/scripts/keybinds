@@ -6,14 +6,14 @@ $menu = tofi-drun --config ~/.config/tofi/launcher.config
 $fileManager = alacritty -e ranger
 
 # WINDOWS NAVIGATION WITHIN WORKSPACES
-bind = $mainMod, h, movefocus, l
-bind = $mainMod, l, movefocus, r
-bind = $mainMod, k, movefocus, u
-bind = $mainMod, j, movefocus, d
-bind = $mainMod SHIFT, k, movewindow, u
-bind = $mainMod SHIFT, j, movewindow, d
-bind = $mainMod SHIFT, l, movewindow, r
-bind = $mainMod SHIFT, h, movewindow, l
+# bind = $mainMod, h, movefocus, l
+# bind = $mainMod, l, movefocus, r
+# bind = $mainMod, k, movefocus, u
+# bind = $mainMod, j, movefocus, d
+# bind = $mainMod SHIFT, k, movewindow, u
+# bind = $mainMod SHIFT, j, movewindow, d
+# bind = $mainMod SHIFT, l, movewindow, r
+# bind = $mainMod SHIFT, h, movewindow, l
 
 # FOCUS ANOTHER DESKTOP
 bind = $mainMod, 1, workspace, 1
@@ -35,19 +35,19 @@ bind = $mainMod, 0, workspace, 10
 binde=, XF86AudioRaiseVolume, exec, $HOME/.local/custom-bin/volume up
 binde=, XF86AudioLowerVolume, exec, $HOME/.local/custom-bin/volume down
 binde=, XF86AudioMute, exec, $HOME/.local/custom-bin/volume mute
-bind = $mainMod CTRL, Left, exec, playerctl -p spotify previous
-bind = $mainMod CTRL, Right, exec, playerctl -p spotify next
-bind = $mainMod CTRL, Space, exec, playerctl -p spotify play-pause
+# bind = $mainMod CTRL, Left, exec, playerctl -p spotify previous
+# bind = $mainMod CTRL, Right, exec, playerctl -p spotify next
+# bind = $mainMod CTRL, Space, exec, playerctl -p spotify play-pause
 
-bind = $mainMod, Return, exec, $menu
-bind = $mainMod, q, killactive
-bind = $mainMod, z, exec, bash ~/.local/custom-bin/powermenu
+# bind = $mainMod, Return, exec, $menu
+# bind = $mainMod, q, killactive
+# bind = $mainMod, z, exec, bash ~/.local/custom-bin/powermenu
 # bind = $mainMod, F, togglefloating,
-bind = $mainMod, a, exec, bash ~/.local/custom-bin/audio-output
-bind = $mainMod, s, exec, bash ~/.local/custom-bin/statusmenu
-bind = $mainMod, p, exec, bash ~/.local/custom-bin/passwordmenu
-bind = $mainMod, y, exec, grim -l 4 -g "$(slurp)" - | swappy -f -
-bind = $mainMod, t, exec, $terminal
+# bind = $mainMod, a, exec, bash ~/.local/custom-bin/audio-output
+# bind = $mainMod, s, exec, bash ~/.local/custom-bin/statusmenu
+# bind = $mainMod, p, exec, bash ~/.local/custom-bin/passwordmenu
+# bind = $mainMod, y, exec, grim -l 4 -g "$(slurp)" - | swappy -f -
+# bind = $mainMod, t, exec, $terminal
 # bind = $mainMod, F7, exec, bash -c "rbw get 'Master Personal' --clipboard"
 # bind = $mainMod, F8, exec, bash -c "echo AS-$(rbw get 'Master Personal') | wl-copy"
 # bind = $mainMod, F9, exec, bash -c "echo NBL-$(rbw get 'Master Personal') | wl-copy"
