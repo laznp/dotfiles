@@ -30,5 +30,6 @@ exec-once = swaybg -c '#000000'
 # exec-once = whatsapp
 exec-once = cliphist
 exec-once = corectrl
+exec-once = systemctl --user start xremap
 # exec-once = $HOME/.local/custom-bin/macos-workspace-switch
 # exec-once = jamesdsp

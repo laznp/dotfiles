@@ -1,11 +1,13 @@
 [Unit]
 Description=XRemap input remapping service
+After=graphical-session.target
 
 [Service]
 ExecStart=/usr/bin/xremap --watch=device %h/.config/xremap/config.yaml
 Restart=on-failure
+RestartSec=3
 StandardOutput=journal
 StandardError=journal
 
 [Install]
-WantedBy=default.target
+WantedBy=graphical-session.target

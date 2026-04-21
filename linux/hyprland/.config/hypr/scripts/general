@@ -40,15 +40,16 @@ animations {
     bezier = myBezier, 0.05, 0.9, 0.1, 1.05
     bezier = macEaseOut, 0.16, 1, 0.3, 1  # ADD THIS LINE
     
-    animation = windows, 1, 7, myBezier
-    animation = windowsOut, 1, 7, default, popin 80%
-    animation = border, 1, 10, default
-    animation = borderangle, 1, 8, default
-    animation = fade, 1, 7, default
+    animation = windows, 1, 5, myBezier
+    animation = windowsOut, 1, 5, default, popin 80%
+    animation = border, 1, 8, default
+    animation = borderangle, 1, 6, default
+    animation = fade, 1, 6, default
     
     # CHANGE THIS LINE - add 'slide' at the end:
     animation = workspaces, 1, 8, macEaseOut, slide
 }
+
 
 dwindle {
     pseudotile = true
@@ -59,7 +60,7 @@ misc {
     force_default_wallpaper = -1 
     focus_on_activate = false
     disable_hyprland_logo = 1
-    vrr = 1
+    vrr = 2
     middle_click_paste = false
 }
 
