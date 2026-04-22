@@ -93,10 +93,6 @@ return {
     ignore_list = {},
   },
   -- ignore_ft_on_setup = {},
-  system_open = {
-    cmd = "",
-    args = {},
-  },
   diagnostics = {
     enable = false,
     show_on_dirs = false,
