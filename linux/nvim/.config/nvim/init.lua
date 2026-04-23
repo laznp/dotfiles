@@ -178,10 +178,6 @@ map('n', '<S-j>', ':m .+1<CR>==',       { noremap = true, silent = true })
 map('v', '<S-k>', ":m '<-2<CR>gv=gv",   { noremap = true, silent = true })
 map('v', '<S-j>', ":m '>+1<CR>gv=gv",   { noremap = true, silent = true })
 
--- sniprun
-map('n', '<Leader>r', ':SnipRun<CR>',          { noremap = true, silent = true })
-map('v', '<Leader>r', ":'<,'>SnipRun<CR>",     { noremap = true, silent = true })
-
 -- ─── plugins (vim.pack) ───────────────────────────────────────────────────────
 local gh = function(x) return 'https://github.com/' .. x end
 
@@ -197,8 +193,6 @@ vim.api.nvim_create_autocmd('PackChanged', {
             vim.cmd('MasonUpdate')
         elseif name == 'nvim-treesitter' then
             vim.cmd('TSUpdate')
-        elseif name == 'sniprun' then
-            vim.system({ 'sh', 'install.sh' }, { cwd = ev.data.path })
         end
     end
 })
@@ -242,7 +236,6 @@ vim.pack.add({
     gh('preservim/nerdcommenter'),
     { src = gh('jake-stewart/multicursor.nvim'), version = '1.0' },
     gh('alexghergh/nvim-tmux-navigation'),
-    gh('michaelb/sniprun'),
 })
 
 -- nvim-treesitter keeps queries under its runtime/ directory, so add that subdir explicitly.
@@ -784,6 +777,3 @@ end)
 
 -- ─── tmux navigation ─────────────────────────────────────────────────────────
 require('nvim-tmux-navigation').setup { disable_when_zoomed = true }
-
--- ─── snippet runner ───────────────────────────────────────────────────────────
-require("sniprun").setup({ display = { "NvimNotify" } })
