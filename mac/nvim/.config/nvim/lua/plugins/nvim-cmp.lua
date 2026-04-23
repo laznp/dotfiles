@@ -93,13 +93,9 @@ return {
             vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
         end
         local capabilities = require('cmp_nvim_lsp').default_capabilities()
-        -- require'lspconfig'.ansiblels.setup{}
-        -- require'lspconfig'.dockerls.setup{}
-        -- require'lspconfig'.bashls.setup{}
-        -- require'lspconfig'.jsonls.setup { capabilities = capabilities }
-        require'lspconfig'.pyright.setup{ capabilities = capabilities }
-        require'lspconfig'.rust_analyzer.setup{ capabilities = capabilities }
-        require'lspconfig'.terraformls.setup{ cmd = {'terraform-ls', 'serve'}, capabilities = capabilities }
-        -- require'lspconfig'.yamlls.setup{ capabilities = capabilities }
+        vim.lsp.config('pyright', { capabilities = capabilities })
+        vim.lsp.config('rust_analyzer', { capabilities = capabilities })
+        vim.lsp.config('terraformls', { cmd = {'terraform-ls', 'serve'}, capabilities = capabilities })
+        vim.lsp.enable({ 'pyright', 'rust_analyzer', 'terraformls' })
     end
 }
