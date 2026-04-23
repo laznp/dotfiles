@@ -348,9 +348,9 @@ require('neo-tree').setup {
         indent = { indent_size = 2, padding = 1 },
         git_status = {
             symbols = {
-                added     = "",  modified  = "",
-                deleted   = "",  renamed   = "R",
-                untracked = "?", ignored   = "",
+                added     = "+",  modified  = "~",
+                deleted   = "-",  renamed   = "",
+                untracked = "?", ignored   = "",
                 unstaged  = "?", staged    = "",
                 conflict  = "",
             },
