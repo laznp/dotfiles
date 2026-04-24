@@ -120,6 +120,25 @@ vim.g.mapleader = ' '
 
 local neo_tree_loaded = false
 local fzf_loaded = false
+local mc_loaded = false
+local tmuxnav_loaded = false
+
+local function load_multicursor()
+    if mc_loaded then
+        return
+    end
+    local mc = require("multicursor-nvim")
+    mc.setup()
+    mc_loaded = true
+end
+
+local function load_tmuxnav()
+    if tmuxnav_loaded then
+        return
+    end
+    require('nvim-tmux-navigation').setup { disable_when_zoomed = true }
+    tmuxnav_loaded = true
+end
 
 local function load_neo_tree()
     if neo_tree_loaded then
@@ -322,10 +341,10 @@ end, { noremap = true, silent = true })
 map('n', '<S-y>', 'yy', { noremap = true, silent = true })
 
 -- window / tmux navigation
-map('n', '<C-h>', ':NvimTmuxNavigateLeft<CR>',  { noremap = true, silent = true })
-map('n', '<C-j>', ':NvimTmuxNavigateDown<CR>',  { noremap = true, silent = true })
-map('n', '<C-k>', ':NvimTmuxNavigateUp<CR>',    { noremap = true, silent = true })
-map('n', '<C-l>', ':NvimTmuxNavigateRight<CR>', { noremap = true, silent = true })
+map('n', '<C-h>', function() load_tmuxnav(); vim.cmd('NvimTmuxNavigateLeft') end,  { noremap = true, silent = true })
+map('n', '<C-j>', function() load_tmuxnav(); vim.cmd('NvimTmuxNavigateDown') end,  { noremap = true, silent = true })
+map('n', '<C-k>', function() load_tmuxnav(); vim.cmd('NvimTmuxNavigateUp') end,    { noremap = true, silent = true })
+map('n', '<C-l>', function() load_tmuxnav(); vim.cmd('NvimTmuxNavigateRight') end, { noremap = true, silent = true })
 map('n', '<C-q>', ':close<CR>',                 { noremap = true, silent = true })
 
 -- indenting
@@ -411,25 +430,18 @@ vim.api.nvim_create_autocmd('PackChanged', {
 
 vim.pack.add({
     gh('nvim-tree/nvim-web-devicons'),
-
     gh('navarasu/onedark.nvim'),
     gh('nvim-lualine/lualine.nvim'),
-
     gh('MunifTanjim/nui.nvim'),
     gh('nvim-neo-tree/neo-tree.nvim'),
     gh('akinsho/bufferline.nvim'),
     gh('ojroques/nvim-bufdel'),
     gh('rmagatti/auto-session'),
-
     gh('vijaymarupudi/nvim-fzf'),
     gh('ibhagwan/fzf-lua'),
-
     gh('nvim-lua/plenary.nvim'),
     gh('lewis6991/gitsigns.nvim'),
-
     gh('lukas-reineke/indent-blankline.nvim'),
-
-    -- lsp + completion (native vim.lsp — no nvim-lspconfig needed)
     gh('williamboman/mason.nvim'),
     gh('hrsh7th/cmp-nvim-lsp'),
     gh('hrsh7th/cmp-buffer'),
@@ -440,9 +452,7 @@ vim.pack.add({
     gh('rafamadriz/friendly-snippets'),
     gh('onsails/lspkind.nvim'),
     gh('hrsh7th/nvim-cmp'),
-
     { src = gh('nvim-treesitter/nvim-treesitter'), version = 'main' },
-
     gh('windwp/nvim-autopairs'),
     gh('rcarriga/nvim-notify'),
     gh('preservim/nerdcommenter'),
@@ -534,7 +544,7 @@ require('lualine').setup {
         lualine_x = {
             { 'diff', source = diff_source },
             { 'branch', color = color_mode },
-            { 'diagnostics', sources = { 'nvim_lsp', 'coc' } },
+            { 'diagnostics', sources = { 'nvim_lsp' } },
         },
         lualine_y = { { "progress", color = color_mode } },
         lualine_z = { { 'location', color = color_mode } },
@@ -606,83 +616,110 @@ require("auto-session").setup {
 }
 
 -- ─── git signs ────────────────────────────────────────────────────────────────
-require('gitsigns').setup {
-    signs = {
-        add          = { text = '+' }, change       = { text = '~' },
-        delete       = { text = '-' }, topdelete    = { text = '-' },
-        changedelete = { text = '~' }, untracked    = { text = '?' },
-    },
-    signcolumn = true, numhl = false, linehl = false, word_diff = false,
-    watch_gitdir        = { interval = 1000, follow_files = true },
-    attach_to_untracked = true,
-    current_line_blame  = false,
-    current_line_blame_opts = { virt_text = true, virt_text_pos = 'eol', delay = 1000 },
-    current_line_blame_formatter = '<author>, <author_time:%R> - <summary>',
-    sign_priority = 6, update_debounce = 100, max_file_length = 40000,
-    preview_config = { border = 'single', style = 'minimal', relative = 'cursor', row = 0, col = 1 },
-}
+vim.api.nvim_create_autocmd('BufRead', {
+    group = local_config_group,
+    once = true,
+    callback = function()
+        require('gitsigns').setup {
+            signs = {
+                add          = { text = '+' }, change       = { text = '~' },
+                delete       = { text = '-' }, topdelete    = { text = '-' },
+                changedelete = { text = '~' }, untracked    = { text = '?' },
+            },
+            signcolumn = true, numhl = false, linehl = false, word_diff = false,
+            watch_gitdir        = { interval = 1000, follow_files = true },
+            attach_to_untracked = true,
+            current_line_blame  = false,
+            current_line_blame_opts = { virt_text = true, virt_text_pos = 'eol', delay = 1000 },
+            current_line_blame_formatter = '<author>, <author_time:%R> - <summary>',
+            sign_priority = 6, update_debounce = 100, max_file_length = 40000,
+            preview_config = { border = 'single', style = 'minimal', relative = 'cursor', row = 0, col = 1 },
+        }
+    end,
+})
 
 -- ─── indent guides ────────────────────────────────────────────────────────────
-require("ibl").setup()
+vim.api.nvim_create_autocmd('BufRead', {
+    group = local_config_group,
+    once = true,
+    callback = function() require("ibl").setup() end,
+})
 
 -- ─── lsp tool installer ──────────────────────────────────────────────────────
 local mason_tools = { "ruff", "rust-analyzer", "bash-language-server", "terraform-ls", "clangd" }
 require("mason").setup()
-local mr = require("mason-registry")
-mr:on("package:install:success", function()
-    vim.defer_fn(function()
-        vim.api.nvim_exec_autocmds("FileType", { buf = vim.api.nvim_get_current_buf() })
-    end, 100)
-end)
-mr.refresh(function()
-    for _, tool in ipairs(mason_tools) do
-        local p = mr.get_package(tool)
-        if not p:is_installed() then p:install() end
-    end
-end)
+
+vim.api.nvim_create_user_command('MasonInstallLocal', function()
+    local mr = require("mason-registry")
+
+    mr:on("package:install:success", function()
+        vim.defer_fn(function()
+            vim.api.nvim_exec_autocmds("FileType", { buf = vim.api.nvim_get_current_buf() })
+        end, 100)
+    end)
+
+    mr.refresh(function()
+        for _, tool in ipairs(mason_tools) do
+            local p = mr.get_package(tool)
+            if not p:is_installed() then
+                p:install()
+            end
+        end
+    end)
+end, {})
 
 -- ─── completion ───────────────────────────────────────────────────────────────
-local cmp = require('cmp')
-require("luasnip.loaders.from_vscode").lazy_load()
+vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
+    group = local_config_group,
+    once = true,
+    callback = function()
+        require("luasnip.loaders.from_vscode").lazy_load()
 
-cmp.setup {
-    snippet = { expand = function(args) require("luasnip").lsp_expand(args.body) end },
-    mapping = {
-        ['<C-d>']     = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
-        ['<C-f>']     = cmp.mapping(cmp.mapping.scroll_docs(4),  { 'i', 'c' }),
-        ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(),       { 'i', 'c' }),
-        ['<C-y>']     = cmp.config.disable,
-        ['<C-e>']     = cmp.mapping({ i = cmp.mapping.abort(), c = cmp.mapping.close() }),
-        ['<CR>']      = cmp.mapping.confirm({ select = true }),
-        ['<Down>']    = cmp.mapping.select_next_item(),
-        ['<Up>']      = cmp.mapping.select_prev_item(),
-    },
-    window = {
-        completion    = { border = "rounded", winhighlight = "Normal:Pmenu,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None", col_offset = -3, side_padding = 0 },
-        documentation = { border = "rounded", winhighlight = "Normal:CmpDocs,FloatBorder:FloatBorder,CursorLine:CmpDocs,Search:None", col_offset = -3, side_padding = 0 },
-    },
-    formatting = {
-        fields = { "kind", "abbr", "menu" },
-        format = function(entry, vim_item)
-            local kind = require("lspkind").cmp_format({
-                mode = "symbol_text", maxwidth = 50,
-                menu = { buffer = "[Buffer]", nvim_lsp = "[LSP]", luasnip = "[LuaSnip]", nvim_lua = "[Lua]" },
-            })(entry, vim_item)
-            local strings = vim.split(kind.kind, "%s", { trimempty = true })
-            kind.kind = " " .. (strings[1] or "") .. " "
-            kind.menu = "    (" .. (strings[2] or "") .. ")"
-            return kind
-        end,
-    },
-    sources = cmp.config.sources({ { name = 'luasnip' }, { name = 'buffer' }, { name = 'nvim_lsp' }, { name = 'path' } }),
-}
+        local cmp = require('cmp')
+        cmp.setup {
+            snippet = { expand = function(args) require("luasnip").lsp_expand(args.body) end },
+            mapping = {
+                ['<C-d>']     = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
+                ['<C-f>']     = cmp.mapping(cmp.mapping.scroll_docs(4),  { 'i', 'c' }),
+                ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(),       { 'i', 'c' }),
+                ['<C-y>']     = cmp.config.disable,
+                ['<C-e>']     = cmp.mapping({ i = cmp.mapping.abort(), c = cmp.mapping.close() }),
+                ['<CR>']      = cmp.mapping.confirm({ select = true }),
+                ['<Down>']    = cmp.mapping.select_next_item(),
+                ['<Up>']      = cmp.mapping.select_prev_item(),
+            },
+            window = {
+                completion    = { border = "rounded", winhighlight = "Normal:Pmenu,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None", col_offset = -3, side_padding = 0 },
+                documentation = { border = "rounded", winhighlight = "Normal:CmpDocs,FloatBorder:FloatBorder,CursorLine:CmpDocs,Search:None", col_offset = -3, side_padding = 0 },
+            },
+            formatting = {
+                fields = { "kind", "abbr", "menu" },
+                format = function(entry, vim_item)
+                    local kind = require("lspkind").cmp_format({
+                        mode = "symbol_text", maxwidth = 50,
+                        menu = { buffer = "[Buffer]", nvim_lsp = "[LSP]", luasnip = "[LuaSnip]", nvim_lua = "[Lua]" },
+                    })(entry, vim_item)
+                    local strings = vim.split(kind.kind, "%s", { trimempty = true })
+                    kind.kind = " " .. (strings[1] or "") .. " "
+                    kind.menu = "    (" .. (strings[2] or "") .. ")"
+                    return kind
+                end,
+            },
+            sources = cmp.config.sources({ { name = 'luasnip' }, { name = 'buffer' }, { name = 'nvim_lsp' }, { name = 'path' } }),
+        }
 
-cmp.setup.cmdline({ '/', '?' }, { mapping = cmp.mapping.preset.cmdline(), sources = { { name = 'buffer' } } })
-cmp.setup.cmdline(':', {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = cmp.config.sources({ { name = 'path' } }, { { name = 'cmdline' } }),
+        cmp.setup.cmdline({ '/', '?' }, { mapping = cmp.mapping.preset.cmdline(), sources = { { name = 'buffer' } } })
+        cmp.setup.cmdline(':', {
+            mapping = cmp.mapping.preset.cmdline(),
+            sources = cmp.config.sources({ { name = 'path' } }, { { name = 'cmdline' } }),
+        })
+        cmp.setup.filetype({ "sql" }, { sources = { { name = "buffer" } } })
+
+        -- ─── auto pairs ───────────────────────────────────────────────────────────────
+        require('nvim-autopairs').setup { check_ts = true, disable_filetype = { "vim" } }
+        cmp.event:on('confirm_done', require('nvim-autopairs.completion.cmp').on_confirm_done({ map_char = { tex = '' } }))
+    end,
 })
-cmp.setup.filetype({ "sql" }, { sources = { { name = "buffer" } } })
 
 local diag_signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
 for type, icon in pairs(diag_signs) do
@@ -759,10 +796,14 @@ end
 vim.lsp.enable(vim.tbl_keys(lsp_servers))
 
 -- ─── treesitter ───────────────────────────────────────────────────────────────
-require('nvim-treesitter').install {
+local treesitter_parsers = {
     'python', 'rust', 'hcl', 'lua', 'vim', 'dockerfile',
     'terraform', 'cpp', 'c', 'javascript', 'yaml', 'markdown', 'markdown_inline', 'html',
 }
+
+vim.api.nvim_create_user_command('TSInstallLocal', function()
+    require('nvim-treesitter').install(treesitter_parsers)
+end, {})
 
 vim.api.nvim_create_autocmd("FileType", {
     pattern  = { 'python', 'rust', 'hcl', 'lua', 'vim', 'dockerfile',
@@ -794,10 +835,6 @@ vim.api.nvim_create_autocmd("FileType", {
     end,
 })
 
--- ─── auto pairs ───────────────────────────────────────────────────────────────
-require('nvim-autopairs').setup { check_ts = true, disable_filetype = { "vim" } }
-cmp.event:on('confirm_done', require('nvim-autopairs.completion.cmp').on_confirm_done({ map_char = { tex = '' } }))
-
 -- ─── notifications ────────────────────────────────────────────────────────────
 vim.notify = require("notify")
 vim.notify.setup({ background_colour = "#000000" })
@@ -810,15 +847,19 @@ vim.g.NERDToggleCheckAllLines    = 1
 vim.g.NERDCompactSexyComs        = 1
 
 -- ─── multi-cursor ─────────────────────────────────────────────────────────────
-local mc = require("multicursor-nvim")
-mc.setup()
-vim.keymap.set({ "n", "v" }, "<c-n>", function() mc.addCursor("*") end)
-vim.keymap.set("n", "<c-leftmouse>", mc.handleMouse)
-vim.keymap.set("n", "<esc>", function()
+map({ "n", "v" }, "<c-n>", function()
+    load_multicursor()
+    require("multicursor-nvim").addCursor("*")
+end)
+map("n", "<c-leftmouse>", function()
+    load_multicursor()
+    require("multicursor-nvim").handleMouse()
+end)
+map("n", "<esc>", function()
+    load_multicursor()
+    local mc = require("multicursor-nvim")
     if not mc.cursorsEnabled() then mc.enableCursors()
     elseif mc.hasCursors() then mc.clearCursors()
     end
 end)
 
--- ─── tmux navigation ─────────────────────────────────────────────────────────
-require('nvim-tmux-navigation').setup { disable_when_zoomed = true }
