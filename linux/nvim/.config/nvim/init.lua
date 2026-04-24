@@ -409,6 +409,38 @@ map('n', '<S-j>', ':m .+1<CR>==',       { noremap = true, silent = true })
 map('v', '<S-k>', ":m '<-2<CR>gv=gv",   { noremap = true, silent = true })
 map('v', '<S-j>', ":m '>+1<CR>gv=gv",   { noremap = true, silent = true })
 
+-- floating terminal
+local float_term = { buf = -1, win = -1 }
+local function toggle_float_term()
+    if vim.api.nvim_win_is_valid(float_term.win) then
+        vim.api.nvim_win_hide(float_term.win)
+        return
+    end
+    local width  = math.floor(vim.o.columns * 0.55)
+    local height = math.floor(vim.o.lines   * 0.50)
+    local col    = math.floor((vim.o.columns - width)  / 2)
+    local row    = math.floor((vim.o.lines   - height) / 2)
+    if not vim.api.nvim_buf_is_valid(float_term.buf) then
+        float_term.buf = vim.api.nvim_create_buf(false, true)
+    end
+    float_term.win = vim.api.nvim_open_win(float_term.buf, true, {
+        relative = 'editor', style = 'minimal',
+        border = 'rounded',
+        width = width, height = height, col = col, row = row,
+    })
+    vim.wo[float_term.win].winhighlight = 'Normal:Normal,FloatBorder:Normal'
+    if vim.bo[float_term.buf].buftype ~= 'terminal' then
+        vim.cmd('terminal')
+        float_term.buf = vim.api.nvim_get_current_buf()
+    end
+    vim.cmd('startinsert')
+end
+
+map('n', '<C-t>', toggle_float_term, { noremap = true, silent = true })
+map('t', '<C-t>', function()
+    vim.api.nvim_win_hide(float_term.win)
+end, { noremap = true, silent = true })
+
 -- ─── plugins (vim.pack) ───────────────────────────────────────────────────────
 local gh = function(x) return 'https://github.com/' .. x end
 
