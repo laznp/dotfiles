@@ -66,7 +66,7 @@ vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter', 'CursorHold', 'CursorHo
     end,
 })
 
-vim.api.nvim_create_autocmd({ 'BufWritePre', 'BufRead' }, {
+vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
     group = local_config_group,
     pattern = '*',
     callback = function()
@@ -118,12 +118,205 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 local map = vim.keymap.set
 vim.g.mapleader = ' '
 
+local neo_tree_loaded = false
+local fzf_loaded = false
+
+local function load_neo_tree()
+    if neo_tree_loaded then
+        return
+    end
+
+    require('neo-tree').setup {
+        close_if_last_window = false,
+        popup_border_style   = "rounded",
+        enable_git_status    = true,
+        enable_diagnostics   = false,
+        sort_case_insensitive = true,
+        default_component_configs = {
+            indent = { indent_size = 2, padding = 1 },
+            git_status = {
+                symbols = {
+                    added     = "+",  modified  = "~",
+                    deleted   = "-",  renamed   = "",
+                    untracked = "?", ignored   = "",
+                    unstaged  = "?", staged    = "",
+                    conflict  = "",
+                },
+            },
+        },
+        window = {
+            position = "left",
+            width    = 40,
+            mappings = {
+                ["<cr>"]    = "open",
+                ["l"]       = "open",
+                ["h"]       = "close_node",
+                ["v"]       = "open_vsplit",
+                ["s"]       = "open_split",
+                ["t"]       = "open_tabnew",
+                ["C"]       = "close_node",
+                ["z"]       = "close_all_nodes",
+                ["R"]       = "refresh",
+                ["a"]       = "add",
+                ["d"]       = "delete",
+                ["r"]       = "rename",
+                ["y"]       = "copy_to_clipboard",
+                ["x"]       = "cut_to_clipboard",
+                ["p"]       = "paste_from_clipboard",
+                ["q"]       = "close_window",
+                ["?"]       = "show_help",
+                ["gy"]      = function(state)
+                    local path = state.tree:get_node():get_id()
+                    vim.fn.setreg('+', path)
+                    vim.notify('Copied: ' .. path)
+                end,
+            },
+        },
+        filesystem = {
+            filtered_items = {
+                visible        = false,
+                hide_dotfiles  = false,
+                hide_gitignored = false,
+            },
+            follow_current_file    = { enabled = false },
+            use_libuv_file_watcher = false,
+            hijack_netrw_behavior  = "open_default",
+        },
+        buffers = {
+            follow_current_file = { enabled = true },
+        },
+    }
+
+    neo_tree_loaded = true
+end
+
+local function load_fzf()
+    if fzf_loaded then
+        return
+    end
+
+    local fzf_actions = require("fzf-lua.actions")
+    require('fzf-lua').setup {
+        hls = {
+            normal = 'Normal',
+            border = 'Normal',
+            cursor = 'Cursor',
+            cursorline = 'CursorLine',
+        },
+        winopts = {
+            height = 0.85, width = 0.80, row = 0.35, col = 0.50,
+            border = { '┌', '─', '┐', '│', '┘', '─', '└', '│' },
+            fullscreen = false,
+            preview = {
+                border = 'border', wrap = 'nowrap', hidden = 'nohidden',
+                vertical = 'down:45%', horizontal = 'right:60%', layout = 'flex',
+                flip_columns = 120, title = true, scrollbar = 'float', scrollchars = { '█', '' },
+                delay = 100,
+            },
+        },
+        keymap = {
+            builtin = {
+                ["<F2>"] = "toggle-fullscreen", ["<F3>"] = "toggle-preview-wrap",
+                ["<F4>"] = "toggle-preview",    ["<F5>"] = "toggle-preview-ccw",
+                ["<F6>"] = "toggle-preview-cw", ["<S-down>"] = "preview-page-down",
+                ["<S-up>"] = "preview-page-up", ["<S-left>"] = "preview-page-reset",
+            },
+            fzf = {
+                ["ctrl-z"] = "abort",      ["ctrl-u"] = "unix-line-discard",
+                ["ctrl-f"] = "half-page-down", ["ctrl-b"] = "half-page-up",
+                ["ctrl-a"] = "beginning-of-line", ["ctrl-e"] = "end-of-line",
+                ["alt-a"]  = "toggle-all",
+            },
+        },
+        fzf_opts = { ['--ansi'] = '', ['--prompt'] = '> ', ['--info'] = 'inline', ['--height'] = '100%', ['--layout'] = 'default' },
+        previewers = {
+            cat      = { cmd = "cat",  args = "--number" },
+            bat      = { cmd = "bat",  args = "--style=numbers,changes --color always", theme = 'OneHalfDark' },
+            head     = { cmd = "head" },
+            git_diff = { cmd = "git diff", args = "--color" },
+            man      = { cmd = "man -c %s | col -bx" },
+            builtin  = { syntax = true, syntax_limit_b = 1024 * 1024 },
+        },
+        files = {
+            prompt = '  ', git_icons = true, file_icons = true, color_icons = true,
+            actions = {
+                ["default"] = fzf_actions.file_edit,   ["ctrl-s"] = fzf_actions.file_split,
+                ["ctrl-v"]  = fzf_actions.file_vsplit,  ["ctrl-t"] = fzf_actions.file_tabedit,
+                ["alt-q"]   = fzf_actions.file_sel_to_qf,
+                ["ctrl-y"]  = function(selected) print(selected[1]) end,
+            },
+        },
+        git = {
+            files    = { prompt = ' ', cmd = 'git ls-files --exclude-standard', git_icons = true, file_icons = true, color_icons = true },
+            status   = { prompt = ' ', cmd = "git status -s", previewer = "git_diff", file_icons = true, git_icons = true },
+            commits  = {
+                prompt = '  ', cmd = "git log --pretty=oneline --abbrev-commit --color",
+                preview = "git show --pretty='%Cred%H%n%Cblue%an%n%Cgreen%s' --color {1}",
+                actions = { ["default"] = fzf_actions.git_checkout },
+            },
+            bcommits = {
+                prompt = '  ', cmd = "git log --pretty=oneline --abbrev-commit --color",
+                preview = "git show --pretty='%Cred%H%n%Cblue%an%n%Cgreen%s' --color {1}",
+                actions = { ["default"] = fzf_actions.git_buf_edit, ["ctrl-s"] = fzf_actions.git_buf_split,
+                            ["ctrl-v"] = fzf_actions.git_buf_vsplit, ["ctrl-t"] = fzf_actions.git_buf_tabedit },
+            },
+            branches = {
+                prompt = ' ', cmd = "git branch --all --color",
+                preview = "git log --graph --pretty=oneline --abbrev-commit --color {1}",
+                actions = { ["default"] = fzf_actions.git_switch },
+            },
+            icons = { ["M"] = { icon = "M", color = "yellow" }, ["D"] = { icon = "D", color = "red" },
+                      ["A"] = { icon = "A", color = "green" },  ["?"] = { icon = "?", color = "magenta" } },
+        },
+        grep = {
+            prompt = 'Rg❯ ', input_prompt = 'Grep For❯ ',
+            rg_opts = "--hidden --column --line-number --no-heading --color=always --smart-case -g '!{.git,node_modules}/*'",
+            git_icons = true, file_icons = true, color_icons = true,
+            glob_flag = "--iglob", glob_separator = "%s%-%-",
+        },
+        args     = { prompt = 'Args❯ ',    files_only = true, actions = { ["ctrl-x"] = fzf_actions.arg_del } },
+        oldfiles = { prompt = 'History❯ ', cwd_only = false },
+        buffers  = {
+            prompt = 'Buffers❯ ', file_icons = true, color_icons = true, sort_lastused = true,
+            actions = { ["default"] = fzf_actions.buf_edit, ["ctrl-s"] = fzf_actions.buf_split,
+                        ["ctrl-v"]  = fzf_actions.buf_vsplit, ["ctrl-t"] = fzf_actions.buf_tabedit,
+                        ["ctrl-x"]  = fzf_actions.buf_del },
+        },
+        blines = {
+            previewer = "builtin", prompt = 'BLines❯ ',
+            actions = { ["default"] = fzf_actions.buf_edit, ["ctrl-s"] = fzf_actions.buf_split,
+                        ["ctrl-v"]  = fzf_actions.buf_vsplit, ["ctrl-t"] = fzf_actions.buf_tabedit },
+        },
+        colorschemes = {
+            prompt = '  ', live_preview = true,
+            actions = { ["default"] = fzf_actions.colorscheme },
+            winopts = { height = 0.55, width = 0.30 },
+        },
+        quickfix = { file_icons = true, git_icons = true },
+        lsp = {
+            prompt = '❯ ', async_or_timeout = true, file_icons = true, lsp_icons = true, severity = "hint",
+            icons = {
+                ["Error"]       = { icon = "", color = "red" },
+                ["Warning"]     = { icon = "", color = "yellow" },
+                ["Information"] = { icon = "", color = "blue" },
+                ["Hint"]        = { icon = "", color = "magenta" },
+            },
+        },
+        file_icon_padding = '', file_icon_colors = { ["lua"] = "blue", ["hcl"] = "magenta" },
+    }
+
+    fzf_loaded = true
+end
+
 -- split window
 map('n', '<Leader>|', ':vsp<CR>',  { noremap = true, silent = true })
 map('n', '<Leader>_', ':sp<CR>',   { noremap = true, silent = true })
 
 -- file explorer
-map('n', '<Leader>e', ':Neotree toggle<CR>', { noremap = true, silent = true })
+map('n', '<Leader>e', function()
+    load_neo_tree()
+    vim.cmd('Neotree toggle')
+end, { noremap = true, silent = true })
 
 -- yank line
 map('n', '<S-y>', 'yy', { noremap = true, silent = true })
@@ -158,9 +351,18 @@ map('v', '<C-/>', '<Plug>NERDCommenterToggle<CR>gv',   { noremap = true, silent 
 map('v', '<C-c>', '<Plug>NERDCommenterSexy<CR>gv',     { silent = true })
 
 -- fzf
-map('n', '<C-p>', ':FzfLua files<CR>',     { noremap = true, silent = true })
-map('n', '<C-b>', ':FzfLua buffers<CR>',   { noremap = true, silent = true })
-map('n', '<C-f>', ':FzfLua live_grep<CR>', { noremap = true, silent = true })
+map('n', '<C-p>', function()
+    load_fzf()
+    require('fzf-lua').files()
+end, { noremap = true, silent = true })
+map('n', '<C-b>', function()
+    load_fzf()
+    require('fzf-lua').buffers()
+end, { noremap = true, silent = true })
+map('n', '<C-f>', function()
+    load_fzf()
+    require('fzf-lua').live_grep()
+end, { noremap = true, silent = true })
 
 -- clear search highlight
 map('n', '<CR>', ':noh<CR><CR>', { noremap = true, silent = true })
@@ -303,7 +505,7 @@ local function color_mode()
     local mc = {
         n = colors.orange, i = colors.blue, v = colors.magenta, V = colors.magenta,
         c = colors.red, no = colors.red, s = colors.orange, S = colors.orange,
-        ic = colors.yellow, R = colors.purple, Rv = colors.purple,
+        ic = colors.yellow, R = colors.violet, Rv = colors.violet,
         cv = colors.red, ce = colors.red, r = colors.blue, rm = colors.blue,
         ["r?"] = colors.blue, ["!"] = colors.red, t = colors.red,
         [""] = colors.magenta, [""] = colors.orange,
@@ -347,68 +549,6 @@ require('lualine').setup {
 
 -- ─── file explorer ────────────────────────────────────────────────────────────
 require('nvim-web-devicons').setup()
-
-require('neo-tree').setup {
-    close_if_last_window = false,
-    popup_border_style   = "rounded",
-    enable_git_status    = true,
-    enable_diagnostics   = false,
-    sort_case_insensitive = true,
-    default_component_configs = {
-        indent = { indent_size = 2, padding = 1 },
-        git_status = {
-            symbols = {
-                added     = "+",  modified  = "~",
-                deleted   = "-",  renamed   = "",
-                untracked = "?", ignored   = "",
-                unstaged  = "?", staged    = "",
-                conflict  = "",
-            },
-        },
-    },
-    window = {
-        position = "left",
-        width    = 40,
-        mappings = {
-            -- ["<space>"] = "toggle_node",
-            ["<cr>"]    = "open",
-            ["l"]       = "open",
-            ["h"]       = "close_node",
-            ["v"]       = "open_vsplit",
-            ["s"]       = "open_split",
-            ["t"]       = "open_tabnew",
-            ["C"]       = "close_node",
-            ["z"]       = "close_all_nodes",
-            ["R"]       = "refresh",
-            ["a"]       = "add",
-            ["d"]       = "delete",
-            ["r"]       = "rename",
-            ["y"]       = "copy_to_clipboard",
-            ["x"]       = "cut_to_clipboard",
-            ["p"]       = "paste_from_clipboard",
-            ["q"]       = "close_window",
-            ["?"]       = "show_help",
-            ["gy"]      = function(state)
-                local path = state.tree:get_node():get_id()
-                vim.fn.setreg('+', path)
-                vim.notify('Copied: ' .. path)
-            end,
-        },
-    },
-    filesystem = {
-        filtered_items = {
-            visible        = false,
-            hide_dotfiles  = false,
-            hide_gitignored = false,
-        },
-        follow_current_file    = { enabled = false },
-        use_libuv_file_watcher = false,
-        hijack_netrw_behavior  = "open_default",
-    },
-    buffers = {
-        follow_current_file = { enabled = true },
-    },
-}
 
 -- ─── buffer tabs ─────────────────────────────────────────────────────────────
 require('bufferline').setup {
@@ -463,111 +603,6 @@ require("auto-session").setup {
     args_allow_single_directory = true,
     continue_restore_on_error   = true,
     log_level = "error",
-}
-
--- ─── fuzzy finder ────────────────────────────────────────────────────────────
-local fzf_actions = require("fzf-lua.actions")
-require('fzf-lua').setup {
-    winopts = {
-        height = 0.85, width = 0.80, row = 0.35, col = 0.50,
-        border = { '┌', '─', '┐', '│', '┘', '─', '└', '│' },
-        fullscreen = false,
-        hl      = { normal = 'Normal', border = 'Normal', cursor = 'Cursor', cursorline = 'CursorLine' },
-        preview = {
-            border = 'border', wrap = 'nowrap', hidden = 'nohidden',
-            vertical = 'down:45%', horizontal = 'right:60%', layout = 'flex',
-            flip_columns = 120, title = true, scrollbar = 'float', scrollchars = { '█', '' },
-        },
-    },
-    keymap = {
-        builtin = {
-            ["<F2>"] = "toggle-fullscreen", ["<F3>"] = "toggle-preview-wrap",
-            ["<F4>"] = "toggle-preview",    ["<F5>"] = "toggle-preview-ccw",
-            ["<F6>"] = "toggle-preview-cw", ["<S-down>"] = "preview-page-down",
-            ["<S-up>"] = "preview-page-up", ["<S-left>"] = "preview-page-reset",
-        },
-        fzf = {
-            ["ctrl-z"] = "abort",      ["ctrl-u"] = "unix-line-discard",
-            ["ctrl-f"] = "half-page-down", ["ctrl-b"] = "half-page-up",
-            ["ctrl-a"] = "beginning-of-line", ["ctrl-e"] = "end-of-line",
-            ["alt-a"]  = "toggle-all",
-        },
-    },
-    fzf_opts = { ['--ansi'] = '', ['--prompt'] = '> ', ['--info'] = 'inline', ['--height'] = '100%', ['--layout'] = 'default' },
-    previewers = {
-        cat      = { cmd = "cat",  args = "--number" },
-        bat      = { cmd = "bat",  args = "--style=numbers,changes --color always", theme = 'OneHalfDark' },
-        head     = { cmd = "head" },
-        git_diff = { cmd = "git diff", args = "--color" },
-        man      = { cmd = "man -c %s | col -bx" },
-        builtin  = { delay = 100, syntax = true, syntax_limit_b = 1024 * 1024 },
-    },
-    files = {
-        prompt = '  ', git_icons = true, file_icons = true, color_icons = true,
-        actions = {
-            ["default"] = fzf_actions.file_edit,   ["ctrl-s"] = fzf_actions.file_split,
-            ["ctrl-v"]  = fzf_actions.file_vsplit,  ["ctrl-t"] = fzf_actions.file_tabedit,
-            ["alt-q"]   = fzf_actions.file_sel_to_qf,
-            ["ctrl-y"]  = function(selected) print(selected[1]) end,
-        },
-    },
-    git = {
-        files    = { prompt = ' ', cmd = 'git ls-files --exclude-standard', git_icons = true, file_icons = true, color_icons = true },
-        status   = { prompt = ' ', cmd = "git status -s", previewer = "git_diff", file_icons = true, git_icons = true },
-        commits  = {
-            prompt = '  ', cmd = "git log --pretty=oneline --abbrev-commit --color",
-            preview = "git show --pretty='%Cred%H%n%Cblue%an%n%Cgreen%s' --color {1}",
-            actions = { ["default"] = fzf_actions.git_checkout },
-        },
-        bcommits = {
-            prompt = '  ', cmd = "git log --pretty=oneline --abbrev-commit --color",
-            preview = "git show --pretty='%Cred%H%n%Cblue%an%n%Cgreen%s' --color {1}",
-            actions = { ["default"] = fzf_actions.git_buf_edit, ["ctrl-s"] = fzf_actions.git_buf_split,
-                        ["ctrl-v"] = fzf_actions.git_buf_vsplit, ["ctrl-t"] = fzf_actions.git_buf_tabedit },
-        },
-        branches = {
-            prompt = ' ', cmd = "git branch --all --color",
-            preview = "git log --graph --pretty=oneline --abbrev-commit --color {1}",
-            actions = { ["default"] = fzf_actions.git_switch },
-        },
-        icons = { ["M"] = { icon = "M", color = "yellow" }, ["D"] = { icon = "D", color = "red" },
-                  ["A"] = { icon = "A", color = "green" },  ["?"] = { icon = "?", color = "magenta" } },
-    },
-    grep = {
-        prompt = 'Rg❯ ', input_prompt = 'Grep For❯ ',
-        rg_opts = "--hidden --column --line-number --no-heading --color=always --smart-case -g '!{.git,node_modules}/*'",
-        git_icons = true, file_icons = true, color_icons = true,
-        glob_flag = "--iglob", glob_separator = "%s%-%-",
-    },
-    args     = { prompt = 'Args❯ ',    files_only = true, actions = { ["ctrl-x"] = fzf_actions.arg_del } },
-    oldfiles = { prompt = 'History❯ ', cwd_only = false },
-    buffers  = {
-        prompt = 'Buffers❯ ', file_icons = true, color_icons = true, sort_lastused = true,
-        actions = { ["default"] = fzf_actions.buf_edit, ["ctrl-s"] = fzf_actions.buf_split,
-                    ["ctrl-v"]  = fzf_actions.buf_vsplit, ["ctrl-t"] = fzf_actions.buf_tabedit,
-                    ["ctrl-x"]  = fzf_actions.buf_del },
-    },
-    blines = {
-        previewer = "builtin", prompt = 'BLines❯ ',
-        actions = { ["default"] = fzf_actions.buf_edit, ["ctrl-s"] = fzf_actions.buf_split,
-                    ["ctrl-v"]  = fzf_actions.buf_vsplit, ["ctrl-t"] = fzf_actions.buf_tabedit },
-    },
-    colorschemes = {
-        prompt = '  ', live_preview = true,
-        actions = { ["default"] = fzf_actions.colorscheme },
-        winopts = { height = 0.55, width = 0.30 },
-    },
-    quickfix = { file_icons = true, git_icons = true },
-    lsp = {
-        prompt = '❯ ', async_or_timeout = true, file_icons = true, lsp_icons = true, severity = "hint",
-        icons = {
-            ["Error"]       = { icon = "", color = "red" },
-            ["Warning"]     = { icon = "", color = "yellow" },
-            ["Information"] = { icon = "", color = "blue" },
-            ["Hint"]        = { icon = "", color = "magenta" },
-        },
-    },
-    file_icon_padding = '', file_icon_colors = { ["lua"] = "blue", ["hcl"] = "magenta" },
 }
 
 -- ─── git signs ────────────────────────────────────────────────────────────────
