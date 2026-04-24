@@ -26,6 +26,8 @@ vim.o.termguicolors   = true
 vim.o.wrap            = false
 vim.o.swapfile        = false
 vim.o.showmode        = false
+vim.o.autoread        = true
+vim.o.updatetime      = 300
 vim.o.showtabline     = 2
 vim.o.laststatus      = 3
 vim.g.clipboard = {
@@ -55,6 +57,14 @@ local function run_detached(cmd, opts)
         vim.notify(err, vim.log.levels.WARN)
     end
 end
+
+vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter', 'CursorHold', 'CursorHoldI', 'TermClose', 'TermLeave' }, {
+    callback = function()
+        if vim.fn.mode() ~= 'c' then
+            vim.cmd('checktime')
+        end
+    end,
+})
 
 vim.api.nvim_create_autocmd({ 'BufWritePre', 'BufRead' }, {
     group = local_config_group,
