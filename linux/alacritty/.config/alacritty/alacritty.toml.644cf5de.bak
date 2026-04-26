@@ -55,12 +55,10 @@ lines = 50
 x = 25
 y = 25
 
-# [terminal.shell]
-# program = "tmux"
+[terminal.shell]
+program = "tmux"
 
 [keyboard]
 bindings = [
     { key = "Escape", mods = "Control", action = "ToggleViMode" },
-    { key = "Return", mods = "Shift", chars = "\u001B\r" }
 ]
-

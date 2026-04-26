@@ -218,7 +218,7 @@ keymap:
       
   - name: "Terminal Mac-like bindings"
     application:
-      only: Alacritty
+      only: [Alacritty, foot]
     remap:
       Super-C: C-Shift-c   # Copy
       Super-V: C-Shift-v   # Paste

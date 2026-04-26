@@ -1,8 +1,8 @@
 $mainMod = Super
 
-$terminal = alacritty
+$terminal = foot
 #$menu = rofi -no-lazy-grab -no-history -no-sort -show drun -modi ssh,drun -theme /home/laznp/.config/rofi/config
-$menu = tofi-drun --config ~/.config/tofi/launcher.config 
+$menu = tofi-drun --config ~/.config/tofi/launcher.config
 $fileManager = alacritty -e ranger
 
 # WINDOWS NAVIGATION WITHIN WORKSPACES
