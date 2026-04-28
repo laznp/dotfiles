@@ -70,13 +70,6 @@
         "return-type": "plain",
         "on-click": "tofi-drun --config ~/.config/tofi/launcher.config"
     },
-    "custom/mousebat": {
-        "format": "󰍽  {} ",
-        "max-length": 40,
-        "interval": 1,
-        "exec": "python3 $HOME/.local/custom-bin/razer_battery",
-        "return-type": "plain",
-    },
     "network": {
         "interface": "br0",
         "format": "{ifname}",
@@ -121,14 +114,6 @@
     "tray": {
         "icon-size": 16,
         "spacing": 10
-    },
-    "custom/mousebat": {
-        "format": " 󰍽 {} ",
-        "max-length": 40,
-        "interval": 30,
-        "exec": "python3 $HOME/.local/custom-bin/razer_battery",
-        "return-type": "plain",
-        "escape": true
     },
     "custom/headphonebat": {
         "format": "  {} ",
