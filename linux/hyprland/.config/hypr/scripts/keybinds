@@ -27,8 +27,18 @@ bind = $mainMod, 8, workspace, 8
 bind = $mainMod, 9, workspace, 9
 bind = $mainMod, 0, workspace, 10
 
+bind = $mainMod shift, 1, movetoworkspace, 1
+bind = $mainMod shift, 2, movetoworkspace, 2
+bind = $mainMod shift, 3, movetoworkspace, 3
+bind = $mainMod shift, 4, movetoworkspace, 4
+bind = $mainMod shift, 5, movetoworkspace, 5
+bind = $mainMod shift, 6, movetoworkspace, 6
+bind = $mainMod shift, 7, movetoworkspace, 7
+bind = $mainMod shift, 8, movetoworkspace, 8
+bind = $mainMod shift, 9, movetoworkspace, 9
+bind = $mainMod shift, 0, movetoworkspace, 10
 # Example special workspace (scratchpad)
-# bind = $mainMod, S, togglespecialworkspace, magic
+bind = $mainMod, tab, togglespecialworkspace, magic
 # bind = $mainMod SHIFT, S, movetoworkspace, special:magic
 
 # MEDIA KEYS TO SET VOLUME
