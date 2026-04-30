@@ -2,79 +2,14 @@
 # Save this as ~/.config/xremap/config.yml or similar
 
 keymap:
-  # MEDIA CONTROL WITH SUPER+CTRL
-  # - name: "PlayerCtl controls"
-    # remap:
-      # Super-Ctrl-Left:
-        # launch: ["playerctl", "previous", "-p", "spotify"]
-      # Super-Ctrl-Right:
-        # launch: ["playerctl", "next", "-p", "spotify"]
-      # Super-Ctrl-space:
-        # launch: ["playerctl", "play-pause", "-p", "spotify"]
-
-# # VOLUME CONTROLS
-  # - name: "Volume controls"
-    # remap:
-      # VOLUMEDOWN:
-        # launch: ["/home/laznp/.local/custom-bin/volume", "down"]
-      # VOLUMEUP:
-        # launch: ["/home/laznp/.local/custom-bin/volume", "up"]
-      # MUTE:
-        # launch: ["/home/laznp/.local/custom-bin/volume", "mute"]
   # Hyprland
   - name: "Hyprland window manager controls"
     remap:
-      # super-l:
-        # launch: ["hyprctl", "dispatch", "workspace", "+1"]
-      # super-h:
-        # launch: ["hyprctl", "dispatch", "workspace", "-1"]
       super-i:
         remap:
-          # Focus directions
-          # h:
-            # launch: ["hyprctl", "dispatch", "movefocus", "l"]
-          # j:
-            # launch: ["hyprctl", "dispatch", "movefocus", "d"]
-          # k:
-            # launch: ["hyprctl", "dispatch", "movefocus", "u"]
-          # l:
-            # launch: ["hyprctl", "dispatch", "movefocus", "r"]
-
           # # Close window
           q:
             launch: ["hyprctl", "dispatch", "killactive", ""]
-
-          # # Swap (move) window in directions
-          # Shift-h:
-            # launch: ["hyprctl", "dispatch", "movewindow", "l"]
-          # Shift-j:
-            # launch: ["hyprctl", "dispatch", "movewindow", "d"]
-          # Shift-k:
-            # launch: ["hyprctl", "dispatch", "movewindow", "u"]
-          # Shift-l:
-            # launch: ["hyprctl", "dispatch", "movewindow", "r"]
-
-          # # Focus workspaces (Hyprland uses numbered workspaces like "1", "2", etc.)
-          # x:
-            # launch: ["hyprctl", "dispatch", "workspace", "1"]
-          # c:
-            # launch: ["hyprctl", "dispatch", "workspace", "2"]
-          # v:
-            # launch: ["hyprctl", "dispatch", "workspace", "3"]
-          # s:
-            # launch: ["hyprctl", "dispatch", "workspace", "4"]
-          # d:
-            # launch: ["hyprctl", "dispatch", "workspace", "5"]
-          # f:
-            # launch: ["hyprctl", "dispatch", "workspace", "6"]
-          # w:
-            # launch: ["hyprctl", "dispatch", "workspace", "7"]
-          # e:
-            # launch: ["hyprctl", "dispatch", "workspace", "8"]
-          # r:
-            # launch: ["hyprctl", "dispatch", "workspace", "9"]
-          # t:
-            # launch: ["hyprctl", "dispatch", "workspace", "10"]
 
           # # Move active window to workspace
           # Shift-x:
@@ -215,7 +150,7 @@ keymap:
           # # Password menu
           # p:
             # launch: ["bash", "/home/laznp/.local/custom-bin/passwordmenu"]
-      
+
   - name: "Terminal Mac-like bindings"
     application:
       only: [Alacritty, foot]

@@ -9,10 +9,11 @@
     ],
     "modules-center": [],
     "modules-right": [
-        "custom/mousebat",
+        "custom/powerpackage",
         "pulseaudio",
         "network",
-        "clock"
+        "clock",
+        "tray"
     ],
     "colors": {
         "background": "#282c34",
@@ -26,11 +27,10 @@
     },
     "hyprland/workspaces": {
         "persistent-workspaces": {
-            "DP-2": [ 1, 2, 3, 4, 5, 6 ],
-            "DP-3": [ 7, 8, 9, 10 ]
+            "DP-2": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
         },
         "disable-scroll": true,
-        "all-outputs": false,
+        "all-outputs": true,
         "warp-on-scroll": false,
         "format": "{icon}",
         "format-icons": {
@@ -69,13 +69,6 @@
         "exec": "echo  ",
         "return-type": "plain",
         "on-click": "tofi-drun --config ~/.config/tofi/launcher.config"
-    },
-    "custom/mousebat": {
-        "format": "󰍽  {} ",
-        "max-length": 40,
-        "interval": 1,
-        "exec": "python3 $HOME/.local/custom-bin/razer_battery",
-        "return-type": "plain",
     },
     "network": {
         "interface": "br0",
@@ -122,14 +115,6 @@
         "icon-size": 16,
         "spacing": 10
     },
-    "custom/mousebat": {
-        "format": " 󰍽 {} ",
-        "max-length": 40,
-        "interval": 30,
-        "exec": "python3 $HOME/.local/custom-bin/razer_battery",
-        "return-type": "plain",
-        "escape": true
-    },
     "custom/headphonebat": {
         "format": "  {} ",
         "max-length": 40,
@@ -137,7 +122,28 @@
         "exec": "bash $HOME/.local/custom-bin/xm4_battery",
         "return-type": "plain",
         "escape": true
-    }
+    },
+    "custom/cputemp": {
+        "format": "󰍛 {} ",
+        "max-length": 40,
+        "interval": 1,
+        "exec": "echo $(sensors zenpower-pci-00c3 | grep Tdie | awk '{ print $2 }' | tr -d '+')",
+        "return-type": "plain"
+    },
+    "custom/gputemp": {
+        "format": "󰢮 {} ",
+        "max-length": 40,
+        "interval": 1,
+        "exec": "echo $(sensors amdgpu-pci-2d00 | grep edge | awk '{ print $2 }' | tr -d '+')",
+        "return-type": "plain"
+    },
+    "custom/powerpackage": {
+        "format": " {} ",
+        "max-length": 40,
+        "interval": 1,
+        "exec": "echo $(bash /home/laznp/.local/custom-bin/power-package | tail -n 1 | awk '{print $2}')",
+        "return-type": "plain"
+    },
 },{
     "layer": "top",
     "position": "top",
@@ -169,7 +175,7 @@
             "DP-3": [ 7, 8, 9, 10 ],
         },
         "disable-scroll": true,
-        "all-outputs": false,
+        "all-outputs": true,
         "warp-on-scroll": false,
         "format": "{icon}",
         "format-icons": {
