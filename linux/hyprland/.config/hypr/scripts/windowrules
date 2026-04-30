@@ -24,3 +24,6 @@ windowrule = move 0 0,match:class (flameshot),match:title (flameshot)
 windowrule = match:pin true,match:class (flameshot),match:title (flameshot)
 windowrule = match:fullscreen true,match:class (flameshot),match:title (flameshot)
 windowrule = match:float true,match:class (flameshot),match:title (flameshot)
+
+# ueberzugpp - prevent focus steal during image preview
+windowrule = match:float true, match:class (ueberzugpp)
