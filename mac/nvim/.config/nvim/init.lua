@@ -151,6 +151,7 @@ vim.pack.add({
 
     gh('MunifTanjim/nui.nvim'),
     gh('nvim-neo-tree/neo-tree.nvim'),
+    gh('s1n7ax/nvim-window-picker'),
     gh('akinsho/bufferline.nvim'),
     gh('ojroques/nvim-bufdel'),
     gh('rmagatti/auto-session'),
@@ -282,6 +283,19 @@ require('lualine').setup {
 -- ─── file explorer ────────────────────────────────────────────────────────────
 require('nvim-web-devicons').setup()
 
+require('window-picker').setup {
+    hint = 'floating-big-letter',
+    selection_chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+    filter_rules = {
+        include_current_win = false,
+        autoselect_one = true,
+        bo = {
+            filetype = { 'neo-tree', 'neo-tree-popup', 'notify' },
+            buftype  = { 'terminal', 'quickfix' },
+        },
+    },
+}
+
 require('neo-tree').setup {
     close_if_last_window = false,
     popup_border_style   = "rounded",
@@ -304,11 +318,11 @@ require('neo-tree').setup {
         position = "left",
         width    = 40,
         mappings = {
-            ["<cr>"]    = "open",
-            ["l"]       = "open",
+            ["<cr>"]    = "open_with_window_picker",
+            ["l"]       = "open_with_window_picker",
             ["h"]       = "close_node",
-            ["v"]       = "open_vsplit",
-            ["s"]       = "open_split",
+            ["v"]       = "vsplit_with_window_picker",
+            ["s"]       = "split_with_window_picker",
             ["t"]       = "open_tabnew",
             ["C"]       = "close_node",
             ["z"]       = "close_all_nodes",
@@ -316,7 +330,7 @@ require('neo-tree').setup {
             ["a"]       = "add",
             ["d"]       = "delete",
             ["r"]       = "rename",
-            ["y"]       = "copy_to_clipboard",
+            ["c"]       = "copy_to_clipboard",
             ["x"]       = "cut_to_clipboard",
             ["p"]       = "paste_from_clipboard",
             ["q"]       = "close_window",

@@ -49,7 +49,7 @@
             "default": ""
         }
     },
-    
+
     "hyprland/window": {
         "format": " {}",
         "rewrite": {
@@ -65,7 +65,7 @@
     "custom/archlinux": {
         "format": "  {} ",
         "max-length": 40,
-        "interval": 1, 
+        "interval": 1,
         "exec": "echo  ",
         "return-type": "plain",
         "on-click": "tofi-drun --config ~/.config/tofi/launcher.config"
@@ -73,7 +73,7 @@
     "custom/mousebat": {
         "format": "󰍽  {} ",
         "max-length": 40,
-        "interval": 1, 
+        "interval": 1,
         "exec": "python3 $HOME/.local/custom-bin/razer_battery",
         "return-type": "plain",
     },
@@ -228,7 +228,7 @@
     "custom/archlinux": {
         "format": "  {} ",
         "max-length": 40,
-        "interval": 1, 
+        "interval": 1,
         "exec": "echo  ",
         "return-type": "plain",
         "on-click": "tofi-drun --config ~/.config/tofi/launcher.config"
