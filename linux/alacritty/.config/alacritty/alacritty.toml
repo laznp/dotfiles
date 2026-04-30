@@ -1,12 +1,43 @@
 [general]
 live_config_reload = true
 
-import = [
-  "~/.config/alacritty/onedark.toml"
-]
-
 [colors]
 draw_bold_text_with_bright_colors = true
+
+[colors.primary]
+background = "0x101010"
+foreground = "0x93a4c3"
+bright_foreground = "0x455574"
+
+[colors.normal]
+black   = "0x101010"
+red     = "0xf65866"
+green   = "0x8bcd5b"
+yellow  = "0xefbd5d"
+blue    = "0x41a7fc"
+magenta = "0xc75ae8"
+cyan    = "0x34bfd0"
+white   = "0x828791"
+
+[colors.bright]
+black   = "0x93a4c3"
+red     = "0xf65866"
+green   = "0x8bcd5b"
+yellow  = "0xefbd5d"
+blue    = "0x41a7fc"
+magenta = "0xc75ae8"
+cyan    = "0x34bfd0"
+white   = "0x828791"
+
+[colors.dim]
+black   = "0x1e2127"
+red     = "0xe06c75"
+green   = "0x98c379"
+yellow  = "0xd19a66"
+blue    = "0x61afef"
+magenta = "0xc678dd"
+cyan    = "0x56b6c2"
+white   = "0x828791"
 
 [env]
 TERM = "xterm-256color"
@@ -15,19 +46,19 @@ TERM = "xterm-256color"
 size = 9
 
 [font.normal]
-family = "JetBrainsMono Nerd Font"
+family = "RobotoMono Nerd Font"
 style = "Bold"
 
 [font.bold]
-family = "JetBrainsMono Nerd Font"
+family = "RobotoMono Nerd Font"
 style = "Bold"
 
 [font.bold_italic]
-family = "JetBrainsMono Nerd Font"
+family = "RobotoMono Nerd Font"
 style = "Bold Italic"
 
 [font.italic]
-family = "JetBrainsMono Nerd Font"
+family = "RobotoMono Nerd Font"
 style = "Bold Italic"
 
 [font.offset]
