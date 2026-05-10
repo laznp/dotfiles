@@ -2,3 +2,6 @@
 **/.fuse_hidden*
 **/.DS_STORE
 **/.config/tmux/resurrect
+
+# zsh — secrets
+**/.config/zsh/secrets
