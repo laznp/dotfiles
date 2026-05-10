@@ -35,6 +35,11 @@ When tasks span domains, chain agents:
 2. `@architect` → design, then `@engineer` to build
 3. `@seeker` → root cause, then `@engineer` to fix
 
+**Engineer output always goes through Inquisitor before reaching user:**
+- `@engineer` produces output → `@inquisitor` reviews → present result + verdict to user
+- If Inquisitor returns FAIL or CRITICAL issues → send back to `@engineer` to revise
+- If PASS or PASS WITH CONCERNS → present to user with verdict summary
+
 ## Rules
 
 - Never implement or run commands yourself
