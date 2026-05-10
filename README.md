@@ -20,7 +20,7 @@ Running `stow -t ~ <package>` creates symlinks from `$HOME` into the repo.
 
 | Platform | Packages                                                                                                                                                                           |
 | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **all**      | zsh, git, tmux, bat, starship, k9s, opencode, fonts                                                                                                                                |
+| **all**      | zsh, git, tmux, bat, starship, k9s, ai-agent, fonts                                                                                                                                |
 | **linux**    | Hyprland, bspwm, waybar, nvim, rofi, polybar, alacritty, dunst, ly, pipewire, ranger, systemd, tofi, vivid, wallpapers, wireplumber, xremap, picom, swaylock, swappy, sxhkd, utils |
 | **mac**      | aerospace, sketchybar, nvim, alacritty, utils                                                                                                                                      |
 
@@ -31,7 +31,7 @@ Running `stow -t ~ <package>` creates symlinks from `$HOME` into the repo.
 - **tmux** — status bar, keybinds, mouse support, persistent sessions via continuum/resurrect
 - **starship** — custom prompt with git/K8s status, docker/python context
 - **k9s** — Kubernetes TUI theme and keybind overrides
-- **opencode** — AI-assisted dev tool with custom agent definitions and MCP servers (K8s, Slack, GitHub, Grafana)
+- **Shadowforce** — multi-agent AI system running on Claude Code and OpenCode Go. Six specialized agents (Overlord, Stalker, Engineer, Inquisitor, Seeker, Architect, Vanguard) with routing, supervision, and quality/security gates. Each agent runs on a different model optimized for its role (DeepSeek v4, Qwen, GLM, Mimo). Same team, same rules across both Claude and OpenCode runtimes.
 - **Desktop (Linux)** — Hyprland (Wayland compositor) or bspwm (X11), waybar/polybar status bars, rofi launcher, dunst notifications, alacritty terminal, ly login manager
 - **nvim** — editor config (separate per platform for UI differences)
 - **macOS** — aerospace tiling WM, sketchybar menu bar
@@ -48,7 +48,7 @@ git clone git@github.com:laznp/dotfiles.git ~/Projects/personal/dotfiles
 cd ~/Projects/personal/dotfiles
 
 # Cross-platform configs
-stow -t ~ -d all zsh git tmux bat starship k9s opencode
+stow -t ~ -d all zsh git tmux bat starship k9s ai-agent
 
 # Linux desktop
 stow -t ~ -d linux nvim hyprland waybar rofi alacritty dunst ly

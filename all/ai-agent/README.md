@@ -9,15 +9,15 @@ ai-agent/
 ├── .claude/
 │   └── CLAUDE.md                    # Claude Code team definition
 └── .config/opencode/
-    ├── opencode.json                 # Provider config, default_agent, MCP servers
-    └── agents/
-        ├── overlord.md               # Primary agent (default)
-        ├── stalker.md                # Recon
-        ├── engineer.md               # Implementation
-        ├── inquisitor.md             # Quality gate
-        ├── seeker.md                 # Incident triage
-        ├── architect.md              # Strategy
-        └── vanguard.md               # Security
+    ├── opencode.json                 # Provider config, MCP servers
+    ├── AGENTS.md                     # Overlord — global instructions for main agent
+    └── skills/
+        ├── stalker/SKILL.md          # Recon
+        ├── engineer/SKILL.md         # Implementation
+        ├── inquisitor/SKILL.md       # Quality gate
+        ├── seeker/SKILL.md           # Incident triage
+        ├── architect/SKILL.md        # Strategy
+        └── vanguard/SKILL.md         # Security
 ```
 
 ## The Team
@@ -36,47 +36,34 @@ ai-agent/
 
 ```
 You
- └── Overlord (presents plan, waits approval)
-      ├── @stalker      → recon, never modifies
-      ├── @engineer     → builds (every action asks you)
-      │    ├── @inquisitor  → quality review (parallel)
-      │    └── @vanguard    → security review (parallel)
-      ├── @seeker       → incidents, asks before bash
-      ├── @architect    → strategy, words only
-      └── @vanguard     → security, words only
+ └── Overlord (main agent — AGENTS.md defines behavior)
+      ├── skill(stalker)      → recon, never modifies
+      ├── skill(engineer)     → builds (every action asks you)
+      │    ├── skill(inquisitor)  → quality review (parallel)
+      │    └── skill(vanguard)    → security review (parallel)
+      ├── skill(seeker)       → incidents, asks before bash
+      ├── skill(architect)    → strategy, words only
+      └── skill(vanguard)     → security, words only
 ```
+
+Overlord loads each member on demand via `skill({ name: "<member>" })`. All skills run on Overlord's model — no per-skill model config (OpenCode limitation).
 
 ## Supervision Model
 
-- Overlord presents plan → you approve → agents act
-- Every `write`, `edit`, `bash` on Engineer → asks you
-- Every `bash` on Seeker → asks you
-- Stalker → reads freely, destructive ops hard-denied
-- Architect, Inquisitor, Vanguard → words only, no tools
+- Overlord presents plan → you approve → acts
+- Stalker skill → reads freely, destructive ops refused
+- Engineer skill → asks before every write/edit/bash
+- Seeker skill → asks before bash
+- Architect, Inquisitor, Vanguard skills → words only, no tools
 
 ## Quality + Security Gate
 
-Engineer output → **Inquisitor** (quality) + **Vanguard** (security) in parallel.
+Engineer output → **Inquisitor** skill (quality) + **Vanguard** skill (security) in parallel.
 CRITICAL from either → back to Engineer. Both must PASS before reaching you.
-
-## OpenCode Models
-
-| Agent | Model | Why |
-|---|---|---|
-| Overlord | `deepseek-v4-flash` | Fast routing, no depth needed |
-| Stalker | `qwen3.5-plus` | Highest TPS — recon is high-volume |
-| Engineer | `glm-5.1` | SWE-Bench Pro #1 (58.4%), best agentic coder |
-| Inquisitor | `deepseek-v4-pro` | Strongest reasoning for judgment |
-| Seeker | `mimo-v2.5-pro` | Purpose-built for systematic long-horizon reasoning |
-| Architect | `deepseek-v4-pro` | Strongest pure reasoning, Codeforces 3206 |
-| Vanguard | `glm-5.1` | Leads CyberGym security benchmark |
-
-> Kimi K2.5/K2.6 excluded — Moonshot MFJS incompatibility on opencode-go.
-> Track fix: https://github.com/anomalyco/opencode/pull/25011
 
 ## Claude Code
 
-Claude Code uses the same team via `CLAUDE.md`. No model switching (single model), but same routing rules, same supervision, same chaining. Shadowforce activates automatically on session start.
+Claude Code uses same team via `CLAUDE.md`. No skill mechanism — Overlord delegates via Agent tool subagents. Same routing rules, same supervision, same chaining. Shadowforce activates automatically on session start.
 
 ## Stow
 
