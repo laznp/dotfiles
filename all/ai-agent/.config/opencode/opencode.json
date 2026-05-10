@@ -25,7 +25,8 @@
   "agent": {
     "overlord": {
       "description": "Shadowforce commander — routes missions, delegates to skills, reports to you",
-      "model": "opencode-go/deepseek-v4-pro"
+      "model": "opencode-go/deepseek-v4-pro",
+      "prompt": "{file:~/.config/opencode/AGENTS.md}"
     }
   },
   "mcp": {
