@@ -61,6 +61,16 @@ Overlord loads each member on demand via `skill({ name: "<member>" })`. All skil
 Engineer output → **Inquisitor** skill (quality) + **Vanguard** skill (security) in parallel.
 CRITICAL from either → back to Engineer. Both must PASS before reaching you.
 
+## OpenCode Model
+
+All skills run on Overlord's model — no per-skill override (OpenCode limitation).
+
+| | Model |
+|---|---|
+| Overlord + all skills | `opencode-go/deepseek-v4-pro` |
+
+> Previously: each subagent had its own model. Migrated to skills — single model tradeoff for simpler global config.
+
 ## Claude Code
 
 Claude Code uses same team via `CLAUDE.md`. No skill mechanism — Overlord delegates via Agent tool subagents. Same routing rules, same supervision, same chaining. Shadowforce activates automatically on session start.

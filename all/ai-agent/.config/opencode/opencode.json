@@ -22,6 +22,12 @@
     "@franlol/opencode-md-table-formatter@0.0.3"
   ],
   "default_agent": "overlord",
+  "agent": {
+    "overlord": {
+      "description": "Shadowforce commander — routes missions, delegates to skills, reports to you",
+      "model": "opencode-go/deepseek-v4-pro"
+    }
+  },
   "mcp": {
     "kubernetes": {
       "type": "local",
