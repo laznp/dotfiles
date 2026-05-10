@@ -28,9 +28,26 @@ alias slack_nebulae="google-chrome-stable --app=https://app.slack.com/client/T5V
 # Alias source zshrc
 alias reload="source $HOME/.zshrc"
 
+# OpenCode: required env vars for MCP servers (set in ~/.config/zsh/env or shell profile)
+#   GITHUB_PERSONAL_ACCESS_TOKEN   - GitHub MCP
+#   SLACK_MCP_XOXP_TOKEN           - Slack MCP
+#   GRAFANA_URL                    - Grafana MCP
+#   GRAFANA_SERVICE_ACCOUNT_TOKEN  - Grafana MCP
+#   CORPUS_MCP_URL                 - Corpus MCP (default: https://corpus-mcp.devops.atbhn.io/mcp)
 function opencode-auth-update {
     jq --arg token "$( jq -r '.access_token' ~/.qwen/oauth_creds.json )" '.qwen.key = $token' ~/.local/share/opencode/auth.json > /tmp/qwen.json
     mv /tmp/qwen.json ~/.local/share/opencode/auth.json
+}
+
+function opencode-env {
+    echo "OpenCode MCP tokens status:"
+    for var in GITHUB_PERSONAL_ACCESS_TOKEN SLACK_MCP_XOXP_TOKEN GRAFANA_URL GRAFANA_SERVICE_ACCOUNT_TOKEN CORPUS_MCP_URL; do
+        if [ -n "${(P)var}" ]; then
+            echo "  $var = *** (set)"
+        else
+            echo "  $var = MISSING"
+        fi
+    done
 }
 
 function vim {

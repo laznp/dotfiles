@@ -246,3 +246,6 @@ ex=:\
 "
 
 export PATH="$PATH:$HOME/.local/custom-bin"
+
+# OpenCode MCP defaults
+export CORPUS_MCP_URL="${CORPUS_MCP_URL:-https://corpus-mcp.devops.atbhn.io/mcp}"
