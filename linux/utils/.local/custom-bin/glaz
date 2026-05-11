@@ -1,23 +1,23 @@
 #!/usr/bin/env bash
-BRANCH_NAME=$(git symbolic-ref --short -q HEAD)
-if [ $? -eq 0 ]; then
-	if [ $BRANCH_NAME != "main"  ]; then
-		read -p "Commit Message : "
-		git pull origin main
-		git add .
-		git commit -m "${REPLY}"
-		git push origin "$BRANCH_NAME"
-	else
-		read -p "You're on Master Branch. Proceed? [y/n] "
-		if [ ${REPLY} == "y" ] || [ ${REPLY} == "yes" ]; then
-			read -p "Commit Message : "
-			git pull origin main
-			git add .
-			git commit -m "${REPLY}"
-			git push origin main
-		else
-			echo "Can't Proceed on Main Branch!"
-		fi
-	fi
+set -euo pipefail
+
+git rev-parse --is-inside-work-tree &>/dev/null || { echo "Not a git repo"; exit 1; }
+
+BRANCH=$(git symbolic-ref --short HEAD)
+[[ -z "$BRANCH" ]] && { echo "Detached HEAD"; exit 1; }
+
+# Optional pull — explicit flag only
+if [[ "${1:-}" == "--pull" ]]; then
+    echo "Pulling origin/main into $BRANCH..."
+    git pull origin main --rebase || { echo "Pull failed, resolve conflicts first"; exit 1; }
 fi
 
+# Show status before commit
+git status --short
+echo ""
+read -p "Commit message: " MSG
+[[ -z "$MSG" ]] && { echo "Empty message, aborting"; exit 1; }
+
+git add -A
+git commit -m "$MSG"
+git push origin "$BRANCH"

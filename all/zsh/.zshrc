@@ -13,21 +13,21 @@ source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # ── Google Cloud SDK ──
-if [ -f '/home/laznp/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/home/laznp/Downloads/google-cloud-sdk/path.zsh.inc'; fi
-if [ -f '/home/laznp/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/laznp/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+if [ -f '$HOME/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '$HOME/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+if [ -f '$HOME/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '$HOME/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
 
 # ── Terragrunt ──
 export TERRAGRUNT_PROVIDER_CACHE=1
 
 # ── PATH additions ──
-export PATH=$PATH:/home/laznp/.kubescape/bin:/home/laznp/.cargo/bin:/opt/rocm/bin
+export PATH=$PATH:$HOME/.kubescape/bin:$HOME/.cargo/bin:/opt/rocm/bin
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 export PATH=$HOME/.opencode/bin:$PATH
 
 # ── Completions ──
 eval "$(uv generate-shell-completion zsh)"
 eval "$(uvx --generate-shell-completion zsh)"
-[ -s "/home/laznp/.bun/_bun" ] && source "/home/laznp/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # ── Node Version Manager ──
 export NVM_DIR="$HOME/.nvm"

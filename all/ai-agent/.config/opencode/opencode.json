@@ -19,13 +19,14 @@
     }
   },
   "plugin": [
-    "@franlol/opencode-md-table-formatter@0.0.3"
+    "@franlol/opencode-md-table-formatter@0.0.3",
+    "caveman-opencode-plugin@latest"
   ],
   "default_agent": "overlord",
   "agent": {
     "overlord": {
       "description": "Shadowforce commander — routes missions, delegates to skills, reports to you",
-      "model": "opencode-go/deepseek-v4-pro",
+      "model": "opencode-go/qwen3.6-plus",
       "prompt": "{file:~/.config/opencode/AGENTS.md}"
     }
   },

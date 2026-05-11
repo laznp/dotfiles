@@ -141,7 +141,7 @@
         "format": " {} ",
         "max-length": 40,
         "interval": 1,
-        "exec": "echo $(bash /home/laznp/.local/custom-bin/power-package | tail -n 1 | awk '{print $2}')",
+        "exec": "echo $(bash ~/.local/custom-bin/power-package | tail -n 1 | awk '{print $2}')",
         "return-type": "plain"
     },
 },{
@@ -212,7 +212,7 @@
         "format": " {} ",
         "max-length": 40,
         "interval": 1,
-        "exec": "echo $(bash /home/laznp/.local/custom-bin/power-package | tail -n 1 | awk '{print $2}')",
+        "exec": "echo $(bash ~/.local/custom-bin/power-package | tail -n 1 | awk '{print $2}')",
         "return-type": "plain"
     },
     "custom/ippub": {
