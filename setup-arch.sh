@@ -46,7 +46,7 @@ BASE_PACKAGES=(
     "xorg-xrandr" "xorg-xinput" "xorg-xsetroot" "xorg-xset" "xclip" "xorg-xdpyinfo"
     
     # Audio and multimedia
-    "pipewire" "pipewire-alsa" "pipewire-pulse" "pulseaudio" "pulseaudio-alsa"
+    "pipewire" "pipewire-alsa" "pipewire-pulse" "pulseaudio-alsa"
     "pavucontrol" "mpd" "ncmpcpp" "playerctl" "mpv"
     
     # Compositor and visual effects
@@ -77,7 +77,7 @@ BASE_PACKAGES=(
     "libinput" "libinput-gestures"
     
     # Notifications and user interface
-    "dunst" "libnotify" "mako"
+    "dunst" "libnotify"
     
     # Additional tools
     "noto-fonts-emoji" "xorg-xbacklight" "acpi" "acpid" "wireguard-tools"

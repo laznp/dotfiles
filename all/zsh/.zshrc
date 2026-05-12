@@ -1,20 +1,23 @@
 # ── Core config ──
 source $HOME/.config/zsh/env
 source $HOME/.config/zsh/alias
+source $HOME/.config/zsh/functions
 eval "$(starship init zsh)"
 
 # ── Secrets (gitignored) ──
 [ -f $HOME/.config/zsh/secrets ] && source $HOME/.config/zsh/secrets
 
 # ── Syntax highlighting ──
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+if [[ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
+    source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
 
 # ── fzf ──
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # ── Google Cloud SDK ──
-if [ -f '$HOME/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '$HOME/Downloads/google-cloud-sdk/path.zsh.inc'; fi
-if [ -f '$HOME/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '$HOME/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+if [ -f "$HOME/Downloads/google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/Downloads/google-cloud-sdk/path.zsh.inc"; fi
+if [ -f "$HOME/Downloads/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/Downloads/google-cloud-sdk/completion.zsh.inc"; fi
 
 # ── Terragrunt ──
 export TERRAGRUNT_PROVIDER_CACHE=1

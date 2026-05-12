@@ -1,0 +1,179 @@
+# ── OpenCode ──
+function opencode-env {
+    echo "OpenCode MCP tokens status:"
+    for var in GITHUB_PERSONAL_ACCESS_TOKEN SLACK_MCP_XOXP_TOKEN GRAFANA_URL GRAFANA_SERVICE_ACCOUNT_TOKEN CORPUS_MCP_URL; do
+        if [ -n "${(P)var}" ]; then
+            echo "  $var = *** (set)"
+        else
+            echo "  $var = MISSING"
+        fi
+    done
+}
+
+# ── Editor ──
+function vim {
+  (alacritty --title NeoVim -e nvim "$@" >/dev/null 2>&1 &)
+}
+
+function notes {
+    cd ~/Projects/personal/notes
+    (alacritty --class NeoNotes --title Notes -e nvim "$@" >/dev/null 2>&1 &)
+}
+
+# ── SSH ──
+function nebulae-ssh() {
+    eval "$(ssh-agent)"
+    ssh-add ~/.ssh/nebulae
+}
+
+function atbhn-ssh() {
+    eval "$(ssh-agent)"
+    ssh-add ~/.ssh/autobahn
+}
+
+# ── Password ──
+function passgen() {
+    tr -dc 'A-Za-z0-9!@#$%^&*()_+-=' < /dev/urandom | head -c "$1" ; echo
+}
+
+# ── Python venv ──
+function pyenv() {
+    if [ -z "$1" ]; then
+        python3 -m venv venv
+        source ./venv/bin/activate
+    else
+        python3 -m venv "$1"
+        source ./"$1"/bin/activate
+    fi
+}
+
+function activate() {
+    if [ -z "$1" ]; then
+        source ./venv/bin/activate
+    else
+        source ./"$1"/bin/activate
+    fi
+}
+
+# ── K8s ──
+function natsbox {
+    NATS_BOX=$(kubectl get pod -n nats | grep nats-box | cut -d ' ' -f1)
+    kubectl exec -i -t -n nats $NATS_BOX -c nats-box -- sh
+}
+
+function pg() {
+    local context="${1:-dev}"
+    local pod_name="${context}-hetzner-postgresql-primary-0"
+    local namespace="postgresql"
+    echo "Connecting to PostgreSQL in $context cluster as root..."
+    kubectl exec -it -n $namespace $pod_name -- bash -c "export PGPASSWORD=\$POSTGRES_PASSWORD && psql -U root -d postgres"
+}
+
+# ── Infra helpers ──
+function foodbag_infra() {
+    cd $HOME/Projects/nebulae/foodbag-infra/terraform
+    if [ "$1" = "dev" ]; then
+        source foodbag/dev/environment.sh
+        gcloud config set project foodbag-86a44
+        echo "Change project to Foodbag Dev"
+        cd foodbag/dev
+    elif [ "$1" = "staging" ]; then
+        source foodbag/staging/environment.sh
+        gcloud config set project foodbag-86a44
+        echo "Change project to Foodbag Staging"
+        cd foodbag/staging
+    elif [ "$1" = "prod" ]; then
+        source foodbag/production/environment.sh
+        gcloud config set project foodbag-prod
+        echo "Change project to Foodbag Prod"
+        cd foodbag/production
+    fi
+}
+
+function foodprepper_infra() {
+    cd $HOME/Projects/nebulae/foodbag-infra/terraform
+    if [ "$1" = "dev" ]; then
+        source foodprepper/dev/environment.sh
+        gcloud config set project foodprepper-dev
+        echo "Change project to Foodprepper Dev"
+        cd foodprepper/dev
+    elif [ "$1" = "prod" ]; then
+        source foodprepper/production/environment.sh
+        gcloud config set project foodprepper-production
+        echo "Change project to Foodprepper Production"
+        cd foodprepper/production
+    fi
+}
+
+# ── Autobahn ──
+function autobahn_db() {
+    if [ "$1" = "pq" ]; then
+        DB_NAME="${2:-postgres}"
+        PGPASSWORD=$(autobahn_db_secret "prod" "postgres") psql -h localhost -U root "$DB_NAME"
+    elif [ "$1" = "dwh" ]; then
+        PGPASSWORD=$(autobahn_db_secret "prod" "dwh") psql -h localhost -U root datawarehouse -p 5434
+    elif [ "$1" = "mysql" ]; then
+        MYSQL_PWD=$(autobahn_db_secret "prod" "mysql") mariadb -uroot --socket=/var/run/mysqld/mysqld.sock
+    fi
+}
+
+function autobahn_vpn() {
+    if [ "$1" = "up" ]; then
+        wg-quick up wg0
+    elif [ "$1" = "down" ]; then
+        wg-quick down wg0
+    else
+        echo "Parameter Not Found!!"
+    fi
+}
+
+function autobahn_db_secret() {
+    local env="$1" db="$2"
+    local secret_path
+    local secret_var="AUTOBAHN_SECRET_${env^^}_${db^^}"
+    secret_path="${(P)secret_var}"
+    if [[ -z "$secret_path" ]]; then
+        echo "ERROR: secret path $secret_var not set" >&2
+        return 1
+    fi
+    local profile="sso-admin-${env}"
+    aws secretsmanager get-secret-value \
+        --secret-id "$secret_path" \
+        --profile "$profile" \
+        | jq -r '.SecretString | fromjson | .password'
+}
+
+function autobahn() {
+    if [ "$1" = "db-secrets" ]; then
+        shift
+        autobahn_db_secret "$@"
+    elif [ "$1" = "db" ]; then
+        shift
+        autobahn_db "$@"
+    elif [ "$1" = "vpn" ]; then
+        shift
+        autobahn_vpn "$@"
+    fi
+}
+
+# ── Git ──
+function clear-branch() {
+    local one_month_ago
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        one_month_ago=$(date -v-1m +%s)
+    else
+        one_month_ago=$(date -d '1 month ago' +%s)
+    fi
+    git for-each-ref --format='%(committerdate:short) %(refname:short)' refs/heads/ | \
+    while read -r date branch; do
+      if [[ $(date -d "$date" +%s 2>/dev/null || date -j -f '%Y-%m-%d' "$date" +%s 2>/dev/null) -lt $one_month_ago ]]; then
+        echo "Deleting $branch"
+        git branch -D "$branch"
+      fi
+    done
+}
+
+# ── Gaming ──
+function ce() {
+    protonhax run "$(protonhax ls)" ~/.local/share/bottles/bottles/Gaming/drive_c/Program\ Files/Cheat\ Engine\ 7.5/Cheat\ Engine.exe
+}

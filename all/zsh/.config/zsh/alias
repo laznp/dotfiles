@@ -1,205 +1,36 @@
-# Alias Command
+# ── Tool overrides ──
 alias py="python3"
 alias sv="sudo nvim"
 alias ls="lsd"
-alias cat="$(which bat)"
-alias grep="$(which rg)"
-alias htop="$(which bpytop)"
+alias cat="bat"
+alias grep="rg"
+alias htop="bpytop"
 alias wget="axel -n 16"
 alias vimdiff="nvim -d"
 alias df="duf"
 alias -s py="python3"
 alias v="nvim"
 alias update-grub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
-alias adhoc="nvim $HOME/Projects/autobahn/adhoc-task-$(date +'%F')"
+alias adhoc='nvim $HOME/Projects/autobahn/adhoc-task-$(date +%F)'
 alias fzp="paru -Slq | fzf --multi --preview 'paru -Si {1}' | xargs -ro paru -S"
 alias man="tldr"
 alias dig="doggo @8.8.8.8"
 alias waf-ip-update="~/Projects/autobahn/others/update-waf-whitelist-ip.sh"
 alias opc="opencode"
 
-# Shorthand for edit rc files
+# ── RC files ──
 alias zshrc="nvim ~/.zshrc"
 alias zsh_alias="nvim ~/.config/zsh/alias"
+alias zsh_functions="nvim ~/.config/zsh/functions"
 
+# ── Apps ──
 alias slack_autobahn="google-chrome-stable --app=https://app.slack.com/client/T02GNBPNLH3/D05RMA27WHE"
 alias slack_nebulae="google-chrome-stable --app=https://app.slack.com/client/T5VAKUAMQ/C5ULDD4HW"
-# alias whatsapp="google-chrome-stable --app=https://web.whatsapp.com"
 
-# Alias source zshrc
+# ── Reload ──
 alias reload="source $HOME/.zshrc"
 
-# OpenCode: required env vars for MCP servers (set in ~/.config/zsh/env or shell profile)
-#   GITHUB_PERSONAL_ACCESS_TOKEN   - GitHub MCP
-#   SLACK_MCP_XOXP_TOKEN           - Slack MCP
-#   GRAFANA_URL                    - Grafana MCP
-#   GRAFANA_SERVICE_ACCOUNT_TOKEN  - Grafana MCP
-#   CORPUS_MCP_URL                 - Corpus MCP (default: https://corpus-mcp.devops.atbhn.io/mcp)
-function opencode-auth-update {
-    jq --arg token "$( jq -r '.access_token' ~/.qwen/oauth_creds.json )" '.qwen.key = $token' ~/.local/share/opencode/auth.json > /tmp/qwen.json
-    mv /tmp/qwen.json ~/.local/share/opencode/auth.json
-}
-
-function opencode-env {
-    echo "OpenCode MCP tokens status:"
-    for var in GITHUB_PERSONAL_ACCESS_TOKEN SLACK_MCP_XOXP_TOKEN GRAFANA_URL GRAFANA_SERVICE_ACCOUNT_TOKEN CORPUS_MCP_URL; do
-        if [ -n "${(P)var}" ]; then
-            echo "  $var = *** (set)"
-        else
-            echo "  $var = MISSING"
-        fi
-    done
-}
-
-function vim {
-  (alacritty --title NeoVim -e nvim $@ >/dev/null 2>&1 &)
-}
-
-# function opc {
-  # (alacritty --title OpenCode -e opencode $@ >/dev/null 2>&1 &)
-# }
-
-function natsbox {
-    NATS_BOX=$(kubectl get pod -n nats | grep nats-box | cut -d ' ' -f1)
-    kubectl exec -i -t -n nats $NATS_BOX -c nats-box -- sh
-}
-
-function notes {
-    cd ~/Projects/personal/notes
-    (alacritty --class NeoNotes --title Notes -e nvim $@ >/dev/null 2>&1 &)
-}
-
-function nebulae-ssh() {
-    eval $(ssh-agent)
-    ssh-add ~/.ssh/nebulae
-}
-
-function atbhn-ssh() {
-    eval $(ssh-agent)
-    ssh-add ~/.ssh/autobahn
-}
-
-# Alias for password generation
-function passgen() {
-    tr -dc 'A-Za-z0-9' < /dev/urandom | head -c $1 ; echo
-}
-
-# Alias create new python virtualenv
-function pyenv() {
-    if [ -z "$1" ]; then
-        python3 -m venv venv
-        source ./venv/bin/activate
-    else
-        python3 -m venv "$1"
-        source ./$1/bin/activate
-    fi
-}
-
-# Alias activating python virtualenv on directory
-function activate() {
-    if [ -z "$1" ]; then
-        source ./venv/bin/activate
-    else
-        source ./$1/bin/activate
-    fi
-}
-
-function foodbag_infra() {
-    cd $HOME/Projects/nebulae/foodbag-infra/terraform
-    if [ "$1" = "dev" ]; then
-        source foodbag/dev/environment.sh
-        gcloud config set project foodbag-86a44
-        echo "Change project to Foodbag Dev"
-        cd foodbag/dev
-    elif [ "$1" = "staging" ]; then
-        source foodbag/dev/environment-staging.sh
-        gcloud config set project foodbag-86a44
-        echo "Change project to Foodbag Dev"
-        cd foodbag/dev
-    elif [ "$1" = "prod" ]; then
-        source foodbag/production/environment.sh
-        gcloud config set project foodbag-prod
-        echo "Change project to Foodbag Prod"
-        cd foodbag/production
-    fi
-}
-
-function foodprepper_infra() {
-    cd $HOME/Projects/nebulae/foodbag-infra/terraform
-    if [ "$1" = "dev" ]; then
-        source foodprepper/dev/environment.sh
-        gcloud config set project foodprepper-dev
-        echo "Change project to Foodprepper Dev"
-        cd foodprepper/dev
-    elif [ "$1" = "prod" ]; then
-        source foodprepper/production/environment.sh
-        gcloud config set project foodprepper-production
-        echo "Change project to Foodprepper Production"
-        cd foodprepper/production
-    fi
-}
-
-function autobahn_db() {
-    if [ "$1" = "pq" ]; then
-        DB_NAME="${2:-postgres}"
-        PGPASSWORD=$(autobahn_db_secret "prod" "postgres") psql -h localhost -U root "$DB_NAME"
-    elif [ "$1" = "dwh" ]; then
-        PGPASSWORD=$(autobahn_db_secret "prod" "dwh") psql -h localhost -U root datawarehouse -p 5434
-    elif [ "$1" = "mysql" ]; then
-        MYSQL_PWD=$(autobahn_db_secret "prod" "mysql") mariadb -uroot -h127.0.0.1 --ssl=false
-    fi
-}
-
-function autobahn_vpn() {
-    if [ "$1" = "up" ]; then
-        wg-quick up wg0
-    elif [ "$1" = "down" ]; then
-        wg-quick down wg0
-    else
-        echo "Parameter Not Found!!"
-    fi
-}
-
-function autobahn_db_secret() {
-    local env="$1" db="$2"
-    local secret_path
-    local secret_var="AUTOBAHN_SECRET_${env^^}_${db^^}"
-    secret_path="${(P)secret_var}"
-    if [[ -z "$secret_path" ]]; then
-        echo "ERROR: secret path $secret_var not set" >&2
-        return 1
-    fi
-    local profile="sso-admin-${env}"
-    aws secretsmanager get-secret-value \
-        --secret-id "$secret_path" \
-        --profile "$profile" \
-        | jq -r '.SecretString | fromjson | .password'
-}
-
-function autobahn() {
-    if [ "$1" = "db-secrets" ]; then
-        shift
-        autobahn_db_secret "$@"
-    elif [ "$1" = "db" ]; then
-        shift
-        autobahn_db "$@"
-    elif [ "$1" = "vpn" ]; then
-        shift
-        autobahn_vpn "$@"
-    fi
-}
-
-function clear-branch() {
-    git for-each-ref --format='%(committerdate:short) %(refname:short)' refs/heads/ | \
-    while read -r date branch; do
-      if [[ $(date -d "$date" +%s) -lt $(date -d '1 month ago' +%s) ]]; then
-        echo "Deleting $branch"
-        git branch -D "$branch"
-      fi
-    done
-}
-
-# Alias git command
+# ── Git ──
 alias gad="git add"
 alias gco="git checkout"
 alias gcob="git checkout -b"
@@ -209,7 +40,7 @@ alias gpl="git pull origin"
 alias gst="git status"
 alias gfa="git fetch -a"
 
-# Alias for Arch Linux
+# ── Arch Linux ──
 alias pacman="sudo pacman"
 alias reboot="sudo reboot"
 alias tf="terraform"
@@ -219,7 +50,7 @@ alias tga="terragrunt apply"
 alias stow="stow -t $HOME"
 alias mkdir="mkdir -p"
 
-# Alias Kubectl
+# ── Kubectl ──
 alias k="kubectl"
 alias kgp="kubectl get pods"
 alias kgs="kubectl get svc"
@@ -230,29 +61,16 @@ alias kap="kubectl apply"
 alias krm="kubectl delete"
 alias kux="kubectl config use-context"
 
-# Alias Directory
+# ── Directory ──
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 alias ~="cd ~"
 
-# Alias Project
+# ── Project ──
 alias kuman="cd ~/Projects/autobahn/kubernetes-manifest"
 alias infra="cd ~/Projects/autobahn/infrastructure"
 alias personal="cd ~/Projects/personal"
 alias atbhn="cd ~/Projects/autobahn"
 alias nebulae="cd ~/Projects/nebulae"
 alias "2hippo"="cd ~/Projects/2hippo"
-
-function ce() {
-    protonhax run "$(protonhax ls)" ~/.local/share/bottles/bottles/Gaming/drive_c/Program\ Files/Cheat\ Engine\ 7.5/Cheat\ Engine.exe
-}
-
-pg() {
-    local context="${1:-dev}"
-    local pod_name="${context}-hetzner-postgresql-primary-0"
-    local namespace="postgresql"
-
-    echo "Connecting to PostgreSQL in $context cluster as root..."
-    kubectl exec -it -n $namespace $pod_name -- bash -c "export PGPASSWORD=\$POSTGRES_PASSWORD && psql -U root -d postgres"
-}
