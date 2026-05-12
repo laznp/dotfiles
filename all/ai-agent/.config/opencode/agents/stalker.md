@@ -2,7 +2,6 @@
 description: Codebase recon — find files, grep symbols, map structure. Read-only.
 mode: subagent
 hidden: true
-steps: 10
 model: opencode-go/deepseek-v4-flash
 tools:
   write: false

@@ -146,7 +146,7 @@ function autobahn_db() {
     elif [ "$1" = "dwh" ]; then
         PGPASSWORD=$(autobahn_db_secret "prod" "dwh") psql -h localhost -U root datawarehouse -p 5434
     elif [ "$1" = "mysql" ]; then
-        mariadb -uroot -h127.0.0.1 -p$(autobahn_db_secret "prod" "mysql") --ssl=false
+        MYSQL_PWD=$(autobahn_db_secret "prod" "mysql") mariadb -uroot -h127.0.0.1 --ssl=false
     fi
 }
 
@@ -161,19 +161,19 @@ function autobahn_vpn() {
 }
 
 function autobahn_db_secret() {
-    if [[ "$1" = "dev" || "$1" = "test" ]]; then
-        SECRET_PREFIX="$1-hetzner/shared-item/shared-item"
-        PROFILE="sso-admin-$1"
-    else
-        SECRET_PREFIX="$1/shared-item/shared-item"
-        PROFILE="sso-admin-$1"
+    local env="$1" db="$2"
+    local secret_path
+    local secret_var="AUTOBAHN_SECRET_${env^^}_${db^^}"
+    secret_path="${(P)secret_var}"
+    if [[ -z "$secret_path" ]]; then
+        echo "ERROR: secret path $secret_var not set" >&2
+        return 1
     fi
-    if [[ "$2" = "mysql" || "$2" = "postgres" ]]; then
-        SECRET_ITEMS="$SECRET_PREFIX/backend-aurora-db-$2"
-    else
-        SECRET_ITEMS="$SECRET_PREFIX/backend-db-dwh"
-    fi
-    echo "$(aws secretsmanager get-secret-value --secret-id $SECRET_ITEMS --profile $PROFILE | jq -c '.SecretString | fromjson' | jq -r '.password')"
+    local profile="sso-admin-${env}"
+    aws secretsmanager get-secret-value \
+        --secret-id "$secret_path" \
+        --profile "$profile" \
+        | jq -r '.SecretString | fromjson | .password'
 }
 
 function autobahn() {

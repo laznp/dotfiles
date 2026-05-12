@@ -11,13 +11,13 @@ ai-agent/
 └── .config/opencode/
     ├── opencode.json                 # Provider config, MCP servers
     ├── AGENTS.md                     # Overlord — global instructions for main agent
-    └── skills/
-        ├── stalker/SKILL.md          # Recon
-        ├── engineer/SKILL.md         # Implementation
-        ├── inquisitor/SKILL.md       # Quality gate
-        ├── seeker/SKILL.md           # Incident triage
-        ├── architect/SKILL.md        # Strategy
-        └── vanguard/SKILL.md         # Security
+    └── agents/
+        ├── stalker.md                # Recon
+        ├── engineer.md               # Implementation
+        ├── inquisitor.md             # Quality gate
+        ├── seeker.md                 # Incident triage
+        ├── architect.md              # Strategy
+        └── vanguard.md              # Security
 ```
 
 ## The Team
@@ -37,43 +37,45 @@ ai-agent/
 ```
 You
  └── Overlord (main agent — AGENTS.md defines behavior)
-      ├── skill(stalker)      → recon, never modifies
-      ├── skill(engineer)     → builds (every action asks you)
-      │    ├── skill(inquisitor)  → quality review (parallel)
-      │    └── skill(vanguard)    → security review (parallel)
-      ├── skill(seeker)       → incidents, asks before bash
-      ├── skill(architect)    → strategy, words only
-      └── skill(vanguard)     → security, words only
+      ├── @stalker      → recon, never modifies
+      ├── @engineer     → builds (every action asks you)
+      │    ├── @inquisitor  → quality review
+      │    └── @vanguard    → security review
+      ├── @seeker       → incidents, asks before bash
+      ├── @architect    → strategy, words only
+      └── @vanguard     → security, words only
 ```
 
-Overlord loads each member on demand via `skill({ name: "<member>" })`. All skills run on Overlord's model — no per-skill model config (OpenCode limitation).
+Overlord delegates via `@agentname`. Each agent runs on its own model with scoped tool permissions.
 
 ## Supervision Model
 
 - Overlord presents plan → you approve → acts
-- Stalker skill → reads freely, destructive ops refused
-- Engineer skill → asks before every write/edit/bash
-- Seeker skill → asks before bash
-- Architect, Inquisitor, Vanguard skills → words only, no tools
+- Stalker → reads freely, destructive ops refused
+- Engineer → asks before every write/edit/bash
+- Seeker → asks before bash
+- Architect, Inquisitor, Vanguard → words only, no tools
 
 ## Quality + Security Gate
 
-Engineer output → **Inquisitor** skill (quality) + **Vanguard** skill (security) in parallel.
+Engineer output → **@inquisitor** (quality) + **@vanguard** (security) sequentially.
 CRITICAL from either → back to Engineer. Both must PASS before reaching you.
 
-## OpenCode Model
+## Models
 
-All skills run on Overlord's model — no per-skill override (OpenCode limitation).
-
-| | Model |
-|---|---|
-| Overlord + all skills | `opencode-go/deepseek-v4-pro` |
-
-> Previously: each subagent had its own model. Migrated to skills — single model tradeoff for simpler global config.
+| Agent | Model | Reason |
+|---|---|---|
+| Overlord | `opencode-go/qwen3.6-plus` | Orchestration + reasoning |
+| Stalker | `opencode-go/deepseek-v4-flash` | Fast, cheap recon |
+| Engineer | `opencode-go/deepseek-v4-pro` | Quality implementation |
+| Inquisitor | `opencode-go/qwen3.6-plus` | Strong review |
+| Vanguard | `opencode-go/qwen3.6-plus` | Strong security review |
+| Architect | `opencode-go/kimi-k2.5` | Deep reasoning |
+| Seeker | `opencode-go/deepseek-v4-pro` | Evidence-driven investigation |
 
 ## Claude Code
 
-Claude Code uses same team via `CLAUDE.md`. No skill mechanism — Overlord delegates via Agent tool subagents. Same routing rules, same supervision, same chaining. Shadowforce activates automatically on session start.
+Claude Code uses same team via `CLAUDE.md`. No `@agent` syntax — Overlord delegates via Agent tool subagents. Same routing rules, same supervision, same chaining. Shadowforce activates automatically on session start.
 
 ## Stow
 

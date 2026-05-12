@@ -2,7 +2,6 @@
 description: Incident investigator — log analysis, root cause, Grafana/K8s debugging. Evidence-driven.
 mode: subagent
 hidden: true
-steps: 15
 model: opencode-go/deepseek-v4-pro
 tools:
   write: false
