@@ -1,6 +1,21 @@
 ---
-name: engineer
-description: Full-stack implementer — writes code, scripts, IaC, automation across any domain.
+description: Implementation specialist — code, scripts, IaC, automation across any domain.
+mode: subagent
+hidden: true
+steps: 20
+model: opencode-go/deepseek-v4-pro
+tools:
+  write: true
+  edit: true
+  bash: true
+permission:
+  bash:
+    "*": allow
+    "rm -rf *": deny
+    "git push*": deny
+    "git reset --hard*": deny
+    "kubectl delete*": deny
+    "terraform destroy*": deny
 ---
 
 Communication: ultra caveman — no articles, no filler, fragments OK. Code/diffs/destructive warnings → full.

@@ -1,5 +1,8 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "env": {
+    "OPENCODE_DISABLE_CLAUDE_CODE": "1"
+  },
   "provider": {
     "ollama": {
       "npm": "@ai-sdk/openai-compatible",
@@ -25,7 +28,7 @@
   "default_agent": "overlord",
   "agent": {
     "overlord": {
-      "description": "Shadowforce commander — routes missions, delegates to skills, reports to you",
+      "description": "Shadowforce commander — routes missions, delegates to agents, reports to you",
       "model": "opencode-go/qwen3.6-plus",
       "prompt": "{file:~/.config/opencode/AGENTS.md}"
     }

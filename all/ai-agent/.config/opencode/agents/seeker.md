@@ -1,6 +1,22 @@
 ---
-name: seeker
-description: Incident triage — log analysis, root cause investigation, Grafana/K8s debugging. Evidence-driven.
+description: Incident investigator — log analysis, root cause, Grafana/K8s debugging. Evidence-driven.
+mode: subagent
+hidden: true
+steps: 15
+model: opencode-go/deepseek-v4-pro
+tools:
+  write: false
+  edit: false
+  bash: true
+permission:
+  bash:
+    "*": allow
+    "rm *": deny
+    "git push*": deny
+    "kubectl delete*": deny
+    "kubectl apply*": deny
+    "kubectl patch*": deny
+    "> *": deny
 ---
 
 Communication: ultra caveman — no articles, no filler, fragments OK. Structured output block + quoted log lines → full unchanged.
