@@ -14,6 +14,10 @@ vim.api.nvim_create_autocmd('PackChanged', {
     end,
 })
 
+vim.api.nvim_create_user_command('PackUpdate', function()
+    vim.pack.update()
+end, {})
+
 vim.pack.add({
     gh('nvim-tree/nvim-web-devicons'),
     gh('navarasu/onedark.nvim'),

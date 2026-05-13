@@ -10,7 +10,7 @@ end, {})
 vim.api.nvim_create_autocmd("FileType", {
     pattern  = { 'python', 'rust', 'hcl', 'lua', 'vim', 'dockerfile',
                  'terraform', 'cpp', 'c', 'javascript', 'yaml', 'markdown', 'html' },
-    callback = function() vim.treesitter.start() end,
+    callback = function() pcall(vim.treesitter.start) end,
 })
 
 vim.api.nvim_create_autocmd("FileType", {
