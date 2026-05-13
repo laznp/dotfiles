@@ -246,8 +246,8 @@ map('n', '<S-l>', '$',       { noremap = true, silent = true })
 map('v', '<S-l>', '$<Left>', { noremap = true, silent = true })
 map('v', '<S-h>', '0',       { noremap = true, silent = true })
 
-map('i', '<S-TAB>', 'pumvisible() ? "\\<C-p>" : "\\<TAB>"', { expr = true })
-map('i', '<TAB>',   'pumvisible() ? "\\<C-n>" : "\\<TAB>"', { expr = true })
+map('i', '<S-TAB>', 'pumvisible() ? "<C-p>" : "<TAB>"', { expr = true })
+map('i', '<TAB>',   'pumvisible() ? "<C-n>" : "<TAB>"', { expr = true })
 
 map('v', '"', 'qqc""<ESC>Pq', { noremap = true, silent = true })
 map('v', "'", "qqc''<ESC>Pq", { noremap = true, silent = true })

@@ -20,6 +20,7 @@ vim.pack.add({
     gh('nvim-lualine/lualine.nvim'),
     gh('MunifTanjim/nui.nvim'),
     gh('nvim-neo-tree/neo-tree.nvim'),
+    gh('s1n7ax/nvim-window-picker'),
     gh('akinsho/bufferline.nvim'),
     gh('ojroques/nvim-bufdel'),
     gh('rmagatti/auto-session'),

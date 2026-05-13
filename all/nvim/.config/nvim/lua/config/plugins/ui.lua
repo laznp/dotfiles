@@ -1,6 +1,6 @@
 -- ─── notifications ───────────────────────────────────────────────────────────
+require("notify").setup({ background_colour = "#000000" })
 vim.notify = require("notify")
-vim.notify.setup({ background_colour = "#000000" })
 
 -- ─── colorscheme ─────────────────────────────────────────────────────────────
 require('onedark').setup {
@@ -90,7 +90,7 @@ require('lualine').setup {
         lualine_c = { 'filename' }, lualine_x = { 'location' },
         lualine_y = {}, lualine_z = {},
     },
-    extensions = { 'fzf', 'toggleterm' },
+    extensions = { 'fzf' },
 }
 
 -- ─── devicons + buffer tabs ───────────────────────────────────────────────────

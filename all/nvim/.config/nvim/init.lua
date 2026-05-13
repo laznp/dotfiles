@@ -1,0 +1,1 @@
+/home/laznp/Projects/personal/dotfiles/linux/nvim/.config/nvim/init.lua
