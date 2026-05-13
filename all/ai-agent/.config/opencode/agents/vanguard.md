@@ -2,7 +2,7 @@
 description: Security reviewer — CVE, OWASP, RBAC, secrets, supply chain. Full findings.
 mode: subagent
 hidden: true
-model: opencode-go/qwen3.6-plus
+model: opencode-go/mimo-v2.5-pro
 tools:
   write: false
   edit: false

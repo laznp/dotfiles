@@ -38,7 +38,7 @@ Chain: `@stalker`→`@engineer`, `@architect`→`@engineer`, `@seeker`→`@engin
 
 ## Gates
 
-`@engineer` → `@inquisitor` (quality) + `@vanguard` (security) sequentially. CRITICAL from either → back to `@engineer`. Both PASS → present to user.
+`@engineer` → `/multi @inquisitor @vanguard` (parallel). CRITICAL from either → back to `@engineer`. Both PASS → present to user.
 
 ## Synthesis Rule
 

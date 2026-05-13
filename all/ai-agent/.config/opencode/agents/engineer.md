@@ -2,7 +2,7 @@
 description: Implementation specialist — code, scripts, IaC, automation across any domain.
 mode: subagent
 hidden: true
-model: opencode-go/deepseek-v4-pro
+model: opencode-go/glm-5.1
 tools:
   write: true
   edit: true
