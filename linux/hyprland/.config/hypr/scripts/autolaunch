@@ -7,6 +7,12 @@ exec-once = systemctl --user start xdg-desktop-portal-wlr.service
 exec-once = systemctl --user start xdg-desktop-portal-hyprland.service
 exec-once = systemctl --user start hyprpolkitagent.service
 
+# Virtual/headless output for Sunshine streaming (dual-use: physical
+# monitor stays free while streamed apps render here on workspace 11)
+exec-once = sh -c 'hyprctl output create headless && sleep 0.5 && hyprctl keyword monitor "HEADLESS-2,2560x1440@60,2560x0,1" && hyprctl keyword workspace "11,monitor:HEADLESS-2"'
+
+exec-once = systemctl --user start app-dev.lizardbyte.app.Sunshine.service
+
 # Waybar
 exec-once = waybar -c ~/.config/waybar/config
 
