@@ -156,9 +156,14 @@ restore_windows() {
     done
 }
 
+restore_headless_res() {
+    hyprctl keyword monitor "HEADLESS-2,2560x1440@60,2560x0,1"
+}
+
 on_exit() {
     restore_audio
     restore_windows
+    restore_headless_res
 }
 trap on_exit EXIT TERM INT HUP
 
