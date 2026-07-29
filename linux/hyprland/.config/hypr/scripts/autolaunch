@@ -24,6 +24,7 @@ exec-once = swaybg -c '#000000'
 # RAM
 # exec-once = openrgb -d 'Corsair Dominator Platinum' -m Direct -c '6478d2'
 # exec-once = openrgb -d 'Corsair Dominator Platinum' -m Direct -c 'ffffff'
+exec-once = openrgb -d 'Corsair Vengeance RGB Pro SL DDR4' -m Direct -c 'ffffff'
 
 # GPU
 # exec-once = openrgb -d 4 -z 1 -s 12 -m Direct -c "6478d2"

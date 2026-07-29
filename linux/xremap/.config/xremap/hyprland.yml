@@ -1,6 +1,3 @@
-# xremap configuration converted from sxhkd
-# Save this as ~/.config/xremap/config.yml or similar
-
 keymap:
   # Hyprland
   - name: "Hyprland window manager controls"
@@ -150,32 +147,3 @@ keymap:
           # # Password menu
           # p:
             # launch: ["bash", "/home/laznp/.local/custom-bin/passwordmenu"]
-
-  - name: "Terminal Mac-like bindings"
-    application:
-      only: [Alacritty, foot]
-    remap:
-      Super-C: C-Shift-c   # Copy
-      Super-V: C-Shift-v   # Paste
-  - name: "Mac-like common bindings"
-    remap:
-      Super-C: C-c       # Copy
-      Super-V: C-v       # Paste
-      Super-X: C-x       # Cut
-      Super-A: C-a       # Select All
-      Super-Z: C-z       # Undo
-      Super-Shift-Z: C-Shift-z   # Redo
-      Super-S: C-s       # Save
-      Super-O: C-o       # Open
-      Super-N: C-n       # New
-      Super-T: C-t       # New Tab
-      Super-W: C-w       # Close
-      Super-Q: C-q       # Quit
-      Super-P: C-p       # Print
-      Super-F: C-f       # Find
-      Super-G: C-g       # Find Next
-      Super-Shift-G: C-Shift-g   # Find Previous
-      Super-M: C-m       # Minimize
-      Super-Comma: C-comma  # Preferences
-      Super-Tab: Alt-Tab   # App switcher
-      Super-Backspace: C-Backspace

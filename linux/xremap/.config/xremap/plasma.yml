@@ -1,0 +1,21 @@
+keymap:
+  - name: "Plasma window manager controls"
+    remap:
+      super-i:
+        remap:
+          # Close window (KWin global shortcut)
+          q:
+            launch: ["qdbus6", "org.kde.kglobalaccel", "/component/kwin",
+                     "org.kde.kglobalaccel.Component.invokeShortcut", "Window Close"]
+
+          # APPLICATION LAUNCHERS
+          # Terminal
+          t:
+            launch: ["alacritty", "-t", "Alacritty"]
+          # Launcher (KRunner)
+          space:
+            launch: ["qdbus6", "org.kde.krunner", "/App", "org.kde.krunner.App.display"]
+          # Screenshot (grim/slurp need wlr-screencopy, KWin doesn't expose it — use Spectacle)
+          y:
+            launch: ["spectacle", "-r", "-b", "-c"]
+
