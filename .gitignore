@@ -6,3 +6,5 @@ all/tmux/.config/tmux/resurrect/
 
 # zsh — secrets
 **/.config/zsh/secrets
+.DS_Store
+**/.local/share/fonts/.uuid

@@ -1,0 +1,31 @@
+#!/bin/sh
+
+# Slack unread indicator. Source is the Dock badge label:
+#   empty -> no unread      grey logo
+#   "•"   -> unread          full-colour logo
+#   "N"   -> N mentions/DMs red logo
+#
+# State is carried by colour alone, so each state needs its own image:
+# SwiftBar's colour= parameter styles text, not images.
+#
+# Logos are embedded 18px PNGs rather than Nerd Font glyphs -- SwiftBar
+# centres images vertically, whereas glyphs sit on the font baseline and
+# end up visually offset. SwiftBar renders images 1:1 in points, not @2x.
+
+ICON_IDLE="iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAADtElEQVR4nFVUTUgkRxSuqq7+Z5xWBmdDokl2Nzhslj0kiiyaSyCKZpijohcFBU8evHiX7EW8eFFQ5jIeHPAoJu4EQbJ6CCLJQYiza0gybiBusuM40/ZMd1V3V3i9jrgPiv6pqu9933tfFUZ3YmZmBq2traFcLveFrusPPc97axjGi/Pzc+T7/leKorR5nvdqfn7+ZGxsDOXz+du9pPmyvr6OASSfz7fJstxl2zY2TTPJGPuo0Wh8bJrmPcdxZIzx4+Xl5TiAHB0dvQ9ULBZRIpHAx8fHGL4ppUhVVSJJEuKcaxhjIwgCgRAKEUKCMabAutPTU9wEo9vb2yiVSqGbRRCXuVzuZ0mS7vu+L1NKXYwxFUJAkmhIkiRA2sTEBIAjwKCZTAbkWKqqaowxhDFGhJCaYRgnnufZ4+PjjaWlpS/DsJkHAUsM0hYXF+OKopBMJlPBGxsbTyilnwOAECICghFRDENP07TC2dnZQ03THjmOEyqKgjnnzymlcULIU2AaBEGRBkHwKHwXEc2bAKTQsizVdd1PhBABIUQIIUKQqeu65LruZ4QQxBgLJUlKUULIvy0tLUnf9yMEYBUhYRw1glL6VghBKKW4tbWV1mo1Ho/H667rGqZpYk3T8PX19X+0o6PjRbVa7UQIKYwx4nmeLMtyYJomIF+NjIy8AXrfPXv2k2malu/7f05PTzcWFhZOqtWqyqCFivKa5nI50Aw6gU1ja2vrt3Q6rVuW1ck5D0EkkOzp6eGyLIdBEDzY3d2VZFlm0L0gCEKQh6empr5RVTUBBW40Gk4ymdy7uLj4Vtd1Cv/K5fLe3Nwc4Zx/DbKbA+oDT/BcpVL5hyKEErZtQzdgwuGcxyil1LZt3zRNyfO8NsYYOBo2+De1u20MfhcfQNaioigpcDHG+HfoDCyEWWitqqqkvb39r1KplIrFYjKwuOspSMAYe0my2eyv4BXDMJ5ns9mS53lNF0cbDMOgXV1d1+Vy+XtJkvbq9fqPruvuM8b2hRD7nPPC0NDQLzSdTqOVlZVL2Njd3Y2A2e1BJATksIODg/tCiE9d1+WEkD+Gh4f/vntrAAbd2dlB/f39eHR0FM3Ozoq+vj5gE9UA1N10MybLcjt4DWP8YaFQ+AEhVLMsCw4umpycFFBsdHh4KDo7wUoI7h0XMMCEhBA4oIwQEgKI4ziBpmlAmQwODoqrqyvU29v7/n20ubkZSSuVSpdCiJe6roM/3lBKX4dheF6v18vgZM75q4GBgcrq6ioCRs34H3G8959r0xZLAAAAAElFTkSuQmCC"
+ICON_UNREAD="iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAD+UlEQVR4nE2UXYhVVRTH/2vtvc+558y94x1Hx0wxH0YMa0AYm/TBTAIttXqaeelhMEl67OPFirrcKOglMkGIeehDqIcRfZOYQMjyAxvFhAxNocymUefjTnfux7nnnL1XnHtV3LDZGzbrx/r/116L8PAqCaNMbuvZykHku/ZLMzr/mBRe/jPdJ3Fj7TEJzCZVTw7/8vwH76NUYpTL7n4o3b8Mj4s6OkJ2x+TCUE2F55N6PfH7isZUMVq7+4bv+taMxTMLoj1DIXlPnnnuwJWSlLhMHRh3EhHGhitqWESxQFgbcBAaGKCZYAWDVkviHAligUicNnuzuOmL0yqDZXcNESoTZdT4XnKT205X9orv7eWWt8TXmG6w6oc4BkmmgETrNJM2tqmctCNESINIdp2vbOQw12ejligCGdBVryss+dEf148MrZ8amvjokDj7wEpppW1/Np/4cMDzjP6J6BJtPVf52Hrhu2AGpOMaEUOIQGk0WzTB0zNT772WFroPpNVazDnPUGQ3+kwDLV8fgXOsYvlUJw7v2LiVwloLuue9tCUkXl9xWaOCVwjNFrjHiUgKIq8r5wf1VvS6IxHXihNR+m1tQKf8pYVnXQydZWOlUwECPHYAG5yDc8YYZr28O7RztcXHczx1WWQNFXIKgafsfP00rRcpRDMYtjF6VQ3qkZlKT72Qry+sNM1ciss3VtEPWXorJz5/US0JBm41Vx/B9l3/FCcOjqou3SdNO1dE7pi+unSE0aoy0kxSOk3JyU8EWIXCSyOIa0mmVgSYir9YQNXESapfrZ7YHPbarypoOofUJVgsxPTXutGzy8XfYsD4m5o37wz0b3v08vXfVlAub5Vg5k64ref0z7o4r086WMBJm0zM7dqwYczOy4T2LLbcjatJN3uktdx87O7cutCp/O20Wu/zgpAajUEbuQLIYm6uVSdmQ5IxbBukSBST3smxoc9C4xsYpWF4jMRFQhAGaScgKTSN7o+/a9TwX0/BdHWHyusK2M92PmA/DIwG5w7y2mtfvxUV/acWl4eDa699820cpd2uU344B6iiyxeLv9+YnVq1QVThmcU6balHamc9UTusqJ2LSX6od/e5N7Vk/+/S2IV2z6HEiucfdLRiwN32K7OTQ/t6a/+O1iKpQgVfLttz5vjDQyNjcFaUcQwr2b/flFF2DKc7b+3P7ZAogdh+BLTV03Z3YJrH5r7f/oSMDyu5MGjGx4dVxmh37giOWoytbDeTTZPbGQMCY4hZtK4wyy20HBbrtpX5zGI9GjlqMbjHjmTn/THSGUxll0lbc2nsYs3IoW4/iGfI/tgKCseboPFqgye78p6KEv9w8YVTv0oJTPdmURb/P4nS5hQ9bhRTAAAAAElFTkSuQmCC"
+ICON_MENTION="iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAACSUlEQVR4nHWUTYiPURTGf+/MO/P3MUiEhW53wUajCCMLxspsNFY210IU2VgwCx/FTtnIpCwoFsrdsbAgxUJNJAspSlGuyzQW5Kt/mP/M0PM6b73Eqdv7du85z3mec8+5BQ1LLnT5HGeSC6PAfuAhsAP4CVwD1gPnfY4nat86tmiAdPscp5MLAwbQAXqA3UALuGiAiun3OT5rgnXVTIBugZkzBiJbCiwHFDBp54uqk98xFUaZXCgMVU6yR8mFPYDWAmACWGFJC1tTxqZjRIpKWnJhDbCkQf0LMAt44XMcTy6cAw5asl5gs89xLLmwWmR8jo+L5MIp4Dj/tvfARmAfcNSAJFmJBXLFmJ4pgWOiCkw3AMRKtBcDu4AfVqMpYzQbOGAK5DcioHvAVlH8i40CZA+MhTLPAb4C44BTsW2NKXgY2Gk3oc2FQBv4BjzxOd4RvVcuDNdyfI5vkwsnra4f1GPKUi/ZhM/xCHDJZHQk0vrhk9Vob3LhNLDMYiRtUsW+D2yyzdfAIPAU6LO9QZN9l//b7dJAhFoY0EoDaVtN1gHzLKBt9aqbFivHkCSdtcPSxuC7OZYG3gNE4DMw1y6h1VjyG1V3HgY2KLPP8SowvzmDQJ/P8SWwCthiCoaAbfYd8DkeKmxEKqo2N3K4Zb3TApRIna7h1feyz/F6s0DNEZHOanaSC9uBGwYkGSM2uOrs2vqB53bbM3o1qmvXT6Oz3zVqo/OPwBs7E7ist46x7x+1qKVJph42zZfeJTWiJN4E1gIXbIDrV6OyXzZmx+GE4yl5AAAAAElFTkSuQmCC"
+
+BADGE=$(lsappinfo info -only StatusLabel "Slack" 2>/dev/null \
+  | grep -o '"label"="[^"]*"' | sed 's/"label"="//;s/"//')
+
+if [ -z "$BADGE" ]; then
+  echo " | image=$ICON_IDLE"
+elif echo "$BADGE" | grep -qE '^[0-9]+$'; then
+  echo " | image=$ICON_MENTION"
+else
+  echo " | image=$ICON_UNREAD"
+fi
+
+echo "---"
+echo "Open Slack | bash=/usr/bin/open param1=-a param2=Slack terminal=false"

@@ -177,3 +177,8 @@ function clear-branch() {
 function ce() {
     protonhax run "$(protonhax ls)" ~/.local/share/bottles/bottles/Gaming/drive_c/Program\ Files/Cheat\ Engine\ 7.5/Cheat\ Engine.exe
 }
+
+function opencode-auth-update {
+    jq --arg token "$( jq -r '.access_token' ~/.qwen/oauth_creds.json )" '.qwen.key = $token' ~/.local/share/opencode/auth.json > /tmp/qwen.json
+    mv /tmp/qwen.json ~/.local/share/opencode/auth.json
+}
