@@ -50,7 +50,7 @@ size = 8.0
 bottom = 8.0
 left = 8.0
 right = 8.0
-top = 38.0
+top = 48.0
 
 [general]
 animationsEnabled = true
@@ -175,13 +175,13 @@ useWorkspaceId = false
 [workspaceBar]
 backgroundOpacity = 0.1
 deduplicateAppIcons = false
-enabled = true
-excludedBundleIDs = []
+enabled = false
+excludedBundleIDs = ["app.freelens.Freelens", "app.zen-browser.zen", "com.1password.1password", "com.apple.MobileSMS", "com.apple.Safari", "com.bambulab.bambu-studio", "com.brave.Browser", "com.electron.kontena-lens", "com.electron.open-lens", "com.eltima.cmd1.pro.mas", "com.google.Chrome", "com.hnc.Discord", "com.microsoft.Outlook", "com.microsoft.teams2", "com.microsoft.VSCode", "com.mitchellh.ghostty", "com.openai.codex", "com.spotify.client", "com.tdesktop.Telegram", "com.tinyspeck.slackmacgap", "com.todesktop.230313mzl4w4u92", "company.thebrowser.dia", "dev.zed.Zed", "net.whatsapp.WhatsApp", "org.alacritty", "org.mozilla.firefox"]
 height = 24.0
 hideEmptyWorkspaces = false
 hideInNativeFullscreen = false
 notchActiveZoneWidth = 180.0
-notchMode = "moveBelowMenuBar"
+notchMode = "splitActiveLeft"
 position = "overlappingMenuBar"
 reserveLayoutSpace = false
 revealHoldMilliseconds = 200.0
@@ -1065,7 +1065,7 @@ binding = "Unassigned"
 id = "preselect.down"
 
 [[hotkeys]]
-binding = "Unassigned"
+binding = "Command+0"
 id = "preselectClear"
 
 [[hotkeys]]
@@ -1120,7 +1120,7 @@ id = "toggleSystemStats"
 id = "C02231DD-2ADB-4BDE-8B2B-14E097CEAF0F"
 monitorDisplayUUID = "37D8832A-2D66-02CA-B9F7-8F30A301B230"
 monitorName = "Built-in Retina Display"
-outerGapTop = 47.0
+outerGapTop = 48.0
 
 [[workspaces]]
 id = "AD36F001-C57E-41A5-AC1D-DF5249D007F0"

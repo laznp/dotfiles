@@ -1,0 +1,985 @@
+#!/usr/bin/env bash
+#
+# remocal — unified launcher for backend services AND microfrontends.
+# Detects mode from the target path:
+#   - .../microfrontends/apps/<mfe>   → MFE mode (webpack publicPath rewrite, sibling
+#                                       remotes, React singleton consume, MSW disable,
+#                                       CDN Cache-Control: no-store)
+#   - other dir w/ package.json or pyproject.toml → backend mode
+#
+#   remocal {up|down|discover} [PATH] [--route NAME]
+#
+# PATH defaults to $PWD. ROUTE defaults to $REMOCAL_ROUTE or $USER.
+# Daemon must already be connected (script never quits/connects it).
+#
+# Env: REMOCAL_NS, REMOCAL_WORKLOAD, REMOCAL_LOCAL_PORT, REMOCAL_ORIGIN,
+#      REMOCAL_ALLOW_GLOBAL=1, START_CMD, KUBECONFIG
+#
+set -euo pipefail
+
+log()  { printf '\033[1;36m[remocal]\033[0m %s\n' "$*"; }
+warn() { printf '\033[1;33m[remocal]\033[0m %s\n' "$*"; }
+die()  { printf '\033[1;31m[remocal] %s\033[0m\n' "$*" >&2; exit 1; }
+
+CMD="up"
+case "${1:-}" in
+  up|down|discover) CMD="$1"; shift ;;
+esac
+
+TARGETS=()
+ROUTE="${REMOCAL_ROUTE:-$USER}"
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --route) ROUTE="${2:?--route needs a value}"; shift 2 ;;
+    -*) shift ;;
+    *) TARGETS+=("$1"); shift ;;
+  esac
+done
+[ ${#TARGETS[@]} -eq 0 ] && TARGETS=("$PWD")
+ORIGIN="${REMOCAL_ORIGIN:-https://dev-hetzner.atbhn.io}"
+
+# Populate per-target globals (REPO_DIR, MODE, MFE, MF_ROOT, REPO) used by
+# every existing cmd_*/discover_*/cleanup. Multi-target invocations call this
+# per target inside a subshell so each iteration's globals stay isolated.
+init_for_target() {
+  local t="$1"
+  [ -d "$t" ] || die "not a directory: $t"
+  REPO_DIR="$(cd "$t" && pwd)"
+  MODE="backend"; MFE=""; MF_ROOT=""
+  if [[ "$REPO_DIR" =~ /microfrontends/apps/([^/]+)/?$ ]]; then
+    MFE="${BASH_REMATCH[1]}"
+    MF_ROOT="${REPO_DIR%/apps/*}"
+    [ -f "$MF_ROOT/packages/webpack-config/index.js" ] && MODE="mfe"
+  fi
+  REPO="$(basename "$REPO_DIR")"
+}
+init_for_target "${TARGETS[0]}"  # defaults for single-target fast path / down / discover
+
+# kubeconfig: $KUBECONFIG, else walk up
+locate_kubeconfig() {
+  if [ -n "${KUBECONFIG:-}" ] && [ -f "$KUBECONFIG" ]; then return; fi
+  local d="$REPO_DIR"
+  while [ "$d" != "/" ]; do
+    [ -f "$d/kubecontext" ] && { export KUBECONFIG="$d/kubecontext"; return; }
+    [ -f "$d/dev/kubecontext" ] && { export KUBECONFIG="$d/dev/kubecontext"; return; }
+    d="$(dirname "$d")"
+  done
+  die "no kubeconfig: set KUBECONFIG or place 'kubecontext' in $REPO_DIR (or its dev/) or any parent"
+}
+
+preflight() {
+  local tools="telepresence kubectl jq python3 docker curl"
+  [ "$MODE" = "mfe" ] && tools="$tools node pnpm"
+  for b in $tools; do
+    command -v "$b" >/dev/null || die "missing tool: $b"
+  done
+}
+
+free_port() { python3 -c 'import socket;s=socket.socket();s.bind(("127.0.0.1",0));print(s.getsockname()[1]);s.close()'; }
+port_free() { ! lsof -nP -iTCP:"$1" -sTCP:LISTEN >/dev/null 2>&1; }
+kc() { kubectl --request-timeout=25s "$@"; }
+
+require_connected() {
+  # NOTE: capture `telepresence status` into a var BEFORE grepping. Piping it
+  # directly into `grep -q` lets grep exit on first match and close the pipe
+  # while telepresence is still streaming its (large) status output → telepresence
+  # gets SIGPIPE (exit 141), and under `set -o pipefail` the whole pipeline then
+  # reports failure → spurious "not connected" even though the daemon is fine.
+  local out
+  for _ in 1 2 3 4 5 6; do
+    out="$(telepresence status 2>/dev/null || true)"
+    grep -qiE "Connected" <<<"$out" && return 0
+    sleep 2
+  done
+  die "telepresence not connected. Run:
+    KUBECONFIG=${KUBECONFIG:-./kubecontext} telepresence connect --manager-namespace ambassador"
+}
+
+port_is_http() {
+  case "${SVC_APPPROTO:-}" in http|http2) return 0 ;; esac
+  case "${SVC_PORT_NAME:-}" in http|http-*|http2|http2-*) return 0 ;; esac
+  return 1
+}
+
+# A local port is unusable if something is LISTENing on it OR an existing
+# Telepresence intercept already reserves it (the daemon refuses to reuse it,
+# even when no process is currently bound).
+port_taken() {
+  lsof -nP -iTCP:"$1" -sTCP:LISTEN >/dev/null 2>&1 && return 0
+  telepresence list 2>/dev/null | grep -qw "$1" && return 0
+  return 1
+}
+
+# Auto-select Node so engineers never have to `nvm use` per repo. Sources nvm
+# and picks a version from (in order) .nvmrc, package.json engines.node, or the
+# Dockerfile's `FROM node:N`. No-op if nvm isn't installed; warns (doesn't fail)
+# if the wanted version isn't installed.
+select_node() {
+  export NVM_DIR="${NVM_DIR:-$HOME/.nvm}"
+  [ -s "$NVM_DIR/nvm.sh" ] || return 0
+  # shellcheck disable=SC1090
+  . "$NVM_DIR/nvm.sh" >/dev/null 2>&1 || return 0
+  local want=""
+  [ -f "$REPO_DIR/.nvmrc" ] && want="$(tr -dc '0-9.' < "$REPO_DIR/.nvmrc" 2>/dev/null | head -c 16)"
+  if [ -z "$want" ] && [ -f "$REPO_DIR/package.json" ]; then
+    want="$(python3 -c 'import json,re,sys
+try: e=json.load(open(sys.argv[1])).get("engines",{}).get("node","")
+except Exception: e=""
+m=re.search(r"(\d+)", e or ""); print(m.group(1) if m else "")' "$REPO_DIR/package.json" 2>/dev/null)"
+  fi
+  if [ -z "$want" ]; then
+    local df=""
+    for cand in "$REPO_DIR"/Dockerfile "$REPO_DIR"/Dockerfile.*; do
+      [ -f "$cand" ] && { df="$cand"; break; }
+    done
+    [ -n "$df" ] && want="$( { grep -oiE 'node:[0-9]+' "$df" 2>/dev/null || true; } | head -1 | cut -d: -f2)"
+  fi
+  [ -n "$want" ] || return 0
+  if nvm use "$want" >/dev/null 2>&1; then
+    log "node $(node -v 2>/dev/null) (auto-selected for $REPO)"
+  else
+    warn "Node $want expected for $REPO but not installed — using $(node -v 2>/dev/null || echo system). Install once: nvm install $want"
+  fi
+}
+
+# Auto-install missing deps so first run on a fresh checkout is zero-effort.
+# SAFETY: always --frozen-lockfile, so a wrong pnpm major can only ERROR (and we
+# fall back to a precise manual command) — it can never re-resolve/wipe an
+# existing node_modules (the pnpm-6/9 footgun). Uses the repo's PINNED pnpm via
+# corepack when packageManager is set, and sources Verdaccio creds for private
+# @autobahn/* deps. Arg = dir holding package.json (repo for backend, MF_ROOT
+# for MFEs). No-op when node_modules already present.
+ensure_deps() {
+  local dir="$1"
+  [ -f "$dir/package.json" ] || return 0
+  [ -d "$dir/node_modules" ] && return 0
+  log "dependencies missing in $(basename "$dir") — installing (pinned, --frozen-lockfile)…"
+  # private-registry creds for @autobahn/* (no-op if already set or unused)
+  if [ -z "${VERDACCIO_NPM_TOKEN:-}" ] && [ -f "$HOME/.zshrc" ]; then
+    eval "$(grep -E '^[[:space:]]*export VERDACCIO_(URL|NPM_TOKEN)=' "$HOME/.zshrc" 2>/dev/null || true)"
+  fi
+  local pm="pnpm"
+  if grep -q '"packageManager"' "$dir/package.json" 2>/dev/null && command -v corepack >/dev/null 2>&1; then
+    ( cd "$dir" && corepack prepare --activate ) >/dev/null 2>&1 || true
+    pm="corepack pnpm"
+  fi
+  if ( cd "$dir" && $pm install --frozen-lockfile ) >/dev/null 2>&1; then
+    log "dependencies installed."
+  else
+    die "dependency install failed for $(basename "$dir") — node_modules left untouched (frozen). Likely causes:
+    • private @autobahn/* deps need Verdaccio — export VERDACCIO_URL + VERDACCIO_NPM_TOKEN
+    • pnpm-major mismatch — microfrontends needs pnpm 6 (node-16 nvm); newer pnpm refuses lockfileVersion 5.3
+    Then run:  cd $dir && $pm install --frozen-lockfile"
+  fi
+}
+
+# On dev-hetzner the traffic-manager runs with H2C probing, which makes
+# header-filtered intercepts isolate per-route even on bare-TCP services. When
+# it's on we can safely intercept a bare-TCP svc without REMOCAL_ALLOW_GLOBAL.
+h2c_probing_on() {
+  kc -n "${REMOCAL_MANAGER_NS:-ambassador}" get deploy traffic-manager -o json 2>/dev/null | python3 -c '
+import json,sys
+try: d=json.load(sys.stdin)
+except Exception: sys.exit(1)
+for c in d.get("spec",{}).get("template",{}).get("spec",{}).get("containers",[]):
+    for e in c.get("env",[]):
+        if e.get("name")=="AGENT_ENABLE_H2C_PROBING" and str(e.get("value","")).lower()=="true":
+            sys.exit(0)
+sys.exit(1)' && return 0 || return 1
+}
+
+# Seed the local JetStream broker with the cluster's stream DEFINITIONS (configs
+# only — no messages, no consumers). Services that bind JetStream consumers at
+# boot (NestJS @autobahn/nats-jetstream etc.) can't start against an empty local
+# NATS: the consumer can't find its stream, and auto-create chokes on wildcard
+# subjects. We copy CONFIGS, not data, so per-dev isolation holds — nothing
+# publishes to these local streams, so the local service processes no shared
+# events (which is what we want; events keep flowing to the deployed pods).
+# Best-effort: never fatal, just warns.
+seed_local_nats_streams() {
+  local nport="$1" LOCAL="nats://127.0.0.1:$1" i
+  command -v nats >/dev/null 2>&1 || {
+    warn "nats CLI not found — skipping JetStream seeding; NATS-consumer services may not boot."
+    warn "  install: brew install nats-io/nats-tools/nats"
+    return 0
+  }
+  for i in 1 2 3 4 5 6 7 8; do
+    nats --server="$LOCAL" --timeout=3s stream ls -n >/dev/null 2>&1 && break
+    sleep 1
+  done
+  # Resolve cluster NATS server + token from the pod's env (literal value or secretKeyRef).
+  # NB: pass the deploy JSON via a temp FILE — python reads its script from the
+  # heredoc on stdin, so it can't also read the JSON from stdin.
+  local creds cl_srv cl_tok djson; djson="$(mktemp)"
+  kc -n "$NS" get deploy "$WORKLOAD" -o json > "$djson" 2>/dev/null || true
+  creds="$(python3 - "$NS" "$djson" <<'PY' || true
+import json,sys,subprocess,base64
+ns,path=sys.argv[1],sys.argv[2]
+try: d=json.load(open(path))
+except Exception: sys.exit(0)
+# pick the container that actually carries NATS_* env (skip sidecars)
+conts=d["spec"]["template"]["spec"]["containers"]
+def resolve(e):
+    if e.get("value") is not None: return e["value"]
+    skr=e.get("valueFrom",{}).get("secretKeyRef")
+    if skr:
+        r=subprocess.run(["kubectl","--request-timeout=25s","-n",ns,"get","secret",skr["name"],
+                          "-o","jsonpath={.data.%s}"%skr["key"]],capture_output=True,text=True)
+        try: return base64.b64decode(r.stdout).decode()
+        except Exception: return ""
+    return ""
+srv=tok=""
+for c in conts:
+    for e in c.get("env",[]):
+        if e.get("name")=="NATS_SERVER" and not srv: srv=resolve(e)
+        elif e.get("name")=="NATS_TOKEN" and not tok: tok=resolve(e)
+print(srv); print(tok)
+PY
+)"
+  rm -f "$djson"
+  cl_srv="$(printf '%s\n' "$creds" | sed -n 1p)"
+  cl_tok="$(printf '%s\n' "$creds" | sed -n 2p)"
+  [ -n "$cl_srv" ] || { warn "couldn't resolve cluster NATS server — skipping stream seeding."; return 0; }
+  local CL="nats://${cl_srv#nats://}"
+  local names; names="$(nats --server="$CL" --token="$cl_tok" --timeout=10s stream ls -n 2>/dev/null || true)"
+  [ -n "$names" ] || { warn "no cluster streams listed (auth/reachability) — NATS-consumer services may not boot."; return 0; }
+  log "seeding JetStream stream definitions from cluster → local NATS (configs only, no data)…"
+  local cfgdir n count=0; cfgdir="$(mktemp -d)"
+  while IFS= read -r n; do
+    [ -z "$n" ] && continue
+    nats --server="$CL" --token="$cl_tok" --timeout=10s stream info "$n" --json 2>/dev/null \
+      | python3 -c 'import json,sys
+try: c=json.load(sys.stdin)["config"]
+except Exception: sys.exit(1)
+c["num_replicas"]=1
+for k in ("mirror","sources","placement"): c.pop(k,None)
+sys.stdout.write(json.dumps(c))' > "$cfgdir/$n.json" 2>/dev/null || true
+    [ -s "$cfgdir/$n.json" ] || continue
+    nats --server="$LOCAL" stream add "$n" --config "$cfgdir/$n.json" >/dev/null 2>&1 && count=$((count+1)) || true
+  done <<EOF
+$names
+EOF
+  rm -rf "$cfgdir"
+  log "seeded $count local JetStream stream(s)."
+}
+
+# Opt-in (REMOCAL_LOCAL_DB): give this service its OWN throwaway database instead
+# of wiring it to the shared dev DB — so you can run migrations and mutate freely
+# with zero blast radius. "Restore to latest" is free: tear down = drop the
+# container. Trade-off: the local DB is EMPTY except your migrations + seed (no
+# real dev data), and siblings still on the shared DB won't see your local rows
+# (same isolation boundary as the local NATS) — so this is for single-service
+# schema/logic work, not multi-service data flows.
+#
+# Prototype scope: MySQL only (org-management-style DB_HOST/DB_PORT/DB_USER/DB_PASS/
+# DB_NAME). Postgres / sharded PG is the documented next step (needs shard-config
+# rewrite + per-shard migrate). Tunables: REMOCAL_DB_MIGRATE_CMD (default
+# 'pnpm migrate:up'), REMOCAL_DB_SEED_CMD (optional, run after migrate).
+start_local_db() {
+  local engine="${REMOCAL_LOCAL_DB}"
+  if [ "$engine" = "1" ]; then
+    if env_has SHARD_CONFIG_PATH; then engine="postgres-sharded"
+    elif env_has DB_HOST; then engine="mysql"
+    else engine="unknown"; fi
+  fi
+
+  case "$engine" in
+    mysql)
+      env_has DB_HOST || { warn "REMOCAL_LOCAL_DB: no DB_HOST in pod env — can't tell where to point a local MySQL; skipping (using shared DB)."; return 0; }
+      local dport; dport="$(free_port)"
+      local dbname="remocal"; local dbpass="remocal"
+      log "local MySQL on :$dport (throwaway — migrations run into it, no shared-dev data)"
+      docker rm -f "$DBC" >/dev/null 2>&1 || true
+      docker run -d --rm --name "$DBC" \
+        -e MYSQL_ROOT_PASSWORD="$dbpass" -e MYSQL_DATABASE="$dbname" \
+        -p "127.0.0.1:${dport}:3306" mysql:8.0 >/dev/null
+      # wait for readiness (first boot initialises the data dir — can take ~20-40s)
+      local i ready=0
+      for i in $(seq 1 60); do
+        if docker exec "$DBC" mysqladmin ping -uroot -p"$dbpass" --silent >/dev/null 2>&1; then ready=1; break; fi
+        sleep 1
+      done
+      [ "$ready" = "1" ] || { warn "local MySQL didn't become ready in time — skipping (using shared DB)."; docker rm -f "$DBC" >/dev/null 2>&1; return 0; }
+
+      local db_env=(DB_HOST=127.0.0.1 DB_PORT="$dport" DB_USER=root DB_PASS="$dbpass" DB_NAME="$dbname" DB_TYPE=mysql)
+      ENV_OVERRIDES+=("${db_env[@]}")
+
+      local migrate_cmd="${REMOCAL_DB_MIGRATE_CMD:-pnpm migrate:up}"
+      log "running migrations into local MySQL: $migrate_cmd"
+      # sh -c (not bash -lc): inherit the launcher's PATH/Node, don't let a login
+      # shell re-source nvm and pick a different Node for sequelize-cli.
+      if ( cd "$REPO_DIR" && env "${db_env[@]}" sh -c "$migrate_cmd" ) >/dev/null 2>&1; then
+        log "migrations applied to local MySQL."
+      else
+        warn "migrations failed against local MySQL — the service may not start cleanly. Run manually: cd $REPO_DIR && env ${db_env[*]} $migrate_cmd"
+      fi
+      if [ -n "${REMOCAL_DB_SEED_CMD:-}" ]; then
+        log "seeding local MySQL: $REMOCAL_DB_SEED_CMD"
+        ( cd "$REPO_DIR" && env "${db_env[@]}" sh -c "$REMOCAL_DB_SEED_CMD" ) >/dev/null 2>&1 \
+          || warn "seed command failed (non-fatal)."
+      fi
+      ;;
+    postgres-sharded|postgres|pg)
+      # NOT implemented: a local PG copy is hard here because the schema is
+      # co-owned (this repo's sequelize migrations + noble-stream's sea-orm
+      # migrations), the service opens 3+ connections (default + dedicated +
+      # shards), and RLS roles must be recreated — and for a cross-service
+      # feature an isolated DB severs the very integration you'd want to test.
+      # Prefer shared DB + REMOCAL_MIGRATE (migrate up on up, undo on down).
+      warn "REMOCAL_LOCAL_DB: Postgres/sharded not implemented — using the SHARED dev DB."
+      warn "For schema work on a PG service, use REMOCAL_MIGRATE=1 (applies pending migrations on up, reverts on down)."
+      ;;
+    *)
+      warn "REMOCAL_LOCAL_DB set but couldn't determine the DB engine for '$REPO' — using shared DB."
+      ;;
+  esac
+}
+
+# ── REMOCAL_MIGRATE: run the branch's pending migrations against the SHARED dev
+# DB on `up`, and revert exactly those on `down`. Opt-in (mutates shared dev) and
+# scoped to single-DB sequelize services (e.g. org-management). For ADDITIVE
+# migrations this is safe to share (old code ignores a new column) and the
+# `down` is surgical — it removes only your delta, never other devs' data — so
+# it's the right tool instead of snapshotting the shared DB. Sharded/dedicated
+# PG (DB_DEDICATED_*/SHARD_CONFIG_PATH) is intentionally skipped (two configs,
+# two metas — do those by hand for now).
+migrate_state_file() { echo "${TMPDIR:-/tmp}/remocal-migrate-${NS}-${ROUTE}.count"; }
+
+# Print "DB_*=value" lines from the pod (resolving secretKeyRef), so we can run
+# migrate from the laptop against the same shared DB the service uses.
+resolve_pod_db_env() {
+  # deploy JSON via a temp FILE — python reads its script from the heredoc on
+  # stdin, so it can't also read the JSON from stdin (that collision silently
+  # yields zero creds).
+  local dj; dj="$(mktemp)"
+  kc -n "$NS" get deploy "$WORKLOAD" -o json > "$dj" 2>/dev/null || true
+  python3 - "$NS" "$dj" <<'PY' || true
+import json,sys,subprocess,base64
+ns,path=sys.argv[1],sys.argv[2]
+try: d=json.load(open(path))
+except Exception: sys.exit(0)
+c=d["spec"]["template"]["spec"]["containers"][0]
+def resolve(e):
+    if e.get("value") is not None: return e["value"]
+    skr=e.get("valueFrom",{}).get("secretKeyRef")
+    if skr:
+        r=subprocess.run(["kubectl","--request-timeout=25s","-n",ns,"get","secret",skr["name"],
+                          "-o","jsonpath={.data.%s}"%skr["key"]],capture_output=True,text=True)
+        try: return base64.b64decode(r.stdout).decode()
+        except Exception: return ""
+    return ""
+for e in c.get("env",[]):
+    n=e.get("name","")
+    if n.startswith("DB_"):
+        print("%s=%s" % (n, resolve(e)))
+PY
+  rm -f "$dj"
+}
+
+_resolve_dbenv_array() {
+  DBENV=()
+  local line
+  while IFS= read -r line; do [ -n "$line" ] && DBENV+=("$line"); done < <(resolve_pod_db_env)
+}
+
+run_shared_migrations_up() {
+  if env_has SHARD_CONFIG_PATH || env_has DB_DEDICATED_HOST; then
+    warn "REMOCAL_MIGRATE: sharded/dedicated PG not supported — apply this service's migrations to dev by hand."
+    return 0
+  fi
+  local DBENV; _resolve_dbenv_array
+  [ "${#DBENV[@]}" -gt 0 ] || { warn "REMOCAL_MIGRATE: couldn't resolve DB creds from pod — skipping."; return 0; }
+  local status_cmd="${REMOCAL_MIGRATE_STATUS_CMD:-npx sequelize-cli db:migrate:status}"
+  local up_cmd="${REMOCAL_MIGRATE_UP_CMD:-pnpm migrate:up}"
+  local pending
+  pending="$( cd "$REPO_DIR" && env "${DBENV[@]}" sh -c "$status_cmd" 2>/dev/null | grep -c '^down ' )" || pending=0
+  if [ "${pending:-0}" -eq 0 ]; then
+    log "REMOCAL_MIGRATE: no pending migrations — shared dev already up to date."
+    return 0
+  fi
+  log "REMOCAL_MIGRATE: applying $pending pending migration(s) to SHARED dev ($up_cmd)…"
+  if ( cd "$REPO_DIR" && env "${DBENV[@]}" sh -c "$up_cmd" ) >/dev/null 2>&1; then
+    echo "$pending" > "$(migrate_state_file)"
+    log "REMOCAL_MIGRATE: applied $pending. Will revert them on '/remocal down' ($pending × undo)."
+  else
+    warn "REMOCAL_MIGRATE: migrate up FAILED — shared dev left as-is. Run manually: cd $REPO_DIR && env <db…> $up_cmd"
+  fi
+}
+
+run_shared_migrations_down() {
+  local sf; sf="$(migrate_state_file)"
+  [ -f "$sf" ] || return 0
+  local n; n="$(cat "$sf" 2>/dev/null)"; [ -n "$n" ] || { rm -f "$sf"; return 0; }
+  local DBENV; _resolve_dbenv_array
+  [ "${#DBENV[@]}" -gt 0 ] || { warn "REMOCAL_MIGRATE: can't resolve DB creds to revert $n migration(s); state kept at $sf"; return 0; }
+  local down_cmd="${REMOCAL_MIGRATE_DOWN_CMD:-pnpm migrate:undo}"
+  log "REMOCAL_MIGRATE: reverting $n migration(s) from SHARED dev ($down_cmd ×$n)…"
+  local ok=1 i
+  for i in $(seq 1 "$n"); do
+    ( cd "$REPO_DIR" && env "${DBENV[@]}" sh -c "$down_cmd" ) >/dev/null 2>&1 || { ok=0; break; }
+  done
+  if [ "$ok" = "1" ]; then rm -f "$sf"; log "REMOCAL_MIGRATE: reverted $n migration(s) — shared dev clean."
+  else warn "REMOCAL_MIGRATE: revert failed partway — run '$down_cmd' by hand until clean. State kept at $sf."; fi
+}
+
+# ────────────────── backend mode ──────────────────
+
+detect_start_cmd_backend() {
+  [ -n "${START_CMD:-}" ] && { echo "$START_CMD"; return; }
+  if [ -f "$REPO_DIR/package.json" ]; then
+    local pm="npm"
+    [ -f "$REPO_DIR/yarn.lock" ] && pm="yarn"
+    [ -f "$REPO_DIR/pnpm-lock.yaml" ] && pm="pnpm"
+    # Prefer an explicit dev script. Manager/workers-split repos (e.g. NestJS
+    # services with start:dev-manager / start:dev-workers and NO plain start:dev)
+    # must run the HTTP/manager bundle — never the workers bundle, and never the
+    # bare `start` (which often points at a precompiled dist/ that isn't built).
+    local s
+    for s in start:dev start:dev-manager start:dev-api start:dev-http start:dev-server start:dev-web dev:manager dev; do
+      grep -q "\"$s\"" "$REPO_DIR/package.json" && { echo "$pm run $s"; return; }
+    done
+    # any other start:dev* script, excluding worker/processor bundles
+    s="$(python3 -c 'import json,sys
+sc=json.load(open(sys.argv[1])).get("scripts",{})
+c=[k for k in sc if k.startswith("start:dev") and not any(w in k for w in ("worker","processor"))]
+print(c[0] if c else "")' "$REPO_DIR/package.json" 2>/dev/null)"
+    [ -n "$s" ] && { echo "$pm run $s"; return; }
+    echo "$pm start"; return
+  fi
+  if [ -f "$REPO_DIR/pyproject.toml" ] || [ -f "$REPO_DIR/requirements.txt" ]; then
+    [ -f "$REPO_DIR/manage.py" ] && { echo "python manage.py runserver 0.0.0.0:\$PORT"; return; }
+    if grep -qi "fastapi\|uvicorn" "$REPO_DIR/pyproject.toml" "$REPO_DIR/requirements.txt" 2>/dev/null; then
+      local app_mod
+      app_mod="$(grep -rE "FastAPI\(" --include='*.py' -l "$REPO_DIR/src" "$REPO_DIR" 2>/dev/null \
+        | grep -vE "/tests?/|/test_|_test\.py$" \
+        | head -1 | sed "s|^$REPO_DIR/||;s|\.py$||;s|/|.|g")"
+      [ -z "$app_mod" ] && app_mod="main"
+      echo "uvicorn ${app_mod}:app --host 0.0.0.0 --port \$PORT --reload"; return
+    fi
+    grep -qi "flask" "$REPO_DIR/pyproject.toml" "$REPO_DIR/requirements.txt" 2>/dev/null && { echo "flask run --host 0.0.0.0 --port \$PORT --reload"; return; }
+    echo "python -m ${REPO//-/_}"; return
+  fi
+  die "no package.json/pyproject.toml in $REPO_DIR — set START_CMD"
+}
+
+discover_backend() {
+  locate_kubeconfig
+  NS="${REMOCAL_NS:-${NS:-$REPO}}"
+  kc get ns "$NS" >/dev/null 2>&1 || die "namespace '$NS' not found. Override with REMOCAL_NS."
+
+  if [ -n "${REMOCAL_WORKLOAD:-${WORKLOAD:-}}" ]; then
+    WORKLOAD="${REMOCAL_WORKLOAD:-$WORKLOAD}"
+  else
+    WORKLOAD="$(kc -n "$NS" get deploy -o name 2>/dev/null \
+      | cut -d/ -f2 | grep -vE 'worker|workers' \
+      | grep -E "nodejs|python|api|$NS" | head -1)"
+    [ -z "$WORKLOAD" ] && WORKLOAD="$(kc -n "$NS" get deploy -o name 2>/dev/null \
+      | cut -d/ -f2 | grep -vE 'worker|workers' | head -1)"
+  fi
+  [ -n "$WORKLOAD" ] || die "no non-worker deployment in $NS (set REMOCAL_WORKLOAD)"
+
+  CONTAINER="$(kc -n "$NS" get deploy "$WORKLOAD" -o jsonpath='{.spec.template.spec.containers[0].name}')"
+
+  read -r SVC SVC_PORT SVC_PORT_NAME SVC_APPPROTO < <(kc -n "$NS" get svc -o json | python3 -c '
+import json,sys
+wl=sys.argv[1]; d=json.load(sys.stdin)
+for it in d.get("items",[]):
+    if (it.get("spec",{}).get("selector") or {}).get("app")==wl:
+        p=(it["spec"].get("ports") or [{}])[0]
+        print(it["metadata"]["name"], p.get("port",""), p.get("name") or "-", p.get("appProtocol") or "-"); break
+' "$WORKLOAD") || true
+  [ -n "${SVC:-}" ] || die "no Service selecting app=$WORKLOAD in $NS"
+
+  POD="$(kc -n "$NS" get pods -l "app=$WORKLOAD" -o name 2>/dev/null | sed 's#^pod/##' | head -1)"
+  [ -n "$POD" ] || die "no running pod for $WORKLOAD"
+
+  # Pick the local port the intercept forwards to. Default to the app's
+  # in-cluster containerPort so services that HARDCODE app.listen(<port>)
+  # (and ignore env) still land where we forward. Fall back to a free port if
+  # that one's already taken locally (e.g. another remocal target).
+  APP_PORT="$(kc -n "$NS" get deploy "$WORKLOAD" -o jsonpath="{.spec.template.spec.containers[?(@.name=='$CONTAINER')].ports[0].containerPort}" 2>/dev/null)"
+  APP_PORT="${APP_PORT:-3000}"
+  if [ -n "${REMOCAL_LOCAL_PORT:-}" ]; then
+    LOCAL_PORT="$REMOCAL_LOCAL_PORT"
+  elif ! port_taken "$APP_PORT"; then
+    LOCAL_PORT="$APP_PORT"
+  else
+    LOCAL_PORT="$(free_port)"
+    warn "app port :$APP_PORT is busy (listener or existing intercept) — using :$LOCAL_PORT (exported via *_PORT env)."
+    warn "If '$REPO' HARDCODES :$APP_PORT (ignores env), free :$APP_PORT or run it on another machine."
+  fi
+  START_CMD="$(detect_start_cmd_backend)"
+}
+
+cmd_up_backend() {
+  preflight; locate_kubeconfig; require_connected; discover_backend; select_node
+  ensure_deps "$REPO_DIR"
+
+  if port_is_http; then
+    log "isolation OK — '$SVC' appProtocol=$SVC_APPPROTO name=$SVC_PORT_NAME"
+  elif [ "${REMOCAL_ALLOW_GLOBAL:-}" = "1" ]; then
+    warn "bare-TCP '$SVC' — proceeding (REMOCAL_ALLOW_GLOBAL=1)."
+  elif h2c_probing_on; then
+    log "bare-TCP '$SVC' but traffic-manager H2C probing is on → header intercept still isolates per-route. Proceeding."
+  else
+    die "bare-TCP '$SVC' would make the intercept GLOBAL and this cluster has no H2C probing. Set appProtocol:http on the svc, or REMOCAL_ALLOW_GLOBAL=1 if you're the sole dev."
+  fi
+
+  WORKDIR="$(mktemp -d "${TMPDIR:-/tmp}/remocal-${NS}-${ROUTE}.XXXXXX")"; chmod 700 "$WORKDIR"
+  REDIS="remocal-redis-${NS}-${ROUTE}"; NATS="remocal-nats-${NS}-${ROUTE}"
+  DBC="remocal-db-${NS}-${ROUTE}"
+
+  cleanup() {
+    set +e; echo; log "tearing down…"
+    telepresence leave "$WORKLOAD" >/dev/null 2>&1
+    docker rm -f "$REDIS" "$NATS" "$DBC" >/dev/null 2>&1
+    rm -rf "$WORKDIR"
+    log "done."
+  }
+  trap cleanup EXIT INT TERM
+
+  log "route '$ROUTE' -> $NS/$WORKLOAD (container $CONTAINER), local :$LOCAL_PORT"
+
+  # Export the port under every common name services use to choose their listen
+  # port — different repos read different vars (PORT, DEV_PORT, HTTP_PORT, …).
+  # Setting them all means we don't have to know which one this service honors.
+  ENV_OVERRIDES=(
+    PATH="$PATH" HOME="$HOME"
+    PORT="$LOCAL_PORT" DEV_PORT="$LOCAL_PORT" HTTP_PORT="$LOCAL_PORT"
+    APP_PORT="$LOCAL_PORT" SERVER_PORT="$LOCAL_PORT" NEST_PORT="$LOCAL_PORT"
+    NESTJS_PORT="$LOCAL_PORT" SERVICE_PORT="$LOCAL_PORT"
+    NODE_ENV=development
+    OTEL_TRACES_EXPORTER=none OTEL_METRICS_EXPORTER=none OTEL_LOGS_EXPORTER=none
+    OTEL_METRIC_EXPORT_INTERVAL=60000 OTEL_METRIC_EXPORT_TIMEOUT=10000
+    # Don't let a non-fatal async hiccup during boot kill the HTTP server. Services
+    # that fire-and-forget app.startAllMicroservices() (NATS/JetStream consumers)
+    # can reject AFTER the local broker is wired but before app.listen(); on
+    # Node ≥15 an unhandled rejection is fatal by default and the HTTP API never
+    # comes up. We only care about the HTTP side locally (the local instance must
+    # NOT consume shared events anyway), so downgrade to a warning.
+    NODE_OPTIONS=--unhandled-rejections=warn
+  )
+
+  POD_ENV="$(kc -n "$NS" get pod "$POD" -o json | python3 -c '
+import json,sys; c=sys.argv[1]; d=json.load(sys.stdin)
+for cont in d["spec"]["containers"]:
+    if cont["name"]==c: print("\n".join(e.get("name","") for e in cont.get("env",[])))
+' "$CONTAINER")"
+  env_has() { printf '%s\n' "$POD_ENV" | grep -qx "$1"; }
+
+  if env_has SHARD_CONFIG_PATH; then
+    SHARD_PATH="$(kc -n "$NS" get pod "$POD" -o jsonpath="{range .spec.containers[?(@.name=='$CONTAINER')].env[?(@.name=='SHARD_CONFIG_PATH')]}{.value}{end}")"
+    kc -n "$NS" exec "$POD" -c "$CONTAINER" -- cat "$SHARD_PATH" > "$WORKDIR/shard-config.json"
+    for f in $(python3 -c 'import json,sys;c=json.load(open(sys.argv[1]));print("\n".join(s.get("dbCreds","") for s in c.get("shards",[]) if s.get("dbCreds")))' "$WORKDIR/shard-config.json"); do
+      kc -n "$NS" exec "$POD" -c "$CONTAINER" -- cat "$f" > "$WORKDIR/$(basename "$f")"
+    done
+    python3 -c 'import json,os,sys;c,d=sys.argv[1],sys.argv[2];x=json.load(open(c));[s.update(dbCreds=os.path.join(d,os.path.basename(s["dbCreds"]))) for s in x.get("shards",[]) if s.get("dbCreds")];json.dump(x,open(c,"w"),indent=2)' "$WORKDIR/shard-config.json" "$WORKDIR"
+    ENV_OVERRIDES+=(SHARD_CONFIG_PATH="$WORKDIR/shard-config.json")
+  fi
+
+  if env_has REDIS_HOST; then
+    local rport; rport="$(free_port)"
+    log "local Redis on :$rport"
+    docker rm -f "$REDIS" >/dev/null 2>&1 || true
+    docker run -d --rm --name "$REDIS" -p "127.0.0.1:${rport}:6379" redis:7-alpine >/dev/null
+    ENV_OVERRIDES+=(REDIS_HOST=127.0.0.1 REDIS_PORT="$rport" REDIS_USER= REDIS_PASSWORD=)
+  fi
+
+  if env_has NATS_SERVER; then
+    local nport; nport="$(free_port)"
+    log "local NATS on :$nport"
+    docker rm -f "$NATS" >/dev/null 2>&1 || true
+    docker run -d --rm --name "$NATS" -p "127.0.0.1:${nport}:4222" nats:2.10-alpine -js >/dev/null
+    ENV_OVERRIDES+=(NATS_SERVER="127.0.0.1:${nport}" NATS_TOKEN=)
+    seed_local_nats_streams "$nport"
+  fi
+
+  # Opt-in throwaway local DB (otherwise the service uses the shared dev DB).
+  [ -n "${REMOCAL_LOCAL_DB:-}" ] && start_local_db
+
+  # Opt-in: apply the branch's pending migrations to the SHARED dev DB (reverted
+  # on `down`). Skip when using a local DB — that path migrates its own DB.
+  [ "${REMOCAL_MIGRATE:-}" = "1" ] && [ -z "${REMOCAL_LOCAL_DB:-}" ] && run_shared_migrations_up
+
+  ( for _ in $(seq 1 90); do
+      if (exec 3<>"/dev/tcp/127.0.0.1/${LOCAL_PORT}") 2>/dev/null; then
+        exec 3>&- 3<&- 2>/dev/null
+        printf '\n\033[1;32m[remocal] LOCAL %s healthy on :%s — X-Route: %s\033[0m\n\n' "$NS" "$LOCAL_PORT" "$ROUTE"
+        exit 0
+      fi; sleep 3
+    done ) &
+
+  # Idempotent up: clear any stale intercept for this workload first (a leftover
+  # registration from a prior run makes `intercept` fail with "already exists").
+  telepresence leave "$WORKLOAD" >/dev/null 2>&1 || true
+
+  telepresence intercept "$WORKLOAD" \
+    --namespace "$NS" --container "$CONTAINER" \
+    --port "${LOCAL_PORT}:${SVC_PORT}" \
+    --http-header "X-Route=${ROUTE}" --mount false \
+    -- env "${ENV_OVERRIDES[@]}" sh -c "cd '$REPO_DIR' && exec $START_CMD"
+}
+
+cmd_down_backend() {
+  preflight; discover_backend 2>/dev/null || true
+  # Revert any migrations REMOCAL_MIGRATE applied on `up` (gated on the state
+  # file, so it runs even if the flag isn't set this invocation).
+  run_shared_migrations_down
+  log "leaving intercept on ${WORKLOAD:-<workload>} (route '$ROUTE')"
+  telepresence leave "${WORKLOAD:-}" >/dev/null 2>&1 || true
+  docker rm -f "remocal-redis-${NS:-}-${ROUTE}" "remocal-nats-${NS:-}-${ROUTE}" "remocal-db-${NS:-}-${ROUTE}" >/dev/null 2>&1 || true
+  log "done."
+}
+
+cmd_discover_backend() {
+  preflight; discover_backend
+  local verdict
+  if port_is_http; then verdict="HTTP-typed → ISOLATES per-dev"
+  else verdict="BARE TCP → GLOBAL (REMOCAL_ALLOW_GLOBAL=1 to override)"; fi
+  cat <<EOF
+$(log "backend plan (route '$ROUTE', $REPO_DIR)")
+  kubeconfig : $KUBECONFIG
+  namespace  : $NS
+  workload   : $WORKLOAD   (container: $CONTAINER)
+  service    : $SVC  port=$SVC_PORT name=$SVC_PORT_NAME appProtocol=$SVC_APPPROTO
+  pod        : $POD
+  local port : $LOCAL_PORT
+  start cmd  : $START_CMD
+  intercept  : X-Route=$ROUTE  ->  127.0.0.1:$LOCAL_PORT
+  isolation  : $verdict
+EOF
+}
+
+# ────────────────── mfe mode ──────────────────
+
+discover_mfe() {
+  locate_kubeconfig
+  NS="${REMOCAL_NS:-microfrontends}"
+  WORKLOAD="microfrontends-${MFE}-depl"
+  kc -n "$NS" get deploy "$WORKLOAD" >/dev/null 2>&1 || die "deploy $WORKLOAD not in $NS"
+  SVC="microfrontends-${MFE}-svc"
+  read -r SVC_PORT SVC_PORT_NAME SVC_APPPROTO < <(kc -n "$NS" get svc "$SVC" -o json | python3 -c '
+import json,sys; d=json.load(sys.stdin)
+p=(d["spec"].get("ports") or [{}])[0]
+print(p.get("port",""), p.get("name") or "-", p.get("appProtocol") or "-")
+') || true
+
+  FED_NAME="${MFE//-/_}"
+  if [ "$MFE" = "container" ]; then
+    # Host shell — not in remote-list, serves at '/', port 8080.
+    DEV_PORT="${REMOCAL_LOCAL_PORT:-8080}"
+    MFE_SUBPATH="/"
+    HEALTH_PATH="/"
+    IS_HOST=1
+  else
+    DEV_PORT="${REMOCAL_LOCAL_PORT:-$(node -e '
+      const list = require(process.argv[1]);
+      const m = list.find(r => r.name === process.argv[2]);
+      if (!m) process.exit(3);
+      process.stdout.write(String(m.port));
+    ' "$MF_ROOT/apps/container/config/remote-list.js" "$FED_NAME" 2>/dev/null)}"
+    [ -n "${DEV_PORT:-}" ] || die "no dev port for '$FED_NAME' in apps/container/config/remote-list.js (set REMOCAL_LOCAL_PORT)"
+    MFE_SUBPATH="/$MFE/"
+    HEALTH_PATH="/$MFE/remoteEntry.js"
+    IS_HOST=0
+  fi
+}
+
+# Print "KEY=VALUE" lines for all env on MFE container, resolving
+# secretKeyRef and configMapKeyRef. Build-time substitution (envsubst) on the
+# pod uses these → same values feed our local webpack DefinePlugin.
+resolve_pod_mfe_env() {
+  local dj; dj="$(mktemp)"
+  kc -n "$NS" get deploy "$WORKLOAD" -o json > "$dj" 2>/dev/null || true
+  python3 - "$NS" "$dj" <<'PY' || true
+import json,sys,subprocess,base64
+ns,path=sys.argv[1],sys.argv[2]
+try: d=json.load(open(path))
+except Exception: sys.exit(0)
+c=d["spec"]["template"]["spec"]["containers"][0]
+def kget(kind,name,key):
+    r=subprocess.run(["kubectl","--request-timeout=25s","-n",ns,"get",kind,name,
+                      "-o","jsonpath={.data.%s}"%key],capture_output=True,text=True)
+    return r.stdout or ""
+def resolve(e):
+    if e.get("value") is not None: return e["value"]
+    vf=e.get("valueFrom",{}) or {}
+    skr=vf.get("secretKeyRef")
+    if skr:
+        try: return base64.b64decode(kget("secret",skr["name"],skr["key"])).decode()
+        except Exception: return ""
+    cmr=vf.get("configMapKeyRef")
+    if cmr:
+        return kget("configmap",cmr["name"],cmr["key"])
+    return ""
+for e in c.get("env",[]):
+    n=e.get("name","")
+    if not n: continue
+    v=resolve(e)
+    # encode newlines so bash readline split survives multi-line JSON values
+    v=v.replace("\\","\\\\").replace("\n","\\n")
+    print("%s=%s" % (n, v))
+PY
+  rm -f "$dj"
+}
+
+_resolve_mfeenv_array() {
+  MFEENV=(); MFE_ENV_KEYS=()
+  local line key val
+  while IFS= read -r line; do
+    [ -z "$line" ] && continue
+    key="${line%%=*}"; val="${line#*=}"
+    # decode \n back to real newlines for the child process env
+    val="$(printf '%b' "$val")"
+    MFEENV+=("$key=$val")
+    MFE_ENV_KEYS+=("$key")
+  done < <(resolve_pod_mfe_env)
+}
+
+write_remocal_webpack() {
+  local keys_js="["
+  local k
+  for k in "${MFE_ENV_KEYS[@]}"; do keys_js+="'$k',"; done
+  keys_js+="]"
+
+  cat > "$REPO_DIR/config/webpack.remocal.js" <<EOF
+// AUTO-GENERATED by remocal. DO NOT COMMIT. Removed on cleanup.
+const base = require('./webpack.dev.js');
+base.output = { ...(base.output || {}), publicPath: '$MFE_SUBPATH' };
+
+// Inject pod env (resolved secretKeyRef/configMapKeyRef) as process.env.X
+// via a late DefinePlugin. Same values nginx envsubst would use in prod.
+try {
+  const webpack = require('webpack');
+  const keys = $keys_js;
+  const defs = {};
+  for (const key of keys) {
+    if (process.env[key] !== undefined) {
+      defs['process.env.' + key] = JSON.stringify(process.env[key]);
+    }
+  }
+  base.plugins = base.plugins || [];
+  base.plugins.push(new webpack.DefinePlugin(defs));
+} catch (e) {}
+
+// Sibling remotes -> deployed origin (same-origin, through intercept)
+for (const p of (base.plugins || [])) {
+  const o = p && p._options;
+  if (o && o.remotes && typeof o.remotes === 'object' && !Array.isArray(o.remotes)) {
+    const repointed = {};
+    for (const key of Object.keys(o.remotes)) {
+      const appPath = key.replace(/_/g, '-');
+      repointed[key] = key + '@[window.location.origin]/' + appPath + '/remoteEntry.js';
+    }
+    o.remotes = repointed;
+  }
+}
+
+// Consume host React (avoid duplicate React from transitive 18.x deps)
+for (const p of (base.plugins || [])) {
+  const o = p && p._options;
+  if (o && o.shared) {
+    const consumeHostReact = { singleton: true, import: false, requiredVersion: false };
+    const patch = (entry) => {
+      if (entry && typeof entry === 'object' && !Array.isArray(entry)) {
+        if ('react' in entry) entry.react = consumeHostReact;
+        if ('react-dom' in entry) entry['react-dom'] = consumeHostReact;
+      }
+    };
+    if (Array.isArray(o.shared)) o.shared.forEach(patch);
+    else patch(o.shared);
+  }
+}
+
+// Stub MSW (mocks intercept real API → dashboard hangs)
+try {
+  const webpack = require('webpack');
+  base.plugins = base.plugins || [];
+  base.plugins.push(new webpack.NormalModuleReplacementPlugin(
+    /\/mocks\/browser$/,
+    require('path').join(__dirname, 'remocal-noop.js'),
+  ));
+} catch (e) {}
+
+// Container's runtime importRemote() uses 'http://localhost:<port>' when
+// NODE_ENV=development (parseRemoteName in src/helpers/lazy-remote/helpers.ts).
+// Under remocal we need same-origin path-based URLs. Replace the module.
+try {
+  const webpack = require('webpack');
+  base.plugins = base.plugins || [];
+  base.plugins.push(new webpack.NormalModuleReplacementPlugin(
+    /\/helpers\/lazy-remote\/helpers(\\.[tj]sx?)?$/,
+    require('path').join(__dirname, 'lazy-remote-helpers.remocal.js'),
+  ));
+} catch (e) {}
+
+base.devServer = {
+  ...(base.devServer || {}),
+  port: $DEV_PORT,
+  host: '127.0.0.1',
+  allowedHosts: 'all',
+  headers: {
+    'Access-Control-Allow-Origin': '*',
+    // CDN safety: dev-hetzner sits behind CloudFront. Without no-store, your
+    // local bundle may be cached at the edge keyed on URL (NOT X-Route) and
+    // replayed to every browser hitting that edge.
+    'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
+    'Pragma': 'no-cache',
+  },
+  client: {
+    webSocketURL: 'auto://0.0.0.0:0${MFE_SUBPATH}ws',
+    overlay: { errors: true, warnings: false },
+  },
+  webSocketServer: { type: 'ws', options: { path: '${MFE_SUBPATH}ws' } },
+};
+module.exports = base;
+EOF
+  printf 'module.exports = {};\n' > "$REPO_DIR/config/remocal-noop.js"
+  cat > "$REPO_DIR/config/lazy-remote-helpers.remocal.js" <<'JSEOF'
+// AUTO-GENERATED by remocal. DO NOT COMMIT. Removed on cleanup.
+// Replaces container's parseRemoteName so importRemote() targets same-origin
+// path-based URLs (works through telepresence intercept on dev-hetzner AND
+// direct localhost:8080 hits, instead of hardcoded localhost:<spoke-port>).
+function parseRemoteName(name) {
+  var parts = name.split('/');
+  var scope = parts[0];
+  var moduleName = parts[1];
+  var mfeName = scope.split('_').join('-');
+  return {
+    url: window.location.origin + '/' + mfeName,
+    scope: scope,
+    moduleName: moduleName,
+  };
+}
+module.exports = { parseRemoteName: parseRemoteName };
+JSEOF
+}
+
+isolation_selfcheck_mfe() {
+  local local_sz probe_sz probe_path
+  # Host shell has no remoteEntry.js; probe main bundle instead.
+  if [ "${IS_HOST:-0}" = "1" ]; then
+    probe_path="/main.js"
+  else
+    probe_path="/${MFE}/remoteEntry.js"
+  fi
+  local_sz="$(curl -fsS -o /dev/null -w '%{size_download}' "http://127.0.0.1:${DEV_PORT}${probe_path}" 2>/dev/null || echo 0)"
+  probe_sz="$(curl -fsS -o /dev/null -w '%{size_download}' -H 'X-Route: __remocal_probe__' \
+              "${ORIGIN}${probe_path}?cb=$(date +%s%N)" 2>/dev/null || echo 0)"
+  if [ "$local_sz" != "0" ] && [ "$local_sz" = "$probe_sz" ]; then
+    warn "ISOLATION BROKEN: untagged returned LOCAL bytes ($probe_sz). intercept GLOBAL."
+    warn "Fix: appProtocol:http on $SVC."
+    [ "${REMOCAL_ALLOW_GLOBAL:-}" = "1" ] || die "refusing global. Run 'remocal down $REPO_DIR'."
+  else
+    log "isolation OK: untagged=$probe_sz local=$local_sz"
+  fi
+}
+
+cmd_up_mfe() {
+  preflight; locate_kubeconfig; require_connected; discover_mfe; select_node
+  ensure_deps "$MF_ROOT"
+
+  if ! port_is_http; then
+    warn "Service '$SVC' BARE TCP (name=$SVC_PORT_NAME appProtocol=$SVC_APPPROTO)."
+    warn "Header intercept may be GLOBAL. Self-check will verify after startup."
+    [ "${REMOCAL_ALLOW_GLOBAL:-}" = "1" ] || warn "Will refuse if confirmed global. Set REMOCAL_ALLOW_GLOBAL=1 to override."
+  fi
+
+  cleanup() {
+    set +e; echo; log "tearing down…"
+    telepresence leave "$WORKLOAD" >/dev/null 2>&1
+    rm -f "$REPO_DIR/config/webpack.remocal.js" "$REPO_DIR/config/remocal-noop.js" "$REPO_DIR/config/lazy-remote-helpers.remocal.js"
+    log "done."
+  }
+  trap cleanup EXIT INT TERM
+
+  log "route '$ROUTE' -> $NS/$WORKLOAD, MFE '$MFE' on :$DEV_PORT (${MFE_SUBPATH})"
+  telepresence leave "$WORKLOAD" >/dev/null 2>&1 || true
+  _resolve_mfeenv_array
+  log "harvested ${#MFE_ENV_KEYS[@]} env var(s) from pod"
+  write_remocal_webpack
+
+  ( for _ in $(seq 1 60); do
+      if curl -fsS "http://127.0.0.1:${DEV_PORT}${HEALTH_PATH}" >/dev/null 2>&1; then
+        printf '\n\033[1;32m[remocal] LOCAL %s healthy on :%s%s — X-Route: %s\033[0m\n' "$MFE" "$DEV_PORT" "$MFE_SUBPATH" "$ROUTE"
+        isolation_selfcheck_mfe
+        exit 0
+      fi; sleep 3
+    done ) &
+
+  log "intercepting and starting webpack dev server…"
+  telepresence intercept "$WORKLOAD" \
+    --namespace "$NS" \
+    --port "${DEV_PORT}:${SVC_PORT}" \
+    --http-header "X-Route=${ROUTE}" --mount false \
+    -- env PATH="$PATH" ${MFEENV[@]+"${MFEENV[@]}"} bash -c "cd '$REPO_DIR' && exec pnpm exec webpack serve --config config/webpack.remocal.js"
+}
+
+cmd_down_mfe() {
+  preflight; discover_mfe 2>/dev/null || true
+  log "leaving intercept on ${WORKLOAD:-<workload>} (route '$ROUTE')"
+  telepresence leave "${WORKLOAD:-}" >/dev/null 2>&1 || true
+  rm -f "$REPO_DIR/config/webpack.remocal.js" "$REPO_DIR/config/remocal-noop.js" "$REPO_DIR/config/lazy-remote-helpers.remocal.js"
+  log "done."
+}
+
+cmd_discover_mfe() {
+  preflight; discover_mfe
+  cat <<EOF
+$(log "mfe plan (mfe '$MFE', route '$ROUTE')")
+  kubeconfig : $KUBECONFIG
+  namespace  : $NS
+  workload   : $WORKLOAD
+  service    : $SVC  port=$SVC_PORT name=$SVC_PORT_NAME appProtocol=$SVC_APPPROTO
+  fed name   : $FED_NAME
+  dev port   : $DEV_PORT
+  serve path : ${HEALTH_PATH}   (publicPath=${MFE_SUBPATH} via intercept)
+  intercept  : X-Route=$ROUTE  ->  127.0.0.1:$DEV_PORT
+EOF
+}
+
+# ────────────────── dispatch ──────────────────
+
+run_one() {
+  local t="$1"
+  init_for_target "$t"
+  case "$MODE:$CMD" in
+    backend:up)       cmd_up_backend ;;
+    backend:down)     cmd_down_backend ;;
+    backend:discover) cmd_discover_backend ;;
+    mfe:up)           cmd_up_mfe ;;
+    mfe:down)         cmd_down_mfe ;;
+    mfe:discover)     cmd_discover_mfe ;;
+    *) die "unknown MODE=$MODE CMD=$CMD for $t" ;;
+  esac
+}
+
+if [ "${#TARGETS[@]}" -eq 1 ]; then
+  run_one "${TARGETS[0]}"
+else
+  # Multi-target: each target runs in a subshell so its per-target globals,
+  # WORKDIR, and EXIT/INT/TERM cleanup trap (defined inside cmd_up_*) stay
+  # isolated. Main process forwards SIGINT/SIGTERM → each subshell's trap fires
+  # → telepresence leave + docker rm + rm tempfiles, atomically per target.
+  case "$CMD" in
+    up)
+      PIDS=()
+      for t in "${TARGETS[@]}"; do
+        ( run_one "$t" ) 2>&1 | sed -u "s|^|[$(basename "$t")] |" &
+        PIDS+=("$!")
+      done
+      forward_signal() {
+        local sig="$1"
+        for p in "${PIDS[@]}"; do kill -"$sig" "$p" 2>/dev/null || true; done
+      }
+      trap 'forward_signal TERM; wait' INT TERM
+      wait
+      ;;
+    down|discover)
+      for t in "${TARGETS[@]}"; do
+        ( run_one "$t" ) 2>&1 | sed -u "s|^|[$(basename "$t")] |"
+      done
+      ;;
+    *) die "usage: remocal {up|down|discover} [PATH ...] [--route NAME]" ;;
+  esac
+fi

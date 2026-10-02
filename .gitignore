@@ -8,3 +8,8 @@ all/tmux/.config/tmux/resurrect/
 **/.config/zsh/secrets
 .DS_Store
 **/.local/share/fonts/.uuid
+mac/sketchybar/.config/sketchybar/helpers/onscreen
+mac/utils/.local/bin/mirrord
+mac/utils/.local/bin/gravitype
+mac/utils/.local/bin/poetry
+mac/utils/.local/bin/*.bak

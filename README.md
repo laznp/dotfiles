@@ -23,7 +23,7 @@ Running `stow -t ~ <package>` creates symlinks from `$HOME` into the repo.
 | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **all**      | zsh, git, tmux, bat, starship, k9s, ai-agent, fonts, nvim                                                                                                                          |
 | **linux**    | Hyprland, bspwm, waybar, rofi, polybar, alacritty, dunst, ly, pipewire, ranger, systemd, tofi, vivid, wallpaper, wireplumber, xremap, picom, swaylock, swappy, sxhkd, sunshine, utils |
-| **mac**      | omniwm, swiftbar, alacritty, utils                                                                                                                                            |
+| **mac**      | omniwm, sketchybar, alacritty, utils                                                                                                                                            |
 
 ### What's configured
 
@@ -35,7 +35,7 @@ Running `stow -t ~ <package>` creates symlinks from `$HOME` into the repo.
 - **Shadowforce** — multi-agent AI system running on Claude Code and OpenCode Go. Six specialized agents (Overlord, Stalker, Engineer, Inquisitor, Seeker, Architect, Vanguard) with routing, supervision, and quality/security gates. Each agent runs on a different model optimized for its role (DeepSeek v4, Qwen, GLM, Mimo). Same team, same rules across both Claude and OpenCode runtimes.
 - **Desktop (Linux)** — Hyprland (Wayland compositor) or bspwm (X11), waybar/polybar status bars, rofi launcher, dunst notifications, alacritty terminal, ly login manager, sunshine game streaming
 - **nvim** — shared cross-platform editor config (`all/nvim`)
-- **macOS** — omniwm tiling WM (built-in workspace bar), swiftbar menu bar plugins
+- **macOS** — omniwm tiling WM, sketchybar status bar
 
 ## Prerequisites
 
@@ -55,7 +55,7 @@ stow -t ~ -d all zsh git tmux bat starship k9s ai-agent nvim
 stow -t ~ -d linux hyprland waybar rofi alacritty dunst ly
 
 # macOS
-stow -t ~ -d mac omniwm swiftbar alacritty
+stow -t ~ -d mac omniwm sketchybar alacritty
 ```
 
 ### Fresh install
