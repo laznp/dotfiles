@@ -1,0 +1,156 @@
+# Ported from the OmniWM setup, which in turn came from i3/AeroSpace.
+# Workspaces keep the Linux numbering: 10 of them, Slack on the last one.
+# Workspace 4 is intentionally empty -- it held Steam on Linux.
+
+[settings]
+# rift leaves spaces unmanaged until toggled; without this it starts inert
+# and every workspace command silently does nothing.
+default_disable = false
+
+animate = true
+animation_duration = 0.25
+animation_fps = 100.0
+
+focus_follows_mouse = false
+mouse_follows_focus = false
+mouse_hides_on_focus = false
+
+hot_reload = true
+
+# Feeds sketchybar. rift has no in-config hook, so each event spawns a
+# long-lived subscriber that fires a sketchybar trigger.
+run_on_start = [
+  "rift-cli subscribe cli --event workspace_changed --command sh --args -c --args 'sketchybar --trigger rift_workspace_changed'",
+  "rift-cli subscribe cli --event windows_changed --command sh --args -c --args 'sketchybar --trigger rift_workspace_changed'",
+]
+
+[settings.layout]
+mode = "traditional"
+window_insertion_point = "next_to_selection"
+
+[settings.layout.gaps.outer]
+# rift adds this to a display frame that already excludes the menu bar, rather
+# than subtracting the menu bar from it the way OmniWM did. The external screen
+# has no notch and the menu bar is hidden, so its frame starts at 0 and the full
+# 48 is needed to clear the 40px sketchybar with 8px to spare.
+top = 48
+left = 8
+bottom = 8
+right = 8
+
+[settings.layout.gaps.inner]
+horizontal = 8
+vertical = 8
+
+# The built-in screen's frame already starts 38px down because of the notch, so
+# it needs 10 here to land windows at the same 48px as the external one.
+[settings.layout.gaps.per_display."37D8832A-2D66-02CA-B9F7-8F30A301B230".outer]
+top = 10
+left = 8
+bottom = 8
+right = 8
+
+[settings.layout.gaps.per_display."37D8832A-2D66-02CA-B9F7-8F30A301B230".inner]
+horizontal = 8
+vertical = 8
+
+# Three-finger horizontal swipe switches workspaces. consume_dock_swipe stops
+# macOS handling the same swipe as a Spaces change on top of rift's.
+[settings.gestures]
+enabled = true
+consume_dock_swipe = true
+invert_horizontal_swipe = false
+swipe_vertical_tolerance = 0.4
+skip_empty = true
+fingers = 3
+distance_pct = 0.08
+haptics_enabled = true
+
+[virtual_workspaces]
+enabled = true
+default_workspace_count = 10
+auto_assign_windows = true
+preserve_focus_per_workspace = true
+workspace_auto_back_and_forth = false
+prevent_wrapping = false
+
+workspace_names = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+
+# Workspaces are addressed by name, not index: switch_to_workspace is
+# 0-based while these names are the labels, and mixing the two silently
+# sends windows one workspace off.
+app_rules = [
+  { app_id = "com.google.Chrome", workspace = "1" },
+  { app_id = "com.brave.Browser", workspace = "1" },
+  { app_id = "org.mozilla.firefox", workspace = "1" },
+
+  { app_id = "org.alacritty", workspace = "2" },
+
+  { app_id = "com.microsoft.VSCode", workspace = "3" },
+  { app_id = "com.todesktop.230313mzl4w4u92", workspace = "3" },
+
+  { app_id = "com.electron.open-lens", workspace = "5" },
+  { app_id = "com.electron.kontena-lens", workspace = "5" },
+  { app_id = "app.freelens.Freelens", workspace = "5" },
+
+  { app_id = "com.1password.1password", workspace = "6" },
+  { app_id = "com.bambulab.bambu-studio", workspace = "6" },
+
+  { app_id = "net.whatsapp.WhatsApp", workspace = "7" },
+  { app_id = "com.tdesktop.Telegram", workspace = "7" },
+
+  { app_id = "com.spotify.client", workspace = "8" },
+
+  { app_id = "com.microsoft.teams2", workspace = "9" },
+
+  { app_id = "com.tinyspeck.slackmacgap", workspace = "10" },
+]
+
+[modifier_combinations]
+comb1 = "Meta + Shift"
+
+[keys]
+"Meta + H" = { move_focus = "left" }
+"Meta + J" = { move_focus = "down" }
+"Meta + K" = { move_focus = "up" }
+"Meta + L" = { move_focus = "right" }
+
+"comb1 + H" = { move_node = "left" }
+"comb1 + J" = { move_node = "down" }
+"comb1 + K" = { move_node = "up" }
+"comb1 + L" = { move_node = "right" }
+
+# switch_to_workspace is 0-based, so Meta + 1 is index 0 and Meta + 0 is the tenth.
+"Meta + 1" = { switch_to_workspace = 0 }
+"Meta + 2" = { switch_to_workspace = 1 }
+"Meta + 3" = { switch_to_workspace = 2 }
+"Meta + 4" = { switch_to_workspace = 3 }
+"Meta + 5" = { switch_to_workspace = 4 }
+"Meta + 6" = { switch_to_workspace = 5 }
+"Meta + 7" = { switch_to_workspace = 6 }
+"Meta + 8" = { switch_to_workspace = 7 }
+"Meta + 9" = { switch_to_workspace = 8 }
+"Meta + 0" = { switch_to_workspace = 9 }
+
+"comb1 + 1" = { move_window_to_workspace = 0 }
+"comb1 + 2" = { move_window_to_workspace = 1 }
+"comb1 + 3" = { move_window_to_workspace = 2 }
+"comb1 + 4" = { move_window_to_workspace = 3 }
+"comb1 + 5" = { move_window_to_workspace = 4 }
+"comb1 + 6" = { move_window_to_workspace = 5 }
+"comb1 + 7" = { move_window_to_workspace = 6 }
+"comb1 + 8" = { move_window_to_workspace = 7 }
+"comb1 + 9" = { move_window_to_workspace = 8 }
+"comb1 + 0" = { move_window_to_workspace = 9 }
+
+"Meta + Left" = "prev_workspace"
+"Meta + Right" = "next_workspace"
+
+"Ctrl + Meta + H" = { resize_window_shrink = "horizontal" }
+"Ctrl + Meta + L" = { resize_window_grow = "horizontal" }
+"Ctrl + Meta + J" = { resize_window_grow = "vertical" }
+"Ctrl + Meta + K" = { resize_window_shrink = "vertical" }
+
+"comb1 + Space" = "toggle_window_floating"
+"comb1 + F" = "toggle_fullscreen"
+"comb1 + Z" = "toggle_space_activated"

@@ -40,7 +40,7 @@ default=(
 sketchybar --default "${default[@]}"
 
 ##### Custom Events #####
-sketchybar --add event omniwm_workspace_change
+sketchybar --add event rift_workspace_changed
 
 ##### Apple Menu Button #####
 sketchybar --add item apple left \
@@ -54,7 +54,7 @@ sketchybar --add item apple left \
 # https://felixkratz.github.io/SketchyBar/config/components#space----associate-mission-control-spaces-with-an-item
 # to indicate active and available mission control spaces.
 
-SPACE_ICONS=("" "" "" "󰀘" "" "󰭹" "" "󰊻" "")
+SPACE_ICONS=("" "" "" "" "󰀘" "" "󰭹" "" "󰊻" "")
 for i in "${!SPACE_ICONS[@]}"
 do
   sid="$(($i+1))"
@@ -67,7 +67,7 @@ do
     background.corner_radius=5
     background.height=25
     label.drawing=off
-    click_script="omniwmctl command switch-workspace $sid > /dev/null 2>&1"
+    click_script="rift-cli execute workspace switch $((sid - 1)) > /dev/null 2>&1"
   )
   sketchybar --add item space."$sid" left \
              --set space."$sid" "${space[@]}"
@@ -75,12 +75,12 @@ done
 
 sketchybar --add item spaces_driver left \
            --set spaces_driver drawing=off script="$PLUGIN_DIR/workspaces.sh" \
-           --subscribe spaces_driver omniwm_workspace_change
+           --subscribe spaces_driver rift_workspace_changed
 
 ##### Adding Layout Indicator #####
 sketchybar --add item layout left \
            --set layout icon.drawing=off script="$PLUGIN_DIR/layout.sh" \
-           --subscribe layout omniwm_workspace_change front_app_switched
+           --subscribe layout rift_workspace_changed front_app_switched
 
 ##### Adding Left Items #####
 # We add some regular items to the left side of the bar, where
@@ -119,6 +119,6 @@ sketchybar --add item slack right \
 ##### Force all scripts to run the first time (never do this in a script) #####
 sketchybar --update
 
-##### Start OmniWM event bridge + initialize highlight #####
-"$PLUGIN_DIR/omniwm_watch.sh"
-sketchybar --trigger omniwm_workspace_change
+##### Initialize highlight #####
+# rift spawns the event subscribers itself via run_on_start in its config.
+sketchybar --trigger rift_workspace_changed
