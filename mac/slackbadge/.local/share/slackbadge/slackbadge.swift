@@ -15,6 +15,11 @@ private let unreadColour = NSColor(srgbRed: 0.38, green: 0.69, blue: 0.94, alpha
 private let mentionColour = NSColor(srgbRed: 0.88, green: 0.12, blue: 0.35, alpha: 1) // #e01e5a
 
 private let glyph = "\u{F04B1}" // nf-md-slack
+
+// Nerd Font glyphs sit on the text baseline, which is lower than the menu bar's
+// optical centre, so the icon reads as slightly off next to system-drawn ones.
+// Nudge it until it lines up with its neighbours.
+private let baselineOffset: CGFloat = -2
 private let refreshInterval: TimeInterval = 5
 
 final class SlackBadge: NSObject, NSApplicationDelegate {
@@ -87,7 +92,11 @@ final class SlackBadge: NSObject, NSApplicationDelegate {
 
         item.button?.attributedTitle = NSAttributedString(
             string: text,
-            attributes: [.font: font, .foregroundColor: colour]
+            attributes: [
+                .font: font,
+                .foregroundColor: colour,
+                .baselineOffset: baselineOffset,
+            ]
         )
     }
 }
