@@ -67,6 +67,12 @@ distance_pct = 0.08
 haptics_enabled = true
 
 [virtual_workspaces]
+# 0.8.0 flipped the built-in default to "global", where workspaces are numbered
+# across every display and next/previous plus trackpad swipes cross between
+# screens. Omitting this key opts into that, so it is spelled out: each display
+# keeps its own set, and swipes stay on the screen you are looking at.
+mode = "per_display"
+
 enabled = true
 default_workspace_count = 10
 auto_assign_windows = true
