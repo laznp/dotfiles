@@ -1,0 +1,38 @@
+#!/bin/sh
+
+# Builds slackbadge on first run and whenever the source is newer, then hands
+# over to it.
+#
+# The binary lives inside a minimal .app bundle rather than standing alone:
+# launchd starts this at login, and a bare executable does not reliably get a
+# window server connection there, so the status item never appears. LSUIElement
+# keeps the bundle out of the Dock and gives it no windows.
+
+SRC="$HOME/.local/share/slackbadge/slackbadge.swift"
+APP="$HOME/.local/share/slackbadge/SlackBadge.app"
+BIN="$APP/Contents/MacOS/slackbadge"
+
+if [ ! -x "$BIN" ] || [ "$SRC" -nt "$BIN" ]; then
+  mkdir -p "$APP/Contents/MacOS" || exit 1
+  cat > "$APP/Contents/Info.plist" <<'PLIST'
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleExecutable</key>
+	<string>slackbadge</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.laznp.slackbadge</string>
+	<key>CFBundleName</key>
+	<string>SlackBadge</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>LSUIElement</key>
+	<true/>
+</dict>
+</plist>
+PLIST
+  swiftc -O -o "$BIN" "$SRC" || exit 1
+fi
+
+exec "$BIN"

@@ -13,3 +13,4 @@ mac/utils/.local/bin/mirrord
 mac/utils/.local/bin/gravitype
 mac/utils/.local/bin/poetry
 mac/utils/.local/bin/*.bak
+mac/slackbadge/.local/share/slackbadge/SlackBadge.app/
