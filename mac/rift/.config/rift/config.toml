@@ -39,11 +39,13 @@ mode = "traditional"
 window_insertion_point = "next_to_selection"
 
 [settings.layout.gaps.outer]
-# rift adds this to a display frame that already excludes the menu bar, rather
-# than subtracting the menu bar from it the way OmniWM did. The external screen
-# has no notch and the menu bar is hidden, so its frame starts at 0 and the full
-# 48 is needed to clear the 40px sketchybar with 8px to spare.
-top = 38
+# Measured from the top of the display frame rift reports, which already has
+# the menu bar taken out of it -- so this is the gap below the menu bar, not
+# from the physical screen edge. Worth re-checking against
+# `rift-cli query displays` after an upgrade: rift has reported raw display
+# bounds here in the past, and the same number then lands windows a menu bar's
+# height too low.
+top = 8
 left = 8
 bottom = 8
 right = 8
@@ -54,8 +56,10 @@ vertical = 8
 
 # The built-in screen's frame already starts 38px down because of the notch, so
 # it needs 10 here to land windows at the same 48px as the external one.
+# Same values as the global gaps; kept so the built-in screen has somewhere to
+# differ if it ever needs to.
 [settings.layout.gaps.per_display."37D8832A-2D66-02CA-B9F7-8F30A301B230".outer]
-top = 46
+top = 8
 left = 8
 bottom = 8
 right = 8
